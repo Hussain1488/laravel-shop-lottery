@@ -12,4 +12,8 @@ class CooperationSalesController extends Controller
     {
         return view('back.cooperationsales.index');
     }
+    public function create()
+    {
+        return view('back.cooperationsales.create');
+    }
 }

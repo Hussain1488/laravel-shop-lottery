@@ -38,15 +38,15 @@
             @can('cooperationsales')
                 <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i class="feather icon-users"></i><span class="menu-title" > همکاران</span></a>
                     <ul class="menu-content">
-                        <!-- @can('cooperationsales.index')
-                            <li class="{{ active_class('admin.users.index') }}">
-                                <a href="{{ route('admin.users.index') }}"><i class="feather icon-circle"></i><span class="menu-item">لیست همکاران</span></a>
+                         @can('cooperationsales.index')
+                            <li class="{{ active_class('admin.cooperationsales.index') }}">
+                                <a href="{{ route('admin.cooperationsales.index') }}"><i class="feather icon-circle"></i><span class="menu-item">لیست همکاران</span></a>
                             </li>
-                        @endcan -->
+                        @endcan
 
                         @can('cooperationsales.create')
-                            <li class="{{ active_class('admin.cooperationsales.index') }}">
-                                <a href="{{ route('admin.cooperationsales.index') }}"><i class="feather icon-circle"></i><span class="menu-item">ایجاد همکار</span></a>
+                            <li class="{{ active_class('admin.cooperationsales.create') }}">
+                                <a href="{{ route('admin.cooperationsales.create') }}"><i class="feather icon-circle"></i><span class="menu-item">ایجاد همکار</span></a>
                             </li>
                         @endcan
 
