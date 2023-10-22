@@ -43,8 +43,9 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group d-flex align-items-center">
                                                     <div class="d-flex">
-                                                        <input type="text" placeholder="100,000" class="form-control moneyInput"
-                                                            id="first_name" name="first_name">
+                                                        <input type="text" placeholder="100,000"
+                                                            class="form-control moneyInput" id="first_name"
+                                                            name="first_name">
                                                     </div>
                                                     <label for="first_name" class="ml-2">اعتبار کاربر
                                                         خریدار</label>
@@ -130,10 +131,6 @@
                                         </div>
 
                                     </div>
-
-
-
-
                                     <div class="row">
                                         <div class="col-12">
                                             <button type="submit"
@@ -142,16 +139,17 @@
                                             </button>
                                         </div>
                                     </div>
+
+                                </form>
                             </div>
-                            </form>
                         </div>
                     </div>
-            </div>
-            </section>
-            <!--/ Description -->
 
+                </section>
+                <!--/ Description -->
+
+            </div>
         </div>
-    </div>
     </div>
 @endsection
 
