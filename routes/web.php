@@ -1,55 +1,55 @@
 <?php
 
-use App\Http\Controllers\Back\ApikeyController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Back\ProvinceController;
+use App\Http\Controllers\Back\SmsController;
+use App\Http\Controllers\Back\CityController;
 
 
-use App\Http\Controllers\Back\CooperationSalesController;
+use App\Http\Controllers\Back\LinkController;
 
 
 use App\Http\Controllers\Back\MainController;
-use App\Http\Controllers\Back\UserController;
-use App\Http\Controllers\Back\ProductController;
-use App\Http\Controllers\Back\BrandController;
-use App\Http\Controllers\Back\FilterController;
-use App\Http\Controllers\Back\AttributeGroupController;
-use App\Http\Controllers\Back\AttributeController;
-use App\Http\Controllers\Back\BackupController;
-use App\Http\Controllers\Back\SpecTypeController;
-use App\Http\Controllers\Back\PostController;
-use App\Http\Controllers\Back\CategoryController;
-use App\Http\Controllers\Back\PageController;
 use App\Http\Controllers\Back\MenuController;
-use App\Http\Controllers\Back\OrderController;
-use App\Http\Controllers\Back\TransactionController;
-use App\Http\Controllers\Back\SliderController;
-use App\Http\Controllers\Back\BannerController;
-use App\Http\Controllers\Back\CarrierController;
-use App\Http\Controllers\Back\CityController;
-use App\Http\Controllers\Back\LinkController;
-use App\Http\Controllers\Back\ContactController;
-use App\Http\Controllers\Back\StockNotifyController;
-use App\Http\Controllers\Back\CommentController;
-use App\Http\Controllers\Back\CurrencyController;
-use App\Http\Controllers\Back\DeveloperController;
-use App\Http\Controllers\Back\DiscountController;
-use App\Http\Controllers\Back\InstallController;
+use App\Http\Controllers\Back\PageController;
+use App\Http\Controllers\Back\PostController;
 use App\Http\Controllers\Back\RoleController;
-use App\Http\Controllers\Back\PermissionController;
-use App\Http\Controllers\Back\ReviewController;
-use App\Http\Controllers\Back\SettingController;
-use App\Http\Controllers\Back\SizeTypeController;
-use App\Http\Controllers\Back\SmsController;
-use App\Http\Controllers\Back\StatisticsController;
-use App\Http\Controllers\Back\TariffController;
+use App\Http\Controllers\Back\UserController;
+use App\Http\Controllers\Back\BrandController;
+use App\Http\Controllers\Back\OrderController;
 use App\Http\Controllers\Back\ThemeController;
+use App\Http\Controllers\Back\ApikeyController;
+use App\Http\Controllers\Back\BackupController;
+use App\Http\Controllers\Back\BannerController;
+use App\Http\Controllers\Back\FilterController;
+use App\Http\Controllers\Back\ReviewController;
+use App\Http\Controllers\Back\SliderController;
+use App\Http\Controllers\Back\TariffController;
 use App\Http\Controllers\Back\TicketController;
 use App\Http\Controllers\Back\WalletController;
-use App\Http\Controllers\Back\WalletHistoryController;
 use App\Http\Controllers\Back\WidgetController;
+use App\Http\Controllers\Back\CarrierController;
+use App\Http\Controllers\Back\CommentController;
+use App\Http\Controllers\Back\ContactController;
+use App\Http\Controllers\Back\InstallController;
+use App\Http\Controllers\Back\ProductController;
+use App\Http\Controllers\Back\SettingController;
+use App\Http\Controllers\Back\CategoryController;
+use App\Http\Controllers\Back\CurrencyController;
+use App\Http\Controllers\Back\DiscountController;
+use App\Http\Controllers\Back\ProvinceController;
+use App\Http\Controllers\Back\SizeTypeController;
+use App\Http\Controllers\Back\SpecTypeController;
+use App\Http\Controllers\Back\AttributeController;
+use App\Http\Controllers\Back\DeveloperController;
+use App\Http\Controllers\Back\PermissionController;
+use App\Http\Controllers\Back\StatisticsController;
+use App\Http\Controllers\Back\StockNotifyController;
+use App\Http\Controllers\Back\TransactionController;
+use App\Http\Controllers\Back\CooperationSalesController;
 use App\Http\Controllers\PushSubscriptionController;
 use Rap2hpoutre\LaravelLogViewer\LogViewerController;
+use App\Http\Controllers\Back\WalletHistoryController;
+use App\Http\Controllers\Back\AttributeGroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,8 +94,15 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('backups/{backup}/download', [BackupController::class, 'download'])->name('backups.download');
     Route::delete('backups/{backup}', [BackupController::class, 'destroy'])->name('backups.destroy');
 
+
     // ------------------ cooperation Sales
-    Route::get('cooperationsales', [CooperationSalesController::class, 'create'])->name('cooperationsales.create');
+    Route::get('cooperationsales', [CooperationSalesController::class, 'index'])->name('cooperationsales.index');
+    // Route::get('cooperationsales', function(){
+    //     dd('this is a test!');
+    // });
+
+
+
     // ------------------ users
     Route::resource('users', UserController::class);
     Route::post('users/api/index', [UserController::class, 'apiIndex'])->name('users.apiIndex');

@@ -45,8 +45,8 @@
                         @endcan -->
 
                         @can('cooperationsales.create')
-                            <li class="{{ active_class('admin.users.create') }}">
-                                <a href="{{ 'cooperationsales' }}"><i class="feather icon-circle"></i><span class="menu-item">ایجاد همکار</span></a>
+                            <li class="{{ active_class('admin.cooperationsales.index') }}">
+                                <a href="{{ route('admin.cooperationsales.index') }}"><i class="feather icon-circle"></i><span class="menu-item">ایجاد همکار</span></a>
                             </li>
                         @endcan
 
