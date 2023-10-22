@@ -35,6 +35,24 @@
                     </ul>
                 </li>
             @endcan
+            @can('CooperationSales')
+                <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i class="feather icon-users"></i><span class="menu-title" > همکاران</span></a>
+                    <ul class="menu-content">
+                        @can('CooperationSales.index')
+                            <li class="{{ active_class('admin.users.index') }}">
+                                <a href="{{ route('admin.users.index') }}"><i class="feather icon-circle"></i><span class="menu-item">لیست همکاران</span></a>
+                            </li>
+                        @endcan
+
+                        @can('CooperationSales.create')
+                            <li class="{{ active_class('admin.users.create') }}">
+                                <a href="{{ route('admin.users.create') }}"><i class="feather icon-circle"></i><span class="menu-item">ایجاد همکار</span></a>
+                            </li>
+                        @endcan
+
+                    </ul>
+                </li>
+            @endcan
 
             @can('posts')
                 <li class="nav-item has-sub {{ open_class(['admin.posts.*']) }}"><a href="#"><i class="feather icon-file-text"></i><span class="menu-title" > وبلاگ</span></a>
