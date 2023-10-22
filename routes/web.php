@@ -6,6 +6,7 @@ use App\Http\Controllers\Back\CityController;
 
 
 use App\Http\Controllers\Back\LinkController;
+use App\Http\Controllers\Back\installmentpurchaseController;
 
 
 use App\Http\Controllers\Back\MainController;
@@ -99,7 +100,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('cooperationsales/index', [CooperationSalesController::class, 'index'])->name('cooperationsales.index');
     Route::get('cooperationsales/create', [CooperationSalesController::class, 'create'])->name('cooperationsales.create');
 
-
+    // ------------------ installmentpurchase
+    Route::get('installmentpurchase/index', [installmentpurchaseController::class, 'index'])->name('installmentpurchase.index');
 
 
     // ------------------ users

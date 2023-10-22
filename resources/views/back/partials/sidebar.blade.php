@@ -54,6 +54,21 @@
                 </li>
             @endcan
 
+            @can('installmentpurchase')
+                <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i class="feather icon-users"></i><span class="menu-title" > خریدار</span></a>
+                    <ul class="menu-content">
+                         @can('installmentpurchase.index')
+                            <li class="{{ active_class('admin.installmentpurchase.index') }}">
+                                <a href="{{ route('admin.installmentpurchase.index') }}"><i class="feather icon-circle"></i><span class="menu-item"> اقساط </span></a>
+                            </li>
+                        @endcan
+
+                  
+
+                    </ul>
+                </li>
+            @endcan
+
             @can('posts')
                 <li class="nav-item has-sub {{ open_class(['admin.posts.*']) }}"><a href="#"><i class="feather icon-file-text"></i><span class="menu-title" > وبلاگ</span></a>
                     <ul class="menu-content">
