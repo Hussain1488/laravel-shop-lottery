@@ -3,6 +3,11 @@
 use App\Http\Controllers\Back\ApikeyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Back\ProvinceController;
+
+
+use App\Http\Controllers\Back\CooperationSalesController;
+
+
 use App\Http\Controllers\Back\MainController;
 use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\Back\ProductController;
@@ -59,6 +64,9 @@ use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 
 require __DIR__ . '/auth.php';
 
+
+
+
 Route::get('province/get-cities', [ProvinceController::class, 'getCities'])->name('provinces.get-cities');
 
 Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'middleware' => ['guest']], function () {
@@ -86,6 +94,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('backups/{backup}/download', [BackupController::class, 'download'])->name('backups.download');
     Route::delete('backups/{backup}', [BackupController::class, 'destroy'])->name('backups.destroy');
 
+    // ------------------ cooperation Sales
+    Route::get('cooperationsales', [CooperationSalesController::class, 'create'])->name('cooperationsales.create');
     // ------------------ users
     Route::resource('users', UserController::class);
     Route::post('users/api/index', [UserController::class, 'apiIndex'])->name('users.apiIndex');

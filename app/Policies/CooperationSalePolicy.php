@@ -16,22 +16,22 @@ class CooperationSalePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->can('CooperationSales.index');
+        return $user->can('cooperationsales.index');
     }
     public function view(User $user)
     {
-        return $user->can('CooperationSales.view');
+        return $user->can('cooperationsales.view');
     }
     public function create(User $user)
     {
-        return $user->can('CooperationSales.create');
+        return $user->can('cooperationsales.create');
     }
     public function update(User $user)
     {
-        return $user->can('CooperationSales.update');
+        return $user->can('cooperationsales.update');
     }
     public function delete(User $user)
     {
-        return $user->can('CooperationSales.delete');
+        return $user->can('cooperationsales.delete');
     }
 }

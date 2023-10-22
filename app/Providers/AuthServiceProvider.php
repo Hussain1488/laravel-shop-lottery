@@ -32,14 +32,14 @@ class AuthServiceProvider extends ServiceProvider
                     return $user->level == 'creator' or ($user->isAdmin() && $user->hasRole($permission->roles));
                 });
             }
-            Gate::define('CooperationSales', function ($user) {
+            Gate::define('cooperationsales', function ($user) {
                 return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
             });
-            Gate::define('CooperationSales.index', function ($user) {
+            Gate::define('cooperationsales.index', function ($user) {
                 return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
             });
 
-            Gate::define('CooperationSales.create', function ($user) {
+            Gate::define('cooperationsales.create', function ($user) {
                 return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
             });
         }
