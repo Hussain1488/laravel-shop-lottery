@@ -11,7 +11,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
 
-                @if (auth()->user()->level == 'admin' || auth()->user()->level == 'creator')
+                @if (auth()->user()->level == 'admin' || auth()->user()->level == 'creator' || auth()->user()->level == 'seller')
                     <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                         {{ trans('front::messages.header.control-panel') }}
                     </a>

@@ -25,7 +25,6 @@
                                 <a href="{{ route('admin.users.index') }}"><i class="feather icon-circle"></i><span class="menu-item">لیست کاربران</span></a>
                             </li>
                         @endcan
-
                         @can('users.create')
                             <li class="{{ active_class('admin.users.create') }}">
                                 <a href="{{ route('admin.users.create') }}"><i class="feather icon-circle"></i><span class="menu-item">ایجاد کاربر</span></a>

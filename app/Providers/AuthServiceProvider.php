@@ -34,37 +34,37 @@ class AuthServiceProvider extends ServiceProvider
             }
             // cooperationsales
             Gate::define('cooperationsales', function ($user) {
-                return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
+                return $user->level == 'creator' || $user->level == 'seller' ; // Customize this condition as needed.
             });
             Gate::define('cooperationsales.index', function ($user) {
-                return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
+                return $user->level == 'creator' || $user->level == 'seller'; // Customize this condition as needed.
             });
 
             Gate::define('cooperationsales.create', function ($user) {
-                return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
+                return $user->level == 'creator' || $user->level == 'seller'; // Customize this condition as needed.
             });
             Gate::define('cooperationsales.Income', function ($user) {
-                return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
+                return $user->level == 'creator'  || $user->level == 'seller'; // Customize this condition as needed.
             });
             Gate::define('cooperationsales.clearing', function ($user) {
-                return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
+                return $user->level == 'creator' || $user->level == 'seller'; // Customize this condition as needed.
             });
             // installmentpurchase
             Gate::define('installmentpurchase', function ($user) {
-                return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
+                return $user->level == 'creator'   ; // Customize this condition as needed.
             });
             Gate::define('installmentpurchase.index', function ($user) {
-                return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
+                return $user->level == 'creator'   ; // Customize this condition as needed.
             });
             // createcolleague
             Gate::define('createcolleague', function ($user) {
-                return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
+                return $user->level == 'creator'   ; // Customize this condition as needed.
             });
             Gate::define('createcolleague.index', function ($user) {
-                return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
+                return $user->level == 'creator'   ; // Customize this condition as needed.
             });
             Gate::define('createcolleague.create', function ($user) {
-                return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
+                return $user->level == 'creator'   ; // Customize this condition as needed.
             });
         }
     }

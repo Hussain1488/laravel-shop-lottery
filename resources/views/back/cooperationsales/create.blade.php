@@ -97,9 +97,25 @@
                                                 <div class="form-group">
                                                     <label>تعداد اقساط را انتخاب نمایید</label>
                                                     <select type="text" class="form-control" name="last_name">
-                                                        <option value="">۱۰ ماهه</option>
-                                                        <option value="">۱۵ ماهه</option>
-                                                        <option value="">۲۰ ماهه</option>
+                                                        <option value="">۱ ماه</option>
+                                                        <option value="">۲ ماه</option>
+                                                        <option value="">۳ ماه</option>
+                                                        <option value="">۴ ماه</option>
+                                                        <option value="">۵ ماه</option>
+                                                        <option value="">۶ ماه</option>
+                                                        <option value="">۷ ماه</option>
+                                                        <option value="">۸ ماه</option>
+                                                        <option value="">۹ ماه</option>
+                                                        <option value="">۱۰ ماه</option>
+                                                        <option value="">۱۱ ماه</option>
+                                                        <option value="">۱۲ ماه</option>
+                                                        <option value="">۱۳ ماه</option>
+                                                        <option value="">۱۴ ماه</option>
+                                                        <option value="">۱۵ ماه</option>
+                                                        <option value="">۱۶ ماه</option>
+                                                        <option value="">۱۷ ماه</option>
+                                                        <option value="">۱۸ ماه</option>
+                                                        
                                                     </select>
                                                 </div>
                                             </div>
