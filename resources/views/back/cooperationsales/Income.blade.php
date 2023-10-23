@@ -79,9 +79,9 @@
                                 <div class="row mx-4" style="align-items:center ;display: flex;flex-direction: column;">
                                     <a href="" class="btn btn-danger my-1 " style="width: 200px">درخواست تسویه </a>
                                 </div>
-                                <div class="row mt-4">
+                                <div class="row mt-4 mb-2">
                                     <p class="text-center">
-                                        در صورتی که تأمین کننده کالا فردی غیر از شمامیباشد فاکتور فروش از نام فروشنده به
+                                        در صورتی که تأمین کننده کالا فردی غیر از شما میباشد فاکتور فروش از نام فروشنده به
                                         خریدار تهیه و در قسمت عکس فاکتور آپلود نمایید.
                                     </p>
                                     <div class="">
@@ -106,5 +106,10 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('back/assets/js/pages/users/all.js') }}"></script>
+    <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
+@endpush
 
 
