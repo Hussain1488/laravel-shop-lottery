@@ -76,8 +76,8 @@
                                         پول شما انتقال پیدا میکند.
                                     </div>
                                 </div>
-                                <div class="row mx-4" style="flex-direction: column;">
-                                    <a href="" class="btn btn-danger my-1">درخواست تسویه </a>
+                                <div class="row mx-4" style="align-items:center ;display: flex;flex-direction: column;">
+                                    <a href="" class="btn btn-danger my-1 " style="width: 200px">درخواست تسویه </a>
                                 </div>
                                 <div class="row mt-4">
                                     <p class="text-center">
