@@ -99,6 +99,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     // ------------------ cooperation Sales
     Route::get('cooperationsales/index', [CooperationSalesController::class, 'index'])->name('cooperationsales.index');
     Route::get('cooperationsales/create', [CooperationSalesController::class, 'create'])->name('cooperationsales.create');
+    Route::get('cooperationsales/Income', [CooperationSalesController::class, 'Income'])->name('cooperationsales.Income');
 
     // ------------------ installmentpurchase
     Route::get('installmentpurchase/index', [installmentpurchaseController::class, 'index'])->name('installmentpurchase.index');

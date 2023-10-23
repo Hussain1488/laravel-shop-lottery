@@ -26,6 +26,10 @@ class CooperationSalePolicy
     {
         return $user->can('cooperationsales.create');
     }
+    public function Income(User $user)
+    {
+        return $user->can('cooperationsales.Income');
+    }
     public function update(User $user)
     {
         return $user->can('cooperationsales.update');

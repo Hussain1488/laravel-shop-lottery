@@ -40,15 +40,22 @@
                     <ul class="menu-content">
                          @can('cooperationsales.index')
                             <li class="{{ active_class('admin.cooperationsales.index') }}">
-                                <a href="{{ route('admin.cooperationsales.index') }}"><i class="feather icon-circle"></i><span class="menu-item">لیست همکاران</span></a>
+                                <a href="{{ route('admin.cooperationsales.index') }}"><i class="feather icon-circle"></i><span class="menu-item">لیست فروش </span></a>
                             </li>
                         @endcan
 
                         @can('cooperationsales.create')
                             <li class="{{ active_class('admin.cooperationsales.create') }}">
-                                <a href="{{ route('admin.cooperationsales.create') }}"><i class="feather icon-circle"></i><span class="menu-item">ایجاد همکار</span></a>
+                                <a href="{{ route('admin.cooperationsales.create') }}"><i class="feather icon-circle"></i><span class="menu-item">ایجاد قسط</span></a>
                             </li>
                         @endcan
+
+                        @can('cooperationsales.Income')
+                            <li class="{{ active_class('admin.cooperationsales.Income') }}">
+                                <a href="{{ route('admin.cooperationsales.Income') }}"><i class="feather icon-circle"></i><span class="menu-item"> اقساط پرداخت شده کاربر </span></a>
+                            </li>
+                        @endcan
+
 
                     </ul>
                 </li>

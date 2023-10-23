@@ -42,6 +42,10 @@ class AuthServiceProvider extends ServiceProvider
             Gate::define('cooperationsales.create', function ($user) {
                 return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
             });
+            Gate::define('cooperationsales.Income', function ($user) {
+                return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
+            });
+
             Gate::define('installmentpurchase', function ($user) {
                 return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
             });
