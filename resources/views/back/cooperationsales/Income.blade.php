@@ -27,14 +27,14 @@
             <div class="content-body">
                 <section class="card">
                     <div class="card-header">
-                        <h4 class="card-title">فروش های پرداخت شده کاربر</h4>
+                        <h4 class="card-title">اقساط پرداخت شده کاربر</h4>
                     </div>
                     <div class="card-content">
                         <div class="container mt-3">
 
 
                             <!-- Tab panes -->
-                            <div id="home" class="container tab-pane active"><br>
+                            <div id="" class="container tab-pane mb-2"><br>
                                 <div class="row">
 
                                     <div class="col-md-6 col-12">
@@ -84,22 +84,22 @@
                                         در صورتی که تأمین کننده کالا فردی غیر از شما میباشد فاکتور فروش از نام فروشنده به
                                         خریدار تهیه و در قسمت عکس فاکتور آپلود نمایید.
                                     </p>
-                                    <div class="">
-                                        <input type="file" accept=".pdf, .doc" accept-language="fa">
-                                        <label for="">افزودن عکس فاکتور فروش</label>
-                                        {{-- <br>
+                                </div>
+                                <div class="row">
+                                    <input type="file" accept=".pdf, .doc" accept-language="fa">
+                                    <label for="">افزودن عکس فاکتور فروش</label>
+                                    {{-- <br>
                                         <input type="file" class="custom-file-input" id="customFile">
                                         <label class="custom-file-label" for="customFile">انتخاب فایل</label> --}}
-                                    </div>
-                                    <div class="">
-                                        <input type="text">
-                                        <label for="">ثبت شماره شبا</label>
-                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <input type="text">
+                                    <label for="">ثبت شماره شبا</label>
                                 </div>
 
                             </div>
-
                         </div>
+                    </div>
                 </section>
 
             </div>
@@ -111,5 +111,3 @@
     <script src="{{ asset('back/assets/js/pages/users/all.js') }}"></script>
     <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
 @endpush
-
-
