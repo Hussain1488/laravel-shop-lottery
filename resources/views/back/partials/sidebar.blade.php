@@ -56,6 +56,13 @@
                             </li>
                         @endcan
 
+                        
+                        @can('cooperationsales.clearing')
+                            <li class="{{ active_class('admin.cooperationsales.clearing') }}">
+                                <a href="{{ route('admin.cooperationsales.clearing') }}"><i class="feather icon-circle"></i><span class="menu-item">  درخواست تسویه حساب </span></a>
+                            </li>
+                        @endcan
+
 
                     </ul>
                 </li>

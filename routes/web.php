@@ -100,10 +100,14 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('cooperationsales/index', [CooperationSalesController::class, 'index'])->name('cooperationsales.index');
     Route::get('cooperationsales/create', [CooperationSalesController::class, 'create'])->name('cooperationsales.create');
     Route::get('cooperationsales/Income', [CooperationSalesController::class, 'Income'])->name('cooperationsales.Income');
+    Route::get('cooperationsales/clearing', [CooperationSalesController::class, 'clearing'])->name('cooperationsales.clearing');
+
 
     // ------------------ installmentpurchase
     Route::get('installmentpurchase/index', [installmentpurchaseController::class, 'index'])->name('installmentpurchase.index');
-
+    
+    // ------------------ Create colleague
+    
 
     // ------------------ users
     Route::resource('users', UserController::class);
