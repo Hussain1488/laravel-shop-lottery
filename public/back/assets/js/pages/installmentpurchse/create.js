@@ -29,6 +29,7 @@ $(document).ready(function() {
 
 $('.nav-tabs a').click(function(){
     $(this).tab('show');
+    // console.log('this is a test')
   })
 
   // Select tab by name
