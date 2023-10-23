@@ -83,6 +83,29 @@
                 </li>
             @endcan
 
+            
+            @can('createcolleague')
+                <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i class="feather icon-users"></i><span class="menu-title" > ایجاد همکار</span></a>
+                    <ul class="menu-content">
+                         @can('createcolleague.index')
+                            <li class="{{ active_class('admin.createcolleague.index') }}">
+                                <a href="{{ route('admin.createcolleague.index') }}"><i class="feather icon-circle"></i><span class="menu-item"> ایجاد اپراتور فروش  </span></a>
+                            </li>
+                        @endcan
+
+                        @can('createcolleague.create')
+                            <li class="{{ active_class('admin.createcolleague.create') }}">
+                                <a href="{{ route('admin.createcolleague.create') }}"><i class="feather icon-circle"></i><span class="menu-item"> ایجاد فروشگاه</span></a>
+                            </li>
+                        @endcan
+
+                  
+
+                    </ul>
+                </li>
+            @endcan
+
+
             @can('posts')
                 <li class="nav-item has-sub {{ open_class(['admin.posts.*']) }}"><a href="#"><i class="feather icon-file-text"></i><span class="menu-title" > وبلاگ</span></a>
                     <ul class="menu-content">

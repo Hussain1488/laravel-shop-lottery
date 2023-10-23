@@ -32,6 +32,7 @@ class AuthServiceProvider extends ServiceProvider
                     return $user->level == 'creator' or ($user->isAdmin() && $user->hasRole($permission->roles));
                 });
             }
+            // cooperationsales
             Gate::define('cooperationsales', function ($user) {
                 return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
             });
@@ -48,11 +49,21 @@ class AuthServiceProvider extends ServiceProvider
             Gate::define('cooperationsales.clearing', function ($user) {
                 return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
             });
-
+            // installmentpurchase
             Gate::define('installmentpurchase', function ($user) {
                 return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
             });
             Gate::define('installmentpurchase.index', function ($user) {
+                return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
+            });
+            // createcolleague
+            Gate::define('createcolleague', function ($user) {
+                return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
+            });
+            Gate::define('createcolleague.index', function ($user) {
+                return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
+            });
+            Gate::define('createcolleague.create', function ($user) {
                 return $user->level == 'creator' || $user->isAdmin(); // Customize this condition as needed.
             });
         }

@@ -7,7 +7,7 @@ use App\Http\Controllers\Back\CityController;
 
 use App\Http\Controllers\Back\LinkController;
 use App\Http\Controllers\Back\installmentpurchaseController;
-
+use App\Http\Controllers\Back\CreateColleagueController;
 
 use App\Http\Controllers\Back\MainController;
 use App\Http\Controllers\Back\MenuController;
@@ -107,7 +107,9 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('installmentpurchase/index', [installmentpurchaseController::class, 'index'])->name('installmentpurchase.index');
     
     // ------------------ Create colleague
-    
+    Route::get('createcolleague/index', [CreateColleagueController::class, 'index'])->name('createcolleague.index');
+    Route::get('createcolleague/create', [CreateColleagueController::class, 'create'])->name('createcolleague.create');
+
 
     // ------------------ users
     Route::resource('users', UserController::class);
