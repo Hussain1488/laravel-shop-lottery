@@ -20,4 +20,8 @@ class CooperationSalesController extends Controller
     {
         return view('back.cooperationsales.Income');
     }
+    public function clearing()
+    {
+        return view('back.cooperationsales.clearing');
+    }
 }
