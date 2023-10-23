@@ -58,7 +58,7 @@ class UserController extends Controller
         $this->validate($request, [
             'first_name' => ['required', 'string', 'max:255', new NotSpecialChar()],
             'last_name'  => ['required', 'string', 'max:255', new NotSpecialChar()],
-            'level'      => 'in:user,admin',
+            'level'      => 'in:user,admin,seller',
             'username'   => ['required', 'string', 'unique:users'],
             'email'      => ['string', 'email', 'max:255', 'unique:users', 'nullable'],
             'password'   => ['required', 'string', 'confirmed:confirmed'],
@@ -97,7 +97,7 @@ class UserController extends Controller
         $this->validate($request, [
             'first_name' => ['required', 'string', 'max:255', new NotSpecialChar()],
             'last_name'  => ['required', 'string', 'max:255', new NotSpecialChar()],
-            'level'      => 'in:user,admin',
+            'level'      => 'in:user,admin,seller',
             'username'   => ['required', 'string', "unique:users,username,$user->id"],
             'email'      => ['string', 'email', 'max:255', "unique:users,email,$user->id", 'nullable'],
             'password'   => ['nullable', 'string', 'min:8', 'confirmed:confirmed'],
