@@ -3,22 +3,51 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\createstore;
+use App\Models\Makeinstallmentsm;
 use App\Models\Role;
 use App\Models\User;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CooperationSalesController extends Controller
 {
     //
     public function index()
     {
-        return view('back.cooperationsales.index');
+        $installmentsm = Makeinstallmentsm::all()->with();
+        dd($installmentsm);
+        return view('back.cooperationsales.index' ,compact('installmentsm'));
     }
     public function create()
     {
+        $shopkeeper = Auth::user();
+        // dd($shopkeeper->id);
+        $shop = createstore::where('selectperson', $shopkeeper->id)->first();
+        // dd($shop);
         $users = User::all();
-        return view('back.cooperationsales.create' , compact('users'));
+
+        return view('back.cooperationsales.create' , compact('users','shop'));
+    }
+    public function store(Request $request)
+    {
+        // dd(Auth::user()->id);
+
+        Makeinstallmentsm::create([
+            'status' => 0,
+            'seller_id' => Auth::user()->id,
+            'Creditamount' => $request->Creditamount	,
+            'userselected' => $request->userselected,
+            'typeofpayment' => $request->typeofpayment,
+            'numberofinstallments' => $request->typeofpayment == 'cash' ? 1 : $request->numberofinstallments,
+            'prepaidamount' => $request->prepaidamount,
+            'amounteachinstallment' => $request->amounteachinstallment,
+            'buyerstatus' => 1,
+            'paymentstatus' => 1,
+            'statususer' => 0,
+        ]);
+        return redirect()->back();
     }
     public function Income()
     {

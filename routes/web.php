@@ -101,6 +101,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('cooperationsales/create', [CooperationSalesController::class, 'create'])->name('cooperationsales.create');
     Route::get('cooperationsales/Income', [CooperationSalesController::class, 'Income'])->name('cooperationsales.Income');
     Route::get('cooperationsales/clearing', [CooperationSalesController::class, 'clearing'])->name('cooperationsales.clearing');
+    Route::post('cooperationsales/store', [CooperationSalesController::class, 'store'])->name('cooperationsales.store');
 
 
     // ------------------ installmentpurchase

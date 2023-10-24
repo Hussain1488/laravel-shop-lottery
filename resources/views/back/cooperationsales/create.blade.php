@@ -16,9 +16,10 @@
                                     <li class="breadcrumb-item">مدیریت کاربران
                                     </li>
                                     <li class="breadcrumb-item active">ایجاد کاربر
-                                        <!-- {{ $users }} -->
+
 
                                     </li>
+
                                 </ol>
                             </div>
                         </div>
@@ -30,14 +31,14 @@
                 <!-- Description -->
                 <section id="main-card" class="card">
                     <div class="card-header">
-                        <h4 class="card-title">پنل اصلی فروشات احمدی</h4>
+                        <h4 class="card-title">پنل اصلی فروشات {{ $shop->nameofstore }}</h4>
                     </div>
 
                     <div id="main-card" class="card-content">
                         <div class="card-body">
                             <div class="col-12 col-md-10 offset-md-1">
-                                <form class="form" id="user-create-form" action="{{ route('admin.users.store') }}"
-                                    method="post">
+                                <form class="form" id="user-create-form"
+                                    action="{{ route('admin.cooperationsales.store') }}" method="post">
                                     @csrf
                                     <div class="form-body">
                                         <div class="row">
@@ -47,7 +48,7 @@
                                                     <div class="d-flex">
                                                         <input id="totalMoney" type="text" placeholder="100,000"
                                                             class="form-control moneyInput" id="first_name"
-                                                            name="first_name">
+                                                            name="Creditamount">
                                                     </div>
                                                     <label for="first_name" class="ml-2">اعتبار کاربر
                                                         خریدار</label>
@@ -69,9 +70,10 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
-                                                    <select type="text" class="form-control" name="last_name">
+                                                    <select type="text" class="form-control" name="userselected">
                                                         @foreach ($users as $item)
-                                                            <option value="">{{ $item->username }}</option>
+                                                            <option value="{{ $item->id }}">{{ $item->username }}
+                                                            </option>
                                                         @endforeach
 
                                                     </select>
@@ -87,7 +89,8 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
-                                                    <select id="cash_status" type="text" class="form-control" name="last_name">
+                                                    <select id="cash_status" type="text" class="form-control"
+                                                        name="typeofpayment">
                                                         <option value="cash">نقدی</option>
                                                         <option value="installment">اقساط</option>
                                                     </select>
@@ -103,8 +106,10 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>تعداد اقساط را انتخاب نمایید</label>
-                                                    <select disabled id="payment" type="text" class="form-control" name="last_name">
-                                                        <option id="one_month" value="1">۱ ماه</option>
+                                                    <select disabled id="payment" type="text" class="form-control"
+                                                        name="numberofinstallments">
+                                                        <option id="one_month" selected value="1" selected>۱ ماه
+                                                        </option>
                                                         <option value="2">۲ ماه</option>
                                                         <option value="3">۳ ماه</option>
                                                         <option value="4">۴ ماه</option>
@@ -135,7 +140,8 @@
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <input id="prepayment" readonly type="text" class="form-control moneyInput" name="last_name">
+                                                    <input id="prepayment" readonly type="text"
+                                                        class="form-control moneyInput" name="prepaidamount">
 
                                                 </div>
                                             </div>
@@ -148,7 +154,8 @@
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <input readonly id="each_pay" type="text" class="form-control moneyInput" name="last_name">
+                                                    <input readonly id="each_pay" type="text"
+                                                        class="form-control moneyInput" name="amounteachinstallment">
                                                 </div>
                                             </div>
                                         </div>

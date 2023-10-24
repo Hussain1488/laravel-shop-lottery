@@ -17,11 +17,12 @@ class CreateColleagueController extends Controller
      */
     public function index()
     {
-        return view('back.createcolleague.index');
+        $users = User::where('level', 'user')->get();
+        return view('back.createcolleague.index',compact('users'));
     }
     public function create()
     {
-        $users = User::get();
+        $users = User::where('level', 'user')->get();
         // dd($users);
         return view('back.createcolleague.create',compact('users'));
     }
@@ -40,7 +41,7 @@ class CreateColleagueController extends Controller
         $person->update([
             'level' => 'seller'
         ]);
-        
+
         createstore::create([
             'selectperson' => $request->selectperson,
             'nameofstore' => $request->nameofstore,

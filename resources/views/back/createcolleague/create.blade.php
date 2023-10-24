@@ -72,7 +72,7 @@
                                                         <div class="row">
 
                                                             <div class="col-sm">
-                                                                <input type="file" class="form-control mt-1 mr-1" name="uploaddocument">
+                                                                <input type="file" class="form-control mt-1 mr-1" name="uploaddocument[]">
                                                             </div>
                                                             {{-- <div class="col-sm">
                                                                 <input type="file" class="form-control mt-1 mr-1">

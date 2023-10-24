@@ -48,7 +48,12 @@
                                         <div class="col-md-3 col-6">
                                             <div class="form-group">
                                                 <label>سرچ بر اساس شماره تلفن</label>
-                                                <input type="text" class="form-control" name="last_name">
+                                                <select type="text" class="form-control" name="userselected">
+                                                    @foreach ($users as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->username }}</option>
+                                                    @endforeach
+
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
