@@ -109,11 +109,11 @@
 
                                     </div>
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col d-flex align-items-baseline justify-content-center">
 
                                             <a href="" class="btn btn-primary my-1">تأیید و پرداخت</a>
                                         </div>
-                                        <div class="col">
+                                        <div class="col d-flex align-items-baseline justify-content-center">
 
                                             <a href="" class="btn btn-danger my-1">انصراف از فروش</a>
                                         </div>
