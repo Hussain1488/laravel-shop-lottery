@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
+use App\Models\User;
+
 use Illuminate\Http\Request;
 
 class CooperationSalesController extends Controller
@@ -14,7 +17,8 @@ class CooperationSalesController extends Controller
     }
     public function create()
     {
-        return view('back.cooperationsales.create');
+        $users = User::all();
+        return view('back.cooperationsales.create' , compact('users'));
     }
     public function Income()
     {
