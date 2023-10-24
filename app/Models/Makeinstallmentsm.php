@@ -10,4 +10,10 @@ class Makeinstallmentsm extends Model
     use HasFactory;
     protected $table = 'makeinstallmentsms';
     protected $guarded = [];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'userselected');
+    }
 }

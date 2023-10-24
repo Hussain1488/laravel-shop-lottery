@@ -101,12 +101,13 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('cooperationsales/create', [CooperationSalesController::class, 'create'])->name('cooperationsales.create');
     Route::get('cooperationsales/Income', [CooperationSalesController::class, 'Income'])->name('cooperationsales.Income');
     Route::get('cooperationsales/clearing', [CooperationSalesController::class, 'clearing'])->name('cooperationsales.clearing');
+    Route::get('cooperationsales/changeStatus/{id}', [CooperationSalesController::class, 'changeStatus'])->name('cooperationsales.changeStatus');
     Route::post('cooperationsales/store', [CooperationSalesController::class, 'store'])->name('cooperationsales.store');
 
 
     // ------------------ installmentpurchase
     Route::get('installmentpurchase/index', [installmentpurchaseController::class, 'index'])->name('installmentpurchase.index');
-    
+
     // ------------------ Create colleague
     Route::get('createcolleague/index', [CreateColleagueController::class, 'index'])->name('createcolleague.index');
     Route::get('createcolleague/create', [CreateColleagueController::class, 'create'])->name('createcolleague.create');
@@ -221,8 +222,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('order/not-completed/products', [OrderController::class, 'notCompleted'])->name('orders.notCompleted');
     Route::get('orders/api/userInfo', [OrderController::class, 'userInfo'])->name('orders.userInfo');
     Route::get('orders/api/productsList', [OrderController::class, 'productsList'])->name('orders.productsList');
-    Route::get('orders/api/printAllShippingForms',[OrderController::class, 'printAllShippingForms'])->name('orders.printAllShippingForms');
-    Route::get('orders/api/printAll',[OrderController::class, 'printAll'])->name('orders.printAll');
+    Route::get('orders/api/printAllShippingForms', [OrderController::class, 'printAllShippingForms'])->name('orders.printAllShippingForms');
+    Route::get('orders/api/printAll', [OrderController::class, 'printAll'])->name('orders.printAll');
 
     Route::get('orders/export/create', [OrderController::class, 'export'])->name('orders.export');
 
