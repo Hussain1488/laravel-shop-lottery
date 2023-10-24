@@ -15,6 +15,16 @@ class CreateMakeinstallmentsmsTable extends Migration
     {
         Schema::create('makeinstallmentsms', function (Blueprint $table) {
             $table->id();
+            $table->boolean('status');
+            $table->integer('Creditamount');
+            $table->string('userselected');
+            $table->string('typeofpayment');
+            $table->string('numberofinstallments');
+            $table->string('prepaidamount');
+            $table->string('amounteachinstallment');
+            $table->boolean('buyerstatus');
+            $table->boolean('paymentstatus');
+            $table->integer('status');
             $table->timestamps();
         });
     }

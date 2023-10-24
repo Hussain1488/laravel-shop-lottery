@@ -177,7 +177,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
 
     // ------------------ size types
     Route::resource('sizetypes', SizeTypeController::class);
-    Route::get('sizetypes/{sizetype}/values', [SizeTypeController::class, 'editValues'])->name('sizetypes.editValues');
+    Route::get('sizetypes/{sizetype}/values', [SizeTypeController::class, 'productsValues'])->name('sizetypes.editValues');
     Route::put('sizetypes/{sizetype}/values', [SizeTypeController::class, 'updateValues'])->name('sizetypes.updateValues');
 
     // ------------------ posts
