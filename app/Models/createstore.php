@@ -10,4 +10,6 @@ class createstore extends Model
     use HasFactory;
     protected $table = 'createstores';
     protected $guarded = [];
+
+    
 }

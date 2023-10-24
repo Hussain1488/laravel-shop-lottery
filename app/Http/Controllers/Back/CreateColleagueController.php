@@ -4,6 +4,9 @@ namespace App\Http\Controllers\back;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\createstore;
+
 
 class CreateColleagueController extends Controller
 {
@@ -18,8 +21,9 @@ class CreateColleagueController extends Controller
     }
     public function create()
     {
-        
-        return view('back.createcolleague.create');
+        $users = User::get();
+        // dd($users);
+        return view('back.createcolleague.create',compact('users'));
     }
 
     /**
@@ -31,6 +35,19 @@ class CreateColleagueController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request->all());
+        
+
+        createstore::create([
+            'selectperson' => $request->selectperson,
+            'nameofstore' => $request->nameofstore,
+            'addressofstore' => $request->addressofstore,
+            'feepercentage' => $request->feepercentage,
+            'enddate' => $request->enddate,
+            'uploaddocument' => 'this is a pic',
+        ]);
+
+        return redirect()->back();
     }
 
     /**
