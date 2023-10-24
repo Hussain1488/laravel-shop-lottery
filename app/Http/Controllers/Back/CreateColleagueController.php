@@ -34,10 +34,13 @@ class CreateColleagueController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        // dd($request->all());
         
 
+        $person = User::find($request->selectperson);
+        $person->update([
+            'level' => 'seller'
+        ]);
+        
         createstore::create([
             'selectperson' => $request->selectperson,
             'nameofstore' => $request->nameofstore,
