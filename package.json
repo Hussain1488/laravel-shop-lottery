@@ -16,5 +16,9 @@
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "pusher-js": "^7.0.2"
+    },
+    "dependencies": {
+        "pikaday": "^1.8.2",
+        "pikaday-jalali": "^1.0.0"
     }
 }

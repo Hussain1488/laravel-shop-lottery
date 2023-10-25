@@ -36,7 +36,9 @@ class CreateColleagueController extends Controller
     public function store(Request $request)
     {
 
-        $docPath;
+        // dd($request->all());
+
+        $docPath = '';
         // dd($request->all());
         if ($request->file('uploaddocument')) {
             $files = $request->file('uploaddocument');
@@ -65,6 +67,8 @@ class CreateColleagueController extends Controller
         return redirect()->back();
     }
 
+
+
     public function createcreditoperator(Request $request)
     {
         $users = User::where('level', 'user')->get();
@@ -88,6 +92,42 @@ class CreateColleagueController extends Controller
 
         return view('back.createcolleague.createcreditoperator', compact('user'));
     }
+
+    public function colleagueCreditStore(Request $request)
+    {
+
+
+        $docPath = '';
+        // dd($request->all());
+        if ($request->file('documents')) {
+            $files = $request->file('documents');
+            $paths = [];
+            foreach ($files as $file) {
+                $path = $file->store('document/usercredite', 'public');
+                $paths[] = $path;
+            }
+            $docPath = json_encode($paths);
+        }
+        // dd($docPath);
+        $purchasecredit = intval(str_replace(',', '', $request->purchasecredit));
+        $inventory = intval(str_replace(',', '', $request->inventory));
+
+
+        $userUpdate = User::find($request->userselected);
+        $userUpdate->purchasecredit = $purchasecredit;
+        $userUpdate->inventory = $inventory;
+        $userUpdate->enddate = $request->enddate;
+        $userUpdate->documents = $docPath;
+        // dd($userUpdate);
+        $userUpdate->save();
+
+        return redirect()->back()->with('success');
+    }
+
+
+
+
+
     /**
      * Display the specified resource.
      *

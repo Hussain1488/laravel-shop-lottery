@@ -35,7 +35,7 @@
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" style="font-size: 10px" data-toggle="tab" href="#home">در
+                                    <a class="nav-link active " style="font-size: 10px" data-toggle="tab" href="#home">در
                                         انتظار تأیید</a>
                                 </li>
                                 <li class="nav-item">

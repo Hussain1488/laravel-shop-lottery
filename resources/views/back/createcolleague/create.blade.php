@@ -131,7 +131,9 @@
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
                                                         <input type="date" class="form-control moneyInput"
-                                                            name="enddate">
+                                                            id="jalali_datepicker" name="enddate">
+
+                                                        {{-- <input type="text" id="publish_date_picker" class="datepicker"> --}}
 
                                                     </div>
                                                 </div>
@@ -152,3 +154,35 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    {{-- <script src="https://cdn.jsdelivr.net/npm/pikaday-jalali"></script> --}}
+    {{-- <script src="https://cdn.jsdelivr.net/npm/pikaday"></script> --}}
+    <script>
+        $('#publish_date_picker').pDatepicker({
+            timePicker: {
+                enabled: true,
+                meridian: {
+                    enabled: false
+                },
+                second: {
+                    enabled: false
+                }
+            },
+            toolbox: {
+                // enabled: true,
+                calendarSwitch: {
+                    enabled: false
+                }
+            },
+            initialValue: false,
+            altField: '#publish_date',
+            altFormat: 'YYYY-MM-DD HH:mm:ss',
+
+            onSelect: function(unixDate) {
+                var date = $('#publish_date').val();
+                $('#publish_date').val(date.toEnglishDigit());
+            }
+        });
+    </script>
+@endpush

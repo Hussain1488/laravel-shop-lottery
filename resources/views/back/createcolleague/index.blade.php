@@ -34,118 +34,114 @@
                         <div class="container mt-3">
 
 
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div id="home" class="container tab-pane active"><br>
+                            <form action="{{ route('admin.colleagueCredit.store') }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
 
 
-                                    <div class="row">
-                                        <div class="col-md-3 col-6 pt-2">
-                                            <h5>
-                                                انتخاب فرد مورد نظر
-                                            </h5>
-                                        </div>
-                                        <div class="col-md-3 col-6">
-                                            <div class="form-group">
-                                                <label>سرچ بر اساس شماره تلفن</label>
-                                                <select type="text" class="form-control" name="userselected">
-                                                    @foreach ($users as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->username }}</option>
-                                                    @endforeach
+                                <div class="tab-content">
+                                    <div id="home" class="container tab-pane active"><br>
 
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
 
-                                        <div class="col-md-3 col-6 pt-2">
-                                            <div class="form-group d-flex align-items-center">
-                                                <h5 for="first_name" class="mr-2">
-                                                    مقدار اعتبار خرید اقساطی
+                                        <div class="row">
+                                            <div class="col-md-3 col-6 pt-2">
+                                                <h5>
+                                                    انتخاب فرد مورد نظر
                                                 </h5>
                                             </div>
-                                        </div>
-                                        <div class="col-md-3 col-6 pt-2">
-                                            <div class="d-flex align-items-center">
-                                                <input type="text" placeholder="100,000" class="form-control moneyInput"
-                                                    id="first_name" name="first_name" style="margin-left: 4px;">
-                                                <span>ریال</span>
+                                            <div class="col-md-3 col-6">
+                                                <div class="form-group">
+                                                    <label>سرچ بر اساس شماره تلفن</label>
+                                                    <select type="text" class="form-control" name="userselected">
+                                                        @foreach ($users as $item)
+                                                            <option value="{{ $item->id }}">{{ $item->username }}
+                                                            </option>
+                                                        @endforeach
+
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
+                                        <div class="row">
 
-                                        <div class="col-md-3 col-6 pt-2">
-                                            <div class="form-group d-flex align-items-center">
-                                                <h5 for="first_name" class="mr-2">
-                                                    موجودی نقدی
-                                                </h5>
-
-
+                                            <div class="col-md-3 col-6 pt-2">
+                                                <div class="form-group d-flex align-items-center">
+                                                    <h5 for="purchasecredit" class="mr-2">
+                                                        مقدار اعتبار خرید اقساطی
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-6 pt-2">
+                                                <div class="d-flex align-items-center">
+                                                    <input type="text" placeholder="100,000"
+                                                        class="form-control moneyInput" id="first_name"
+                                                        name="purchasecredit" style="margin-left: 4px;">
+                                                    <span>ریال</span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-6 pt-2">
-                                            <div class="d-flex align-items-center">
-                                                <input type="text" placeholder="100,000" class="form-control moneyInput"
-                                                    id="first_name" name="first_name" style="margin-left: 4px;">
-                                                <span>ریال</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
+                                        <div class="row">
 
-                                        <div class="">
-                                            <div class="form-group align-items-center">
-                                                <h5 for="first_name" class="mr-2">
-                                                    آپلود مدارک
-                                                </h5>
+                                            <div class="col-md-3 col-6 pt-2">
+                                                <div class="form-group d-flex align-items-center">
+                                                    <h5 for="inventory" class="mr-2">
+                                                        موجودی نقدی
+                                                    </h5>
 
-                                                <div class="row">
-
-                                                    <div class="col-sm">
-                                                        <input type="file" class="form-control mt-1 mr-1">
-                                                    </div>
-                                                    <div class="col-sm">
-                                                        <input type="file" class="form-control mt-1 mr-1">
-                                                    </div>
-                                                    <div class="col-sm">
-                                                        <input type="file" class="form-control mt-1 mr-1">
-                                                    </div>
 
                                                 </div>
-
-
+                                            </div>
+                                            <div class="col-md-3 col-6 pt-2">
+                                                <div class="d-flex align-items-center">
+                                                    <input type="text" placeholder="100,000"
+                                                        class="form-control moneyInput" id="first_name" name="inventory"
+                                                        style="margin-left: 4px;">
+                                                    <span>ریال</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3 col-6 pt-2">
+                                                <div class="form-group d-flex align-items-center">
+                                                    <h5 for="documents" class="mr-2">
+                                                        آپلود مدارک
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-6 pt-2">
+                                                <div class="d-flex align-items-center">
+                                                    <input multiple type="file" class="form-control mt-1 mr-1"
+                                                        name="documents[]">
+                                                </div>
                                             </div>
                                         </div>
 
-                                    </div>
 
-
-                                    <div class="row my-2">
-                                        <div class="col-md-6 col-12 pt-2">
-                                            <h5>
-                                                تاریخ پایان اعتبار
-                                            </h5>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-group">
-                                                <input type="date" class="form-control" name="last_name">
+                                        <div class="row my-2">
+                                            <div class="col-md-6 col-12 pt-2">
+                                                <h5>
+                                                    تاریخ پایان اعتبار
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <input type="date" class="form-control" name="enddate">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="row ">
-                                        <div class="col d-flex align-items-baseline justify-content-center">
-                                            <a href="" class="btn btn-primary my-1">تأیید تغییرات</a>
-                                        </div>
-                                        <div class="col d-flex align-items-baseline justify-content-center">
-
-                                            <a href="" class="btn btn-danger my-1">انصراف </a>
+                                        <div class="row ">
+                                            <div class="col d-flex align-items-baseline justify-content-center">
+                                                <input type="submit" class="btn btn-primary my-1"value="تأیید تغییرات" />
+                                            </div>
+                                            <div class="col d-flex align-items-baseline justify-content-center">
+                                                <a href="" class="btn btn-danger my-1">انصراف </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+
+                            </form>
 
                         </div>
                 </section>

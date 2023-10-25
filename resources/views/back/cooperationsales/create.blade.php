@@ -38,7 +38,8 @@
                         <div class="card-body">
                             <div class="col-12 col-md-10 offset-md-1">
                                 <form class="form" id="user-create-form"
-                                    action="{{ route('admin.cooperationsales.store') }}" method="post">
+                                    action="{{ route('admin.cooperationsales.store') }}" method="post"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-body">
                                         <div class="row">
