@@ -53,7 +53,7 @@ class WalletController extends Controller
         $history = $wallet->histories()->create([
             'type'        => 'deposit',
             'amount'      => $amount,
-            'description' =>  trans('front::messages.controller.wallet-recharge') ,
+            'description' =>  trans('front::messages.controller.wallet-recharge'),
             'source'      => 'user',
             'status'      => 'fail'
         ]);

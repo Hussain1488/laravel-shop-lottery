@@ -18,6 +18,7 @@ use Themes\DefaultTheme\src\Controllers\TicketController;
 use Themes\DefaultTheme\src\Controllers\VerifyController;
 use Themes\DefaultTheme\src\Controllers\DiscountController;
 use Themes\DefaultTheme\src\Controllers\WalletController;
+use Themes\DefaultTheme\src\Controllers\InstallmentsController;
 
 // ------------------ Front Part Routes
 
@@ -94,6 +95,7 @@ Route::group(['as' => 'front.'], function () {
 
         // ------------------ wallet
         Route::resource('wallet', WalletController::class)->only(['index', 'show', 'create', 'store']);
+        Route::resource('installments', InstallmentsController::class)->only(['index', 'show', 'create', 'store']);
 
         // ------------------ user
         Route::get('user/profile', [UserController::class, 'profile'])->name('user.profile');

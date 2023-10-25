@@ -17,10 +17,9 @@ class CooperationSalesController extends Controller
     //
     public function index()
     {
-        $installmentsm1 = Makeinstallmentsm::where('seller_id', Auth::user()->id)->with('user')->get();
-        $installmentsm = $installmentsm1->where('status', 0);
+        $installmentsm = Makeinstallmentsm::where('seller_id', Auth::user()->id)->with('user')->get();
+        // $installmentsm = $installmentsm1->where('status', 0);
         // dd($installmentsm);
-
         return view('back.cooperationsales.index', compact('installmentsm'));
     }
     public function create()

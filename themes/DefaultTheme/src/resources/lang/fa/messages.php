@@ -469,6 +469,7 @@ return [
         'unsuccessful-payment'         => 'پرداخت ناموفق',
         'remove-from-favorites'        => 'حذف از لیست علاقمندی ها',
         'remove-this-product'          => 'آیا تمایل به حذف این محصول از لیست علاقمندی ها دارید؟',
+        'installments'                 => 'اقساط',
     ],
 
     'controller' => [
