@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
             }
             // cooperationsales
             Gate::define('cooperationsales', function ($user) {
-                return $user->level == 'creator' || $user->level == 'seller' ; // Customize this condition as needed.
+                return $user->level == 'creator' || $user->level == 'seller'; // Customize this condition as needed.
             });
             Gate::define('cooperationsales.index', function ($user) {
                 return $user->level == 'creator' || $user->level == 'seller'; // Customize this condition as needed.
@@ -51,23 +51,23 @@ class AuthServiceProvider extends ServiceProvider
             });
             // installmentpurchase
             Gate::define('installmentpurchase', function ($user) {
-                return $user->level == 'creator'   ; // Customize this condition as needed.
+                return $user->level == 'creator'; // Customize this condition as needed.
             });
             Gate::define('installmentpurchase.index', function ($user) {
-                return $user->level == 'creator'   ; // Customize this condition as needed.
+                return $user->level == 'creator'; // Customize this condition as needed.
             });
             // createcolleague
             Gate::define('createcolleague', function ($user) {
-                return $user->level == 'creator'   ; // Customize this condition as needed.
+                return $user->level == 'creator' ||  $user->level == 'createcreditoperator'; // Customize this condition as needed.
             });
             Gate::define('createcolleague.index', function ($user) {
-                return $user->level == 'creator'   ; // Customize this condition as needed.
+                return $user->level == 'creator' ||  $user->level == 'createcreditoperator'; // Customize this condition as needed.
             });
             Gate::define('createcolleague.create', function ($user) {
-                return $user->level == 'creator'   ; // Customize this condition as needed.
+                return $user->level == 'creator'; // Customize this condition as needed.
             });
             Gate::define('createcolleague.createcreditoperator', function ($user) {
-                return $user->level == 'creator'   ; // Customize this condition as needed.
+                return $user->level == 'creator'  || $user->level == 'seller'; // Customize this condition as needed.
             });
         }
     }

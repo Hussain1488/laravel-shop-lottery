@@ -35,7 +35,8 @@
 
                             < <!-- Tab panes -->
                                 <div class="tab-content">
-                                    <form action="{{ route('admin.createcolleague.store') }}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{ route('admin.createcolleague.store') }}" method="POST"
+                                        enctype="multipart/form-data">
                                         @csrf
 
                                         <div id="home" class="container tab-pane active"><br>
@@ -50,7 +51,8 @@
                                                         <div class="d-flex">
                                                             <select type="text" class="form-control" name="selectperson">
                                                                 @foreach ($users as $item)
-                                                                    <option value="{{ $item->id }}">{{ $item->username }}</option>
+                                                                    <option value="{{ $item->id }}">
+                                                                        {{ $item->username }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -72,14 +74,10 @@
                                                         <div class="row">
 
                                                             <div class="col-sm">
-                                                                <input type="file" class="form-control mt-1 mr-1" name="uploaddocument[]">
+                                                                <input multiple type="file"
+                                                                    class="form-control mt-1 mr-1" name="uploaddocument[]">
                                                             </div>
-                                                            {{-- <div class="col-sm">
-                                                                <input type="file" class="form-control mt-1 mr-1">
-                                                            </div>
-                                                            <div class="col-sm">
-                                                                <input type="file" class="form-control mt-1 mr-1">
-                                                            </div> --}}
+
 
                                                         </div>
 

@@ -31,13 +31,40 @@
                     </div>
                     <div class="card-content">
                         <h6 class="card-title m-2">ساخت افرادی که همکاری در فروش دارند</h6>
-                        <div class="container mt-3">
+                        <form action="{{ route('admin.createcolleague.storecreditoperator') }}" method="POST">
+                            @csrf
+                            <div class="container mt-3">
+
+                                <div class="row">
+                                    <div class="col-md-3 col-6 pt-2">
+                                        <h5>
+                                            انتخاب فرد مورد نظر
+                                        </h5>
+                                    </div>
+                                    <div class="col-md-3 col-6">
+
+                                        <div class="form-group">
+                                            <label>سرچ بر اساس شماره تلفن</label>
+                                            <select type="text" class="form-control" name="user">
+
+                                                @foreach ($users as $item)
+                                                    <option value="{{ $item->id }}">{{ $item->username }}</option>
+                                                @endforeach
 
 
-                            <!-- Tab panes -->
-                        dfgdfgdg
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row p-1">
+                                    <div class="co">
+                                        <input type="submit" value="تأیید" class="btn btn-info">
 
-                        </div>
+                                    </div>
+                                </div>
+                        </form>
+
+                    </div>
                 </section>
 
             </div>

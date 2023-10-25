@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\createstore;
-
+use Illuminate\Support\Facades\File;
 
 class CreateColleagueController extends Controller
 {
@@ -36,11 +36,22 @@ class CreateColleagueController extends Controller
     public function store(Request $request)
     {
 
-
+        $docPath;
+        // dd($request->all());
+        if ($request->file('uploaddocument')) {
+            $files = $request->file('uploaddocument');
+            $paths = [];
+            foreach ($files as $file) {
+                $path = $file->store('document/createstore', 'public');
+                $paths[] = $path;
+            }
+            $docPath = json_encode($paths);
+        }
         $person = User::find($request->selectperson);
-        $person->update([
-            'level' => 'seller'
-        ]);
+        $person->level = 'seller';
+        $person->save();
+
+        // dd(json_decode($docPath, true));
 
         createstore::create([
             'selectperson' => $request->selectperson,
@@ -48,7 +59,7 @@ class CreateColleagueController extends Controller
             'addressofstore' => $request->addressofstore,
             'feepercentage' => $request->feepercentage,
             'enddate' => $request->enddate,
-            'uploaddocument' => 'this is a pic',
+            'uploaddocument' => $docPath,
         ]);
 
         return redirect()->back();
@@ -56,8 +67,26 @@ class CreateColleagueController extends Controller
 
     public function createcreditoperator(Request $request)
     {
+        $users = User::where('level', 'user')->get();
 
-        return view('back.createcolleague.createcreditoperator');
+
+        return view('back.createcolleague.createcreditoperator', compact('users'));
+    }
+
+    public function storecreditoperator(Request $request)
+    {
+        // dd($request->user);
+
+        $user = User::find($request->user);
+
+        $user->level = 'createcreditoperator';
+        // dd($users);
+        $user->save();
+
+        $users = User::where('level', 'user')->get();
+
+
+        return view('back.createcolleague.createcreditoperator', compact('user'));
     }
     /**
      * Display the specified resource.

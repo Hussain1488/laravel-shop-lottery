@@ -1,17 +1,19 @@
 <!--start .author-author__info-->
-@if(auth()->check())
+@if (auth()->check())
     <ul class="nav float-left">
         @include('front::partials.language')
-        
+
         <li class="nav-item account dropdown">
-            <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
+            <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="label-dropdown">{{ trans('front::messages.header.account') }}</span>
                 <i class="mdi mdi-account-circle-outline"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
 
-                @if (auth()->user()->level == 'admin' || auth()->user()->level == 'creator' || auth()->user()->level == 'seller')
+                @if (auth()->user()->level == 'admin' ||
+                        auth()->user()->level == 'creator' ||
+                        auth()->user()->level == 'seller' ||
+                        auth()->user()->level == 'createcreditoperator')
                     <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                         {{ trans('front::messages.header.control-panel') }}
                     </a>
@@ -35,15 +37,14 @@
         @include('front::partials.language')
 
         <li class="nav-item account dropdown">
-            <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
-               aria-expanded="false">
+            <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="label-dropdown"> {{ trans('front::messages.header.account') }}</span>
                 <i class="mdi mdi-account-circle-outline"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
                 <a class="dropdown-item" href="{{ route('login') }}">
                     <i class="mdi mdi-account-card-details-outline"></i>
-                    {{ trans('front::messages.header.sign-in-to-site') }}   
+                    {{ trans('front::messages.header.sign-in-to-site') }}
                 </a>
                 <a class="dropdown-item" href="{{ route('register') }}">
                     <i class="mdi mdi-account-edit-outline"></i>
