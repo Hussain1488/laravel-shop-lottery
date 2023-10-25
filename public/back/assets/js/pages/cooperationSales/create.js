@@ -10,19 +10,20 @@ $(document).ready(function () {
     $('#cash_status').on('change', function () {
         var cash_status = $('#cash_status').val();
 
-
         if (cash_status == 'installment') {
             $('#payment').prop('disabled', false);
 
             $('#payment').on('change', function () {
-                let payment = parseFloat($('#totalMoney').val()); // Replace with the desired value
+                let payment = parseFloat(
+                    $('#totalMoney').val().replace(/,/g, '')
+                );
                 let installment = parseFloat($('#payment').val());
                 let total_pay = payment + payment * (30 / 100);
                 let prepayment = total_pay * 0.3;
                 let rest_pay = total_pay - prepayment;
                 let each_pay = Math.round(rest_pay / $('#payment').val());
-                $('#prepayment').val(prepayment);
-                $('#each_pay').val(each_pay);
+                $('#prepayment').val(addCommas(prepayment));
+                $('#each_pay').val(addCommas(each_pay));
                 // console.log(total_pay);
             });
         } else {
@@ -51,4 +52,30 @@ $(document).ready(function () {
     });
 
     $('#payment');
+
+    $('.moneyInput').on('input', function () {
+        var input = $(this).val();
+
+        // Remove any non-digit characters (e.g., commas)
+        var digits = input.replace(/\D/g, '');
+
+        // Format the number with commas
+        var formattedNumber = addCommas(digits);
+
+        // Update the input field with the formatted number
+        $(this).val(formattedNumber);
+    });
+
+    // Function to add commas as a thousands separator
+    function addCommas(nStr) {
+        nStr += '';
+        var x = nStr.split('.');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+    }
 });
