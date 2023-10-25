@@ -29,11 +29,6 @@
                     <a href="{{ route('front.wallet.create') }}"
                         class="m-0 d-block">{{ trans('front::messages.wallet.increase-wallet-inventory') }}</a>
                 </div>
-                <div class="page dt-sl">
-                    <div class="table-responsive">
-                        this is a test!!
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -140,7 +135,7 @@
                                                 </div>
                                             @endforeach
 
-                                            <div class="row">
+                                            <div class="row mb-2">
                                                 <div class="col d-flex align-items-baseline justify-content-center">
 
                                                     <a href="" class="btn btn-primary my-1">تأیید و پرداخت</a>

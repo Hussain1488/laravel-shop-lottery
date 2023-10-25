@@ -130,3 +130,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
+@endpush
