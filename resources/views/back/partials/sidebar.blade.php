@@ -100,6 +100,12 @@
                 <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
                             class="feather icon-users"></i><span class="menu-title"> ایجاد همکار</span></a>
                     <ul class="menu-content">
+                      @can('createcolleague.createcreditoperator')
+                            <li class="{{ active_class('admin.createcolleague.createcreditoperator') }}">
+                                <a href="{{ route('admin.createcolleague.createcreditoperator') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item">  ایجاد اپراتور اعتباردهی </span></a>
+                            </li>
+                        @endcan
                         @can('createcolleague.index')
                             <li class="{{ active_class('admin.createcolleague.index') }}">
                                 <a href="{{ route('admin.createcolleague.index') }}"><i class="feather icon-circle"></i><span

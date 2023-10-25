@@ -54,6 +54,11 @@ class CreateColleagueController extends Controller
         return redirect()->back();
     }
 
+    public function createcreditoperator(Request $request)
+    {
+
+        return view('back.createcolleague.createcreditoperator');
+    }
     /**
      * Display the specified resource.
      *
