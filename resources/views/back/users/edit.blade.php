@@ -76,12 +76,12 @@
                                                     <label>نوع کاربری</label>
                                                     <select id="level" class="form-control" name="level">
                                                         <option {{ $user->level == 'user' ? 'selected' : '' }} value="user">کاربر عادی</option>
-                                                        <option {{ $user->level == 'user' ? 'selected' : '' }} value="seller"> فروشنده </option>
+                                                        <option {{ $user->level == 'seller' ? 'selected' : '' }} value="seller"> فروشنده </option>
                                                         <option {{ $user->level == 'admin' ? 'selected' : '' }} value="admin">مدیر وبسایت</option>
                                                     </select>
                                                 </div>
                                             </div>
-
+ 
                                             <div class="col-md-6">
                                                 <fieldset class="form-group">
                                                     <label>تصویر</label>
