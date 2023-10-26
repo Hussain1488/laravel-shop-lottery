@@ -22,7 +22,17 @@ class CreateColleagueController extends Controller
     }
     public function create()
     {
-        $users = User::where('level', 'user')->get();
+
+        $user =  User::where('level', 'user')->orwhere('level', 'seller')->get();
+
+        foreach ($user as $key) {
+            if ($key->level == 'user' || ($key->level == 'seller' && !createstore::where('selectperson', $key->id)->exists())) {
+                $users[] = $key;
+            };
+        }
+
+        // dd($users);
+
         // dd($users);
         return view('back.createcolleague.create', compact('users'));
     }
