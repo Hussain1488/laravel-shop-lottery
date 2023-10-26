@@ -292,6 +292,5 @@
     <script>
         var user = @json($users);
     </script>
-    {{-- <script src="{{ asset('back/assets/js/pages/users/all.js') }}"></script> --}}
     <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
 @endpush

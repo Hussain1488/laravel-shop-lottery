@@ -15,7 +15,7 @@ $(document).ready(function () {
 
             $('#payment').on('change', function () {
                 let payment = parseFloat(
-                    $('#totalMoney').val().replace(/,/g, '')
+                    $('#main_price').val().replace(/,/g, '')
                 );
                 let installment = parseFloat($('#payment').val());
                 let total_pay = payment + payment * (30 / 100);
@@ -29,22 +29,22 @@ $(document).ready(function () {
         } else {
             $('#payment').prop('disabled', true);
             $('#payment').val($('#payment option:first').val());
-            var payment1 = $('#totalMoney').val();
-            // console.log(payment1);
+            var payment1 = $('#main_price').val();
+            console.log(payment1);
             $('#prepayment').val(payment1);
             $('#each_pay').val(0);
         }
     });
 
-    $('#payment').on('change', function () {
-        var payment = $('#totalMoney').val();
-        var pay_status = $('#pay_status').val(); // Replace with the desired value
+    // $('#payment').on('change', function () {
+    //     var payment = $('#totalMoney').val();
+    //     var pay_status = $('#pay_status').val(); // Replace with the desired value
 
-        if (pay_status == 'installment') {
-        }
+    //     if (pay_status == 'installment') {
+    //     }
 
-        $('#prepayment').val(payment);
-    });
+    //     $('#prepayment').val(payment);
+    // });
 
     $('.custom-file-input').on('change', function () {
         var fileName = $(this).val();
@@ -80,6 +80,13 @@ $(document).ready(function () {
     }
 
     $('.persian-date-picker').customPersianDate();
+
+    if ($('#user_select').find('option').length === 1) {
+        selectElement.find('option:first').prop('selected', true);
+        var creditAttrValue1 = selectedOption.attr('creadit_attr');
+        var formattedNumber1 = addCommas(creditAttrValue1);
+        $('#purchase_creadite').val(formattedNumber1);
+    }
 
     $('#user_select').change(function () {
         var selectedOption = $(this).find(':selected');
