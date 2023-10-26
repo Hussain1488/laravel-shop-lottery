@@ -90,7 +90,7 @@ class CreateColleagueController extends Controller
         $users = User::where('level', 'user')->get();
 
 
-        return view('back.createcolleague.createcreditoperator', compact('user'));
+        return view('back.createcolleague.createcreditoperator', compact('users'));
     }
 
     public function colleagueCreditStore(Request $request)

@@ -62,9 +62,11 @@
                                                 <label for="first_name" class="mr-2">
                                                     مقدار اعتبار خرید اقساطی
                                                 </label>
-                                                <div class="d-flex">
+                                                <div class="d-flex align-items-center">
                                                     <input type="text" placeholder="100,000"
-                                                        class="form-control moneyInput" id="first_name" name="first_name">
+                                                        class="form-control moneyInput" id="first_name" name="first_name"
+                                                        style="margin-left: 4px">
+                                                    ریال
                                                 </div>
 
                                             </div>

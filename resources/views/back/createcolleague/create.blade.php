@@ -33,118 +33,117 @@
                         <h6 class="card-title m-2">ساخت افرادی که همکاری در فروش دارند</h6>
                         <div class="container mt-3">
 
-                            < <!-- Tab panes -->
-                                <div class="tab-content">
-                                    <form action="{{ route('admin.createcolleague.store') }}" method="POST"
-                                        enctype="multipart/form-data">
-                                        @csrf
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <form action="{{ route('admin.createcolleague.store') }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
 
-                                        <div id="home" class="container tab-pane active"><br>
-                                            <div class="row">
+                                    <div id="home" class="container tab-pane active"><br>
+                                        <div class="row">
 
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group align-items-center">
-                                                        <h6 for="first_name" class="mr-2">
-                                                            انتخاب فرد مورد نظر از بین افرادی که لاگین کردند
-                                                        </h6>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group align-items-center">
+                                                    <h6 for="first_name" class="mr-2">
+                                                        انتخاب فرد مورد نظر از بین افرادی که لاگین کردند
+                                                    </h6>
 
-                                                        <div class="d-flex">
-                                                            <select type="text" class="form-control" name="selectperson">
-                                                                @foreach ($users as $item)
-                                                                    <option value="{{ $item->id }}">
-                                                                        {{ $item->username }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-
+                                                    <div class="d-flex">
+                                                        <select type="text" class="form-control" name="selectperson">
+                                                            @foreach ($users as $item)
+                                                                <option value="{{ $item->id }}">
+                                                                    {{ $item->username }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
 
                                                 </div>
                                             </div>
-                                            <div class="row">
+                                            <div class="col-md-6 col-12">
 
-                                                <div class="">
-                                                    <div class="form-group align-items-center">
-                                                        <label for="first_name" class="mr-2">
-                                                            آپلود تعدادی عکس(قرارداد ها و فورم ها)
-                                                        </label>
-
-                                                        <div class="row">
-
-                                                            <div class="col-sm">
-                                                                <input multiple type="file"
-                                                                    class="form-control mt-1 mr-1" name="uploaddocument[]">
-                                                            </div>
-
-
-                                                        </div>
-
-
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-12 pt-2">
-                                                    <h5>
-                                                        نام فروشگاه
-                                                    </h5>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" name="nameofstore">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-12 pt-2">
-                                                    <h5>
-                                                        آدرس فروشگاه
-                                                    </h5>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" name="addressofstore">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-12 pt-2">
-                                                    <h5>
-                                                        درصد کارمزد فروشگاه
-                                                    </h5>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group">
-                                                        <input type="number" class="form-control" name="feepercentage">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-12 pt-2">
-                                                    <h5>
-                                                        تاریخ پایان قرارداد
-                                                    </h5>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group">
-                                                        <input type="text"
-                                                            placeholder="تاریخ پایان قرار داد را مشخص کنید."
-                                                            class="form-control persian-date-picker" name="enddate"
-                                                            data-timestamps="false">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-2"
-                                                style="align-items:center ;display: flex;flex-direction: column;">
-                                                <input type="submit" value="تأیید" class="btn btn-info btn-lg"
-                                                    style="background-color: none; text-color:black">
                                             </div>
                                         </div>
-                                    </form>
-                                </div>
+                                        <div class="row">
+
+                                            <div class="">
+                                                <div class="form-group align-items-center">
+                                                    <label for="first_name" class="mr-2">
+                                                        آپلود تعدادی عکس(قرارداد ها و فورم ها)
+                                                    </label>
+
+                                                    <div class="row">
+
+                                                        <div class="col-sm">
+                                                            <input multiple type="file" class="form-control mt-1 mr-1"
+                                                                name="uploaddocument[]">
+                                                        </div>
+
+
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 pt-2">
+                                                <h5>
+                                                    نام فروشگاه
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="nameofstore">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 pt-2">
+                                                <h5>
+                                                    آدرس فروشگاه
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="addressofstore">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 pt-2">
+                                                <h5>
+                                                    درصد کارمزد فروشگاه
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" name="feepercentage">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 pt-2">
+                                                <h5>
+                                                    تاریخ پایان قرارداد
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <input type="text" placeholder="تاریخ پایان قرار داد را مشخص کنید."
+                                                        class="form-control persian-date-picker" name="enddate"
+                                                        data-timestamps="false">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2"
+                                            style="align-items:center ;display: flex;flex-direction: column;">
+                                            <input type="submit" value="تأیید" class="btn btn-info btn-lg"
+                                                style="background-color: none; text-color:black">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
 
                         </div>
                 </section>

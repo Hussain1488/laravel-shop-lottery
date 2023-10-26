@@ -62,10 +62,10 @@
                                                 <label for="first_name" class="mr-2">
                                                     مقدار اعتبار خرید اقساطی
                                                 </label>
-                                                <div class="d-flex">
+                                                <div class="d-flex align-items-baseline">
                                                     <input readonly type="text" placeholder="100,000"
                                                         class="form-control moneyInput" id="first_name" name="first_name"
-                                                        value="{{ $user->purchasecredit }}">
+                                                        value="{{ $user->purchasecredit }}" style="margin-left: 4px">ریال
                                                 </div>
 
                                             </div>
@@ -79,10 +79,10 @@
                                             <div class="form-group d-flex align-items-center">
                                                 <label for="first_name" class="mr-2">
                                                     موجودی نقدی کیف پول </label>
-                                                <div class="d-flex ">
+                                                <div class="d-flex align-items-baseline ">
                                                     <input readonly type="text" placeholder="100,000"
-                                                        class="form-control moneyInput" id="first_name" name="first_name" 
-                                                        value="{{ $user->inventory }}">
+                                                        class="form-control moneyInput" id="first_name" name="first_name"
+                                                        value="{{ $user->inventory }}" style="margin-left: 4px">ریال
                                                 </div>
 
                                             </div>

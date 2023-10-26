@@ -50,24 +50,24 @@
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item">
-                                            <a class="nav-link active" style="font-size: 10px" data-toggle="tab"
+                                            <a class="nav-link active" style="font-size: .625rem" data-toggle="tab"
                                                 href="#home">در
                                                 انتظار تأیید</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" style="font-size: 10px" data-toggle="tab"
+                                            <a class="nav-link" style="font-size: .625rem" data-toggle="tab"
                                                 href="#menu1">اقساط
                                                 پرداخت
                                                 نشده</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" style="font-size: 10px" data-toggle="tab"
+                                            <a class="nav-link" style="font-size: .625rem" data-toggle="tab"
                                                 href="#menu2">اقساط
                                                 پرداخت
                                                 شده</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" style="font-size: 10px" data-toggle="tab"
+                                            <a class="nav-link" style="font-size: .625rem" data-toggle="tab"
                                                 href="#menu3">خدمات
                                                 اینترنتی</a>
                                         </li>
@@ -103,7 +103,8 @@
                                                         <div class="d-flex ">
                                                             <input readonly type="text" class="form-control moneyInput"
                                                                 id="first_name" name="first_name"
-                                                                value="{{ $user->inventory }}"><span> ریال</span>
+                                                                value="{{ $user->inventory }}"
+                                                                style="margin-left: 4px"><span> ریال</span>
                                                         </div>
 
                                                     </div>

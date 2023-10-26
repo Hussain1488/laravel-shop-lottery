@@ -86,7 +86,32 @@ $(document).ready(function () {
 
         var creditAttrValue = selectedOption.attr('creadit_attr');
 
-        $('#purchase_creadite').val(creditAttrValue);
+        if (creditAttrValue == '') {
+            creditAttrValue = 0;
+        }
+        var formattedNumber = addCommas(creditAttrValue);
+        $('#purchase_creadite').val(formattedNumber);
+    });
+
+    $('#submit_button').click(function () {
+        // Get the values of input fields
+        var creadit = $('#purchase_creadite').val();
+        var main_price = $('#main_price').val();
+
+        // console.log(value1);
+        // console.log(value2);
+
+        // Perform your condition check here
+        if (creadit >= main_price) {
+            // If the condition is met, submit the form
+            $('#user-create-form').submit();
+        } else {
+            // If the condition is not met, show a confirmation dialog
+
+            $('#demo-modal').addClass('open');
+
+            // Close the popup when the close button is clicked
+        }
     });
 
     // console.log(user);

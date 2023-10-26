@@ -46,10 +46,11 @@
                                         <div class="form-group">
                                             <label>سرچ بر اساس شماره تلفن</label>
                                             <select type="text" class="form-control" name="user">
-
-                                                @foreach ($users as $item)
-                                                    <option value="{{ $item->id }}">{{ $item->username }}</option>
-                                                @endforeach
+                                                @isset($users)
+                                                    @foreach ($users as $item)
+                                                        <option value="{{ $item->id }}">{{ $item->username }}</option>
+                                                    @endforeach
+                                                @endisset
 
 
                                             </select>
