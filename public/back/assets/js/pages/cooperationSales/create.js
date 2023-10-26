@@ -116,28 +116,3 @@ $(document).ready(function () {
 
     // console.log(user);
 });
-$('#storecreditoperatorForm').submit(function (e) {
-    $.ajax({
-        url: $(this).attr('action'),
-        type: 'POST',
-        data: formData,
-        success: function (data) {
-            form.data('disabled', true);
-            window.location.href =
-                BASE_URL + '/createcolleague/createcreditoperator';
-        },
-        beforeSend: function (xhr) {
-            block('#main-card');
-            xhr.setRequestHeader(
-                'X-CSRF-TOKEN',
-                $('meta[name="csrf-token"]').attr('content')
-            );
-        },
-        complete: function () {
-            unblock('#main-card');
-        },
-        cache: false,
-        contentType: false,
-        processData: false
-    });
-});

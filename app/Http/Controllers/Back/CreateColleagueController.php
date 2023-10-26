@@ -91,8 +91,6 @@ class CreateColleagueController extends Controller
 
         toastr()->success('اپراتور اعتبار سنجی با موفقیت ایجاد شد.');
 
-        // return response('success');
-
         return view('back.createcolleague.createcreditoperator', compact('users'));
     }
 
