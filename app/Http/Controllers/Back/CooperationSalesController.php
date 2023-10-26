@@ -62,6 +62,9 @@ class CooperationSalesController extends Controller
             'paymentstatus' => 1,
             'statususer' => 0,
         ]);
+
+
+
         return redirect()->back();
     }
     public function Income()

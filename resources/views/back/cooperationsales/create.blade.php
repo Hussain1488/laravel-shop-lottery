@@ -53,7 +53,7 @@
                                                                 placeholder="100,000" class="form-control moneyInput"
                                                                 id="first_name" name="Creditamount" value="0"
                                                                 style="margin-left: 4px">
-                                                            
+
                                                             ریال
                                                         </div>
                                                         <label for="first_name" class="ml-2">اعتبار کاربر
@@ -78,6 +78,7 @@
                                                         <label>سرچ بر اساس شماره تلفن</label>
                                                         <select type="text" class="form-control" id="user_select"
                                                             name="userselected">
+                                                            <option value="">کاربر را انتخاب کنید</option>
                                                             @foreach ($users as $item)
                                                                 <option creadit_attr="{{ $item->purchasecredit }}"
                                                                     value="{{ $item->id }}">

@@ -74,8 +74,9 @@ class CreateColleagueController extends Controller
             'uploaddocument' => $docPath,
         ]);
 
-
         $users = User::where('level', 'user')->get();
+
+        toastr()->success('  فروشگاه با موفقیت ایجاد شد.');
 
         // dd($users);
         return view('back.createcolleague.create', compact('users'));

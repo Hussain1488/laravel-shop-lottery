@@ -50,6 +50,7 @@
 
                                                     <div class="d-flex">
                                                         <select type="text" class="form-control" name="selectperson">
+
                                                             @foreach ($users as $item)
                                                                 <option value="{{ $item->id }}">
                                                                     {{ $item->username }}</option>

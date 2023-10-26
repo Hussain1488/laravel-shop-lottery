@@ -83,9 +83,8 @@ $(document).ready(function () {
 
     $('#user_select').change(function () {
         var selectedOption = $(this).find(':selected');
-
         var creditAttrValue = selectedOption.attr('creadit_attr');
-        var orginal_value = selectedOption.attr('creadit_attr');
+        // var orginal_value = selectedOption.attr('creadit_attr');
 
         if (creditAttrValue == '') {
             creditAttrValue = 0;
