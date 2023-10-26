@@ -1,8 +1,8 @@
 $(document).ready(function () {
     $('#each_pay').val(0);
     if ($('#cash_status').val() == 'cash') {
-        $('#totalMoney').on('change', function () {
-            let payment = $('#totalMoney').val();
+        $('#main_price').on('change', function () {
+            let payment = $('#main_price').val();
             $('#prepayment').val(payment);
             $('#each_pay').val(0);
         });

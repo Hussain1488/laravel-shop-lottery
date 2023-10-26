@@ -63,6 +63,7 @@ class CooperationSalesController extends Controller
             'statususer' => 0,
         ]);
 
+        toastr()->success('قسط کاربر با موفقیت ایجاد شد.');
 
 
         return redirect()->back();
