@@ -29,11 +29,13 @@ class InstallmentsController extends Controller
 
         $installmentsm1 = Makeinstallmentsm::where('userselected', Auth::user()->id)->with('user')->get();
         $installmentsm = $installmentsm1->where('status', 1);
+        $user = Auth::user();
+
 
         // dd($installmentsm);
 
 
-        return view('front::user.installments.index', compact('installmentsm'));
+        return view('front::user.installments.index', compact('installmentsm', 'user'));
     }
 
     /**

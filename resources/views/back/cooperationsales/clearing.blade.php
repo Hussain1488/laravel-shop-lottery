@@ -44,7 +44,8 @@
                                             </label>
                                             <div class="d-flex align-items-center">
                                                 <input type="text" placeholder="100,000" class="form-control moneyInput"
-                                                    id="first_name" name="first_name" style="margin-left: 4px;"> <span>ریال</span>
+                                                    id="first_name" name="first_name" style="margin-left: 4px;">
+                                                <span>ریال</span>
                                             </div>
 
 
@@ -64,8 +65,8 @@
                                 </div>
                                 <div class="form-group d-flex align-items-center">
                                     <div class="d-flex align-items-center">
-                                        <input type="text" placeholder="100,000" class="form-control moneyInput"
-                                            id="first_name" name="first_name" style="margin-left: 4px;"> ریال
+                                        <input type="text" class="form-control moneyInput" id="first_name"
+                                            name="first_name" style="margin-left: 4px;"> ریال
                                     </div>
                                     <label for="first_name" class="ml-2">
                                         مبلغ درخواست واریز

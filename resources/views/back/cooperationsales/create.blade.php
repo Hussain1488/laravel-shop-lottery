@@ -47,9 +47,9 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group d-flex align-items-center">
                                                     <div class="d-flex">
-                                                        <input id="totalMoney" type="text" placeholder="100,000"
-                                                            class="form-control moneyInput" id="first_name"
-                                                            name="Creditamount">
+                                                        <input readonly id="purchase_creadite" type="text"
+                                                            placeholder="100,000" class="form-control moneyInput"
+                                                            id="first_name" name="Creditamount">
                                                     </div>
                                                     <label for="first_name" class="ml-2">اعتبار کاربر
                                                         خریدار</label>
@@ -71,13 +71,31 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
-                                                    <select type="text" class="form-control" name="userselected">
+                                                    <select type="text" class="form-control" id="user_select"
+                                                        name="userselected">
                                                         @foreach ($users as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->username }}
+                                                            <option creadit_attr="{{ $item->purchasecredit }}"
+                                                                value="{{ $item->id }}">
+                                                                {{ $item->username }}
                                                             </option>
                                                         @endforeach
 
                                                     </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 pt-2">
+                                                <h5>
+                                                    قیمت اصلی کالا
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <label>سرچ بر اساس شماره تلفن</label>
+                                                    <input id="totalMoney" type="text" placeholder="100,000"
+                                                        class="form-control moneyInput" id="first_name" name="Creditamount">
+
                                                 </div>
                                             </div>
                                         </div>
@@ -191,6 +209,9 @@
 @endphp
 
 @push('scripts')
+    <script>
+        var user = @json($users);
+    </script>
     {{-- <script src="{{ asset('back/assets/js/pages/users/all.js') }}"></script> --}}
     <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
 @endpush

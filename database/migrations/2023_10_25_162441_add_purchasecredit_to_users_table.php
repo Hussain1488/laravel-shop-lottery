@@ -14,10 +14,10 @@ class AddPurchasecreditToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->bigInteger('purchasecredit');
-            $table->bigInteger('inventory');
-            $table->string('documents');
-            $table->string('enddate');
+            $table->bigInteger('purchasecredit')->nullable();
+            $table->bigInteger('inventory')->nullable();
+            $table->string('documents')->nullable();
+            $table->string('enddate')->nullable();
         });
     }
 
@@ -29,7 +29,6 @@ class AddPurchasecreditToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-         
         });
     }
 }

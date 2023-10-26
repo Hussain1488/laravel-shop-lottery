@@ -4,6 +4,7 @@ namespace App\Http\Controllers\back;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class installmentpurchaseController extends Controller
 {
@@ -14,7 +15,10 @@ class installmentpurchaseController extends Controller
      */
     public function index()
     {
-        return view('back.installmentpurchase.index');
+
+        $user = Auth::user();
+        // dd($user);
+        return view('back.installmentpurchase.index')->with('user', $user);
     }
 
     /**

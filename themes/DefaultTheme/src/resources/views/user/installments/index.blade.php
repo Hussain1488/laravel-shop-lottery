@@ -84,9 +84,9 @@
                                                             مقدار اعتبار خرید اقساطی
                                                         </label>
                                                         <div class="d-flex">
-                                                            <input type="text" placeholder="100,000"
-                                                                class="form-control moneyInput" id="first_name"
-                                                                name="first_name">
+                                                            <input readonly type="text" class="form-control moneyInput"
+                                                                id="first_name" name="first_name"
+                                                                value="{{ $user->purchasecredit }}">
                                                         </div>
 
                                                     </div>
@@ -101,9 +101,9 @@
                                                         <label for="first_name" class="mr-2">
                                                             موجودی نقدی کیف پول </label>
                                                         <div class="d-flex ">
-                                                            <input type="text" placeholder="100,000"
-                                                                class="form-control moneyInput" id="first_name"
-                                                                name="first_name">
+                                                            <input readonly type="text" class="form-control moneyInput"
+                                                                id="first_name" name="first_name"
+                                                                value="{{ $user->inventory }}"><span> ریال</span>
                                                         </div>
 
                                                     </div>
@@ -160,9 +160,9 @@
                                                             مقدار اعتبار خرید اقساطی
                                                         </label>
                                                         <div class="d-flex">
-                                                            <input type="text" placeholder="100,000"
-                                                                class="form-control moneyInput" id="first_name"
-                                                                name="first_name">
+                                                            <input readonly type="text" class="form-control moneyInput"
+                                                                id="first_name" name="first_name"
+                                                                value="{{ $user->purchasecredit }}">
                                                         </div>
 
                                                     </div>
@@ -177,9 +177,9 @@
                                                         <label for="first_name" class="mr-2">
                                                             موجودی نقدی کیف پول </label>
                                                         <div class="d-flex ">
-                                                            <input type="text" placeholder="100,000"
-                                                                class="form-control moneyInput" id="first_name"
-                                                                name="first_name">
+                                                            <input readonly type="text" class="form-control moneyInput"
+                                                                id="first_name" name="first_name"
+                                                                value="{{ $user->inventory }}">
                                                         </div>
 
                                                     </div>

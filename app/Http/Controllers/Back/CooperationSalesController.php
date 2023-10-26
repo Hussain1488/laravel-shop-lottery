@@ -28,7 +28,8 @@ class CooperationSalesController extends Controller
         // dd($shopkeeper->id);
         $shop = createstore::where('selectperson', $shopkeeper->id)->first();
         // dd($shop);
-        $users = User::all();
+        $users = User::where('level', 'user')->get();
+        // dd($users);
 
         return view('back.cooperationsales.create', compact('users', 'shop'));
     }

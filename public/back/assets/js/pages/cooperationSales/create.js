@@ -80,4 +80,14 @@ $(document).ready(function () {
     }
 
     $('.persian-date-picker').customPersianDate();
+
+    $('#user_select').change(function () {
+        var selectedOption = $(this).find(':selected');
+
+        var creditAttrValue = selectedOption.attr('creadit_attr');
+
+        $('#purchase_creadite').val(creditAttrValue);
+    });
+
+    // console.log(user);
 });
