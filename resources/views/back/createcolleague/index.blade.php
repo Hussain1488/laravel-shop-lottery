@@ -134,7 +134,7 @@
                                         <div class="row ">
                                             <div class="col d-flex align-items-baseline justify-content-center">
                                                 <input type="submit" class="btn btn-primary my-1"value=" تأیید
-                                                        تغییرات" />
+                                                                    تغییرات" />
                                             </div>
                                             <div class="col d-flex align-items-baseline justify-content-center">
                                                 <a href="" class="btn btn-danger my-1">انصراف </a>
@@ -157,6 +157,8 @@
 ])
 
 @push('scripts')
+    <script src="{{ asset('back/assets/js/scripts.js') }}?v=9"></script>
+
     <script src="{{ asset('back/assets/js/pages/users/all.js') }}"></script>
     <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
 @endpush

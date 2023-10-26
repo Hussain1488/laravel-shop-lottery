@@ -64,7 +64,11 @@ class CreateColleagueController extends Controller
             'uploaddocument' => $docPath,
         ]);
 
-        return redirect()->back();
+
+        $users = User::where('level', 'user')->get();
+
+        // dd($users);
+        return view('back.createcolleague.create', compact('users'));
     }
 
 
@@ -122,7 +126,10 @@ class CreateColleagueController extends Controller
         // dd($userUpdate);
         $userUpdate->save();
 
-        return redirect()->back()->with('success');
+        toastr()->success('اعتبار دهی به کاربر با موفقیت انجام شد.');
+
+
+        return redirect()->back();
     }
 
 

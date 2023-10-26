@@ -85,22 +85,28 @@ $(document).ready(function () {
         var selectedOption = $(this).find(':selected');
 
         var creditAttrValue = selectedOption.attr('creadit_attr');
+        var orginal_value = selectedOption.attr('creadit_attr');
 
         if (creditAttrValue == '') {
             creditAttrValue = 0;
         }
         var formattedNumber = addCommas(creditAttrValue);
         $('#purchase_creadite').val(formattedNumber);
+        // $('#Creadit_hidden').val(orginal_value);
     });
 
     $('#submit_button').click(function () {
         // Get the values of input fields
-        var creadit = $('#purchase_creadite').val();
-        var main_price = $('#main_price').val();
+        var creadit = parseInt(
+            $('#purchase_creadite').val().replace(/,/g, ''),
+            10
+        );
+        $('#purchase_creadite').val();
+        var main_price = parseInt($('#main_price').val().replace(/,/g, ''), 10);
+        // var intValue = parseInt($('#main_price').val().replace(/,/g, ''), 10);
 
-        // console.log(value1);
-        // console.log(value2);
-
+        // console.log(creadit);
+        // console.log(main_price);
         // Perform your condition check here
         if (creadit >= main_price) {
             // If the condition is met, submit the form
@@ -108,7 +114,7 @@ $(document).ready(function () {
         } else {
             // If the condition is not met, show a confirmation dialog
 
-            $('#demo-modal').addClass('open');
+            $('#myModal').modal();
 
             // Close the popup when the close button is clicked
         }

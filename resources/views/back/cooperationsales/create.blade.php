@@ -53,6 +53,7 @@
                                                                 placeholder="100,000" class="form-control moneyInput"
                                                                 id="first_name" name="Creditamount" value="0"
                                                                 style="margin-left: 4px">
+                                                            
                                                             ریال
                                                         </div>
                                                         <label for="first_name" class="ml-2">اعتبار کاربر
@@ -227,97 +228,55 @@
             </div>
         </div>
     </div>
-    {{-- <div class="wrapper">
-        <a href="#demo-modal">Open Demo Modal</a>
+
+
+    <div class="container" dir="rtl">
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-danger">هشدار!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>مقدار قیمت اصلی نباید از اعتبار خریدار بیشتر باشد.<br />لطفا اصلاح کنید بعد تآیید و ارسال کنید.
+                        </p>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-default text-danger" data-dismiss="modal">بستن</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
-    <div id="demo-modal" class="modal open">
-        <div class="modal__content">
-            <h1>CSS Only Modal</h1>
-
-            <p>
-                You can use the :target pseudo-class to create a modals with Zero JavaScript. Enjoy!
-            </p>
-
-            <div class="modal__footer">
-                Made with <i class="fa fa-heart"></i>, by <a href="https://twitter.com/denicmarko"
-                    target="_blank">@denicmarko</a>
-            </div>
-
-            <a href="#" class="modal__close">&times;</a>
-        </div>  
-    </div> --}}
-
     <style>
-        .wrapper {
-            height: 100vh;
-            /* This part is important for centering the content */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* End center */
-            background: -webkit-linear-gradient(to right, #834d9b, #d04ed6);
-            background: linear-gradient(to right, #834d9b, #d04ed6);
-        }
-
-        .wrapper a {
-            display: inline-block;
+        .modal a.close-modal[class*="icon-"] {
+            direction: rtl;
+            top: -10px;
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            color: #fff;
+            line-height: 1.25;
+            text-align: center;
             text-decoration: none;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 3px;
-            text-transform: uppercase;
-            color: #585858;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        .modal {
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(77, 77, 77, .7);
-            transition: all .4s;
-        }
-
-        .modal:target {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .modal__content {
-            border-radius: 4px;
-            position: relative;
-            width: 500px;
-            max-width: 90%;
-            background: #fff;
-            padding: 1em 2em;
-        }
-
-        .modal__footer {
-            text-align: right;
-
-            a {
-                color: #585858;
-            }
-
-            i {
-                color: #d02d2c;
-            }
-        }
-
-        .modal__close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: #585858;
-            text-decoration: none;
+            text-indent: 0;
+            background: #900;
+            border: 2px solid #fff;
+            -webkit-border-radius: 26px;
+            -moz-border-radius: 26px;
+            -o-border-radius: 26px;
+            -ms-border-radius: 26px;
+            -moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
         }
     </style>
 @endsection
