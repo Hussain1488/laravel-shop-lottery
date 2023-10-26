@@ -114,6 +114,18 @@
                                         <div class="row">
                                             <div class="col-md-6 col-12 pt-2">
                                                 <h5>
+                                                    اعتبار فروشگاه
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" name="nameofstore">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 pt-2">
+                                                <h5>
                                                     درصد کارمزد فروشگاه
                                                 </h5>
                                             </div>
