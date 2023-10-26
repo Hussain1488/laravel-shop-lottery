@@ -38,6 +38,15 @@ class InstallmentsController extends Controller
         return view('front::user.installments.index', compact('installmentsm', 'user'));
     }
 
+    public function userStatus($id)
+    {
+        $installments = Makeinstallmentsm::find($id);
+        $installments->statususer = 1;
+        $installments->save();
+
+        return redirect()->back();
+    }
+
     /**
      * Show the form for creating a new resource.
      *

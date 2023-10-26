@@ -79,7 +79,7 @@
 
                         </div>
                         <div class="profile-section-link">
-                            <a href="{{ route('front.user.profile.edit') }}" class="border-bottom-dt">
+                            <a href="{{ route('front.user.installments.usrestatus.edit') }}" class="border-bottom-dt">
                                 <i class="mdi mdi-account-edit-outline"></i>
                                 {{ trans('front::messages.profile.edit-personal-information') }}
                             </a>

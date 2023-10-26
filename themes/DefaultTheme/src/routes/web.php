@@ -96,6 +96,7 @@ Route::group(['as' => 'front.'], function () {
         // ------------------ wallet
         Route::resource('wallet', WalletController::class)->only(['index', 'show', 'create', 'store']);
         Route::resource('installments', InstallmentsController::class)->only(['index', 'show', 'create', 'store']);
+        Route::get('installments/staus/{id}', [InstallmentsController::class, 'userStatus'])->name('installments.usrestatus.edit');
 
         // ------------------ user
         Route::get('user/profile', [UserController::class, 'profile'])->name('user.profile');

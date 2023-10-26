@@ -75,7 +75,7 @@
 
                                     <!-- Tab panes -->
                                     <div class="tab-content">
-                                        <div id="home" class="container tab-pane active"><br>
+                                        <div id="home" class="container tab-pane active my-2 py-3"><br>
                                             <div class="row">
 
                                                 <div class="col-md-6 col-12">
@@ -114,38 +114,40 @@
                                                 </div>
                                             </div>
                                             @foreach ($installmentsm as $key)
-                                                <div class="border rounded p-2">
-                                                    <div class="row text-center" style="flex-direction: column;">
-                                                        <h5>
-                                                            {{ $key->user->username }}
-                                                        </h5>
-                                                    </div>
-
-                                                    <div class="row my-1">
-                                                        <div class="col">
-                                                            {{ $key->numberofinstallments }} عدد قسط به سر رسید ۲۵ هر ماه به
-                                                            مبلغ قسط {{ $key->Creditamount }} ریال
+                                                @if ($key->statususer == 0)
+                                                    <div class="border rounded p-2 my-2">
+                                                        <div class="row text-center" style="flex-direction: column;">
+                                                            <h5>
+                                                                {{ $key->user->username }}
+                                                            </h5>
                                                         </div>
 
-                                                    </div>
+                                                        <div class="row my-1">
+                                                            <div class="col">
+                                                                {{ $key->numberofinstallments }} عدد قسط به سر رسید ۲۵ هر
+                                                                ماه به
+                                                                مبلغ قسط {{ $key->Creditamount }} ریال
+                                                            </div>
 
-                                                    <div class="row">
-                                                        مقدار پیش پرداخت: {{ $key->prepaidamount }} ریال
-                                                    </div>
+                                                        </div>
 
-                                                </div>
+                                                        <div class="row px-3">
+
+                                                            <div class="">
+
+                                                                مقدار پیش پرداخت: {{ $key->prepaidamount }} ریال
+                                                            </div>
+                                                            <div class="col d-flex justify-content-end">
+                                                                <a href="{{ route('front.installments.usrestatus.edit', [$key->id]) }}"
+                                                                    class="btn btn-success" style="">تأیید</a>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                @endif
                                             @endforeach
 
-                                            <div class="row mb-2">
-                                                <div class="col d-flex align-items-baseline justify-content-center">
 
-                                                    <a href="" class="btn btn-primary my-1">تأیید و پرداخت</a>
-                                                </div>
-                                                <div class="col d-flex align-items-baseline justify-content-center">
-
-                                                    <a href="" class="btn btn-danger my-1">انصراف از خرید</a>
-                                                </div>
-                                            </div>
                                         </div>
                                         <div id="menu1" class="container tab-pane fade"><br>
                                             <h3>Menu 1</h3>
@@ -189,33 +191,34 @@
 
                                                 </div>
                                             </div>
-                                            @for ($i = 0; $i <= 3; $i++)
-                                                <div class="border rounded p-2 my-1">
-                                                    <div class="row text-center " style="flex-direction: column;">
-                                                        <h5>
-                                                            قسط فروشگاه احمدی
-                                                        </h5>
-                                                    </div>
-
-                                                    <div class="row my-1">
-                                                        <div class="col-5">
-                                                            1402/2/2
-                                                        </div>
-                                                        <div class="col-7">
-                                                            مبلغ قسط ۱۰۰۰،۰۰۰ ریال
+                                            @foreach ($installmentsm as $key)
+                                                @if ($key->statususer == 1)
+                                                    <div class="border rounded p-2 my-1">
+                                                        <div class="row text-center " style="flex-direction: column;">
+                                                            <h5>
+                                                                {{ $key->user->username }} </h5>
                                                         </div>
 
-                                                    </div>
+                                                        <div class="row my-1">
+                                                            <div class="col-5">
+                                                                1402/2/2
+                                                            </div>
+                                                            <div class="col-7">
+                                                                مبلغ قسط {{ $key->Creditamount }} ریال
+                                                            </div>
 
-                                                    <div class="row">
-                                                        مقدار جریمه دیر کرد ۰ ریال
-                                                    </div>
+                                                        </div>
 
-                                                    <div class="row mt-2">
-                                                        وضعیت: پرداخت شده در تاریخ ۱۴۰۲/۸/۲۵
+                                                        <div class="row m-2">
+                                                            مقدار جریمه دیر کرد ۰ ریال
+                                                        </div>
+
+                                                        <div class="row m-2">
+                                                            وضعیت: پرداخت شده در تاریخ ۱۴۰۲/۸/۲۵
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endfor
+                                                @endif
+                                            @endforeach
 
                                         </div>
                                         <div id="menu3" class="container tab-pane fade"><br>
