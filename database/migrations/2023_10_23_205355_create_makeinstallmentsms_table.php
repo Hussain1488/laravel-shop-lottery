@@ -39,6 +39,6 @@ class CreateMakeinstallmentsmsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('makeinstallmentsms');
+        
     }
 }
