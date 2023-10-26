@@ -31,7 +31,8 @@
                     </div>
                     <div class="card-content">
                         <h6 class="card-title m-2">ساخت افرادی که همکاری در فروش دارند</h6>
-                        <form action="{{ route('admin.createcolleague.storecreditoperator') }}" method="POST">
+                        <form action="{{ route('admin.createcolleague.storecreditoperator') }}" id="storecreditoperatorForm"
+                            method="POST">
                             @csrf
                             <div class="container mt-3">
 

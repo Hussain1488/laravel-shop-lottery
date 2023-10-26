@@ -89,6 +89,9 @@ class CreateColleagueController extends Controller
 
         $users = User::where('level', 'user')->get();
 
+        toastr()->success('اپراتور اعتبار سنجی با موفقیت ایجاد شد.');
+
+        // return response('success');
 
         return view('back.createcolleague.createcreditoperator', compact('users'));
     }
