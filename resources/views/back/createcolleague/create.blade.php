@@ -118,8 +118,9 @@
                                                 </h5>
                                             </div>
                                             <div class="col-md-6 col-12">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="nameofstore">
+                                                <div class="d-flex align-items-center">
+                                                    <input type="text" class="form-control" name="storecredit"
+                                                        style="padding-right: 4px"> ریال
                                                 </div>
                                             </div>
                                         </div>

@@ -66,6 +66,7 @@ class CreateColleagueController extends Controller
         // dd(json_decode($docPath, true));
 
         createstore::create([
+            'storecredit' => $request->storecredit,
             'selectperson' => $request->selectperson,
             'nameofstore' => $request->nameofstore,
             'addressofstore' => $request->addressofstore,
