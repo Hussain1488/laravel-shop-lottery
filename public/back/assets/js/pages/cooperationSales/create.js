@@ -79,44 +79,5 @@ $(document).ready(function () {
         return x1 + x2;
     }
 
-    let month = [
-        'فروردین',
-        'اردیبهشت',
-        'خرداد',
-        'تیر',
-        'مرداد',
-        'شهریور',
-        'مهر',
-        'آبان',
-        'آذر',
-        'دی',
-        'بهمن',
-        'اسفند'
-    ];
-    var persianWeekdays = [
-        'یک‌شنبه',
-        'دوشنبه',
-        'سه‌شنبه',
-        'چهارشنبه',
-        'پنج‌شنبه',
-        'جمعه',
-        'شنبه'
-    ];
-
-    var persianWeekdaysShort = ['ی', 'د', 'س', 'چ', 'پ', 'ج', 'ش'];
-    console.log('Script is running');
-
-    var picker = new Pikaday({
-        field: document.getElementById('jalali_datepicker'),
-        format: 'jYYYY/jMM/jDD', // Use the Jalali format
-        i18n: {
-            previousMonth: 'ماه قبلی',
-            nextMonth: 'ماه بعدی',
-            months: month, // Provide localized month names
-            weekdays: persianWeekdays, // Provide localized day names
-            weekdaysShort: persianWeekdaysShort // Provide localized day abbreviations
-        },
-        yearSuffix: ' سال',
-        jalali: true // Enable Jalali date support
-    });
+    $('.persian-date-picker').customPersianDate();
 });

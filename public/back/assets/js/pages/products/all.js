@@ -487,7 +487,7 @@ function addProductPrice() {
         .attr('name', 'prices[' + count + '][discount_expire]');
 
     setTimeout(() => {
-        $('.persian-date-picker').customPersianDate();
+        $('.persian-date-picker').);
         price.find('.single-price').removeClass('.animated fadeIn');
     }, 700);
 }

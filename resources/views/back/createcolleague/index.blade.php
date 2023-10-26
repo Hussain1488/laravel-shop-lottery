@@ -125,14 +125,16 @@
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <input type="date" class="form-control" name="enddate">
+                                                    <input type="text" class="form-control persian-date-picker"
+                                                        name="enddate">
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row ">
                                             <div class="col d-flex align-items-baseline justify-content-center">
-                                                <input type="submit" class="btn btn-primary my-1"value="تأیید تغییرات" />
+                                                <input type="submit" class="btn btn-primary my-1"value=" تأیید
+                                                        تغییرات" />
                                             </div>
                                             <div class="col d-flex align-items-baseline justify-content-center">
                                                 <a href="" class="btn btn-danger my-1">انصراف </a>
@@ -150,6 +152,9 @@
         </div>
     </div>
 @endsection
+@include('back.partials.plugins', [
+    'plugins' => ['persian-datepicker'],
+])
 
 @push('scripts')
     <script src="{{ asset('back/assets/js/pages/users/all.js') }}"></script>

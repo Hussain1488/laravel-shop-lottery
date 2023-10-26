@@ -191,6 +191,8 @@ if (typeof persianDate != 'undefined') {
     $('.persian-date-picker').customPersianDate();
 }
 
+$('.persian-date-picker').customPersianDate();
+
 $('#password-confirm-form').on('submit', function (e) {
     e.preventDefault();
 
