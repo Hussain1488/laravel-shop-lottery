@@ -15,6 +15,7 @@ class AddStorecreditToCreatestoreTable extends Migration
     {
         Schema::table('createstores', function (Blueprint $table) {
             $table->bigInteger('storecredit')->nullable();
+            $table->bigInteger('salesamount')->nullable();
         });
     }
 
@@ -26,7 +27,7 @@ class AddStorecreditToCreatestoreTable extends Migration
     public function down()
     {
         Schema::table('createstores', function (Blueprint $table) {
-            //
+      
         });
     }
 }
