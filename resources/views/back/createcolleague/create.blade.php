@@ -36,7 +36,7 @@
                             <!-- Tab panes -->
                             <div class="tab-content">
                                 <form action="{{ route('admin.createcolleague.store') }}" method="POST"
-                                    enctype="multipart/form-data">
+                                    enctype="multipart/form-data" id="store_create_form">
                                     @csrf
 
                                     <div id="home" class="container tab-pane active"><br>
@@ -79,7 +79,12 @@
 
                                                         <div class="col-sm">
                                                             <input multiple type="file" class="form-control mt-1 mr-1"
-                                                                name="uploaddocument[]">
+                                                                name="uploaddocument[]" value="{{ old('uploaddocument') }}">
+                                                            <span class="text-danger">
+                                                                @error('uploaddocument')
+                                                                    {{ $message }}
+                                                                @enderror
+                                                            </span>
                                                         </div>
 
 
@@ -98,7 +103,13 @@
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" name="nameofstore">
+                                                    <input type="text" class="form-control" name="nameofstore"
+                                                        value="{{ old('nameofstore') }}">
+                                                    <span class="text-danger">
+                                                        @error('nameofstore')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -110,7 +121,14 @@
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" name="addressofstore">
+                                                    <input type="text" class="form-control" name="addressofstore"
+                                                        value="{{ old('addressofstore') }}">
+                                                    <span class="text-danger">
+                                                        @error('addressofstore')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </span>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -121,9 +139,20 @@
                                                 </h5>
                                             </div>
                                             <div class="col-md-6 col-12">
-                                                <div class="d-flex align-items-center">
-                                                    <input type="text" class="form-control moneyInput" id="moneyInput"
-                                                        name="storecredit" style="margin-left: 4px"> ریال
+                                                <div class="col pb-2">
+
+                                                    <div class="d-flex align-items-center">
+                                                        <input type="text" class="form-control moneyInput"
+                                                            id="moneyInput" name="storecredit" style="margin-left: 4px"
+                                                            value="{{ old('storecredit') }} ">
+                                                        ریال
+
+                                                    </div>
+                                                    <span class="text-danger">
+                                                        @error('storecredit')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -135,7 +164,13 @@
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <input type="number" class="form-control" name="feepercentage">
+                                                    <input type="number" class="form-control" name="feepercentage"
+                                                        value="{{ old('feepercentage') }}">
+                                                    <span class="text-danger">
+                                                        @error('feepercentage')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -149,13 +184,19 @@
                                                 <div class="form-group">
                                                     <input type="text" placeholder="تاریخ پایان قرار داد را مشخص کنید."
                                                         class="form-control persian-date-picker" name="enddate"
-                                                        data-timestamps="false">
+                                                        value="{{ old('enddate') }}" data-timestamps="false">
+                                                    <span class="text-danger">
+                                                        @error('enddate')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row mb-2"
                                             style="align-items:center ;display: flex;flex-direction: column;">
-                                            <input type="submit" value="تأیید" class="btn btn-info btn-lg"
+                                            <input type="button" id="summit_button" value="تأیید"
+                                                class="btn btn-info btn-lg"
                                                 style="background-color: none; text-color:black">
                                         </div>
                                     </div>

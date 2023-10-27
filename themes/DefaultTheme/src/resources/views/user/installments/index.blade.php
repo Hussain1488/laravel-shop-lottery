@@ -149,12 +149,8 @@
 
 
                                         </div>
+
                                         <div id="menu1" class="container tab-pane fade"><br>
-                                            <h3>Menu 1</h3>
-                                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                                aliquip ex ea commodo consequat.</p>
-                                        </div>
-                                        <div id="menu2" class="container tab-pane fade"><br>
                                             <div class="row">
 
                                                 <div class="col-md-6 col-12">
@@ -216,10 +212,27 @@
                                                         <div class="row m-2">
                                                             وضعیت: پرداخت شده در تاریخ ۱۴۰۲/۸/۲۵
                                                         </div>
+                                                        <div class="row px-3">
+
+                                                            <div class="col d-flex justify-content-center">
+                                                                <a href="{{ route('front.installments.usrestatus.refuse', [$key->id]) }}"
+                                                                    class="btn btn-warning" style="">انصراف</a>
+                                                            </div>
+                                                            <div class="col d-flex justify-content-center">
+                                                                <a href="{{ route('front.installments.usrestatus.pay', [$key->id]) }}"
+                                                                    class="btn btn-success" style="">پرداخت</a>
+                                                            </div>
+
+                                                        </div>
                                                     </div>
                                                 @endif
                                             @endforeach
 
+                                        </div>
+                                        <div id="menu2" class="container tab-pane fade"><br>
+                                            <h3>Menu 1</h3>
+                                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                                aliquip ex ea commodo consequat.</p>
                                         </div>
                                         <div id="menu3" class="container tab-pane fade"><br>
                                             <h3>Menu 3</h3>
