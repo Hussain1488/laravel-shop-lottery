@@ -48,6 +48,8 @@ class CreateColleagueController extends Controller
 
         // dd($request->all());
 
+        $storecredit = intval(str_replace(',', '', $request->storecredit));
+
         $docPath = '';
         // dd($request->all());
         if ($request->file('uploaddocument')) {
@@ -66,7 +68,7 @@ class CreateColleagueController extends Controller
         // dd(json_decode($docPath, true));
 
         createstore::create([
-            'storecredit' => $request->storecredit,
+            'storecredit' => $storecredit,
             'selectperson' => $request->selectperson,
             'nameofstore' => $request->nameofstore,
             'addressofstore' => $request->addressofstore,

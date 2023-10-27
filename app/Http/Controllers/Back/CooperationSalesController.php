@@ -18,9 +18,10 @@ class CooperationSalesController extends Controller
     public function index()
     {
         $installmentsm = Makeinstallmentsm::where('seller_id', Auth::user()->id)->with('user')->get();
+        $store = createstore::where('selectperson', Auth::user()->id)->first();
         // $installmentsm = $installmentsm1->where('status', 0);
         // dd($installmentsm);
-        return view('back.cooperationsales.index', compact('installmentsm'));
+        return view('back.cooperationsales.index', compact('installmentsm', 'store'));
     }
     public function create()
     {
@@ -45,7 +46,9 @@ class CooperationSalesController extends Controller
 
         $user = User::find($request->userselected);
         $user->purchasecredit -= $Creditamount;
-        $user->save();
+
+        $store = createstore::where('selectperson', Auth::user()->id)->first();
+        $store->storecredit -= $Creditamount;
 
 
 
@@ -62,6 +65,9 @@ class CooperationSalesController extends Controller
             'paymentstatus' => 1,
             'statususer' => 0,
         ]);
+
+        $store->save();
+        $user->save();
 
         toastr()->success('قسط کاربر با موفقیت ایجاد شد.');
 

@@ -34,6 +34,7 @@
                     <section id="main-card" class="card">
                         <div class="card-header">
                             <h4 class="card-title">پنل اصلی فروشات {{ $shop->nameofstore }}</h4>
+                            <input type="hidden" value="{{ $shop->storecredit }}" name="" id="store_creadit">
                         </div>
 
                         <div id="main-card" class="card-content">
@@ -232,9 +233,6 @@
 
 
     <div class="container" dir="rtl">
-
-
-        <!-- Modal -->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
 
@@ -245,6 +243,30 @@
                     </div>
                     <div class="modal-body">
                         <p>مقدار قیمت اصلی نباید از اعتبار خریدار بیشتر باشد.<br />لطفا اصلاح کنید بعد تآیید و ارسال کنید.
+                        </p>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-default text-danger" data-dismiss="modal">بستن</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="container" dir="rtl">
+        <div class="modal fade" id="myModal2" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-danger">هشدار!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>مقدار قیمت اصلی نباید از اعتبار فروشگاه بیشتر باشد.</p>
+                        <p>
+                            اعتبار فروشگاه شما فعلا : <span id="store_creadit2" class="text-info"></span>ریال میباشد.
                         </p>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">

@@ -27,7 +27,7 @@
             <div class="content-body">
                 <section class="card">
                     <div class="card-header">
-                        <h4 class="card-title">اسم کاربر</h4>
+                        <h4 class="card-title">{{ $store->nameofstore }}</h4>
                     </div>
                     <div class="card-content">
                         <div class="container mt-3">
@@ -63,9 +63,9 @@
                                                     مقدار اعتبار خرید اقساطی
                                                 </label>
                                                 <div class="d-flex align-items-center">
-                                                    <input type="text" placeholder="100,000"
+                                                    <input readonly type="text" placeholder="100,000"
                                                         class="form-control moneyInput" id="first_name" name="first_name"
-                                                        style="margin-left: 4px">
+                                                        style="margin-left: 4px" value="{{ $store->storecredit }}">
                                                     ریال
                                                 </div>
 

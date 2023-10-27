@@ -107,22 +107,26 @@ $(document).ready(function () {
             $('#purchase_creadite').val().replace(/,/g, ''),
             10
         );
-        $('#purchase_creadite').val();
-        var main_price = parseInt($('#main_price').val().replace(/,/g, ''), 10);
-        // var intValue = parseInt($('#main_price').val().replace(/,/g, ''), 10);
 
         // console.log(creadit);
-        // console.log(main_price);
-        // Perform your condition check here
-        if (creadit >= main_price) {
-            // If the condition is met, submit the form
-            $('#user-create-form').submit();
+        $('#purchase_creadite').val();
+        var main_price = parseInt($('#main_price').val().replace(/,/g, ''), 10);
+        var store_creadit = $('#store_creadit').val();
+        // console.log(store_creadit);
+
+        if (store_creadit >= main_price) {
+            if (creadit >= main_price) {
+                $('#user-create-form').submit();
+            } else {
+                // If the condition is not met, show a confirmation dialog
+
+                $('#myModal').modal();
+
+                // Close the popup when the close button is clicked
+            }
         } else {
-            // If the condition is not met, show a confirmation dialog
-
-            $('#myModal').modal();
-
-            // Close the popup when the close button is clicked
+            $('#store_creadit2').text(store_creadit);
+            $('#myModal2').modal();
         }
     });
 
