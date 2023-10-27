@@ -27,7 +27,13 @@
             <div class="content-body">
                 <section class="card">
                     <div class="card-header">
-                        <h4 class="card-title">{{ $store->nameofstore }}</h4>
+                        @isset($store)
+                            <h4 class="card-title">{{ $store->nameofstore }}</h4>
+                        @else
+                            <h4 class="text-warning">
+                                شما فروشگاهی برای نمایش ندارید!
+                            </h4>
+                        @endisset
                     </div>
                     <div class="card-content">
                         <div class="container mt-3">
@@ -58,18 +64,20 @@
                                     <div class="row">
 
                                         <div class="col-md-6 col-12">
-                                            <div class="form-group d-flex align-items-center">
-                                                <label for="first_name" class="mr-2">
-                                                    مقدار اعتبار خرید اقساطی
-                                                </label>
-                                                <div class="d-flex align-items-center">
-                                                    <input readonly type="text" placeholder="100,000"
-                                                        class="form-control moneyInput" id="first_name" name="first_name"
-                                                        style="margin-left: 4px" value="{{ $store->storecredit }}">
-                                                    ریال
-                                                </div>
+                                            @isset($store)
+                                                <div class="form-group d-flex align-items-center">
+                                                    <label for="first_name" class="mr-2">
+                                                        مقدار اعتبار خرید اقساطی
+                                                    </label>
+                                                    <div class="d-flex align-items-center">
+                                                        <input readonly type="text" placeholder="100,000"
+                                                            class="form-control moneyInput" id="first_name" name="first_name"
+                                                            style="margin-left: 4px" value="{{ $store->storecredit }}">
+                                                        ریال
+                                                    </div>
 
-                                            </div>
+                                                </div>
+                                            @endisset
                                         </div>
                                         <div class="col-md-6 col-12">
 
