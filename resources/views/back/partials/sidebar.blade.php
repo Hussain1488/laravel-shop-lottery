@@ -95,7 +95,6 @@
                 </li>
             @endcan
 
-
             @can('createcolleague')
                 <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
                             class="feather icon-users"></i><span class="menu-title"> ایجاد همکار</span></a>
@@ -119,6 +118,24 @@
                                         class="menu-item"> ایجاد فروشگاه</span></a>
                             </li>
                         @endcan
+
+
+
+                    </ul>
+                </li>
+            @endcan
+
+            @can('installmentreports')
+                <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
+                            class="feather icon-users"></i><span class="menu-title"> گزارش گیری اقساط </span></a>
+                    <ul class="menu-content">
+                        @can('installmentreports.index')
+                            <li class="{{ active_class('admin.installmentreports.index') }}">
+                                <a href="{{ route('admin.installmentreports.index') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item">اعتبار دهی به خریدار</span></a>
+                            </li>
+                        @endcan
+
 
 
 
@@ -602,7 +619,7 @@
 
                 </ul>
             </li>
-        @endcan
+            @endcan
 
         @can('tickets')
             <li class="nav-item has-sub {{ open_class(['admin.tickets.*']) }}"><a href="#"><i
