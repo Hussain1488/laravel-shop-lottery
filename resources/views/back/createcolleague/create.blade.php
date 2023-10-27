@@ -50,11 +50,14 @@
 
                                                     <div class="d-flex">
                                                         <select type="text" class="form-control" name="selectperson">
-
-                                                            @foreach ($users as $item)
-                                                                <option value="{{ $item->id }}">
-                                                                    {{ $item->username }}</option>
-                                                            @endforeach
+                                                            @isset($users)
+                                                                @foreach ($users as $item)
+                                                                    <option value="{{ $item->id }}">
+                                                                        {{ $item->username }}</option>
+                                                                @endforeach
+                                                            @else
+                                                                <option value="">کاربری برای انتخاب وجود ندارد</option>
+                                                            @endisset
                                                         </select>
                                                     </div>
 
@@ -119,8 +122,8 @@
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="d-flex align-items-center">
-                                                    <input type="text" class="form-control" name="storecredit"
-                                                        style="padding-right: 4px"> ریال
+                                                    <input type="text" class="form-control moneyInput" id="moneyInput"
+                                                        name="storecredit" style="margin-left: 4px"> ریال
                                                 </div>
                                             </div>
                                         </div>
@@ -167,12 +170,10 @@
     </div>
 @endsection
 @include('back.partials.plugins', [
-    'plugins' => ['persian-datepicker'],
+    'plugins' => ['persian-datepicker', 'jquery.validate'],
 ])
 
 
-@push('script')
-    <script src="{{ asset('back/assets/js/scripts.js') }}?v=9"></script>
-
-    {{-- <script src="{{ asset('back/assets/js/pages/products/create.js') }}?v=3"></script> --}}
+@push('scripts')
+    <script src="{{ asset('back/assets/js/pages/createcollegue/myscript.js') }}"></script>
 @endpush

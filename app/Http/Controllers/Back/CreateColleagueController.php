@@ -24,7 +24,7 @@ class CreateColleagueController extends Controller
     {
 
         $user =  User::where('level', 'user')->orwhere('level', 'seller')->get();
-
+        $users = [];
         foreach ($user as $key) {
             if ($key->level == 'user' || ($key->level == 'seller' && !createstore::where('selectperson', $key->id)->exists())) {
                 $users[] = $key;
