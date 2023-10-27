@@ -7,7 +7,6 @@ $(document).ready(function () {
         let money_changed = money.replace(/,/g, '');
         moneyInput.val(money_changed);
 
-        // console.log(moneyInput.val());
         $('#store_create_form').submit();
     });
 
