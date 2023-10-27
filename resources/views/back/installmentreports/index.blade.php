@@ -1,7 +1,6 @@
 @extends('back.layouts.master')
 
 @section('content')
-
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -14,7 +13,9 @@
                                 <ol class="breadcrumb no-border">
                                     <li class="breadcrumb-item">مدیریت
                                     </li>
-                                    <li class="breadcrumb-item active">داشبورد
+                                    <li class="breadcrumb-item">مدیریت کاربران
+                                    </li>
+                                    <li class="breadcrumb-item active">ایجاد کاربر
                                     </li>
                                 </ol>
                             </div>
@@ -24,9 +25,158 @@
 
             </div>
             <div class="content-body">
-                 installmentsreport
+                <section class="card">
+                    <div class="card-header">
+                        {{-- @isset($store) --}}
+                        <h4 class="card-title">کاربر خریدار محسن احمد زاده</h4>
+                        {{-- @else
+                            <h4 class="text-warning">
+                                شما فروشگاهی برای نمایش ندارید!
+                            </h4>
+                        @endisset --}}
+                    </div>
+                    <div class="card-content">
+                        <div class="container mt-3">
+
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active " style="font-size: 10px" data-toggle="tab" href="#home">در
+                                        انتظار تأیید</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" style="font-size: 10px" data-toggle="tab" href="#menu1">اقساط
+                                        پرداخت
+                                        نشده</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" style="font-size: 10px" data-toggle="tab" href="#menu2">اقساط
+                                        پرداخت
+                                        شده</a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div id="home" class="container tab-pane active"><br>
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-12">
+
+
+
+                                        </div>
+                                        <div class="col-md-6 col-12">
+
+                                        </div>
+                                    </div>
+                                    {{-- @empty(false)
+                                        <section id="main-card" class="card">
+                                            <div class="card-header m-3 ">
+                                                <h3 class="text-danger">لیست فروشی برای نمایش به شما وجود ندارد</h3>
+                                            </div>
+                                        </section>
+                                    @else --}}
+                                    {{-- @foreach ($installmentsm as $key) --}}
+                                    {{-- @if ($key->status == 0) --}}
+                                    <div class="border rounded p-2 my-1">
+                                        <div class="row d-flex justify-content-center">
+                                            <h5>قسط فروشگاه:
+                                                احمدی
+                                            </h5>
+                                        </div>
+
+
+                                        <div class="row">
+                                            مبلغ کل فروش:۱۰۰۰۰
+                                        </div>
+                                        <div class="row">
+                                            ۲۵ عدد قسط به سر رسیده
+                                            ۶ هر ماه به مبلغ قسط
+                                            ۱۰۰۰۰ ریال
+                                        </div>
+
+                                        <div class="row mt-2">
+                                            <div class="col">
+                                                مقدار پیش پرداخت ۱۰۰۰۰ ریال
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- @endif --}}
+                                    {{-- @endforeach --}}
+                                    {{-- @endempty --}}
+
+
+                                </div>
+                                <div id="menu1" class="container tab-pane fade"><br>
+                                    <h3>Menu 1</h3>
+                                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                        aliquip ex ea commodo consequat.</p>
+                                </div>
+                                <div id="menu2" class="container tab-pane fade"><br>
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group d-flex align-items-center">
+                                                <h3>
+                                                    لیست اقساط تأیید شده
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+
+                                        </div>
+                                    </div>
+
+                                    {{-- @empty($installmentsm)
+                                        <section id="main-card" class="card">
+                                            <div class="card-header m-3 ">
+                                                <h3 class="text-danger">لیست فروشی برای نمایش به شما وجود ندارد</h3>
+                                            </div>
+                                        </section>
+                                    @else
+                                        @foreach ($installmentsm as $key)
+                                            @if ($key->status == 1)
+                                                <div class="border rounded p-2 my-1">
+                                                    <div class="row">
+                                                        <h5>آقای:
+                                                            {{ $key->user->first_name . ' ' . $key->user->last_name }}
+                                                        </h5>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        مبلغ کل فروش:{{ $key->Creditamount }}
+                                                    </div>
+                                                    <div class="row">
+                                                        {{ $key->numberofinstallments }} عدد قسط به سر رسیده
+                                                        {{ $key->prepaidamount }} هر ماه به مبلغ قسط
+                                                        {{ $key->amounteachinstallment }} ریال
+                                                    </div>
+
+                                                    <div class="row mt-2">
+                                                        <div class="col">
+                                                            مقدار پیش پرداخت {{ $key->prepaidamount }} ریال
+                                                        </div>
+                                                        <div class="col d-flex justify-content-end">
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @endempty --}}
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
             </div>
+            </section>
+
         </div>
     </div>
-
 @endsection
