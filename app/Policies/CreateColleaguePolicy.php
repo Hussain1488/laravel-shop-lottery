@@ -23,6 +23,10 @@ class CreateColleaguePolicy
     {
         return $user->can('createcolleague.create');
     }
+    public function store(User $user)
+    {
+        return $user->can('createcolleague.store');
+    }
     public function createcreditoperator(User $user)
     {
         return $user->can('createcolleague.createcreditoperator');

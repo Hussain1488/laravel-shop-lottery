@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\back;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Back\CreateShopRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\createstore;
@@ -43,7 +44,7 @@ class CreateColleagueController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateShopRequest $request)
     {
 
         // dd($request->all());
