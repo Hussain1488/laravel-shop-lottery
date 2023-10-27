@@ -56,6 +56,14 @@ class InstallmentsController extends Controller
     {
         //
     }
+    public function refuse()
+    {
+        dd('this is refuse');
+    }
+    public function pay()
+    {
+        dd('this is pay');
+    }
 
     /**
      * Store a newly created resource in storage.
