@@ -25,7 +25,7 @@ class CreateShopRequest extends FormRequest
     {
         return [
             'selectperson' => 'required|numeric',
-            'uploaddocument' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'uploaddocument' => 'required',
             'nameofstore' => 'required|string',
             'addressofstore' => 'required|string',
             'storecredit' => 'required|numeric',

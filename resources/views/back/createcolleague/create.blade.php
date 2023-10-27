@@ -36,7 +36,7 @@
                             <!-- Tab panes -->
                             <div class="tab-content">
                                 <form action="{{ route('admin.createcolleague.store') }}" method="POST"
-                                    enctype="multipart/form-data">
+                                    enctype="multipart/form-data" id="store_create_form">
                                     @csrf
 
                                     <div id="home" class="container tab-pane active"><br>
@@ -195,7 +195,8 @@
                                         </div>
                                         <div class="row mb-2"
                                             style="align-items:center ;display: flex;flex-direction: column;">
-                                            <input type="submit" value="تأیید" class="btn btn-info btn-lg"
+                                            <input type="button" id="summit_button" value="تأیید"
+                                                class="btn btn-info btn-lg"
                                                 style="background-color: none; text-color:black">
                                         </div>
                                     </div>

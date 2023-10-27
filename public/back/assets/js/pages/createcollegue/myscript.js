@@ -1,6 +1,18 @@
 $(document).ready(function () {
+    $('#summit_button').on('click', function (e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        let moneyInput = $('#moneyInput');
+        let money = moneyInput.val();
+        let money_changed = money.replace(/,/g, '');
+        moneyInput.val(money_changed);
+
+        // console.log(moneyInput.val());
+        $('#store_create_form').submit();
+    });
+
     $('#moneyInput').on('input', function () {
-        console.log('hey');
+        // console.log('hey');
         var input = $(this).val();
         var digits = input.replace(/\D/g, '');
         var formattedNumber = addCommas(digits);
