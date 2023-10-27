@@ -4,10 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Back\SmsController;
 use App\Http\Controllers\Back\CityController;
 
-
 use App\Http\Controllers\Back\LinkController;
 use App\Http\Controllers\Back\installmentpurchaseController;
 use App\Http\Controllers\Back\CreateColleagueController;
+use App\Http\Controllers\Back\InstallmentReportsController;
 
 use App\Http\Controllers\Back\MainController;
 use App\Http\Controllers\Back\MenuController;
@@ -116,6 +116,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('createcolleague/createcreditoperator', [CreateColleagueController::class, 'createcreditoperator'])->name('createcolleague.createcreditoperator');
     Route::post('createcolleague/storecreditoperator', [CreateColleagueController::class, 'storecreditoperator'])->name('createcolleague.storecreditoperator');
 
+    // ------------------ installment Reports
+    Route::get('installmentreports/index', [InstallmentReportsController::class, 'index'])->name('installmentreports.index');
 
 
     // ------------------ users
