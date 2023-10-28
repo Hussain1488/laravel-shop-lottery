@@ -118,6 +118,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
 
     // ------------------ installment Reports
     Route::get('installmentreports/index', [InstallmentReportsController::class, 'index'])->name('installmentreports.index');
+    Route::get('installmentreports/filter', [InstallmentReportsController::class, 'filter'])->name('installments.filter');
+    Route::get('installmentreports/filter1', [InstallmentReportsController::class, 'filter1'])->name('installments.filter1');
 
 
     // ------------------ users
