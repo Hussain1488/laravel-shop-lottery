@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Makeinstallmentsm extends Model
 {
@@ -15,5 +16,10 @@ class Makeinstallmentsm extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'userselected');
+    }
+
+    public function seller()
+    {
+        return $this->belongsTo(User::class, 'seller_id');
     }
 }
