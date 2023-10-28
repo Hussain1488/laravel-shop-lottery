@@ -1,4 +1,17 @@
 $(document).ready(function () {
+    $('.moneyInput').each(function () {
+        var input = $(this).val();
+
+        // Remove any non-digit characters (e.g., commas)
+        var digits = input.replace(/\D/g, '');
+
+        // Format the number with commas
+        var formattedNumber = addCommas(digits);
+
+        // Update the input field with the formatted number
+        $(this).val(formattedNumber);
+    });
+
     $('#each_pay').val(0);
     if ($('#cash_status').val() == 'cash') {
         $('#main_price').on('change', function () {
