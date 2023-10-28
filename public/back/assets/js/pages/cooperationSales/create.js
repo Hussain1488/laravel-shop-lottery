@@ -43,7 +43,7 @@ $(document).ready(function () {
             $('#payment').prop('disabled', true);
             $('#payment').val($('#payment option:first').val());
             var payment1 = $('#main_price').val();
-            console.log(payment1);
+            // console.log(payment1);
             $('#prepayment').val(payment1);
             $('#each_pay').val(0);
         }
@@ -116,6 +116,7 @@ $(document).ready(function () {
 
     $('#submit_button').click(function () {
         // Get the values of input fields
+
         var creadit = parseInt(
             $('#purchase_creadite').val().replace(/,/g, ''),
             10
@@ -126,6 +127,7 @@ $(document).ready(function () {
         var main_price = parseInt($('#main_price').val().replace(/,/g, ''), 10);
         var store_creadit = $('#store_creadit').val();
         // console.log(store_creadit);
+        // console.log(creadit);
 
         if (store_creadit >= main_price) {
             if (creadit >= main_price) {
