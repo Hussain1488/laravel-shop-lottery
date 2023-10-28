@@ -189,7 +189,7 @@
                                         <div class="col-md-6 col-12">
                                             <div class="form-group d-flex align-items-center">
                                                 <h3>
-                                                    لیست اقساط تأیید شده
+                                                    لیست اقساط پرداخت شده
                                                 </h3>
                                             </div>
                                         </div>
