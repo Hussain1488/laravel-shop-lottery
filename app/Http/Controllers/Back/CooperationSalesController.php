@@ -50,6 +50,7 @@ class CooperationSalesController extends Controller
         $store = createstore::where('selectperson', Auth::user()->id)->first();
         $store->storecredit -= $Creditamount;
 
+        // dd($store->id);
 
 
         Makeinstallmentsm::create([
@@ -64,6 +65,7 @@ class CooperationSalesController extends Controller
             'buyerstatus' => 1,
             'paymentstatus' => 1,
             'statususer' => 0,
+            'store_id' => $store->id,
         ]);
 
         $store->save();
