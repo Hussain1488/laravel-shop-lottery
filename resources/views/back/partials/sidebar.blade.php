@@ -146,9 +146,10 @@
                         @can('installmentreports.index')
                             <li class="{{ active_class('admin.installmentreports.index') }}">
                                 <a href="{{ route('admin.installmentreports.index') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item">اعتبار دهی به خریدار</span></a>
+                                        class="menu-item"> لیست تمامی اقساط </span></a>
                             </li>
                         @endcan
+
 
 
 
