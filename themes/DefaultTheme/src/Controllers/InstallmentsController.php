@@ -27,8 +27,7 @@ class InstallmentsController extends Controller
     public function index()
     {
 
-        $installmentsm1 = Makeinstallmentsm::where('userselected', Auth::user()->id)->with('user')->get();
-        $installmentsm = $installmentsm1->where('status', 1);
+        $installmentsm = Makeinstallmentsm::where('userselected', Auth::user()->id)->with('user')->get();
         $user = Auth::user();
 
 
@@ -41,7 +40,7 @@ class InstallmentsController extends Controller
     public function userStatus($id)
     {
         $installments = Makeinstallmentsm::find($id);
-        $installments->statususer = 1;
+        $installments->paymentstatus = 1;
         $installments->save();
 
         return redirect()->back();

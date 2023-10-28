@@ -139,7 +139,7 @@
                                                             </div>
                                                             <div class="col d-flex justify-content-end">
                                                                 <a href="{{ route('front.installments.usrestatus.edit', [$key->id]) }}"
-                                                                    class="btn btn-success" style="">تأیید</a>
+                                                                    class="btn btn-success" style="">پرداخت</a>
                                                             </div>
 
                                                         </div>

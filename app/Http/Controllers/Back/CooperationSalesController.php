@@ -62,8 +62,8 @@ class CooperationSalesController extends Controller
             'numberofinstallments' => $request->typeofpayment == 'cash' ? 1 : $request->numberofinstallments,
             'prepaidamount' => $prepaidamount,
             'amounteachinstallment' => $amounteachinstallment,
-            'buyerstatus' => 1,
-            'paymentstatus' => 1,
+            'buyerstatus' => 0,
+            'paymentstatus' => 0,
             'statususer' => 0,
             'store_id' => $store->id,
         ]);

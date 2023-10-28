@@ -49,7 +49,8 @@
                                         نشده</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" style="font-size: 10px" data-toggle="tab" href="#menu2">اقساط تأیید
+                                    <a class="nav-link" style="font-size: 10px" data-toggle="tab" href="#menu2">اقساط
+                                        پرداخت
                                         شده</a>
                                 </li>
                                 <li class="nav-item">
@@ -114,8 +115,8 @@
                                                             مقدار پیش پرداخت {{ $key->prepaidamount }} ریال
                                                         </div>
                                                         <div class="col d-flex justify-content-end">
-                                                            <a href="{{ route('admin.cooperationsales.changeStatus', [$key->id]) }}"
-                                                                class="btn btn-success" style="">تأیید</a>
+                                                            {{-- <a href="{{ route('admin.cooperationsales.changeStatus', [$key->id]) }}"
+                                                                class="btn btn-success" style="">تأیید</a> --}}
                                                         </div>
 
                                                     </div>
@@ -128,9 +129,59 @@
                                     <a href="" class="btn btn-danger my-1">انصراف از فروش</a>
                                 </div>
                                 <div id="menu1" class="container tab-pane fade"><br>
-                                    <h3>Menu 1</h3>
-                                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                        aliquip ex ea commodo consequat.</p>
+                                    <div class="row">
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group d-flex align-items-center">
+                                                <h3>
+                                                    لیست اقساط تأیید شده
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+
+                                        </div>
+                                    </div>
+                                    @empty($installmentsm)
+                                        <section id="main-card" class="card">
+                                            <div class="card-header m-3 ">
+                                                <h3 class="text-danger">لیست فروشی برای نمایش به شما وجود ندارد</h3>
+                                            </div>
+                                        </section>
+                                    @else
+                                        @foreach ($installmentsm as $key)
+                                            @if ($key->status == 1)
+                                                <div class="border rounded p-2 my-1">
+                                                    <div class="row">
+                                                        <h5>آقای:
+                                                            {{ $key->user->first_name . ' ' . $key->user->last_name }}
+                                                        </h5>
+                                                    </div>
+
+
+                                                    <div class="row">
+                                                        مبلغ کل فروش:{{ $key->Creditamount }}
+                                                    </div>
+                                                    <div class="row">
+                                                        {{ $key->numberofinstallments }} عدد قسط به سر رسیده
+                                                        {{ $key->prepaidamount }} هر ماه به مبلغ قسط
+                                                        {{ $key->amounteachinstallment }} ریال
+                                                    </div>
+
+                                                    <div class="row mt-2">
+                                                        <div class="col">
+                                                            مقدار پیش پرداخت {{ $key->prepaidamount }} ریال
+                                                        </div>
+                                                        <div class="col d-flex justify-content-end">
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @endempty
+
                                 </div>
                                 <div id="menu2" class="container tab-pane fade"><br>
                                     <div class="row">
@@ -155,7 +206,7 @@
                                         </section>
                                     @else
                                         @foreach ($installmentsm as $key)
-                                            @if ($key->status == 1)
+                                            @if ($key->paymentstatus == 1)
                                                 <div class="border rounded p-2 my-1">
                                                     <div class="row">
                                                         <h5>آقای:
