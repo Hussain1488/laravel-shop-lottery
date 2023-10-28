@@ -104,18 +104,22 @@
                                     @else
                                         @foreach ($installments as $key)
                                             @if ($key->status == 0)
-                                                {{-- <div class="row mt-3 ml-2">
-                                                    <h4>
-                                                        اقساط فروشگاه: {{ $key->seller->first_name }}
-                                                    </h4>
-                                                </div> --}}
-
-
-
                                                 <div class="border rounded p-2 my-1">
-                                                    <div class="row d-flex justify-content-center">
-                                                        <h5>قسط آقای: {{ $key->user->username }}
+                                                    <div class="row d-flex justify-content-around">
+                                                        <h5>
+                                                            قسط فروشگاه: {{ $key->store->nameofstore }}
                                                         </h5>
+                                                        <form action="{{ route('admin.installments.filter') }}"
+                                                            method="get">
+                                                            @csrf
+                                                            <input type="hidden" value="{{ $key->user->username }}"
+                                                                name="filter" id="">
+                                                            <button class="btn"
+                                                                style="border:none; background-color:none" type="submit">
+                                                                <h5>قسط آقای: {{ $key->user->username }}
+                                                                </h5>
+                                                            </button>
+                                                        </form>
                                                     </div>
 
 
@@ -193,9 +197,21 @@
 
 
                                                 <div class="border rounded p-2 my-1">
-                                                    <div class="row d-flex justify-content-center">
-                                                        <h5>قسط آقای: {{ $key->user->username }}
+                                                    <div class="row d-flex justify-content-around">
+                                                        <h5>
+                                                            قسط فروشگاه: {{ $key->store->nameofstore }}
                                                         </h5>
+                                                        <form action="{{ route('admin.installments.filter1') }}"
+                                                            method="get">
+                                                            @csrf
+                                                            <input type="hidden" value="{{ $key->user->username }}"
+                                                                name="filter1" id="">
+                                                            <button class="btn"
+                                                                style="border:none; background-color:none" type="submit">
+                                                                <h5>قسط آقای: {{ $key->user->username }}
+                                                                </h5>
+                                                            </button>
+                                                        </form>
                                                     </div>
 
 

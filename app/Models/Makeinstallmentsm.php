@@ -22,4 +22,8 @@ class Makeinstallmentsm extends Model
     {
         return $this->belongsTo(User::class, 'seller_id');
     }
+    public function store()
+    {
+        return $this->belongsTo(createstore::class, 'store_id');
+    }
 }

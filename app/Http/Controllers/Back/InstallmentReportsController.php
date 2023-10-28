@@ -18,8 +18,9 @@ class InstallmentReportsController extends Controller
     {
 
         $payment_stat = 'wait';
-        $installments = Makeinstallmentsm::where('status', 0)->with("seller", "user")->get();
-        $installments1 = Makeinstallmentsm::where('status', 1)->with("seller", "user")->get();
+        $installments = Makeinstallmentsm::where('status', 0)->with("store", "user")->get();
+        $installments1 = Makeinstallmentsm::where('status', 1)->with("store", "user")->get();
+
         // dd($installments);
 
         return view('back.installmentreports.index', compact('installments', 'installments1', 'payment_stat'));
@@ -38,9 +39,10 @@ class InstallmentReportsController extends Controller
     }
     public function filter(Request $request)
     {
+        // dd($request->all());
         $payment_stat = 'wait';
 
-        $all_installments = Makeinstallmentsm::with("seller", "user")->get();
+        $all_installments = Makeinstallmentsm::with("store", "user")->get();
 
         $user = User::where('username', 'like', '%' . $request->filter . '%')->get();
         $installments = $all_installments->where('status', 0)->whereIn('userselected', $user->pluck('id'))->all();
@@ -48,16 +50,16 @@ class InstallmentReportsController extends Controller
         if ($user->isEmpty()) {
 
             toastr()->warning('قسطی با شماره وارد شده یافت نشد.');
-            $installments = Makeinstallmentsm::where('status', 0)->with("seller", "user")->get();
-            $installments1 = Makeinstallmentsm::where('status', 1)->with("seller", "user")->get();
+            $installments = Makeinstallmentsm::where('status', 0)->with("store", "user")->get();
+            $installments1 = Makeinstallmentsm::where('status', 1)->with("store", "user")->get();
             return view('back.installmentreports.index', compact('installments', 'installments1', 'payment_stat'));
         } else {
-            $installments1 = Makeinstallmentsm::where('status', 1)->with("seller", "user")->get();
+            $installments1 = Makeinstallmentsm::where('status', 1)->with("store", "user")->get();
             return view('back.installmentreports.index', compact('installments', 'installments1', 'payment_stat'));
             // dd($installments);
         }
 
-        // $installments = $all_installments->whereIn("userselecter, seller_id", )->get();
+        // $installments = $all_installments->whereIn("userselecter, store_id", )->get();
     }
     public function filter1(Request $request)
     {
@@ -66,7 +68,7 @@ class InstallmentReportsController extends Controller
         $payment_stat = 'not_paid';
 
         $payment_stat = 'not_paid';
-        $all_installments = Makeinstallmentsm::with("seller", "user")->get();
+        $all_installments = Makeinstallmentsm::with("store", "user")->get();
 
         $user = User::where('username', 'like', '%' . $request->filter1 . '%')->get();
         // dd($user);
@@ -75,11 +77,11 @@ class InstallmentReportsController extends Controller
         if (empty($installments1)) {
 
             toastr()->warning('قسطی با شماره وارد شده یافت نشد.');
-            $installments = Makeinstallmentsm::where('status', 0)->with("seller", "user")->get();
-            $installments1 = Makeinstallmentsm::where('status', 1)->with("seller", "user")->get();
+            $installments = Makeinstallmentsm::where('status', 0)->with("store", "user")->get();
+            $installments1 = Makeinstallmentsm::where('status', 1)->with("store", "user")->get();
             return view('back.installmentreports.index', compact('installments', 'installments1', 'payment_stat'));
         } else {
-            $installments = Makeinstallmentsm::where('status', 0)->with("seller", "user")->get();
+            $installments = Makeinstallmentsm::where('status', 0)->with("store", "user")->get();
             return view('back.installmentreports.index', compact('installments', 'installments1', 'payment_stat'));
             // dd($installments);
         }
