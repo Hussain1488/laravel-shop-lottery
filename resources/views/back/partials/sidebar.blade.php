@@ -119,6 +119,13 @@
                             </li>
                         @endcan
 
+                        @can('createcolleague.createdocument')
+                            <li class="{{ active_class('admin.createcolleague.createdocument') }}">
+                                <a href="{{ route('admin.createcolleague.createdocument') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item"> ایجاد سند مالی </span></a>
+                            </li>
+                        @endcan
+
 
 
                     </ul>

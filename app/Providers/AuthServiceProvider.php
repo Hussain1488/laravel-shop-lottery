@@ -70,7 +70,10 @@ class AuthServiceProvider extends ServiceProvider
                 return $user->level == 'creator'; // Customize this condition as needed.
             });
             Gate::define('createcolleague.createcreditoperator', function ($user) {
-                return $user->level == 'creator'  || $user->level == 'seller'; // Customize this condition as needed.
+                return $user->level == 'creator' ; // Customize this condition as needed.
+            });
+            Gate::define('createcolleague.createdocument', function ($user) {
+                return $user->level == 'creator' ; // Customize this condition as needed.
             });
            // installmentreports
            Gate::define('installmentreports', function ($user) {

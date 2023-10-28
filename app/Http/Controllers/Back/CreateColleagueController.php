@@ -21,6 +21,12 @@ class CreateColleagueController extends Controller
         $users = User::where('level', 'user')->get();
         return view('back.createcolleague.index', compact('users'));
     }
+    public function createdocument()
+    {
+        return view('back.createcolleague.createdocument');
+
+    }
+
     public function create()
     {
 
@@ -76,6 +82,7 @@ class CreateColleagueController extends Controller
             'feepercentage' => $request->feepercentage,
             'enddate' => $request->enddate,
             'uploaddocument' => $docPath,
+
         ]);
 
         $users = User::where('level', 'user')->get();
