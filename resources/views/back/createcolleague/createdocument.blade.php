@@ -72,11 +72,11 @@
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
                                                     <select type="text" class="form-control" name="userselected">
-                                                        {{-- @foreach ($users as $item)
+                                                        @foreach ($users as $item)
                                                             <option value="{{ $item->id }}">{{ $item->username }}
                                                             </option>
-                                                        @endforeach --}}
-                                                        <option value="">Hussian</option>
+                                                        @endforeach
+                                                        {{-- <option value="">Hussian</option> --}}
 
                                                     </select>
                                                 </div>
@@ -148,3 +148,12 @@
         </div>
     </div>
 @endsection
+
+@include('back.partials.plugins', [
+    'plugins' => ['persian-datepicker', 'jquery.validate'],
+])
+
+
+@push('scripts')
+    <script src="{{ asset('back/assets/js/pages/createcollegue/myscript.js') }}"></script>
+@endpush

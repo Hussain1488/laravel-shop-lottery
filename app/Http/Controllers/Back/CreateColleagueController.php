@@ -23,8 +23,8 @@ class CreateColleagueController extends Controller
     }
     public function createdocument()
     {
-        return view('back.createcolleague.createdocument');
-
+        $users = User::where('level', 'user')->get();
+        return view('back.createcolleague.createdocument', compact('users'));
     }
 
     public function create()

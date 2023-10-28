@@ -10,7 +10,7 @@ $(document).ready(function () {
         $('#store_create_form').submit();
     });
 
-    $('#moneyInput').on('input', function () {
+    $('.moneyInput').on('input', function () {
         // console.log('hey');
         var input = $(this).val();
         var digits = input.replace(/\D/g, '');
