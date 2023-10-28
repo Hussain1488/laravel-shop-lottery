@@ -78,8 +78,9 @@
                                                     <div class="form-group">
                                                         <label>سرچ بر اساس شماره تلفن</label>
                                                         <select type="text" class="form-control" id="user_select"
-                                                            name="userselected">
-                                                            <option value="">کاربر را انتخاب کنید</option>
+                                                            name="userselected" value="{{ old('userselected') }}">
+                                                            <option value="0">کاربر
+                                                                را انتخاب کنید</option>
                                                             @foreach ($users as $item)
                                                                 <option creadit_attr="{{ $item->purchasecredit }}"
                                                                     value="{{ $item->id }}">
@@ -88,6 +89,11 @@
                                                             @endforeach
 
                                                         </select>
+                                                        @error('userselected')
+                                                            <span class="text-danger">
+                                                                {{ $message }}
+                                                            </span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -104,8 +110,16 @@
 
                                                             <input id="main_price" type="text" placeholder="100,000"
                                                                 class="form-control moneyInput" id="first_name"
-                                                                name="Creditamount" style="margin-left: 4px"> ریال
+                                                                name="Creditamount" style="margin-left: 4px"
+                                                                value="{{ old('Creditamount') }}"> ریال
                                                         </div>
+                                                        @error('Creditamount')
+                                                            <span class="text-danger">
+                                                                {{ $message }}
+                                                            </span>
+                                                        @enderror
+
+
 
                                                     </div>
                                                 </div>
@@ -124,6 +138,11 @@
                                                             <option value="cash">نقدی</option>
                                                             <option value="installment">اقساط</option>
                                                         </select>
+                                                        @error('typeofpayment')
+                                                            <span class="text-danger">
+                                                                {{ $message }}
+                                                            </span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,25 +159,47 @@
                                                             name="numberofinstallments">
                                                             <option id="one_month" selected value="1" selected>۱ ماه
                                                             </option>
-                                                            <option value="2">۲ ماه</option>
-                                                            <option value="3">۳ ماه</option>
-                                                            <option value="4">۴ ماه</option>
-                                                            <option value="5">۵ ماه</option>
-                                                            <option value="6">۶ ماه</option>
-                                                            <option value="7">۷ ماه</option>
-                                                            <option value="8">۸ ماه</option>
-                                                            <option value="9">۹ ماه</option>
-                                                            <option value="10">۱۰ ماه</option>
-                                                            <option value="11">۱۱ ماه</option>
-                                                            <option value="12">۱۲ ماه</option>
-                                                            <option value="13">۱۳ ماه</option>
-                                                            <option value="14">۱۴ ماه</option>
-                                                            <option value="15">۱۵ ماه</option>
-                                                            <option value="16">۱۶ ماه</option>
-                                                            <option value="17">۱۷ ماه</option>
-                                                            <option value="18">۱۸ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 2 ? 'selected' : '' }}
+                                                                value="2">۲ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 3 ? 'selected' : '' }}
+                                                                value="3">۳ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 4 ? 'selected' : '' }}
+                                                                value="4">۴ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 5 ? 'selected' : '' }}
+                                                                value="5">۵ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 6 ? 'selected' : '' }}
+                                                                value="6">۶ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 7 ? 'selected' : '' }}
+                                                                value="7">۷ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 8 ? 'selected' : '' }}
+                                                                value="8">۸ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 9 ? 'selected' : '' }}
+                                                                value="9">۹ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 10 ? 'selected' : '' }}
+                                                                value="10">۱۰ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 11 ? 'selected' : '' }}
+                                                                value="11">۱۱ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 12 ? 'selected' : '' }}
+                                                                value="12">۱۲ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 13 ? 'selected' : '' }}
+                                                                value="13">۱۳ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 14 ? 'selected' : '' }}
+                                                                value="14">۱۴ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 15 ? 'selected' : '' }}
+                                                                value="15">۱۵ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 16 ? 'selected' : '' }}
+                                                                value="16">۱۶ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 17 ? 'selected' : '' }}
+                                                                value="17">۱۷ ماه</option>
+                                                            <option {{ old('numberofinstallments') == 18 ? 'selected' : '' }}
+                                                                value="18">۱۸ ماه</option>
 
                                                         </select>
+                                                        @error('numberofinstallments')
+                                                            <span class="text-danger">
+                                                                {{ $message }}
+                                                            </span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -177,6 +218,11 @@
                                                                 style="margin-left: 4px">
                                                             ریال
                                                         </div>
+                                                        @error('prepaidamount')
+                                                            <span class="text-danger">
+                                                                {{ $message }}
+                                                            </span>
+                                                        @enderror
 
                                                     </div>
                                                 </div>
@@ -196,6 +242,11 @@
                                                                 style="margin-left: 4px">
                                                             ریال
                                                         </div>
+                                                        @error('amounteachinstallment')
+                                                            <span class="text-danger">
+                                                                {{ $message }}
+                                                            </span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                             </div>
