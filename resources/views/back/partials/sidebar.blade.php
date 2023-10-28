@@ -126,6 +126,13 @@
                             </li>
                         @endcan
 
+                        @can('createcolleague.resalecredit')
+                            <li class="{{ active_class('admin.createcolleague.resalecredit') }}">
+                                <a href="{{ route('admin.createcolleague.resalecredit') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item"> ایجاد سند مالی </span></a>
+                            </li>
+                        @endcan
+
 
 
                     </ul>
