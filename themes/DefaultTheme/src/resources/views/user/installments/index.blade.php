@@ -86,7 +86,7 @@
                                                         <div class="d-flex">
                                                             <input readonly type="text" class="form-control moneyInput"
                                                                 id="first_name" name="first_name"
-                                                                value="{{ $user->purchasecredit }}">
+                                                                value="{{ $user->purchasecredit != null ? $user->purchasecredit : 0 }}">
                                                         </div>
 
                                                     </div>
@@ -103,7 +103,7 @@
                                                         <div class="d-flex ">
                                                             <input readonly type="text" class="form-control moneyInput"
                                                                 id="first_name" name="first_name"
-                                                                value="{{ $user->inventory }}"
+                                                                value="{{ $user->inventory != null ? $user->inventory : 0 }}"
                                                                 style="margin-left: 4px"><span> ریال</span>
                                                         </div>
 
@@ -161,7 +161,7 @@
                                                         <div class="d-flex">
                                                             <input readonly type="text" class="form-control moneyInput"
                                                                 id="first_name" name="first_name"
-                                                                value="{{ $user->purchasecredit }}">
+                                                                value="{{ $user->purchasecredit != null ? $user->purchasecredit : 0 }}">
                                                         </div>
 
                                                     </div>
@@ -178,7 +178,7 @@
                                                         <div class="d-flex ">
                                                             <input readonly type="text" class="form-control moneyInput"
                                                                 id="first_name" name="first_name"
-                                                                value="{{ $user->inventory }}">
+                                                                value="{{ $user->inventory != null ? $user->inventory : 0 }}">
                                                         </div>
 
                                                     </div>
