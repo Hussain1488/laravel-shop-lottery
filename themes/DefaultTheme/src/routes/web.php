@@ -96,7 +96,8 @@ Route::group(['as' => 'front.'], function () {
         // ------------------ wallet
         Route::resource('wallet', WalletController::class)->only(['index', 'show', 'create', 'store']);
         Route::resource('installments', InstallmentsController::class)->only(['index', 'show', 'create', 'store']);
-        Route::get('installments/staus/{id}', [InstallmentsController::class, 'userStatus'])->name('installments.usrestatus.edit');
+        Route::get('installments/userstatus/{id}', [InstallmentsController::class, 'userStatus'])->name('installments.usrestatus.edit');
+        Route::get('installments/payment/{id}', [InstallmentsController::class, 'paymentStatus'])->name('installments.paymentStatus.edit');
         Route::get('installments/refuse/{id}', [InstallmentsController::class, 'refuse'])->name('installments.usrestatus.refuse');
         Route::get('installments/pay/{id}', [InstallmentsController::class, 'pay'])->name('installments.usrestatus.pay');
 

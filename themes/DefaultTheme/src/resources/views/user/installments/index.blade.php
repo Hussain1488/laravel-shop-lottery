@@ -183,7 +183,7 @@
 
                                                 </div>
                                             </div>
-                                            @foreach ($installmentsm as $key)
+                                            {{-- @foreach ($installmentsm as $key)
                                                 @if ($key->statususer == 1)
                                                     <div class="border rounded p-2 my-1">
                                                         <div class="row text-center " style="flex-direction: column;">
@@ -221,6 +221,71 @@
 
                                                         </div>
                                                     </div>
+                                                @endif
+                                            @endforeach --}}
+                                            @foreach ($installmentsm as $key)
+                                                @if ($key->statususer == 1 && $key->paymentstatus == 0)
+                                                    @php
+                                                        $updated_date = \Carbon\Carbon::parse($key->datepayment);
+
+                                                    @endphp
+                                                    @for ($i = 0; $i < $key->numberofinstallments; $i++)
+                                                        <div class="border rounded p-2 my-1">
+                                                            <div class="row text-center " style="flex-direction: column;">
+                                                                <h5>
+                                                                    اقساط فروشگاه:
+                                                                    {{ $key->store->nameofstore != '' ? $key->store->nameofstore : '...' }}
+                                                                </h5>
+                                                            </div>
+
+                                                            <div class="row my-1">
+                                                                <div class="col-5">
+                                                                    1402/2/2
+                                                                </div>
+                                                                <div class="col-7">
+                                                                    مبلغ قسط {{ $key->Creditamount }} ریال
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="row m-2">
+                                                                مقدار جریمه دیر کرد ۰ ریال
+                                                            </div>
+                                                            <div>
+
+                                                            </div>
+
+                                                            <div class="row m-2">
+                                                                وضعیت: پرداخت شده در تاریخ ۱۴۰۲/۸/۲۵
+                                                            </div>
+                                                            <div class="row m-2">
+                                                                اقساط:
+                                                            </div>
+
+                                                            <div class="row my-1 mx-2 p-1 d-flex justify-content-between">
+                                                                @php
+                                                                    $updated_date = \Carbon\Carbon::parse($updated_date)
+                                                                        ->addMonth()
+                                                                        ->format('Y/m/d');
+                                                                @endphp
+                                                                <div>
+
+                                                                    <div class="row m-2">
+                                                                        قسط شماره {{ $i + 1 }} به سر رسید تاریخ:
+                                                                        {{ $updated_date }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="">
+
+
+                                                                    <a href="{{ route('front.installments.paymentStatus.edit', [$key->id]) }}"
+                                                                        class="btn btn-info btn-sm"
+                                                                        style="">پرداخت</a>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    @endfor
                                                 @endif
                                             @endforeach
 
@@ -317,9 +382,9 @@
                                                                 <div class="">
 
 
-                                                                    <a href="{{ route('front.installments.usrestatus.pay', [$key->id]) }}"
+                                                                    {{-- <a href="{{ route('front.installments.usrestatus.pay', [$key->id]) }}"
                                                                         class="btn btn-info btn-sm"
-                                                                        style="">پرداخت</a>
+                                                                        style="">پرداخت</a> --}}
                                                                 </div>
                                                             </div>
 
