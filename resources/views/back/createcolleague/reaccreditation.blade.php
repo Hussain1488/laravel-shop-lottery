@@ -51,9 +51,12 @@
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
-                                                    <select type="text" class="form-control" name="userselected">
+                                                    <select dir="rtl" type="text" class="form-control"
+                                                        name="userselected">
                                                         @foreach ($store as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->nameofstore }}
+                                                            <option value="{{ $item->id }}">
+                                                                فروشگاه:
+                                                                {{ $item->user->username . ' ' . $item->nameofstore }}
                                                             </option>
                                                         @endforeach
                                                         <option value="">Hussian</option>
