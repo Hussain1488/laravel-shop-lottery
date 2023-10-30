@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Events\OrderPaid;
 use App\Events\WalletAmountIncreased;
 use App\Http\Controllers\Controller;
+use App\Models\banktransaction;
 use App\Models\Gateway;
 use App\Models\Transaction;
 use App\Models\WalletHistory;
@@ -74,6 +75,10 @@ class InstallmentsController extends Controller
     public function paymentStatus($id, $st)
     {
 
+        $bank = new banktransaction();
+
+        $recordCount = banktransaction::count();
+
         // dd($id, $st);
         $installments = Makeinstallmentsm::find($st);
         $insta_dateils = installmentdetails::find($id);
@@ -81,6 +86,25 @@ class InstallmentsController extends Controller
         $installments->paymentstatus = 1;
         $insta_dateils->save();
         $installments->save();
+
+        if ($recordCount > 0) {
+            $lastRecord = banktransaction::latest()->first();
+            $bank = new banktransaction();
+            $bank->create([
+                'namebank' => 'Mellat',
+                'bankbalance' => $lastRecord->bankbalance - $insta_dateils->installmentprice,
+                'transactionprice' => $insta_dateils->installmentprice,
+                'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+            ]);
+        } else {
+            $bank = new banktransaction();
+            $bank->create([
+                'namebank' => 'Mellat',
+                'bankbalance' => -$insta_dateils->installmentprice,
+                'transactionprice' => $insta_dateils->installmentprice,
+                'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+            ]);
+        }
         // toster->success('قسط شما با موفقیت پرداخت شد.');
 
         return redirect()->back();
