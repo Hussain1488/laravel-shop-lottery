@@ -25,6 +25,16 @@ class InstallmentReportsController extends Controller
 
         return view('back.installmentreports.index', compact('installments', 'installments1', 'payment_stat'));
     }
+    public function banktransaction()
+    {
+
+
+
+        // dd($installments);
+
+        return view('back.installmentreports.banktransaction');
+    }
+
 
 
     /**

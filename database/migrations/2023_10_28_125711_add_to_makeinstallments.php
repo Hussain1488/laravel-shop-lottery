@@ -28,7 +28,7 @@ class AddToMakeinstallments extends Migration
     public function down()
     {
         Schema::table('makeinstallments', function (Blueprint $table) {
-            //
+            
         });
     }
 }
