@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\back;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Back\CreateColleagueIndexRequest;
 use App\Http\Requests\Back\CreateShopRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\createstore;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 class CreateColleagueController extends Controller
 {
@@ -105,7 +107,12 @@ class CreateColleagueController extends Controller
 
     public function storecreditoperator(Request $request)
     {
-        // dd($request->user);
+
+        $request->validate([
+            'user' => 'required',
+        ], [
+            'user.required' => 'فیلد کاربر الزامی است',
+        ]);
 
         $user = User::find($request->user);
 
@@ -120,10 +127,10 @@ class CreateColleagueController extends Controller
         return view('back.createcolleague.createcreditoperator', compact('users'));
     }
 
-    public function colleagueCreditStore(Request $request)
+    public function colleagueCreditStore(CreateColleagueIndexRequest $request)
     {
 
-
+        // dd('hey');
         $docPath = '';
         // dd($request->all());
         if ($request->file('documents')) {
@@ -136,13 +143,13 @@ class CreateColleagueController extends Controller
             $docPath = json_encode($paths);
         }
         // dd($docPath);
-        $purchasecredit = intval(str_replace(',', '', $request->purchasecredit));
-        $inventory = intval(str_replace(',', '', $request->inventory));
+        // $purchasecredit = intval(str_replace(',', '', $request->purchasecredit));
+        // $inventory = intval(str_replace(',', '', $request->inventory));
 
 
         $userUpdate = User::find($request->userselected);
-        $userUpdate->purchasecredit = $purchasecredit;
-        $userUpdate->inventory = $inventory;
+        $userUpdate->purchasecredit = $request->purchasecredit;
+        $userUpdate->inventory = $request->inventory;
         $userUpdate->enddate = $request->enddate;
         $userUpdate->documents = $docPath;
         // dd($userUpdate);
@@ -150,6 +157,33 @@ class CreateColleagueController extends Controller
 
         toastr()->success('اعتبار دهی به کاربر با موفقیت انجام شد.');
 
+
+        return redirect()->back();
+    }
+
+
+
+    public function reaccreditationIndex()
+    {
+        $store = createstore::get();
+        return view('back.createcolleague.reaccreditation', compact('store'));
+        // dd('reaccreditationIndex');
+    }
+
+
+
+
+
+    public function reaccreditationStore(Request $request)
+    {
+        $store = createstore::find($request->userselected);
+        // dd($store);
+        $ex_credit = $store->storecredit;
+        // dd($ex_credit);
+        $store->storecredit = $request->storecredit + $ex_credit;
+        $store->save();
+
+        toastr()->success('افزایش اعتبار فروشگاه با موفقیت انجام شد.');
 
         return redirect()->back();
     }
@@ -178,7 +212,6 @@ class CreateColleagueController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**

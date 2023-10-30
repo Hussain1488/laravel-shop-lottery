@@ -99,10 +99,11 @@
                 <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
                             class="feather icon-users"></i><span class="menu-title"> ایجاد همکار</span></a>
                     <ul class="menu-content">
-                      @can('createcolleague.createcreditoperator')
+                        @can('createcolleague.createcreditoperator')
                             <li class="{{ active_class('admin.createcolleague.createcreditoperator') }}">
-                                <a href="{{ route('admin.createcolleague.createcreditoperator') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item">  ایجاد اپراتور اعتباردهی </span></a>
+                                <a href="{{ route('admin.createcolleague.createcreditoperator') }}"><i
+                                        class="feather icon-circle"></i><span class="menu-item"> ایجاد اپراتور اعتباردهی
+                                    </span></a>
                             </li>
                         @endcan
                         @can('createcolleague.index')
@@ -121,17 +122,18 @@
 
                         @can('createcolleague.createdocument')
                             <li class="{{ active_class('admin.createcolleague.createdocument') }}">
-                                <a href="{{ route('admin.createcolleague.createdocument') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item"> ایجاد سند مالی </span></a>
+                                <a href="{{ route('admin.createcolleague.createdocument') }}"><i
+                                        class="feather icon-circle"></i><span class="menu-item"> ایجاد سند مالی </span></a>
                             </li>
                         @endcan
 
-                        @can('createcolleague.resalecredit')
-                            <li class="{{ active_class('admin.createcolleague.resalecredit') }}">
-                                <a href="{{ route('admin.createcolleague.resalecredit') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item"> ایجاد سند مالی </span></a>
+                        @can('createcolleague.reaccreditation.index')
+                            <li class="{{ active_class('admin.createcolleague.reaccreditation.index') }}">
+                                <a href="{{ route('admin.createcolleague.reaccreditation.index') }}"><i
+                                        class="feather icon-circle"></i><span class="menu-item">افزایش اعتبار فروشگاه</span></a>
                             </li>
                         @endcan
+
 
 
 
@@ -145,8 +147,8 @@
                     <ul class="menu-content">
                         @can('installmentreports.index')
                             <li class="{{ active_class('admin.installmentreports.index') }}">
-                                <a href="{{ route('admin.installmentreports.index') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item"> لیست تمامی اقساط </span></a>
+                                <a href="{{ route('admin.installmentreports.index') }}"><i
+                                        class="feather icon-circle"></i><span class="menu-item"> لیست تمامی اقساط </span></a>
                             </li>
                         @endcan
 
@@ -179,8 +181,8 @@
 
                         @can('posts.category')
                             <li class="{{ active_class('admin.posts.categories.index') }}">
-                                <a href="{{ route('admin.posts.categories.index') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item">دسته بندی ها</span></a>
+                                <a href="{{ route('admin.posts.categories.index') }}"><i
+                                        class="feather icon-circle"></i><span class="menu-item">دسته بندی ها</span></a>
                             </li>
                         @endcan
                     </ul>
@@ -188,8 +190,10 @@
             @endcan
 
             @can('products')
-                <li class="nav-item has-sub {{ open_class(['admin.products.*', 'admin.brands.*', 'admin.sizetypes.*']) }}">
-                    <a href="#"><i class="feather icon-shopping-cart"></i><span class="menu-title"> محصولات</span></a>
+                <li
+                    class="nav-item has-sub {{ open_class(['admin.products.*', 'admin.brands.*', 'admin.sizetypes.*']) }}">
+                    <a href="#"><i class="feather icon-shopping-cart"></i><span class="menu-title">
+                            محصولات</span></a>
                     <ul class="menu-content">
                         @can('products.index')
                             <li class="{{ active_class('admin.products.index') }}">
@@ -634,7 +638,7 @@
 
                 </ul>
             </li>
-            @endcan
+        @endcan
 
         @can('tickets')
             <li class="nav-item has-sub {{ open_class(['admin.tickets.*']) }}"><a href="#"><i

@@ -9,6 +9,17 @@ $(document).ready(function () {
 
         $('#store_create_form').submit();
     });
+    $('#summit_button1').on('click', function (e) {
+        e.preventDefault(); // Prevent the default form submission
+        // console.log('hey');
+        let moneyInput = $('#recredition_amount');
+        let money = moneyInput.val();
+        let money_changed = money.replace(/,/g, '');
+        moneyInput.val(money_changed);
+        // console.log(moneyInput.val());
+
+        $('#reaccreditationStoreForm').submit();
+    });
 
     $('.moneyInput').on('input', function () {
         // console.log('hey');
