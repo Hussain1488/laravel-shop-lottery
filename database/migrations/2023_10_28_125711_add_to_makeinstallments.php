@@ -15,7 +15,7 @@ class AddToMakeinstallments extends Migration
     {
         Schema::table('makeinstallmentsms', function (Blueprint $table) {
             $table->unsignedBigInteger('store_id')->nullable();
-            $table->foreign('store_id')->references('id')->on('createstores');
+            $table->foreign('store_id')->references('id')->on('createstores')->onDelete('cascade');
             $table->string('datepayment')->nullable();
         });
     }
@@ -28,7 +28,6 @@ class AddToMakeinstallments extends Migration
     public function down()
     {
         Schema::table('makeinstallments', function (Blueprint $table) {
-            
         });
     }
 }
