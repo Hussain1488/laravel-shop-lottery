@@ -18,4 +18,8 @@ class InstallmentReportsPolicy
     {
         return $user->can('installmentreports.index');
     }
+    public function banktransaction(User $user)
+    {
+        return $user->can('installmentreports.banktransaction');
+    }
 }
