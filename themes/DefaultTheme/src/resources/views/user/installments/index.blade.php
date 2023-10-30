@@ -272,7 +272,9 @@
                                                         <div class="border rounded p-2 my-1">
                                                             <div class="row text-center " style="flex-direction: column;">
                                                                 <h5>
-                                                                    اقساط فروشگاه: {{ $key->store->nameofstore }} </h5>
+                                                                    اقساط فروشگاه:
+                                                                    {{ $key->store->nameofstore != '' ? $key->store->nameofstore : '...' }}
+                                                                </h5>
                                                             </div>
 
                                                             <div class="row my-1">
