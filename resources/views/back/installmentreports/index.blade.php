@@ -107,7 +107,8 @@
                                                 <div class="border rounded p-2 my-1">
                                                     <div class="row d-flex justify-content-around">
                                                         <h5>
-                                                            قسط فروشگاه: {{ $key->store->nameofstore }}
+                                                            قسط فروشگاه:
+                                                            {{ $key->store->nameofstore != '' ? $key->store->nameofstore : '...' }}
                                                         </h5>
                                                         <form action="{{ route('admin.installments.filter') }}"
                                                             method="get">
