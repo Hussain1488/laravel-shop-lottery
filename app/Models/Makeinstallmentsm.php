@@ -12,7 +12,6 @@ class Makeinstallmentsm extends Model
     protected $table = 'makeinstallmentsms';
     protected $guarded = [];
 
-
     public function user()
     {
         return $this->belongsTo(User::class, 'userselected');
@@ -22,8 +21,14 @@ class Makeinstallmentsm extends Model
     {
         return $this->belongsTo(User::class, 'seller_id');
     }
+
     public function store()
     {
         return $this->belongsTo(createstore::class, 'store_id');
+    }
+
+    public function installments()
+    {
+        return $this->hasMany(installmentdetails::class, 'installment_id');
     }
 }

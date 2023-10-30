@@ -2,6 +2,7 @@
 
 namespace Themes\DefaultTheme\src\Controllers;
 
+use App\Models\installmentdetails;
 use App\Models\Makeinstallmentsm;
 use Illuminate\Http\Request;
 use App\Events\OrderPaid;
@@ -30,7 +31,8 @@ class InstallmentsController extends Controller
 
         // $jalaliNow = Jalalian::now();
         // dd($jalaliNow->format('Y/m/d'));
-        $installmentsm = Makeinstallmentsm::where('userselected', Auth::user()->id)->with('store', 'user')->get();
+        $installmentsm = Makeinstallmentsm::where('userselected', Auth::user()->id)->with('installments', 'store', 'user')->get();
+        // dd($installmentsm);
         $user = Auth::user();
 
 
@@ -42,8 +44,26 @@ class InstallmentsController extends Controller
 
     public function userStatus($id)
     {
+
+        // dd($id);
         $installments = Makeinstallmentsm::find($id);
         $installments->statususer = 1;
+
+        $Insta_dateils = new installmentdetails();
+
+        $jalali_date_now = Jalalian::now();
+        // $new_date = $jalali_date_now->addMonths(1)->format('Y-m-d');
+        for ($i = 0; $i < $installments->numberofinstallments; $i++) {
+            $dutedate = $jalali_date_now->addMonths($i + 1)->format('Y-m-d');
+            $Insta_dateils->create([
+                'installment_id' => $installments->id,
+                'installmentnumber' => $i + 1,
+                'installmentprice' => $installments->amounteachinstallment,
+                'paymentstatus' => 0,
+                'duedate' => $dutedate,
+            ]);
+        }
+
         $jalaliNow = Jalalian::now()->format('Y-m-d');
         $installments->datepayment = $jalaliNow;
         $installments->save();
@@ -51,14 +71,17 @@ class InstallmentsController extends Controller
 
         return redirect()->back();
     }
-    public function paymentStatus($id)
+    public function paymentStatus($id, $st)
     {
-        $installments = Makeinstallmentsm::find($id);
+
+        // dd($id, $st);
+        $installments = Makeinstallmentsm::find($st);
+        $insta_dateils = installmentdetails::find($id);
+        $insta_dateils->paymentstatus = 1;
         $installments->paymentstatus = 1;
-        // $jalaliNow = Jalalian::now()->format('Y-m-d');
-        // $installments->datepayment = $jalaliNow;
+        $insta_dateils->save();
         $installments->save();
-        // dd($installments->datepayment);
+        // toster->success('قسط شما با موفقیت پرداخت شد.');
 
         return redirect()->back();
     }
