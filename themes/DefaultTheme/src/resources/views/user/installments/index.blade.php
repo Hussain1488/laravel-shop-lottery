@@ -264,63 +264,65 @@
                                             </div>
                                             @foreach ($installmentsm as $key)
                                                 @if ($key->paymentstatus == 1)
-                                                    <div class="border rounded p-2 my-1">
-                                                        <div class="row text-center " style="flex-direction: column;">
-                                                            <h5>
-                                                                {{ $key->user->username }} </h5>
-                                                        </div>
+                                                    @php
+                                                        $updated_date = \Carbon\Carbon::parse($key->datepayment);
 
-                                                        <div class="row my-1">
-                                                            <div class="col-5">
-                                                                1402/2/2
-                                                            </div>
-                                                            <div class="col-7">
-                                                                مبلغ قسط {{ $key->Creditamount }} ریال
+                                                    @endphp
+                                                    @for ($i = 0; $i < $key->numberofinstallments; $i++)
+                                                        <div class="border rounded p-2 my-1">
+                                                            <div class="row text-center " style="flex-direction: column;">
+                                                                <h5>
+                                                                    اقساط فروشگاه: {{ $key->store->nameofstore }} </h5>
                                                             </div>
 
-                                                        </div>
+                                                            <div class="row my-1">
+                                                                <div class="col-5">
+                                                                    1402/2/2
+                                                                </div>
+                                                                <div class="col-7">
+                                                                    مبلغ قسط {{ $key->Creditamount }} ریال
+                                                                </div>
 
-                                                        <div class="row m-2">
-                                                            مقدار جریمه دیر کرد ۰ ریال
-                                                        </div>
-                                                        <div>
+                                                            </div>
 
-                                                        </div>
-
-                                                        <div class="row m-2">
-                                                            وضعیت: پرداخت شده در تاریخ ۱۴۰۲/۸/۲۵
-                                                        </div>
-                                                        <div class="row m-2">
-                                                            اقساط:
-                                                        </div>
-                                                        @php
-                                                            $updated_date = \Carbon\Carbon::parse($key->updated_at)->toDateString();
-
-                                                        @endphp
-                                                        @for ($i = 0; $i < $key->numberofinstallments; $i++)
-                                                            @php
-                                                                $updated_date = \Carbon\Carbon::parse($updated_date)
-                                                                    ->addMonth()
-                                                                    ->toDateString();
-                                                            @endphp
                                                             <div class="row m-2">
-                                                                قسط {{ $i + 1 }} به سر رسید تاریخ:
-                                                                {{ $updated_date }}
+                                                                مقدار جریمه دیر کرد ۰ ریال
                                                             </div>
-                                                        @endfor
-                                                        <div class="row px-3">
+                                                            <div>
 
-                                                            <div class="col d-flex justify-content-center">
-                                                                <a href="{{ route('front.installments.usrestatus.refuse', [$key->id]) }}"
-                                                                    class="btn btn-warning" style="">انصراف</a>
                                                             </div>
-                                                            <div class="col d-flex justify-content-center">
-                                                                <a href="{{ route('front.installments.usrestatus.pay', [$key->id]) }}"
-                                                                    class="btn btn-success" style="">پرداخت</a>
+
+                                                            <div class="row m-2">
+                                                                وضعیت: پرداخت شده در تاریخ ۱۴۰۲/۸/۲۵
+                                                            </div>
+                                                            <div class="row m-2">
+                                                                اقساط:
+                                                            </div>
+
+                                                            <div class="row my-1 mx-2 p-1 d-flex justify-content-between">
+                                                                @php
+                                                                    $updated_date = \Carbon\Carbon::parse($updated_date)
+                                                                        ->addMonth()
+                                                                        ->format('Y/m/d');
+                                                                @endphp
+                                                                <div>
+
+                                                                    <div class="row m-2">
+                                                                        قسط شماره {{ $i + 1 }} به سر رسید تاریخ:
+                                                                        {{ $updated_date }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="">
+
+
+                                                                    <a href="{{ route('front.installments.usrestatus.pay', [$key->id]) }}"
+                                                                        class="btn btn-info btn-sm"
+                                                                        style="">پرداخت</a>
+                                                                </div>
                                                             </div>
 
                                                         </div>
-                                                    </div>
+                                                    @endfor
                                                 @endif
                                             @endforeach
 
