@@ -283,10 +283,31 @@
                                                         <div class="row m-2">
                                                             مقدار جریمه دیر کرد ۰ ریال
                                                         </div>
+                                                        <div>
+
+                                                        </div>
 
                                                         <div class="row m-2">
                                                             وضعیت: پرداخت شده در تاریخ ۱۴۰۲/۸/۲۵
                                                         </div>
+                                                        <div class="row m-2">
+                                                            اقساط:
+                                                        </div>
+                                                        @php
+                                                            $updated_date = \Carbon\Carbon::parse($key->updated_at)->toDateString();
+
+                                                        @endphp
+                                                        @for ($i = 0; $i < $key->numberofinstallments; $i++)
+                                                            @php
+                                                                $updated_date = \Carbon\Carbon::parse($updated_date)
+                                                                    ->addMonth()
+                                                                    ->toDateString();
+                                                            @endphp
+                                                            <div class="row m-2">
+                                                                قسط {{ $i + 1 }} به سر رسید تاریخ:
+                                                                {{ $updated_date }}
+                                                            </div>
+                                                        @endfor
                                                         <div class="row px-3">
 
                                                             <div class="col d-flex justify-content-center">
