@@ -94,7 +94,7 @@
                                         </section>
                                     @else
                                         @foreach ($installmentsm as $key)
-                                            @if ($key->status == 0)
+                                            @if ($key->statususer == 0)
                                                 <div class="border rounded p-2 my-1">
                                                     <div class="row">
                                                         <h5>آقای:
