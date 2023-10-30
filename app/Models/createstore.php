@@ -11,5 +11,9 @@ class createstore extends Model
     protected $table = 'createstores';
     protected $guarded = [];
 
-    
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'selectperson');
+    }
 }

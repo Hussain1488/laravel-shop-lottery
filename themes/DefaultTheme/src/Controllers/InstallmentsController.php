@@ -43,9 +43,20 @@ class InstallmentsController extends Controller
     public function userStatus($id)
     {
         $installments = Makeinstallmentsm::find($id);
-        $installments->paymentstatus = 1;
+        $installments->statususer = 1;
         $jalaliNow = Jalalian::now()->format('Y-m-d');
         $installments->datepayment = $jalaliNow;
+        $installments->save();
+        // dd($installments->datepayment);
+
+        return redirect()->back();
+    }
+    public function paymentStatus($id)
+    {
+        $installments = Makeinstallmentsm::find($id);
+        $installments->paymentstatus = 1;
+        // $jalaliNow = Jalalian::now()->format('Y-m-d');
+        // $installments->datepayment = $jalaliNow;
         $installments->save();
         // dd($installments->datepayment);
 
