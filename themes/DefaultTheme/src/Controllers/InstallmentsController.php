@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Morilog\Jalali\Jalalian;
 use Shetabit\Payment\Facade\Payment;
 use Shetabit\Multipay\Invoice;
 
@@ -27,7 +28,9 @@ class InstallmentsController extends Controller
     public function index()
     {
 
-        $installmentsm = Makeinstallmentsm::where('userselected', Auth::user()->id)->with('user')->get();
+        // $jalaliNow = Jalalian::now();
+        // dd($jalaliNow->format('Y/m/d'));
+        $installmentsm = Makeinstallmentsm::where('userselected', Auth::user()->id)->with('store', 'user')->get();
         $user = Auth::user();
 
 
@@ -41,7 +44,10 @@ class InstallmentsController extends Controller
     {
         $installments = Makeinstallmentsm::find($id);
         $installments->paymentstatus = 1;
+        $jalaliNow = Jalalian::now()->format('Y-m-d');
+        $installments->datepayment = $jalaliNow;
         $installments->save();
+        // dd($installments->datepayment);
 
         return redirect()->back();
     }

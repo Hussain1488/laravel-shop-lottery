@@ -35,7 +35,7 @@
 
 
                             <form action="{{ route('admin.colleagueCredit.store') }}" method="POST"
-                                enctype="multipart/form-data">
+                                enctype="multipart/form-data" id="createCredit">
                                 @csrf
 
 
@@ -53,12 +53,17 @@
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
                                                     <select type="text" class="form-control" name="userselected">
+                                                        <option value="">کاربر را انتخاب کنید</option>
                                                         @foreach ($users as $item)
                                                             <option value="{{ $item->id }}">{{ $item->username }}
                                                             </option>
                                                         @endforeach
-
                                                     </select>
+                                                    @error('userselected')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
@@ -74,10 +79,15 @@
                                             <div class="col-md-3 col-6 pt-2">
                                                 <div class="d-flex align-items-center">
                                                     <input type="text" placeholder="100,000"
-                                                        class="form-control moneyInput" id="first_name"
+                                                        class="form-control moneyInput" id="purchase_credit"
                                                         name="purchasecredit" style="margin-left: 4px;">
                                                     <span>ریال</span>
                                                 </div>
+                                                @error('purchasecredit')
+                                                    <span class="text-danger">
+                                                        {{ $message }}
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="row">
@@ -94,10 +104,15 @@
                                             <div class="col-md-3 col-6 pt-2">
                                                 <div class="d-flex align-items-center">
                                                     <input type="text" placeholder="100,000"
-                                                        class="form-control moneyInput" id="first_name" name="inventory"
+                                                        class="form-control moneyInput" id="inventory" name="inventory"
                                                         style="margin-left: 4px;">
                                                     <span>ریال</span>
                                                 </div>
+                                                @error('inventory')
+                                                    <span class="text-danger">
+                                                        {{ $message }}
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="row">
@@ -112,6 +127,11 @@
                                                 <div class="d-flex align-items-center">
                                                     <input multiple type="file" class="form-control mt-1 mr-1"
                                                         name="documents[]">
+                                                    @error('documents')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
@@ -127,14 +147,20 @@
                                                 <div class="form-group">
                                                     <input type="text" class="form-control persian-date-picker"
                                                         name="enddate">
+                                                    @error('enddate')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row ">
                                             <div class="col d-flex align-items-baseline justify-content-center">
-                                                <input type="submit" class="btn btn-primary my-1"value=" تأیید
-                                                                    تغییرات" />
+                                                <input type="submit" id="submit_button1"
+                                                    class="btn btn-primary my-1"value=" تأیید
+                                                                                                                                        تغییرات" />
                                             </div>
                                             <div class="col d-flex align-items-baseline justify-content-center">
                                                 <a href="" class="btn btn-danger my-1">انصراف </a>
@@ -160,5 +186,6 @@
     <script src="{{ asset('back/assets/js/scripts.js') }}?v=9"></script>
 
     <script src="{{ asset('back/assets/js/pages/users/all.js') }}"></script>
+    <script src="{{ asset('back/assets/js/pages/createColleague/create.js') }}"></script>
     <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
 @endpush
