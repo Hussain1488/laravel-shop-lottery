@@ -33,9 +33,10 @@
                         <div class="container mt-3">
 
 
-                            <form action="{{ route('admin.colleagueCredit.store') }}" method="POST"
-                                enctype="multipart/form-data">
+                            <form action="{{ route('admin.colleagueDocument.store') }}" method="POST"
+                                enctype="multipart/form-data" id="colleagueDocumentStore">
                                 @csrf
+                                <input readonly name="numberofdocuments" type="hidden" value="{{ $number }}">
 
 
                                 <div class="tab-content">
@@ -51,12 +52,11 @@
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
-                                                    <select type="text" class="form-control" name="userselected">
-                                                        {{-- @foreach ($users as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->username }}
-                                                            </option>
-                                                        @endforeach --}}
-                                                        <option value="">Hussian</option>
+                                                    <select type="text" class="form-control" name="namedebtor">
+
+                                                        <option value="Hussain">Hussian</option>
+                                                        <option value="Mohammad">Mohammad</option>
+                                                        <option value="Ali">Ali</option>
 
                                                     </select>
                                                 </div>
@@ -71,7 +71,7 @@
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
-                                                    <select type="text" class="form-control" name="userselected">
+                                                    <select type="text" class="form-control" name="namecreditor">
                                                         @foreach ($users as $item)
                                                             <option value="{{ $item->id }}">{{ $item->username }}
                                                             </option>
@@ -94,8 +94,8 @@
                                             <div class="col-md-3 col-6 pt-2">
                                                 <div class="d-flex align-items-center">
                                                     <input type="text" placeholder="100,000"
-                                                        class="form-control moneyInput" id="first_name"
-                                                        name="purchasecredit" style="margin-left: 4px;">
+                                                        class="form-control moneyInput" id="ReCredintAmount" name="price"
+                                                        style="margin-left: 4px;">
                                                     <span>ریال</span>
                                                 </div>
                                             </div>
@@ -121,7 +121,7 @@
                                         <div class="row my-2">
                                             <div class="col-md-6 col-12 pt-2">
                                                 <h5>
-                                                    شماره ثبت این سند به شماره ۹۸۵۶۳ میباشد.
+                                                    شماره ثبت این سند به شماره {{ $number }} میباشد.
                                                 </h5>
                                                 <h5>
                                                     شماره پیگیری سند در سند اداری ثبت شده و تحویل بایگانی شود.</h5>
@@ -131,7 +131,7 @@
 
                                         <div class="row ">
                                             <div class="col d-flex align-items-baseline justify-content-center">
-                                                <input type="submit"
+                                                <input type="button" id="submit_button2"
                                                     class="btn btn-primary my-1"value=" تأیید نهایی تغییرات" />
                                             </div>
                                         </div>
