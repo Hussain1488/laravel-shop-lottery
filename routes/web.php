@@ -119,6 +119,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('createcolleague/resalecredit', [CreateColleagueController::class, 'resalecredit'])->name('createcolleague.resalecredit');
     Route::get('createcolleague/reaccreditation', [CreateColleagueController::class, 'reaccreditationIndex'])->name('createcolleague.reaccreditation.index');
     Route::post('createcolleague/reaccreditationStore', [CreateColleagueController::class, 'reaccreditationStore'])->name('createcolleague.reaccreditation.store');
+    Route::post('createcolleague/createDocumentStore', [CreateColleagueController::class, 'createDocumentStore'])->name('colleagueDocument.store');
 
     // ------------------ installment Reports
     Route::get('installmentreports/index', [InstallmentReportsController::class, 'index'])->name('installmentreports.index');

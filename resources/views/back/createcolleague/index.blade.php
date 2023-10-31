@@ -52,10 +52,12 @@
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
-                                                    <select type="text" class="form-control" name="userselected">
+                                                    <select type="text" class="form-control" id="User_selected"
+                                                        name="userselected">
                                                         <option value="">کاربر را انتخاب کنید</option>
                                                         @foreach ($users as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->username }}
+                                                            <option credit_attr_value="{{ $item->inventory }}"
+                                                                value="{{ $item->id }}">{{ $item->username }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -65,6 +67,32 @@
                                                         </span>
                                                     @enderror
                                                 </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div class="col-md-3 col-6 pt-2">
+                                                <div class="form-group d-flex align-items-center">
+                                                    <h5 for="inventory" class="mr-2">
+                                                        موجودی نقدی
+                                                    </h5>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-6 pt-2">
+                                                <div class="d-flex align-items-center">
+                                                    <input readonly type="text" placeholder="100,000"
+                                                        class="form-control moneyInput" id="inventory" name="inventory"
+                                                        style="margin-left: 4px;">
+                                                    <span>ریال</span>
+                                                </div>
+                                                @error('inventory')
+                                                    <span class="text-danger">
+                                                        {{ $message }}
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="row">
@@ -84,31 +112,6 @@
                                                     <span>ریال</span>
                                                 </div>
                                                 @error('purchasecredit')
-                                                    <span class="text-danger">
-                                                        {{ $message }}
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="row">
-
-                                            <div class="col-md-3 col-6 pt-2">
-                                                <div class="form-group d-flex align-items-center">
-                                                    <h5 for="inventory" class="mr-2">
-                                                        موجودی نقدی
-                                                    </h5>
-
-
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-6 pt-2">
-                                                <div class="d-flex align-items-center">
-                                                    <input type="text" placeholder="100,000"
-                                                        class="form-control moneyInput" id="inventory" name="inventory"
-                                                        style="margin-left: 4px;">
-                                                    <span>ریال</span>
-                                                </div>
-                                                @error('inventory')
                                                     <span class="text-danger">
                                                         {{ $message }}
                                                     </span>
@@ -160,7 +163,7 @@
                                             <div class="col d-flex align-items-baseline justify-content-center">
                                                 <input type="submit" id="submit_button1"
                                                     class="btn btn-primary my-1"value=" تأیید
-                                                                                                                                        تغییرات" />
+                                                                                                                                                    تغییرات" />
                                             </div>
                                             <div class="col d-flex align-items-baseline justify-content-center">
                                                 <a href="" class="btn btn-danger my-1">انصراف </a>

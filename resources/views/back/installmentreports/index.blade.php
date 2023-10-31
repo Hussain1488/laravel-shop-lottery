@@ -297,8 +297,8 @@
 
                     </div>
 
+                </section>
             </div>
-            </section>
 
         </div>
     </div>
