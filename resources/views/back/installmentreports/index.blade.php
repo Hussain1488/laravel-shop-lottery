@@ -103,7 +103,7 @@
                                         </div>
                                     @else
                                         @foreach ($installments as $key)
-                                            @if ($key->status == 0)
+                                            @if ($key->statususer == 0)
                                                 <div class="border rounded p-2 my-1">
                                                     <div class="row d-flex justify-content-around">
                                                         <h5>
@@ -180,57 +180,56 @@
                                         </h3>
                                     </div>
 
-                                    @if (empty($installments1))
+                                    @if (empty($installments))
                                         <div class="row mt-3 ml-2">
                                             <h4>
                                                 هیچ قسطی برای نمایش وجود ندارد!
                                             </h4>
                                         </div>
                                     @else
-                                        @foreach ($installments1 as $key)
-                                            @if ($key->status == 1)
-                                                {{-- <div class="row mt-3 ml-2">
-                                                    <h4>
-                                                        اقساط فروشگاه: {{ $key->seller->first_name }}
-                                                    </h4>
-                                                </div> --}}
-
-
-
-                                                <div class="border rounded p-2 my-1">
-                                                    <div class="row d-flex justify-content-around">
-                                                        <h5>
-                                                            قسط فروشگاه: {{ $key->store->nameofstore }}
-                                                        </h5>
-                                                        <form action="{{ route('admin.installments.filter1') }}"
-                                                            method="get">
-                                                            @csrf
-                                                            <input type="hidden" value="{{ $key->user->username }}"
-                                                                name="filter1" id="">
-                                                            <button class="btn"
-                                                                style="border:none; background-color:none" type="submit">
-                                                                <h5>قسط آقای: {{ $key->user->username }}
+                                        @foreach ($installments as $value)
+                                            @if ($value->statususer == 1)
+                                                @foreach ($value->installments as $key)
+                                                    @if ($key->paymentstatus == 0)
+                                                        <div class="border rounded p-2 my-1">
+                                                            <div class="row d-flex justify-content-around">
+                                                                <h5>
+                                                                    قسط فروشگاه: {{ $value->store->nameofstore }}
                                                                 </h5>
-                                                            </button>
-                                                        </form>
-                                                    </div>
+                                                                <form action="{{ route('admin.installments.filter1') }}"
+                                                                    method="get">
+                                                                    @csrf
+                                                                    <input type="hidden"
+                                                                        value="{{ $value->user->username }}" name="filter1"
+                                                                        id="">
+                                                                    <button class="btn"
+                                                                        style="border:none; background-color:none"
+                                                                        type="submit">
+                                                                        <h5>قسط آقای: {{ $value->user->username }}
+                                                                        </h5>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
 
 
-                                                    <div class="row">
-                                                        مبلغ کل فروش:{{ $key->Creditamount }}
-                                                    </div>
-                                                    <div class="row">
-                                                        {{ $key->numberofinstallments }} عدد قسط به سر رسیده
-                                                        ۶ هر ماه به مبلغ قسط
-                                                        {{ $key->amounteachinstallment }} ریال
-                                                    </div>
+                                                            <div class="row">
+                                                                مبلغ کل فروش:{{ $value->Creditamount }}
+                                                            </div>
+                                                            <div class="row">
+                                                                قسط شماره {{ $key->installmentnumber }}به سر رسید
+                                                                {{ \Carbon\Carbon::parse($key->duedate)->format('m') }}
+                                                                هر ماه به مبلغ قسط
+                                                                {{ $key->installmentprice }} ریال
+                                                            </div>
 
-                                                    <div class="row mt-2">
-                                                        <div class="col">
-                                                            مقدار پیش پرداخت {{ $key->prepaidamount }} ریال
+                                                            <div class="row mt-2">
+                                                                <div class="col">
+                                                                    مقدار پیش پرداخت {{ $value->prepaidamount }} ریال
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
+                                                    @endif
+                                                @endforeach
                                             @endif
                                         @endforeach
                                     @endif
@@ -251,45 +250,67 @@
                                         </div>
                                     </div>
 
-                                    {{-- @empty($installmentsm)
-                                        <section id="main-card" class="card">
-                                            <div class="card-header m-3 ">
-                                                <h3 class="text-danger">لیست فروشی برای نمایش به شما وجود ندارد</h3>
-                                            </div>
-                                        </section>
+                                    @if (empty($installments1))
+                                        <div class="row mt-3 ml-2">
+                                            <h4>
+                                                هیچ قسطی برای نمایش وجود ندارد!
+                                            </h4>
+                                        </div>
                                     @else
-                                        @foreach ($installmentsm as $key)
-                                            @if ($key->status == 1)
-                                                <div class="border rounded p-2 my-1">
-                                                    <div class="row">
-                                                        <h5>آقای:
-                                                            {{ $key->user->first_name . ' ' . $key->user->last_name }}
-                                                        </h5>
-                                                    </div>
+                                        @foreach ($installments1 as $value)
+                                            @if ($value->paymentstatus == 1)
+                                                @foreach ($value->installments as $key)
+                                                    @if ($key->paymentstatus == 1)
+                                                        {{-- <div class="row mt-3 ml-2">
+                                                    <h4>
+                                                        اقساط فروشگاه: {{ $key->seller->first_name }}
+                                                    </h4>
+                                                </div> --}}
 
 
-                                                    <div class="row">
-                                                        مبلغ کل فروش:{{ $key->Creditamount }}
-                                                    </div>
-                                                    <div class="row">
-                                                        {{ $key->numberofinstallments }} عدد قسط به سر رسیده
-                                                        {{ $key->prepaidamount }} هر ماه به مبلغ قسط
-                                                        {{ $key->amounteachinstallment }} ریال
-                                                    </div>
 
-                                                    <div class="row mt-2">
-                                                        <div class="col">
-                                                            مقدار پیش پرداخت {{ $key->prepaidamount }} ریال
+                                                        <div class="border rounded p-2 my-1">
+                                                            <div class="row d-flex justify-content-around">
+                                                                <h5>
+                                                                    قسط فروشگاه: {{ $value->store->nameofstore }}
+                                                                </h5>
+                                                                <form action="{{ route('admin.installments.filter1') }}"
+                                                                    method="get">
+                                                                    @csrf
+                                                                    <input type="hidden"
+                                                                        value="{{ $value->user->username }}"
+                                                                        name="filter1" id="">
+                                                                    <button class="btn"
+                                                                        style="border:none; background-color:none"
+                                                                        type="submit">
+                                                                        <h5>قسط آقای: {{ $value->user->username }}
+                                                                        </h5>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                مبلغ کل فروش:{{ $value->Creditamount }}
+                                                            </div>
+                                                            <div class="row">
+                                                                قسط شماره {{ $key->installmentnumber }}به سر رسید
+                                                                {{ \Carbon\Carbon::parse($key->duedate)->format('m') }}
+                                                                هر ماه به مبلغ قسط
+                                                                {{ $key->installmentprice }} ریال
+                                                            </div>
+
+                                                            <div class="row mt-2">
+                                                                <div class="col">
+                                                                    مقدار پیش پرداخت {{ $value->prepaidamount }} ریال
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="col d-flex justify-content-end">
-
-                                                        </div>
-
-                                                    </div>
-                                                </div>
+                                                    @endif
+                                                @endforeach
                                             @endif
                                         @endforeach
-                                    @endempty --}}
+                                    @endif
 
                                 </div>
                             </div>
