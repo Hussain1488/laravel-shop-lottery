@@ -134,4 +134,13 @@ class InstallmentReportsController extends Controller
     {
         //
     }
+
+    public function refuse($id)
+    {
+        $refuse = Makeinstallmentsm::find($id);
+        $refuse->delete();
+
+        toastr()->success('قسط مورد نظر با موفقیت حذف شد.');
+        return redirect()->back();
+    }
 }

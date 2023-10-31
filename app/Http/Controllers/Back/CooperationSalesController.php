@@ -91,4 +91,6 @@ class CooperationSalesController extends Controller
         $newUpdate->save();
         return redirect()->back();
     }
+
+    
 }

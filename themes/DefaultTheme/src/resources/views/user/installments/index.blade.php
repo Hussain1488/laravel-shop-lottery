@@ -114,8 +114,13 @@
                                                                 مقدار پیش پرداخت: {{ $key->prepaidamount }} ریال
                                                             </div>
                                                             <div class="col d-flex justify-content-end">
+
+                                                                <a href="{{ route('front.installments.usrestatus.refuse', [$key->id]) }}"
+                                                                    class="btn btn-warning ml-1" style="">انصراف</a>
+                                                                {{-- <button class="btn btn-warning ml-1"
+                                                                    id="refuse_button">انصراف</button> --}}
                                                                 <a href="{{ route('front.installments.usrestatus.edit', [$key->id]) }}"
-                                                                    class="btn btn-success" style="">تأیید</a>
+                                                                    class="btn btn-success" style="">پرداخت</a>
                                                             </div>
 
                                                         </div>
@@ -402,6 +407,13 @@
             </div>
         </div>
     </div>
+    <script>
+        $('refuse_button').on('click', function() {
+            $('#history-show-modal').modal('show');
+
+        });
+    </script>
+
 
     <script src="{{ theme_asset('js/pages/wallet/index.js') }}"></script>
 @endpush

@@ -119,9 +119,11 @@ class InstallmentsController extends Controller
     {
         //
     }
-    public function refuse()
+    public function refuse($id)
     {
-        dd('this is refuse');
+        $refuse = Makeinstallmentsm::find($id);
+        $refuse->delete();
+        return redirect()->back();
     }
     public function pay()
     {

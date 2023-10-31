@@ -42,7 +42,7 @@
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
                                     <a class="nav-link active " style="font-size: 10px" data-toggle="tab" href="#home">در
-                                        انتظار تأیید</a>
+                                        انتظار پرداخت</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" style="font-size: 10px" data-toggle="tab" href="#menu1">اقساط
@@ -117,6 +117,11 @@
                                                         مقدار پیش پرداخت {{ $key->prepaidamount }} ریال
 
 
+                                                    </div>
+                                                    <div class="d-flex justify-content-end">
+
+                                                        <a href="{{ route('admin.installments.usrestatus.refuse', [$key->id]) }}"
+                                                            class="btn btn-warning ">حذف</a>
                                                     </div>
                                                 </div>
                                             @endif
