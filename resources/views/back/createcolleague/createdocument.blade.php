@@ -59,6 +59,11 @@
                                                         <option value="Ali">Ali</option>
 
                                                     </select>
+                                                    @error('namedebtor')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
@@ -79,6 +84,11 @@
                                                         {{-- <option value="">Hussian</option> --}}
 
                                                     </select>
+                                                    @error('namecreditor')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
@@ -87,17 +97,24 @@
                                             <div class="col-md-3 col-6 pt-2">
                                                 <div class="form-group d-flex align-items-center">
                                                     <h5 for="purchasecredit" class="mr-2">
-                                                        مبلغ به ریال وارد شود
+                                                        مقدار اعتبار
                                                     </h5>
                                                 </div>
                                             </div>
                                             <div class="col-md-3 col-6 pt-2">
+                                                <label>مبلغ به ریال وارد شود</label>
                                                 <div class="d-flex align-items-center">
+
                                                     <input type="text" placeholder="100,000"
                                                         class="form-control moneyInput" id="ReCredintAmount" name="price"
                                                         style="margin-left: 4px;">
                                                     <span>ریال</span>
                                                 </div>
+                                                @error('ReCredintAmount')
+                                                    <span class="text-danger">
+                                                        {{ $message }}
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
 
@@ -114,6 +131,11 @@
                                                     <input multiple type="file" class="form-control mt-1 mr-1"
                                                         name="documents[]">
                                                 </div>
+                                                @error('documents')
+                                                    <span class="text-danger">
+                                                        {{ $message }}
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
 

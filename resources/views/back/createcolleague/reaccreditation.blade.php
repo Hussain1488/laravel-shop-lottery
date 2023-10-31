@@ -29,7 +29,7 @@
                     <div class="card-header">
                     </div>
                     <div class="card-content">
-                        <h6 class="card-title m-2">سند جدید</h6>
+                        <h6 class="card-title m-2">افزایش اعتبار فروشگاه</h6>
                         <div class="container mt-3">
 
 
@@ -45,16 +45,19 @@
                                         <div class="row">
                                             <div class="col-md-3 col-6 pt-2">
                                                 <h5>
-                                                    نام بده کار
+                                                    فروشگاه مد نظر
                                                 </h5>
                                             </div>
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
                                                     <select dir="rtl" type="text" class="form-control"
-                                                        name="userselected">
+                                                        name="select_store">
+                                                        <option value="">فروشگاه را انتخاب کنید</option>
                                                         @foreach ($store as $item)
-                                                            <option value="{{ $item->id }}">
+                                                            <option
+                                                                {{ old('select_store') == $item->id ? ' selected' : '' }}
+                                                                value="{{ $item->id }}">
                                                                 فروشگاه:
                                                                 {{ $item->user->username . ' ' . $item->nameofstore }}
                                                             </option>
@@ -62,6 +65,11 @@
                                                         <option value="">Hussian</option>
 
                                                     </select>
+                                                    @error('select_store')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
@@ -74,14 +82,21 @@
                                                         مبلغ به ریال وارد شود
                                                     </h5>
                                                 </div>
+
                                             </div>
                                             <div class="col-md-3 col-6 pt-2">
                                                 <div class="d-flex align-items-center">
                                                     <input type="text" placeholder="100,000"
                                                         class="form-control moneyInput" id="recredition_amount"
-                                                        name="storecredit" style="margin-left: 4px;">
+                                                        name="storecredit" style="margin-left: 4px;"
+                                                        value="{{ old('storecredit') }}">
                                                     <span>ریال</span>
                                                 </div>
+                                                @error('storecredit')
+                                                    <span class="text-danger">
+                                                        {{ $message }}
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                         {{-- <div class="row my-2">
