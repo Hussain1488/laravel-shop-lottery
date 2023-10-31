@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\back;
 
 use App\Http\Controllers\Controller;
+use App\Models\banktransaction;
 use App\Models\Makeinstallmentsm;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,11 +29,10 @@ class InstallmentReportsController extends Controller
     public function banktransaction()
     {
 
+        $transaction = banktransaction::get();
 
 
-        // dd($installments);
-
-        return view('back.installmentreports.banktransaction');
+        return view('back.installmentreports.banktransaction', compact('transaction'));
     }
 
 
