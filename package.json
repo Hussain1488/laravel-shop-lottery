@@ -18,7 +18,6 @@
         "pusher-js": "^7.0.2"
     },
     "dependencies": {
-        "@liara/cli": "^5.1.0",
         "pikaday": "^1.8.2",
         "pikaday-jalali": "^1.0.0"
     }
