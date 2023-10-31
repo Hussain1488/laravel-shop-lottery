@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\back;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Back\ColleagueCreateDocument;
+use App\Http\Requests\Back\ColleagueReAccreditionRequest;
 use App\Http\Requests\Back\CreateColleagueIndexRequest;
 use App\Http\Requests\Back\CreateShopRequest;
+use App\Models\createdocument;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\createstore;
@@ -23,11 +26,7 @@ class CreateColleagueController extends Controller
         $users = User::where('level', 'user')->get();
         return view('back.createcolleague.index', compact('users'));
     }
-    public function createdocument()
-    {
-        $users = User::where('level', 'user')->get();
-        return view('back.createcolleague.createdocument', compact('users'));
-    }
+
 
     public function create()
     {
@@ -130,6 +129,7 @@ class CreateColleagueController extends Controller
     public function colleagueCreditStore(CreateColleagueIndexRequest $request)
     {
 
+
         // dd('hey');
         $docPath = '';
         // dd($request->all());
@@ -149,7 +149,6 @@ class CreateColleagueController extends Controller
 
         $userUpdate = User::find($request->userselected);
         $userUpdate->purchasecredit = $request->purchasecredit;
-        $userUpdate->inventory = $request->inventory;
         $userUpdate->enddate = $request->enddate;
         $userUpdate->documents = $docPath;
         // dd($userUpdate);
@@ -165,25 +164,70 @@ class CreateColleagueController extends Controller
 
     public function reaccreditationIndex()
     {
-        $store = createstore::get();
+        $store = createstore::with('user')->get();
         return view('back.createcolleague.reaccreditation', compact('store'));
-        // dd('reaccreditationIndex');
     }
 
 
 
 
 
-    public function reaccreditationStore(Request $request)
+    public function reaccreditationStore(ColleagueReAccreditionRequest $request)
     {
-        $store = createstore::find($request->userselected);
+        $store = createstore::find($request->select_store);
         // dd($store);
         $ex_credit = $store->storecredit;
-        // dd($ex_credit);
         $store->storecredit = $request->storecredit + $ex_credit;
         $store->save();
-
         toastr()->success('افزایش اعتبار فروشگاه با موفقیت انجام شد.');
+
+        return redirect()->back();
+    }
+
+    public function createdocument()
+    {
+        $users = User::where('level', 'user')->get();
+        $number = createdocument::count();
+        if ($number > 0 && $number != 0) {
+            $number = createdocument::latest()->first()->numberofdocuments + 1;
+        } else {
+            $number = 10000;
+        }
+
+        // dd($number);
+        return view('back.createcolleague.createdocument', compact('users', 'number'));
+    }
+
+    public function createDocumentStore(ColleagueCreateDocument $request)
+    {
+        // dd($request->all());
+
+        $user = User::find($request->namecreditor);
+        // dd($user);
+
+
+        if ($request->hasFile('documents')) {
+            $files = $request->file('documents');
+            $paths = [];
+            foreach ($files as $file) {
+                $path = $file->store('document/DocCreate', 'public');
+                $paths[] = $path;
+            }
+            $docPath = json_encode($paths);
+        }
+        $user->inventory += $request->price;
+        createdocument::create([
+            'namedebtor' => $request->namedebtor,
+            'namecreditor' => $user->first_name,
+            'price' => $request->price,
+            'documents' => $docPath,
+            'numberofdocuments' => $request->numberofdocuments,
+        ]);
+
+        $user->save();
+
+
+        toastr()->success('  ایجاد سند با موفقیت انجام شد.');
 
         return redirect()->back();
     }
