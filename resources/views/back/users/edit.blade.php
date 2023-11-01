@@ -1,7 +1,6 @@
 @extends('back.layouts.master')
 
 @section('content')
-
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -35,7 +34,8 @@
                     <div id="main-card" class="card-content">
                         <div class="card-body">
                             <div class="col-12 col-md-10 offset-md-1">
-                                <form class="form" id="user-edit-form" action="{{ route('admin.users.update', ['user' => $user]) }}" method="post">
+                                <form class="form" id="user-edit-form"
+                                    action="{{ route('admin.users.update', ['user' => $user]) }}" method="post">
                                     @csrf
                                     @method('put')
                                     <div class="form-body">
@@ -43,13 +43,15 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>نام</label>
-                                                    <input type="text" class="form-control" name="first_name" value="{{ $user->first_name }}">
+                                                    <input type="text" class="form-control" name="first_name"
+                                                        value="{{ $user->first_name }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>نام خانوادگی</label>
-                                                    <input type="text" class="form-control" name="last_name" value="{{ $user->last_name }}">
+                                                    <input type="text" class="form-control" name="last_name"
+                                                        value="{{ $user->last_name }}">
                                                 </div>
                                             </div>
 
@@ -58,13 +60,15 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>آدرس ایمیل</label>
-                                                    <input type="email" class="form-control" name="email" value="{{ $user->email }}">
+                                                    <input type="email" class="form-control" name="email"
+                                                        value="{{ $user->email }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>شماره همراه <small>( نام کاربری )</small></label>
-                                                    <input type="text" class="form-control ltr" name="username" value="{{ $user->username }}">
+                                                    <input type="text" class="form-control ltr" name="username"
+                                                        value="{{ $user->username }}">
                                                 </div>
                                             </div>
 
@@ -75,18 +79,24 @@
                                                 <div class="form-group">
                                                     <label>نوع کاربری</label>
                                                     <select id="level" class="form-control" name="level">
-                                                        <option {{ $user->level == 'user' ? 'selected' : '' }} value="user">کاربر عادی</option>
-                                                        <option {{ $user->level == 'seller' ? 'selected' : '' }} value="seller"> فروشنده </option>
-                                                        <option {{ $user->level == 'admin' ? 'selected' : '' }} value="admin">مدیر وبسایت</option>
+                                                        <option {{ $user->level == 'user' ? 'selected' : '' }}
+                                                            value="user">کاربر عادی</option>
+                                                        <option {{ $user->level == 'seller' ? 'selected' : '' }}
+                                                            value="seller"> فروشنده </option>
+                                                        <option {{ $user->level == 'admin' ? 'selected' : '' }}
+                                                            value="admin">مدیر وبسایت</option>
+                                                        <option {{ $user->level == 'creator' ? 'selected' : '' }}
+                                                            value="creator">سازنده</option>
                                                     </select>
                                                 </div>
                                             </div>
- 
+
                                             <div class="col-md-6">
                                                 <fieldset class="form-group">
                                                     <label>تصویر</label>
                                                     <div class="custom-file">
-                                                        <input id="image" type="file" accept="image/*" name="image" class="custom-file-input">
+                                                        <input id="image" type="file" accept="image/*" name="image"
+                                                            class="custom-file-input">
                                                         <label class="custom-file-label" for="image"></label>
                                                     </div>
                                                 </fieldset>
@@ -99,7 +109,9 @@
                                                     <label>انتخاب نقش ها</label>
                                                     <select id="roles" class="form-control" name="roles[]" multiple>
                                                         @foreach ($roles as $role)
-                                                            <option value="{{ $role->id }}" {{ $user->roles()->find($role->id) ? 'selected' : '' }}>{{ $role->title }}</option>
+                                                            <option value="{{ $role->id }}"
+                                                                {{ $user->roles()->find($role->id) ? 'selected' : '' }}>
+                                                                {{ $role->title }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -110,20 +122,23 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>گذرواژه</label>
-                                                    <input type="password" id="password" class="form-control" name="password">
+                                                    <input type="password" id="password" class="form-control"
+                                                        name="password">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>تکرار گذرواژه</label>
-                                                    <input type="password" class="form-control ltr" name="password_confirmation">
+                                                    <input type="password" class="form-control ltr"
+                                                        name="password_confirmation">
                                                 </div>
                                             </div>
 
                                             <div class="col-md-3 mb-2">
                                                 <fieldset class="checkbox">
                                                     <div class="vs-checkbox-con vs-checkbox-primary">
-                                                        <input type="checkbox" name="verified_at" {{ $user->verified_at ? 'checked' : '' }}>
+                                                        <input type="checkbox" name="verified_at"
+                                                            {{ $user->verified_at ? 'checked' : '' }}>
                                                         <span class="vs-checkbox">
                                                             <span class="vs-checkbox--check">
                                                                 <i class="vs-icon feather icon-check"></i>
@@ -138,12 +153,15 @@
 
                                         <div class="row">
                                             <div class="col-12">
-                                                <button type="submit" class="btn btn-primary mr-1 mb-1 waves-effect waves-light">ویرایش کاربر</button>
+                                                <button type="submit"
+                                                    class="btn btn-primary mr-1 mb-1 waves-effect waves-light">ویرایش
+                                                    کاربر</button>
                                             </div>
                                             <div class="col-12">
                                                 <div class="alert alert-info mt-1 alert-validation-msg" role="alert">
                                                     <i class="feather icon-info ml-1 align-middle"></i>
-                                                    <span>در صورتی که نمیخواهید گذرواژه  را عوض کنید، فیلدهای گذرواژه را خالی بگذارید.</span>
+                                                    <span>در صورتی که نمیخواهید گذرواژه را عوض کنید، فیلدهای گذرواژه را خالی
+                                                        بگذارید.</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -158,15 +176,12 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @include('back.partials.plugins', ['plugins' => ['jquery.validate']])
 
 @php
-    $help_videos = [
-        config('general.video-helpes.users')
-    ];
+    $help_videos = [config('general.video-helpes.users')];
 @endphp
 
 @push('scripts')

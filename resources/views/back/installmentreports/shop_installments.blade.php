@@ -68,7 +68,8 @@
                                 <div id="home"
                                     class="container tab-pane {{ $payment_stat == 'wait' ? 'active' : 'fade' }}"><br>
 
-                                    <form action="{{ route('admin.installments.filter') }}" method="get">
+                                    <form action="{{ route('admin.installments.shop.installments.filter_name') }}"
+                                        method="get">
                                         @csrf
                                         <div class="row ">
 
@@ -81,6 +82,10 @@
                                                 <div class="d-flex">
                                                     <input type="text" name="filter" class="form-control w-auto mr-1"
                                                         placeholder="شماره تلفن را برای فیلتر وارد کنید">
+                                                    <input readonly type="hidden" name="payment_stat" value="wait"
+                                                        placeholder="شماره تلفن را برای فیلتر وارد کنید">
+                                                    <input type="hidden" value="{{ $shop->id }}" name="store"
+                                                        id="">
                                                     <input type="submit" class="btn btn-info" value="فیلتر">
                                                 </div>
                                             </div>
@@ -153,7 +158,8 @@
                                 <div id="menu1"
                                     class="container tab-pane {{ $payment_stat == 'not_paid' ? 'active' : 'fade' }}"><br>
 
-                                    <form action="{{ route('admin.installments.filter1') }}" method="get">
+                                    <form action="{{ route('admin.installments.shop.installments.filter_name') }}"
+                                        method="get">
                                         @csrf
                                         <div class="row ">
 
@@ -164,8 +170,12 @@
                                                 </h4>
 
                                                 <div class="d-flex">
-                                                    <input type="text" name="filter1" class="form-control w-auto mr-1"
+                                                    <input type="text" name="filter" class="form-control w-auto mr-1"
                                                         placeholder="شماره تلفن را برای فیلتر وارد کنید">
+                                                    <input readonly type="hidden" name="payment_stat" value="not_paid"
+                                                        placeholder="شماره تلفن را برای فیلتر وارد کنید">
+                                                    <input type="hidden" value="{{ $shop->id }}" name="store"
+                                                        id="">
                                                     <input type="submit" class="btn btn-info" value="فیلتر">
                                                 </div>
                                             </div>
@@ -242,7 +252,8 @@
                                 <div id="menu2"
                                     class="container tab-pane {{ $payment_stat == 'paid' ? 'active' : 'fade' }}"><br>
 
-                                    <form action="{{ route('admin.installments.filter2') }}" method="get">
+                                    <form action="{{ route('admin.installments.shop.installments.filter_name') }}"
+                                        method="get">
                                         @csrf
                                         <div class="row ">
 
@@ -253,8 +264,12 @@
                                                 </h4>
 
                                                 <div class="d-flex">
-                                                    <input type="text" name="filter1" class="form-control w-auto mr-1"
+                                                    <input type="text" name="filter" class="form-control w-auto mr-1"
                                                         placeholder="شماره تلفن را برای فیلتر وارد کنید">
+                                                    <input readonly type="hidden" name="payment_stat" value="paid"
+                                                        placeholder="شماره تلفن را برای فیلتر وارد کنید">
+                                                    <input type="hidden" value="{{ $shop->id }}" name="store"
+                                                        id="">
                                                     <input type="submit" class="btn btn-info" value="فیلتر">
                                                 </div>
                                             </div>
