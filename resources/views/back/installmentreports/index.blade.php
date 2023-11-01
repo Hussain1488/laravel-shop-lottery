@@ -28,7 +28,7 @@
                 <section class="card">
                     <div class="card-header">
                         {{-- @isset($store) --}}
-                        <h4 class="card-title">کاربر خریدار محسن احمد زاده</h4>
+                        <h4 class="card-title">لیست تمامی اقساط</h4>
                         {{-- @else
                             <h4 class="text-warning">
                                 شما فروشگاهی برای نمایش ندارید!
