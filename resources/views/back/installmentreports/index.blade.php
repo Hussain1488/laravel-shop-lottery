@@ -180,14 +180,14 @@
                                         </h3>
                                     </div>
 
-                                    @if (empty($installments))
+                                    @if (empty($installments1))
                                         <div class="row mt-3 ml-2">
                                             <h4>
                                                 هیچ قسطی برای نمایش وجود ندارد!
                                             </h4>
                                         </div>
                                     @else
-                                        @foreach ($installments as $value)
+                                        @foreach ($installments1 as $value)
                                             @if ($value->statususer == 1)
                                                 @foreach ($value->installments as $key)
                                                     @if ($key->paymentstatus == 0)
@@ -236,6 +236,28 @@
                                 </div>
                                 <div id="menu2"
                                     class="container tab-pane {{ $payment_stat == 'paid' ? 'active' : 'fade' }}"><br>
+
+                                    <form action="{{ route('admin.installments.filter2') }}" method="get">
+                                        @csrf
+                                        <div class="row ">
+
+                                            <div class="col-md-6 col-12 d-flex justify-content-around">
+
+                                                <h4>
+                                                    فیلتر بر اساس شماره تلفن
+                                                </h4>
+
+                                                <div class="d-flex">
+                                                    <input type="text" name="filter1" class="form-control w-auto mr-1"
+                                                        placeholder="شماره تلفن را برای فیلتر وارد کنید">
+                                                    <input type="submit" class="btn btn-info" value="فیلتر">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                            </div>
+                                        </div>
+                                    </form>
+
                                     <div class="row">
 
                                         <div class="col-md-6 col-12">
@@ -250,31 +272,23 @@
                                         </div>
                                     </div>
 
-                                    @if (empty($installments1))
+                                    @if (empty($installments2))
                                         <div class="row mt-3 ml-2">
                                             <h4>
                                                 هیچ قسطی برای نمایش وجود ندارد!
                                             </h4>
                                         </div>
                                     @else
-                                        @foreach ($installments1 as $value)
+                                        @foreach ($installments2 as $value)
                                             @if ($value->paymentstatus == 1)
                                                 @foreach ($value->installments as $key)
                                                     @if ($key->paymentstatus == 1)
-                                                        {{-- <div class="row mt-3 ml-2">
-                                                    <h4>
-                                                        اقساط فروشگاه: {{ $key->seller->first_name }}
-                                                    </h4>
-                                                </div> --}}
-
-
-
                                                         <div class="border rounded p-2 my-1">
                                                             <div class="row d-flex justify-content-around">
                                                                 <h5>
                                                                     قسط فروشگاه: {{ $value->store->nameofstore }}
                                                                 </h5>
-                                                                <form action="{{ route('admin.installments.filter1') }}"
+                                                                <form action="{{ route('admin.installments.filter2') }}"
                                                                     method="get">
                                                                     @csrf
                                                                     <input type="hidden"
