@@ -49,29 +49,91 @@
 
 
 
-                                    <div class="row mt-1 ml-2">
+                                    <div class="row mt-1 ml-2 mb-2">
                                         <h3>
                                             لیست تراکنش های بانکی </h3>
                                     </div>
-                                    @foreach ($transaction as $key)
+                                    <div class="row mb-2">
+                                        <div class="g-col-6 g-col-sm-12">
+                                            <h4>
+                                                مجموعه تراکنش ها
+                                            </h4>
+                                        </div>
+                                        <div class="g-col-6 d-col-sm-12 d-flex align-items-center">
+                                            <input id="total_transaction" readonly class="form-control mr-1" type="text"
+                                                value="{{ $total }}">
+                                            ریال
+                                        </div>
+                                    </div>
+
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    #
+                                                </th>
+                                                <th>
+                                                    اسم بانک
+                                                </th>
+                                                <th>
+                                                    مقدار تراکنش
+                                                </th>
+                                                <th class="text-danger">
+                                                    بالانس بانک
+                                                </th>
+                                                <th>
+                                                    تاریخ تراکنش
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        @php
+                                            $counter = 1;
+                                        @endphp
+                                        <tbody>
+                                            @foreach ($transaction as $key)
+                                                <tr>
+                                                    <td>
+                                                        {{ $counter++ }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $key->namebank }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $key->transactionprice }}
+
+                                                    </td>
+                                                    <td class="text-danger">
+                                                        {{ $key->bankbalance }}
+
+                                                    </td>
+                                                    <td>
+                                                        {{ \Carbon\Carbon::parse($key->transactionsdate)->format('Y/m/d') }}
+
+                                                    </td>
+
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    {{-- @foreach ($transaction as $key)
                                         <div class="border rounded p-2 my-1">
-                                            <div class="row d-flex justify-content-around">
-                                                <div class="col">
+                                            <div class="row grid d-flex justify-content-start">
+                                                <div class="">
                                                     <h6>
                                                         اسم بانک: {{ $key->namebank }}
                                                     </h6>
                                                 </div>
-                                                <div class="col">
+                                                <div class="">
                                                     <h6>
                                                         مقدار تراکنش: {{ $key->transactionprice }}
                                                     </h6>
                                                 </div>
-                                                <div class="col">
+                                                <div class="">
                                                     <h6>
                                                         بالانس بانک : {{ $key->bankbalance }}
                                                     </h6>
                                                 </div>
-                                                <div class="col">
+                                                <div class="">
                                                     <h6>
                                                         تاریخ تراکنش :
                                                         {{ \Carbon\Carbon::parse($key->transactionsdate)->format('Y/m/d') }}
@@ -81,7 +143,7 @@
                                             </div>
                                         </div>
                                     @endforeach
-
+ --}}
 
                                 </div>
                             </div>
@@ -98,3 +160,12 @@
     </div>
     </div>
 @endsection
+
+@include('back.partials.plugins', [
+    'plugins' => ['persian-datepicker', 'jquery.validate'],
+])
+
+
+@push('scripts')
+    <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}"></script>
+@endpush

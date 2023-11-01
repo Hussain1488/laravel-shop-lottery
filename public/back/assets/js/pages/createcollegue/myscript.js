@@ -22,12 +22,11 @@ $(document).ready(function () {
     });
     $('#submit_button2').on('click', function (e) {
         e.preventDefault(); // Prevent the default form submission
-        console.log('hey');
         let moneyInput1 = $('#ReCredintAmount');
         let money = moneyInput1.val();
         let money_changed1 = money.replace(/,/g, '');
         moneyInput1.val(money_changed1);
-        // console.log('hey');
+
         $('#colleagueDocumentStore').submit();
     });
 

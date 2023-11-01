@@ -54,9 +54,7 @@
                                                     <label>سرچ بر اساس شماره تلفن</label>
                                                     <select type="text" class="form-control" name="namedebtor">
 
-                                                        <option value="Hussain">Hussian</option>
-                                                        <option value="Mohammad">Mohammad</option>
-                                                        <option value="Ali">Ali</option>
+                                                        <option value="mellat bank">بانک ملت</option>
 
                                                     </select>
                                                     @error('namedebtor')
@@ -106,8 +104,8 @@
                                                 <div class="d-flex align-items-center">
 
                                                     <input type="text" placeholder="100,000"
-                                                        class="form-control moneyInput" id="ReCredintAmount" name="price"
-                                                        style="margin-left: 4px;">
+                                                        class="form-control moneyInput" id="ReCredintAmount"
+                                                        name="ReCredintAmount" style="margin-left: 4px;">
                                                     <span>ریال</span>
                                                 </div>
                                                 @error('ReCredintAmount')

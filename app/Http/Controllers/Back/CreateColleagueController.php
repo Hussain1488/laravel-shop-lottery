@@ -215,7 +215,9 @@ class CreateColleagueController extends Controller
             }
             $docPath = json_encode($paths);
         }
+
         $user->inventory += $request->price;
+
         createdocument::create([
             'namedebtor' => $request->namedebtor,
             'namecreditor' => $user->first_name,
@@ -224,10 +226,11 @@ class CreateColleagueController extends Controller
             'numberofdocuments' => $request->numberofdocuments,
         ]);
 
+        // dd($request->numberofdocuments);
         $user->save();
 
+        toastr()->success('ایجاد سند جدید با شماره ' . $request->numberofdocuments . ' با موفقیت ثبت گردید.');
 
-        toastr()->success('  ایجاد سند با موفقیت انجام شد.');
 
         return redirect()->back();
     }

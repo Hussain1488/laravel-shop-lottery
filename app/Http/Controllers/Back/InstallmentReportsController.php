@@ -29,10 +29,11 @@ class InstallmentReportsController extends Controller
     public function banktransaction()
     {
 
-        $transaction = banktransaction::get();
+        $transaction = banktransaction::latest()->get();
+        $total  = collect($transaction)->sum('transactionprice');
+        // dd($total);
 
-
-        return view('back.installmentreports.banktransaction', compact('transaction'));
+        return view('back.installmentreports.banktransaction', compact('transaction', 'total'));
     }
 
 

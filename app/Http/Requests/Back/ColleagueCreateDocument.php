@@ -27,8 +27,8 @@ class ColleagueCreateDocument extends FormRequest
         return [
             "namedebtor" => "required",
             "namecreditor" => "required",
-            "ReCredintAmount" => "required|numeric",
-            "documents" => "required|file",
+            "ReCredintAmount" => "required",
+            "documents" => "required",
         ];
     }
     public function attributes()
