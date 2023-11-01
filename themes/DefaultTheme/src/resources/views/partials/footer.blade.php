@@ -43,13 +43,12 @@
                         <div class="footer-social">
                             <ul class="text-center">
 
-                                <li>
+                                <li class="d-flex justify-content-start">
                                     <a referrerpolicy='origin' target='_blank'
                                         href='https://trustseal.enamad.ir/?id=415093&Code=H0hGLabjUsZEVske1xtadMMpzsSTyT4N'><img
-                                            referrerpolicy='origin'
-                                            src='https://trustseal.enamad.ir/logo.aspx?id=415093&Code=H0hGLabjUsZEVske1xtadMMpzsSTyT4N'
-                                            alt='' style='cursor:pointer'
-                                            Code='H0hGLabjUsZEVske1xtadMMpzsSTyT4N'></a>
+                                            style="width: 200px" referrerpolicy='origin'
+                                            src='{{ asset('back/assets/eNamad.jpg') }}' alt=''
+                                            style='cursor:pointer' Code='H0hGLabjUsZEVske1xtadMMpzsSTyT4N'></a>
                                 </li>
                                 @if (option('social_instagram'))
                                     <li><a href="{{ option('social_instagram') }}"><i class="mdi mdi-instagram"></i></a>
