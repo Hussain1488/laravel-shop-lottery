@@ -183,7 +183,7 @@
                                     @if (empty($installments1))
                                         <div class="row mt-3 ml-2">
                                             <h4>
-                                                هیچ قسطی برای نمایش وجود ندارد!
+                                                .هیچ قسطی برای نمایش وجود ندارد!
                                             </h4>
                                         </div>
                                     @else
