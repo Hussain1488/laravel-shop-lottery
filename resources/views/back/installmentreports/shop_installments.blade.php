@@ -28,7 +28,7 @@
                 <section class="card">
                     <div class="card-header">
                         {{-- @isset($store) --}}
-                        <h4 class="card-title">کاربر خریدار محسن احمد زاده</h4>
+                        <h4 class="card-title">لیست اقساط فروشگاه: {{ $shop->nameofstore }}</h4>
                         {{-- @else
                             <h4 class="text-warning">
                                 شما فروشگاهی برای نمایش ندارید!
@@ -106,17 +106,17 @@
                                             @if ($key->statususer == 0)
                                                 <div class="border rounded p-2 my-1">
                                                     <div class="row d-flex justify-content-around">
-                                                        <a
-                                                            href="{{ route('admin.installments.shop.installments', [$key->store->id, 'wait']) }}">
-                                                            <h5>
-                                                                قسط فروشگاه: {{ $key->store->nameofstore }}
-                                                            </h5>
-                                                        </a>
-                                                        <form action="{{ route('admin.installments.filter') }}"
+
+                                                        <form
+                                                            action="{{ route('admin.installments.shop.installments.filter') }}"
                                                             method="get">
                                                             @csrf
-                                                            <input type="hidden" value="{{ $key->user->username }}"
-                                                                name="filter" id="">
+                                                            <input type="hidden" value="{{ $key->userselected }}"
+                                                                name="user" id="">
+                                                            <input type="hidden" value="wait" name="payment_stat"
+                                                                id="">
+                                                            <input type="hidden" value="{{ $key->store_id }}"
+                                                                name="store" id="">
                                                             <button class="btn"
                                                                 style="border:none; background-color:none" type="submit">
                                                                 <h5>قسط آقای: {{ $key->user->username }}
@@ -195,18 +195,18 @@
                                                     @if ($key->paymentstatus == 0)
                                                         <div class="border rounded p-2 my-1">
                                                             <div class="row d-flex justify-content-around">
-                                                                <a
-                                                                    href="{{ route('admin.installments.shop.installments', [$value->store_id, 'not_paid']) }}">
-                                                                    <h5>
-                                                                        قسط فروشگاه: {{ $value->store->nameofstore }}
-                                                                    </h5>
-                                                                </a>
-                                                                <form action="{{ route('admin.installments.filter1') }}"
+
+                                                                <form
+                                                                    action="{{ route('admin.installments.shop.installments.filter') }}"
                                                                     method="get">
                                                                     @csrf
                                                                     <input type="hidden"
-                                                                        value="{{ $value->user->username }}" name="filter1"
+                                                                        value="{{ $value->userselected }}" name="user"
                                                                         id="">
+                                                                    <input type="hidden" value="not_paid"
+                                                                        name="payment_stat" id="">
+                                                                    <input type="hidden" value="{{ $value->store_id }}"
+                                                                        name="store" id="">
                                                                     <button class="btn"
                                                                         style="border:none; background-color:none"
                                                                         type="submit">
@@ -290,18 +290,18 @@
                                                     @if ($key->paymentstatus == 1)
                                                         <div class="border rounded p-2 my-1">
                                                             <div class="row d-flex justify-content-around">
-                                                                <a
-                                                                    href="{{ route('admin.installments.shop.installments', [$value->store_id, 'paid']) }}">
-                                                                    <h5>
-                                                                        قسط فروشگاه: {{ $value->store->nameofstore }}
-                                                                    </h5>
-                                                                </a>
-                                                                <form action="{{ route('admin.installments.filter2') }}"
+
+                                                                <form
+                                                                    action="{{ route('admin.installments.shop.installments.filter') }}"
                                                                     method="get">
                                                                     @csrf
                                                                     <input type="hidden"
-                                                                        value="{{ $value->user->username }}"
-                                                                        name="filter1" id="">
+                                                                        value="{{ $value->userselected }}" name="user"
+                                                                        id="">
+                                                                    <input type="hidden" value="paid"
+                                                                        name="payment_stat" id="">
+                                                                    <input type="hidden" value="{{ $value->store_id }}"
+                                                                        name="store" id="">
                                                                     <button class="btn"
                                                                         style="border:none; background-color:none"
                                                                         type="submit">

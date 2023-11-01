@@ -4,6 +4,7 @@ namespace App\Http\Controllers\back;
 
 use App\Http\Controllers\Controller;
 use App\Models\banktransaction;
+use App\Models\createstore;
 use App\Models\Makeinstallmentsm;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -71,8 +72,6 @@ class InstallmentReportsController extends Controller
             return view('back.installmentreports.index', compact('installments', 'installments1', 'installments2', 'payment_stat'));
             // dd($installments);
         }
-
-        // $installments = $all_installments->whereIn("userselecter, store_id", )->get();
     }
     public function filter1(Request $request)
     {
@@ -100,10 +99,6 @@ class InstallmentReportsController extends Controller
             return view('back.installmentreports.index', compact('installments', 'installments1', 'installments2', 'payment_stat'));
             // dd($installments);
         }
-
-
-
-        // $installments = $all_installments->whereIn("userselecter, seller_id", )->get();
     }
     public function filter2(Request $request)
     {
@@ -129,10 +124,6 @@ class InstallmentReportsController extends Controller
             return view('back.installmentreports.index', compact('installments', 'installments1', 'installments2', 'payment_stat'));
             // dd($installments);
         }
-
-
-
-        // $installments = $all_installments->whereIn("userselecter, seller_id", )->get();
     }
 
     /**
@@ -141,9 +132,56 @@ class InstallmentReportsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show_shop_installments($id, $slug)
     {
-        //
+        // dd($id, $slug);
+
+        if ($slug == 'wait') {
+            $payment_stat = 'wait';
+        } else if ($slug == 'not_paid') {
+            $payment_stat = 'not_paid';
+        } else if ($slug == 'paid') {
+            $payment_stat = 'paid';
+        }
+        $shop = createstore::where('id', $id)->first();
+        $installments = Makeinstallmentsm::where('statususer', 0)->where('store_id', $id)->with("store", "user")->get();
+        $installments1 = Makeinstallmentsm::where('statususer', 1)->where('store_id', $id)->with("store", "user")->get();
+        $installments2 = $installments1;
+        // dd($installments2);
+
+        return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
+    }
+    public function show_shop_installments_filter(Request $request)
+    {
+        // dd($request->all());
+        $shop = createstore::where('id', $request->store)->first();
+
+
+        if ($request->payment_stat == 'wait') {
+            $payment_stat = 'wait';
+            // dd('it is in wait');
+            $installments = Makeinstallmentsm::where('statususer', 0)->where('store_id', $request->store)->where('userselected', $request->user)->with("store", "user")->get();
+            $installments1 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
+            $installments2 = $installments1;
+
+            return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
+        } else if ($request->payment_stat == 'not_paid') {
+            // dd('it is in not paid');
+            $payment_stat = 'not_paid';
+            $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
+            $installments1 = Makeinstallmentsm::where('statususer', 1)->where('store_id', $request->store)->where('userselected', $request->user)->with("store", "user")->get();
+            $installments2 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
+
+            return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
+        } else if ($request->payment_stat == 'paid') {
+            // dd('it is in paid');
+            $payment_stat = 'paid';
+            $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
+            $installments1 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
+            $installments2 = Makeinstallmentsm::where('statususer', 1)->where('store_id', $request->store)->where('userselected', $request->user)->with("store", "user")->get();
+
+            return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
+        }
     }
 
     /**

@@ -128,6 +128,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('installmentreports/filter2', [InstallmentReportsController::class, 'filter2'])->name('installments.filter2');
     Route::get('installmentreports/banktransaction', [InstallmentReportsController::class, 'banktransaction'])->name('installmentreports.banktransaction');
     Route::get('installments/refuse/{id}', [InstallmentReportsController::class, 'refuse'])->name('installments.usrestatus.refuse');
+    Route::get('installments/shop_installments/{id}/{slug}', [InstallmentReportsController::class, 'show_shop_installments'])->name('installments.shop.installments');
+    Route::get('installments/shop_installments/filter', [InstallmentReportsController::class, 'show_shop_installments_filter'])->name('installments.shop.installments.filter');
 
 
 
