@@ -35,8 +35,8 @@ class ColleagueCreateDocument extends FormRequest
     {
 
         return [
-            "namedebtor" => "اسم بستانکار",
-            "namecreditor" => "اسم بدهکار",
+            "namedebtor" => "اسم بدهکار",
+            "namecreditor" => "اسم بستانکار",
             "ReCredintAmount" => "مقدار اعتبار",
             "documents" => "اسناد",
         ];
