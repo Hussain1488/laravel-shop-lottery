@@ -24,7 +24,7 @@ class CreateShopRequest extends FormRequest
     public function rules()
     {
         return [
-            'selectperson' => 'required|numeric',
+            'selectperson' => 'required',
             'uploaddocument' => 'required',
             'nameofstore' => 'required|string',
             'addressofstore' => 'required|string',
@@ -36,7 +36,7 @@ class CreateShopRequest extends FormRequest
     public function attributes()
     {
         return [
-            'selectperson' => 'نام انتخابی',
+            'selectperson' => 'کاربر',
             'uploaddocument' => 'فایل مستندات',
             'nameofstore' => 'نام فروشگاه',
             'addressofstore' => 'آدرس فروشگاه',
