@@ -26,7 +26,8 @@ $(document).ready(function () {
         if (cash_status == 'installment') {
             $('#payment').prop('disabled', false);
 
-            $('#payment').on('change', function () {
+            // $('#payment').on('change', function () {
+            function updatePayment() {
                 let payment = parseFloat(
                     $('#main_price').val().replace(/,/g, '')
                 );
@@ -38,7 +39,8 @@ $(document).ready(function () {
                 $('#prepayment').val(addCommas(prepayment));
                 $('#each_pay').val(addCommas(each_pay));
                 // console.log(total_pay);
-            });
+            }
+            updatePayment();
         } else {
             $('#payment').prop('disabled', true);
             $('#payment').val($('#payment option:first').val());
@@ -124,24 +126,28 @@ $(document).ready(function () {
 
         // console.log(creadit);
         $('#purchase_creadite').val();
-        var main_price = parseInt($('#main_price').val().replace(/,/g, ''), 10);
+        var main_price = $('#main_price').val();
         var store_creadit = $('#store_creadit').val();
-        // console.log(store_creadit);
-        // console.log(creadit);
-
-        if (store_creadit >= main_price) {
-            if (creadit >= main_price) {
-                $('#user-create-form').submit();
-            } else {
-                // If the condition is not met, show a confirmation dialog
-
-                $('#myModal').modal();
-
-                // Close the popup when the close button is clicked
-            }
+        console.log(store_creadit);
+        console.log(main_price);
+        if (main_price == '' || isNaN(main_price) || main_price == 0) {
+            // console.log('this is NaN');
+            $('#myModal3').modal();
         } else {
-            $('#store_creadit2').text(store_creadit);
-            $('#myModal2').modal();
+            if (store_creadit >= main_price) {
+                if (creadit >= main_price) {
+                    $('#user-create-form').submit();
+                } else {
+                    // If the condition is not met, show a confirmation dialog
+
+                    $('#myModal').modal();
+
+                    // Close the popup when the close button is clicked
+                }
+            } else {
+                $('#store_creadit2').text(store_creadit);
+                $('#myModal2').modal();
+            }
         }
     });
 

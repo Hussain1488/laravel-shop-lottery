@@ -51,6 +51,8 @@
                                                     <div class="d-flex">
                                                         <select type="text" class="form-control" name="selectperson">
                                                             @isset($users)
+                                                                <option value="">کاربر را انتخاب کنید
+                                                                </option>
                                                                 @foreach ($users as $item)
                                                                     <option value="{{ $item->id }}">
                                                                         {{ $item->username }}</option>
@@ -60,6 +62,11 @@
                                                             @endisset
                                                         </select>
                                                     </div>
+                                                    @error('selectperson')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
 
                                                 </div>
                                             </div>

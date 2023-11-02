@@ -329,6 +329,27 @@
         </div>
 
     </div>
+    <div class="container" dir="rtl">
+        <div class="modal fade" id="myModal3" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-danger">هشدار!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>مقدار قیمت اصلی کالا باید بیشتر از <span class="text-danger">( 0 )</span> باشد.</p>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-default text-danger" data-dismiss="modal">بستن</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 
     <style>
         .modal a.close-modal[class*="icon-"] {

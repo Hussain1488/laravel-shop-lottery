@@ -1,21 +1,13 @@
 $(document).ready(function () {
-    //     $('#summit_button1').on('click', function () {
-    //         console.log('hey');
+    $('#summit_button1').on('click', function (e) {
+        e.preventDefault();
 
-    //         // e.preventDefault(); // Prevent the default form submission
+        let purchase_credit = $('#purchase_credit').val().replace(/,/g, '');
 
-    //         // let purchase_credit = $('#purchase_credit').val().replace(/,/g, '');
-    //         // let inventory = $('#inventory').val().replace(/,/g, '');
+        $('#purchase_credit').val(purchase_credit);
 
-    //         // // Update the form field values
-    //         // $('#purchase_credit').val(purchase_credit);
-    //         // $('#inventory').val(inventory);
-
-    //         // // Submit the form after modifying the values
-    //         // $('#createCredit').submit();
-
-    //         // console.log('Form submitted'); // This will execute immediately, but the form will be submitted in the background.
-    //     });
+        $('#createCredit').submit();
+    });
 
     $('#User_selected').change(function () {
         var selectedOption = $(this).find(':selected');

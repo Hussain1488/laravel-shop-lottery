@@ -179,7 +179,7 @@
                                         </section>
                                     @else
                                         @foreach ($installmentsm as $index)
-                                            @if ($index->statususer == 1 && $index->paymentstatus == 0)
+                                            @if ($index->statususer == 1)
                                                 @php
                                                     $updated_date = \Carbon\Carbon::parse($index->datepayment);
                                                 @endphp

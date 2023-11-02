@@ -75,12 +75,16 @@
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
                                                     <select type="text" class="form-control" name="namecreditor">
-                                                        @foreach ($users as $item)
-                                                            <option value="{{ $item->id }}">{{ $item->username }}
+                                                        @isset($users)
+                                                            <option value="">کاربر را انتخاب کنید
                                                             </option>
-                                                        @endforeach
-                                                        {{-- <option value="">Hussian</option> --}}
-
+                                                            @foreach ($users as $item)
+                                                                <option value="{{ $item->id }}">
+                                                                    {{ $item->username }}</option>
+                                                            @endforeach
+                                                        @else
+                                                            <option value="">کاربری برای انتخاب وجود ندارد</option>
+                                                        @endisset
                                                     </select>
                                                     @error('namecreditor')
                                                         <span class="text-danger">

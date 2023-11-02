@@ -161,9 +161,9 @@
 
                                         <div class="row ">
                                             <div class="col d-flex align-items-baseline justify-content-center">
-                                                <input type="submit" id="submit_button1"
+                                                <input type="button" id="summit_button1"
                                                     class="btn btn-primary my-1"value=" تأیید
-                                                                                                                                                    تغییرات" />
+                                                                                                                                                                تغییرات" />
                                             </div>
                                             <div class="col d-flex align-items-baseline justify-content-center">
                                                 <a href="" class="btn btn-danger my-1">انصراف </a>
