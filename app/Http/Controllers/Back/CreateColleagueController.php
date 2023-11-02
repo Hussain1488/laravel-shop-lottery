@@ -148,7 +148,7 @@ class CreateColleagueController extends Controller
 
 
         $userUpdate = User::find($request->userselected);
-        $userUpdate->purchasecredit = $request->purchasecredit;
+        $userUpdate->purchasecredit += $request->purchasecredit;
         $userUpdate->enddate = $request->enddate;
         $userUpdate->documents = $docPath;
         // dd($userUpdate);
