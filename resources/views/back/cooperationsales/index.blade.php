@@ -60,7 +60,7 @@
                                 </li>
                             </ul>
 
-                            <!-- Tab panes -->
+                            <!-- Tab not paid and not validated installments -->
                             <div class="tab-content">
                                 <div id="home" class="container tab-pane active"><br>
                                     <div class="row">
@@ -107,8 +107,7 @@
                                                         مبلغ کل فروش:{{ $key->Creditamount }}
                                                     </div>
                                                     <div class="row">
-                                                        {{ $key->numberofinstallments }} عدد قسط به سر رسیده
-                                                        {{ $key->prepaidamount }} هر ماه به مبلغ قسط
+                                                        {{ $key->numberofinstallments }} عدد قسط به مبلغ هر قسط
                                                         {{ $key->amounteachinstallment }} ریال
                                                     </div>
 
@@ -131,6 +130,8 @@
 
                                     <a href="" class="btn btn-danger my-1">انصراف از فروش</a>
                                 </div>
+
+                                {{-- tab prepayment paid and validated installments --}}
                                 <div id="menu1" class="container tab-pane fade"><br>
 
                                     <div class="row">
@@ -226,74 +227,13 @@
                                                         </div>
                                                     @endif
                                                 @endforeach
-
-                                                {{-- <div class="border rounded py-1 px-3">
-
-                                                        <div class="row text-center d-flex justify-content-between ">
-                                                            <div class="col">
-
-                                                                <h5>
-                                                                    اقساط فروشگاه:
-                                                                    {{ $key->store->nameofstore != '' ? $key->store->nameofstore : '...' }}
-                                                                </h5>
-                                                            </div>
-                                                            <div class="col">
-
-                                                                <h5>
-                                                                    اقساط اقای:
-                                                                    {{ $key->user->username != '' ? $key->user->username : '...' }}
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row ">
-                                                            <div class="col-5">
-                                                                1402/2/2
-                                                            </div>
-                                                            <div class="col-7">
-                                                                مبلغ قسط {{ $key->Creditamount }} ریال
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="row">
-                                                            مقدار جریمه دیر کرد ۰ ریال
-                                                        </div>
-                                                        <div>
-
-                                                        </div>
-
-                                                        <div class="row">
-                                                            وضعیت: پرداخت شده در تاریخ ۱۴۰۲/۸/۲۵
-                                                        </div>
-                                                        <div class="row">
-                                                            اقساط:
-                                                        </div>
-
-                                                        <div class="row d-flex justify-content-between">
-                                                            @php
-                                                                $updated_date = \Carbon\Carbon::parse($updated_date)
-                                                                    ->addMonth()
-                                                                    ->format('Y/m/d');
-                                                            @endphp
-                                                            <div>
-
-                                                                <div class="row">
-                                                                    قسط شماره {{ $i + 1 }} به سر رسید تاریخ:
-                                                                    {{ $updated_date }}
-                                                                </div>
-                                                            </div>
-                                                            <div class="">
-                                                            </div>
-                                                        </div>
-
-                                                    </div> --}}
-                                                {{-- @endfor --}}
                                             @endif
                                         @endforeach
                                     @endempty
 
                                 </div>
+
+                                {{-- tab installments paid records --}}
                                 <div id="menu2" class="container tab-pane fade"><br>
 
                                     <div class="row">
@@ -361,7 +301,7 @@
                                                         </div>
                                                         <div class="row">
                                                             قسط به سر رسیده
-                                                            ({{ \Carbon\Carbon::parse($key->datepayment)->format('m') }})
+                                                            ({{ \Carbon\Carbon::parse($key->duedate)->format('d') }})
                                                             هر ماه
                                                             به مبلغ قسط
                                                             {{ $key->amounteachinstallment }} ریال
