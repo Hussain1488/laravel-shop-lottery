@@ -128,12 +128,12 @@ $(document).ready(function () {
         $('#purchase_creadite').val();
         var main_price = $('#main_price').val().replace(/,/g, '');
         var store_creadit = $('#store_creadit').val();
-        console.log(store_creadit);
-        // console.log(main_price);
-        if (main_price == '' || isNaN(main_price) || main_price == 0) {
+        if (main_price == '' || isNaN(main_price) || main_price <= 0) {
             // console.log('this is NaN');
             $('#myModal3').modal();
         } else {
+            // console.log(main_price);
+            // console.log(store_creadit);
             if (store_creadit >= main_price) {
                 if (creadit >= main_price) {
                     $('#user-create-form').submit();

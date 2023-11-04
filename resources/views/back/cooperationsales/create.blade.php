@@ -35,7 +35,8 @@
                     <section id="main-card" class="card">
                         <div class="card-header">
                             <h4 class="card-title">پنل اصلی فروشات {{ $shop->nameofstore }}</h4>
-                            <input type="hidden" value="{{ $shop->storecredit }}" name="" id="store_creadit">
+                            <input type="hidden" value="{{ $shop->storecredit }}" name="store_creadit" id="store_creadit">
+
                         </div>
 
                         <div id="main-card" class="card-content">
@@ -45,6 +46,7 @@
                                         action="{{ route('admin.cooperationsales.store') }}" method="post"
                                         enctype="multipart/form-data">
                                         @csrf
+                                        <input type="hidden" value="{{ $shop->id }}" name="store_id" id="">
                                         <div class="form-body">
                                             <div class="row">
 

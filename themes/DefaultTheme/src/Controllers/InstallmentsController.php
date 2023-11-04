@@ -4,13 +4,16 @@ namespace Themes\DefaultTheme\src\Controllers;
 
 use App\Models\installmentdetails;
 use App\Models\Makeinstallmentsm;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Events\OrderPaid;
 use App\Events\WalletAmountIncreased;
 use App\Http\Controllers\Controller;
 use App\Models\banktransaction;
+use App\Models\createstore;
 use App\Models\Gateway;
 use App\Models\Transaction;
+use App\Models\User as ModelsUser;
 use App\Models\WalletHistory;
 use Carbon\Carbon;
 use Exception;
@@ -50,9 +53,10 @@ class InstallmentsController extends Controller
     {
 
         // dd($id);
-        $installments = Makeinstallmentsm::find($id);
-        $installments->statususer = 1;
 
+        $installments = Makeinstallmentsm::find($id);
+        $user = User::find(Auth::user()->id);
+        $user->inventory -= $installments->prepaidamount;
         $Insta_dateils = new installmentdetails();
 
         $jalali_date_now = Jalalian::now();
@@ -68,6 +72,8 @@ class InstallmentsController extends Controller
             ]);
         }
 
+        $user->save();
+        $installments->statususer = 1;
         $jalaliNow = Jalalian::now()->format('Y-m-d');
         $installments->datepayment = $jalaliNow;
         $installments->save();
@@ -84,13 +90,15 @@ class InstallmentsController extends Controller
 
         $recordCount = banktransaction::count();
 
+
         // dd($id, $st);
         $installments = Makeinstallmentsm::find($st);
         $insta_dateils = installmentdetails::find($id);
         $insta_dateils->paymentstatus = 1;
         $installments->paymentstatus = 1;
-        $insta_dateils->save();
-        $installments->save();
+
+        $user = User::find($installments->userselected);
+        $user->inventory -= $insta_dateils->installmentprice;
 
         if ($recordCount > 0) {
             $lastRecord = banktransaction::latest()->first();
@@ -111,6 +119,9 @@ class InstallmentsController extends Controller
             ]);
         }
         // toster->success('قسط شما با موفقیت پرداخت شد.');
+        $user->save();
+        $insta_dateils->save();
+        $installments->save();
 
         return redirect()->back();
     }
@@ -129,6 +140,14 @@ class InstallmentsController extends Controller
     public function refuse($id)
     {
         $refuse = Makeinstallmentsm::find($id);
+        $store = createstore::find($refuse->store_id);
+        $user = User::find($refuse->userselected);
+        $store->storecredit += $refuse->Creditamount;
+        $user->purchasecredit += $refuse->Creditamount;
+        // dd($refuse->Creditamount, $user->purchasecredit);
+
+        $user->save();
+        $store->save();
         $refuse->delete();
         return redirect()->back();
     }

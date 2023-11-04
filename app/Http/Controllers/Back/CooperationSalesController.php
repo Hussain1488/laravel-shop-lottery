@@ -40,8 +40,8 @@ class CooperationSalesController extends Controller
     // storing new installments function
     public function store(Request $request)
     {
-        // dd($request->all());
-        // dd(Auth::user()->id);
+
+        $store = createstore::find($request->store_id);
         $Creditamount = intval(str_replace(',', '', $request->Creditamount));
         $prepaidamount = intval(str_replace(',', '', $request->prepaidamount));
         $amounteachinstallment = intval(str_replace(',', '', $request->amounteachinstallment));
@@ -50,8 +50,6 @@ class CooperationSalesController extends Controller
 
         $user = User::find($request->userselected);
         $user->purchasecredit -= $Creditamount;
-
-        $store = createstore::where('selectperson', Auth::user()->id)->first();
         $store->storecredit -= $Creditamount;
 
         // dd($store->id);

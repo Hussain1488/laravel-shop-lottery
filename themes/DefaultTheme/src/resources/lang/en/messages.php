@@ -22,6 +22,7 @@ return [
     'currency' => [
         'prefix'    => '',
         'suffix'    => ' TOMAN',
+        'suffix2'    => ' IRR',
     ],
 
     'index' => [

@@ -24,8 +24,8 @@
                                     <span
                                         class="value-profile-point">{{ trans('front::messages.profile.wallet-balance') }}</span>
                                     <div class="float-left label-profile-point"><strong
-                                            class="">{{ trans('front::messages.currency.prefix') }}{{ number_format($user->getWallet()->balance()) }}</strong>
-                                        {{ trans('front::messages.currency.suffix') }}</div>
+                                            class="">{{ trans('front::messages.currency.prefix') }}{{ number_format($user->inventory) }}</strong>
+                                        {{ trans('front::messages.currency.suffix2') }}</div>
                                 </div>
 
                                 <div class="profile-link mt-2 dt-sl">
