@@ -30,6 +30,7 @@
             <div class="content-body">
 
 
+                {{--  creating new installments form --}}
                 @isset($shop)
                     <section id="main-card" class="card">
                         <div class="card-header">
@@ -351,6 +352,7 @@
 
     </div>
 
+    {{-- styling for modals --}}
     <style>
         .modal a.close-modal[class*="icon-"] {
             direction: rtl;
