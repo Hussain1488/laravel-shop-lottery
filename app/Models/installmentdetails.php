@@ -11,6 +11,8 @@ class installmentdetails extends Model
 
     protected $table = 'installmentdetails';
     protected $guarded = [];
+
+    // defining relation wiht makeinstallments model
     public function installments()
     {
         return $this->belongsTo(Makeinstallmentsm::class, 'installment_id');
