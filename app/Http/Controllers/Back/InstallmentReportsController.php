@@ -18,6 +18,8 @@ class InstallmentReportsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //  installment report index view page with all installmnet records.
     public function index()
     {
 
@@ -29,6 +31,8 @@ class InstallmentReportsController extends Controller
 
         return view('back.installmentreports.index', compact('installments', 'installments1', 'installments2', 'payment_stat'));
     }
+
+    //  bank transaction list view page
     public function banktransaction()
     {
 
@@ -51,6 +55,8 @@ class InstallmentReportsController extends Controller
     {
         //
     }
+
+    // filtering accordint to phone number in installments view page in waiting to validate tab.
     public function filter(Request $request)
     {
         // dd($request->all());
@@ -75,6 +81,8 @@ class InstallmentReportsController extends Controller
             // dd($installments);
         }
     }
+
+    // filtering accordint to phone number in installments view page in not_paid to validate tab.
     public function filter1(Request $request)
     {
 
@@ -102,6 +110,8 @@ class InstallmentReportsController extends Controller
             // dd($installments);
         }
     }
+    // filtering accordint to phone number in installments view page in paid to validate tab.
+
     public function filter2(Request $request)
     {
 
@@ -134,6 +144,8 @@ class InstallmentReportsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //  showing the installmnets of specific store's installments
     public function show_shop_installments($id, $slug)
     {
         // dd($id, $slug);
@@ -153,6 +165,9 @@ class InstallmentReportsController extends Controller
 
         return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
     }
+
+    //  filtering the records of installmnets of specific store's installments accorgin to  user ID
+
     public function show_shop_installments_filter(Request $request)
     {
         // dd($request->all());
@@ -187,6 +202,9 @@ class InstallmentReportsController extends Controller
             return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
         }
     }
+
+    //  filtering the records of installmnets of specific store's installments accorgin to phone number input
+
     public function show_shop_installments_filter_name(Request $request)
     {
         // dd($request->all());
@@ -259,6 +277,8 @@ class InstallmentReportsController extends Controller
         //
     }
 
+
+    // destroying the specific installments.
     public function refuse($id)
     {
         $refuse = Makeinstallmentsm::find($id);
