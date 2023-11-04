@@ -12,20 +12,27 @@ class Makeinstallmentsm extends Model
     protected $table = 'makeinstallmentsms';
     protected $guarded = [];
 
+    // defining relation with user model as user
     public function user()
     {
         return $this->belongsTo(User::class, 'userselected');
     }
+
+    // defining relation with user model as seller
 
     public function seller()
     {
         return $this->belongsTo(User::class, 'seller_id');
     }
 
+    // defining relation with createstore model
+
     public function store()
     {
         return $this->belongsTo(createstore::class, 'store_id');
     }
+
+    // defining relation with installmentsdetails model
 
     public function installments()
     {
