@@ -406,4 +406,5 @@
 
 
     <script src="{{ theme_asset('js/pages/wallet/index.js') }}"></script>
+    <script src='{{ asset('front/script.js') }}'></script>
 @endpush

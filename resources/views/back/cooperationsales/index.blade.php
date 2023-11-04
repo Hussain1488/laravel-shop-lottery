@@ -128,7 +128,6 @@
                                     @endempty
 
 
-                                    <a href="" class="btn btn-danger my-1">انصراف از فروش</a>
                                 </div>
 
                                 {{-- tab prepayment paid and validated installments --}}
