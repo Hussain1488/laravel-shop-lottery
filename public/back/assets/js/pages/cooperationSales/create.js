@@ -126,10 +126,10 @@ $(document).ready(function () {
 
         // console.log(creadit);
         $('#purchase_creadite').val();
-        var main_price = $('#main_price').val();
+        var main_price = $('#main_price').val().replace(/,/g, '');
         var store_creadit = $('#store_creadit').val();
         console.log(store_creadit);
-        console.log(main_price);
+        // console.log(main_price);
         if (main_price == '' || isNaN(main_price) || main_price == 0) {
             // console.log('this is NaN');
             $('#myModal3').modal();
