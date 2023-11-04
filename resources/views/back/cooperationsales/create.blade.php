@@ -78,8 +78,9 @@
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label>سرچ بر اساس شماره تلفن</label>
-                                                        <select type="text" class="form-control" id="user_select"
-                                                            name="userselected" value="{{ old('userselected') }}">
+                                                        {{-- <select type="text" class="form-control user_select2"
+                                                            id="user_select" name="userselected"
+                                                            value="{{ old('userselected') }}">
                                                             <option value="0">کاربر
                                                                 را انتخاب کنید</option>
                                                             @foreach ($users as $item)
@@ -89,7 +90,18 @@
                                                                 </option>
                                                             @endforeach
 
+                                                        </select> --}}
+                                                        <select class="form-control user_select2" id="user_select"
+                                                            name="userselected">
+                                                            <option value="0">کاربر را انتخاب کنید</option>
+                                                            @foreach ($users as $item)
+                                                                <option creadit_attr="{{ $item->purchasecredit }}"
+                                                                    value="{{ $item->id }}">
+                                                                    {{ $item->username }}
+                                                                </option>
+                                                            @endforeach
                                                         </select>
+
                                                         @error('userselected')
                                                             <span class="text-danger">
                                                                 {{ $message }}
@@ -133,8 +145,7 @@
                                                 </div>
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
-                                                        <label>سرچ بر اساس شماره تلفن</label>
-                                                        <select id="cash_status" type="text" class="form-control"
+                                                        <select id="cash_status" type="text" class="form-control "
                                                             name="typeofpayment">
                                                             <option value="cash">نقدی</option>
                                                             <option value="installment">اقساط</option>

@@ -53,8 +53,8 @@
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
-                                                    <select type="text" class="form-control" id="User_selected"
-                                                        name="userselected">
+                                                    <select type="text" class="form-control user_select2"
+                                                        id="User_selected" name="userselected">
                                                         <option value="">کاربر را انتخاب کنید</option>
                                                         @foreach ($users as $item)
                                                             <option credit_attr_value="{{ $item->inventory }}"
@@ -164,7 +164,7 @@
                                             <div class="col d-flex align-items-baseline justify-content-center">
                                                 <input type="button" id="summit_button1"
                                                     class="btn btn-primary my-1"value=" تأیید
-                                                                                                                                                                        تغییرات" />
+                                                                                                                                                                                                                                    تغییرات" />
                                             </div>
                                             <div class="col d-flex align-items-baseline justify-content-center">
                                                 <a href="" class="btn btn-danger my-1">انصراف </a>

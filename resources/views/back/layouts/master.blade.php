@@ -6,7 +6,7 @@
     @include('back.partials.meta')
     <title>
         @isset($title)
-            {{  $title }}
+            {{ $title }}
         @else
             {{ option('info_site_title', 'لاراول شاپ') }}
         @endisset
@@ -16,8 +16,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/vendors/css/vendors-rtl.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/vendors/css/ui/prism.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/vendors/css/extensions/toastr.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/vendors/css/forms/select/select2.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/plugins/select2totree/select2totree.css') }}">
+    <link href="{{ asset('node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('back/app-assets/plugins/select2totree/select2totree.css') }}">
 
     <!-- END: Vendor CSS-->
 
@@ -29,10 +31,17 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/css-rtl/themes/dark-layout.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/css-rtl/themes/semi-dark-layout.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/css-rtl/plugins/extensions/toastr.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/css-rtl/plugins/animate/animate.min.css') }}">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('node_modules/select2/dist/js/select2.full.min.js') }}" defer></script>
+
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('back/app-assets/css-rtl/plugins/animate/animate.min.css') }}">
 
     <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/css-rtl/core/menu/menu-types/vertical-menu.css') }}">
+    <link rel="stylesheet" type="text/css"
+        href="{{ asset('back/app-assets/css-rtl/core/menu/menu-types/vertical-menu.css') }}">
     @stack('styles')
     <!-- END: Page CSS-->
 
@@ -56,7 +65,9 @@
 
 <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static {{ user_option('menu_type') == 'collapsed' ? 'menu-collapsed' : '' }}  {{ user_option('theme_color') == 'light' ? '' : 'semi-dark-layout' }}" data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" data-layout="semi-dark-layout">
+<body
+    class="vertical-layout vertical-menu-modern 2-columns  navbar-floating footer-static {{ user_option('menu_type') == 'collapsed' ? 'menu-collapsed' : '' }}  {{ user_option('theme_color') == 'light' ? '' : 'semi-dark-layout' }}"
+    data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" data-layout="semi-dark-layout">
 
     <!-- BEGIN: Header-->
     @include('back.partials.header')
@@ -111,12 +122,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>مدت زمان فعالیت شما بیشتر از {{ config('auth.password_timeout') / 60 }} دقیقه است لطفا رمز عبور خود را مجدد وارد کنید</p>
+                    <p>مدت زمان فعالیت شما بیشتر از {{ config('auth.password_timeout') / 60 }} دقیقه است لطفا رمز عبور
+                        خود را مجدد وارد کنید</p>
                     <form id="password-confirm-form" method="POST" action="{{ route('password.confirm') }}">
                         @csrf
 
                         <fieldset class="form-label-group position-relative has-icon-left">
-                            <input type="password" class="form-control" name="password" required autocomplete="current-password" placeholder="گذرواژه">
+                            <input type="password" class="form-control" name="password" required
+                                autocomplete="current-password" placeholder="گذرواژه">
                             <div class="form-control-position">
                                 <i class="feather icon-lock"></i>
                             </div>
@@ -130,6 +143,7 @@
     </div>
 
     <!-- BEGIN: Vendor JS-->
+    <script src="{{ asset('node_modules/select2/dist/js/select2.full.min.js') }}" defer></script>
     <script src="{{ asset('back/app-assets/vendors/js/vendors.min.js') }}"></script>
     <script src="{{ asset('back/app-assets/vendors/js/forms/select/select2.full.min.js') }}"></script>
     <script src="{{ asset('back/app-assets/plugins/select2totree/select2totree.js') }}"></script>
@@ -157,7 +171,7 @@
     <script>
         var BASE_URL = "{{ route('admin.dashboard') }}";
         var FRONT_URL = "{{ Route::has('front.index') ? route('front.index') : url('/') }}";
-        var WEB_PUSH_NOTIFICATION = {{ auth()->user()->pushSubscriptions()->first() ? 'true' : 'false' }};
+        var WEB_PUSH_NOTIFICATION = {{ auth()->user()->pushSubscriptions()->first()? 'true': 'false' }};
         var APP_FONT_FAMILY = "{{ user_option('theme_font', 'Vazir') }}";
     </script>
 

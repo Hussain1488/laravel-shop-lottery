@@ -151,5 +151,7 @@ $(document).ready(function () {
         }
     });
 
+    $('.user_select2').select2();
+
     // console.log(user);
 });

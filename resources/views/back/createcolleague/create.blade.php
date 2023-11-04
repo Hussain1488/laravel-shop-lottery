@@ -51,7 +51,8 @@
                                                     </h6>
 
                                                     <div class="d-flex">
-                                                        <select type="text" class="form-control" name="selectperson">
+                                                        <select type="text" class="form-control user_select1"
+                                                            name="selectperson">
                                                             @isset($users)
                                                                 <option value="">کاربر را انتخاب کنید
                                                                 </option>

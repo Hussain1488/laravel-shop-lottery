@@ -76,7 +76,8 @@
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
-                                                    <select type="text" class="form-control" name="namecreditor">
+                                                    <select type="text" class="form-control user_select1"
+                                                        name="namecreditor">
                                                         @isset($users)
                                                             <option value="">کاربر را انتخاب کنید
                                                             </option>
