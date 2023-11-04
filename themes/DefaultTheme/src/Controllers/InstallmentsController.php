@@ -27,6 +27,8 @@ class InstallmentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //  going to installments records of user
     public function index()
     {
 
@@ -43,6 +45,7 @@ class InstallmentsController extends Controller
         return view('front::user.installments.index', compact('installmentsm', 'user'));
     }
 
+    // paying the prepayment and creating the installments according its number.
     public function userStatus($id)
     {
 
@@ -72,6 +75,8 @@ class InstallmentsController extends Controller
 
         return redirect()->back();
     }
+
+    //  Paying specific installments and creating its bank transaction.
     public function paymentStatus($id, $st)
     {
 
@@ -119,6 +124,8 @@ class InstallmentsController extends Controller
     {
         //
     }
+
+    // Destroying specific installments
     public function refuse($id)
     {
         $refuse = Makeinstallmentsm::find($id);

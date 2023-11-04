@@ -65,6 +65,8 @@
 
                             <!-- Tab panes -->
                             <div class="tab-content">
+
+                                {{-- not validated and not paid prepayment of installments list --}}
                                 <div id="home"
                                     class="container tab-pane {{ $payment_stat == 'wait' ? 'active' : 'fade' }}"><br>
 
@@ -130,8 +132,8 @@
                                                         مبلغ کل فروش:{{ $key->Creditamount }}
                                                     </div>
                                                     <div class="row">
-                                                        {{ $key->numberofinstallments }} عدد قسط به سر رسیده
-                                                        ۶ هر ماه به مبلغ قسط
+                                                        {{ $key->numberofinstallments }} عدد قسط
+                                                        به مبلغ قسط
                                                         {{ $key->amounteachinstallment }} ریال
                                                     </div>
 
@@ -150,6 +152,7 @@
 
 
                                 </div>
+                                {{--  not payd installments which are paid prepayment of isntallments list --}}
                                 <div id="menu1"
                                     class="container tab-pane {{ $payment_stat == 'not_paid' ? 'active' : 'fade' }}"><br>
 
@@ -222,7 +225,7 @@
                                                             </div>
                                                             <div class="row">
                                                                 قسط شماره {{ $key->installmentnumber }}به سر رسید
-                                                                {{ \Carbon\Carbon::parse($key->duedate)->format('m') }}
+                                                                {{ \Carbon\Carbon::parse($key->duedate)->format('d') }}
                                                                 هر ماه به مبلغ قسط
                                                                 {{ $key->installmentprice }} ریال
                                                             </div>
@@ -239,7 +242,7 @@
                                         @endforeach
                                     @endif
                                 </div>
-                                <div id="menu2"
+                                <div id="menu2" {{-- paid installments list --}}
                                     class="container tab-pane {{ $payment_stat == 'paid' ? 'active' : 'fade' }}"><br>
 
                                     <form action="{{ route('admin.installments.filter2') }}" method="get">
@@ -317,7 +320,7 @@
                                                             </div>
                                                             <div class="row">
                                                                 قسط شماره {{ $key->installmentnumber }}به سر رسید
-                                                                {{ \Carbon\Carbon::parse($key->duedate)->format('m') }}
+                                                                {{ \Carbon\Carbon::parse($key->duedate)->format('d') }}
                                                                 هر ماه به مبلغ قسط
                                                                 {{ $key->installmentprice }} ریال
                                                             </div>

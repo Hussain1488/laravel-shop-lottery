@@ -36,6 +36,7 @@
                         @endisset --}}
                     </div>
 
+                    {{-- bank transacion report page --}}
 
 
 

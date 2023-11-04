@@ -37,7 +37,7 @@
                     </div>
 
 
-
+                    {{-- installments of specific store --}}
 
                     <div class="card-content">
                         <div class="container mt-3">
@@ -65,6 +65,8 @@
 
                             <!-- Tab panes -->
                             <div class="tab-content">
+                                {{-- not validated and not paid prepayment of installments list --}}
+
                                 <div id="home"
                                     class="container tab-pane {{ $payment_stat == 'wait' ? 'active' : 'fade' }}"><br>
 
@@ -155,6 +157,7 @@
 
 
                                 </div>
+                                {{--  not payd installments which are paid prepayment of isntallments list --}}
                                 <div id="menu1"
                                     class="container tab-pane {{ $payment_stat == 'not_paid' ? 'active' : 'fade' }}"><br>
 
@@ -249,7 +252,7 @@
                                         @endforeach
                                     @endif
                                 </div>
-                                <div id="menu2"
+                                <div id="menu2" {{-- paid installments list --}}
                                     class="container tab-pane {{ $payment_stat == 'paid' ? 'active' : 'fade' }}"><br>
 
                                     <form action="{{ route('admin.installments.shop.installments.filter_name') }}"
