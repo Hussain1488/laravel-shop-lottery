@@ -1,6 +1,7 @@
 @extends('back.layouts.master')
 
 @section('content')
+    <input type="hidden" id="new_date" value="{{ $today }}">
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -45,19 +46,11 @@
                                         انتظار پرداخت</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" style="font-size: 10px" data-toggle="tab" href="#menu1">اقساط
-                                        پرداخت
-                                        نشده</a>
+                                    <a class="nav-link" style="font-size: 10px" data-toggle="tab" href="#menu1">
+                                        فروش های انجام شده
+                                    </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" style="font-size: 10px" data-toggle="tab" href="#menu2">اقساط
-                                        پرداخت
-                                        شده</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" style="font-size: 10px" data-toggle="tab" href="#menu3">خدمات
-                                        اینترنتی</a>
-                                </li>
+
                             </ul>
 
                             <!-- Tab not paid and not validated installments -->
@@ -183,49 +176,58 @@
                                                 @php
                                                     $updated_date = \Carbon\Carbon::parse($index->datepayment);
                                                 @endphp
-                                                @foreach ($index->installments as $key)
-                                                    @if ($key->paymentstatus == 0)
-                                                        <div class="border rounded p-2 my-1">
-                                                            <div class="row">
-                                                                <h5>آقای:
-                                                                    {{ $index->user->first_name . ' ' . $index->user->last_name }}
-                                                                </h5>
-                                                            </div>
 
 
-                                                            <div class="row">
-                                                                مبلغ کل فروش:{{ $index->Creditamount }}
-                                                            </div>
-                                                            <div class="row">
-                                                                قسط به سر رسید
-                                                                ({{ \Carbon\Carbon::parse($key->duedate)->format('d') }})
-                                                                هر ماه
-                                                                به مبلغ قسط
-                                                                {{ $key->installmentprice }} ریال
-                                                            </div>
 
-                                                            <div class="row ">
-
-                                                                مقدار پیش پرداخت {{ $index->prepaidamount }} ریال
+                                                <div class="border rounded p-2 my-1">
+                                                    <div class="row">
+                                                        <h5>آقای:
+                                                            {{ $index->user->first_name . ' ' . $index->user->last_name }}
+                                                        </h5>
+                                                    </div>
 
 
-                                                            </div>
-                                                            <div class="row d-flex justify-content-between p-1">
+                                                    <div class="row">
+                                                        مبلغ کل فروش:{{ $index->Creditamount }}
+                                                    </div>
+                                                    <div class="row">
+                                                        قسط به سر رسید
+                                                        ({{ \Carbon\Carbon::parse($index->datepayment)->format('d') }})
+                                                        هر ماه
+                                                        به مبلغ قسط
+                                                        {{ $key->installmentprice }} ریال
+                                                    </div>
 
-                                                                <div>
+                                                    <div class="row ">
 
-                                                                    <div class="row">
-                                                                        قسط شماره {{ $key->installmentnumber }} به سر رسید
-                                                                        تاریخ:
-                                                                        {{ \Carbon\Carbon::parse($key->duedate)->format('Y/m/d') }}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="">
-                                                                </div>
-                                                            </div>
+                                                        مقدار پیش پرداخت {{ $index->prepaidamount }} ریال
+
+
+                                                    </div>
+                                                    <div class="row d-flex justify-content-between p-1">
+
+
+
+
+                                                        <div class="col">
+
+                                                            قسط شماره {{ $index->installmentnumber }} به سر رسید
+                                                            تاریخ:
+                                                            {{ \Carbon\Carbon::parse($index->datepayment)->format('Y/m/d') }}
                                                         </div>
-                                                    @endif
-                                                @endforeach
+                                                        <div class="col d-flex justify-content-end">
+                                                            <button data_date='{{ $index->datepayment }}'
+                                                                data_day='{{ $index->store->settlementtime }}'
+                                                                class="btn btn-primary settlementtime_button"
+                                                                id="settlementtime_button">
+                                                                درخواست تسویه حساب
+                                                            </button>
+                                                        </div>
+
+
+
+                                                    </div>
+                                                </div>
                                             @endif
                                         @endforeach
                                     @endempty
@@ -233,7 +235,7 @@
                                 </div>
 
                                 {{-- tab installments paid records --}}
-                                <div id="menu2" class="container tab-pane fade"><br>
+                                {{-- <div id="menu2" class="container tab-pane fade"><br>
 
                                     <div class="row">
 
@@ -329,7 +331,7 @@
                                         @endforeach
                                     @endempty
 
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
 

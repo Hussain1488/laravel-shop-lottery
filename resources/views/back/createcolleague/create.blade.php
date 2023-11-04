@@ -187,6 +187,24 @@
                                         <div class="row">
                                             <div class="col-md-6 col-12 pt-2">
                                                 <h5>
+                                                    مدت زمان برای تصفیه
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" name="settlementtime"
+                                                        value="{{ old('settlementtime') }}">
+                                                    <span class="text-danger">
+                                                        @error('settlementtime')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 pt-2">
+                                                <h5>
                                                     تاریخ پایان قرارداد
                                                 </h5>
                                             </div>

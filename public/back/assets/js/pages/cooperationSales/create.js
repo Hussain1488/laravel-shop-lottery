@@ -153,5 +153,18 @@ $(document).ready(function () {
 
     $('.user_select2').select2();
 
+    $('.settlementtime_button').click(function () {
+        let b = $(this).attr('data_day');
+        let a = $(this).attr('data_date'); // Use $(this) to reference the clicked element
+        // Rest of your code
+        console.log(a);
+        console.log(b);
+        console.log($('#new_date').val() - a);
+        let timeDifference = a.getTime() - $('#new_date').val().getTime();
+        let daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+        console.log(daysDifference);
+        // if()
+    });
+
     // console.log(user);
 });

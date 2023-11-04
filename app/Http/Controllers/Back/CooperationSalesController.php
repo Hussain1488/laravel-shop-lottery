@@ -11,17 +11,20 @@ use App\Models\CooperationSales;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Morilog\Jalali\Jalalian;
 
 class CooperationSalesController extends Controller
 {
     //Cooperation Sales index page
     public function index()
     {
-        $installmentsm = Makeinstallmentsm::where('seller_id', Auth::user()->id)->with('user')->get();
+        $installmentsm = Makeinstallmentsm::where('seller_id', Auth::user()->id)->with('store', 'user')->get();
         $store = createstore::where('selectperson', Auth::user()->id)->first();
+        $today = Jalalian::now()->format('Y-m-d');
+        // $daysDifference = $date1->diff($date2)->format('%d');
         // $installmentsm = $installmentsm1->where('status', 0);
         // dd($installmentsm);
-        return view('back.cooperationsales.index', compact('installmentsm', 'store'));
+        return view('back.cooperationsales.index', compact('installmentsm', 'store', 'today'));
     }
 
     //Creating new installments page

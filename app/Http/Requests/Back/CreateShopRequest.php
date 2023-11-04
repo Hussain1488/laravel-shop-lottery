@@ -31,6 +31,7 @@ class CreateShopRequest extends FormRequest
             'storecredit' => 'required|numeric',
             'enddate' => 'required|date',
             'feepercentage' => 'required|numeric',
+            'settlementtime' => 'required',
         ];
     }
     public function attributes()
@@ -43,6 +44,7 @@ class CreateShopRequest extends FormRequest
             'storecredit' => 'اعتبار فروشگاه',
             'enddate' => 'تاریخ پایان قرارداد',
             'feepercentage' => 'درصد کارمزد فروشگاه',
+            'settlementtime' => 'زمان تصفیه',
         ];
     }
 }

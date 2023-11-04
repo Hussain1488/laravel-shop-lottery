@@ -85,6 +85,7 @@ class CreateColleagueController extends Controller
             'nameofstore' => $request->nameofstore,
             'addressofstore' => $request->addressofstore,
             'feepercentage' => $request->feepercentage,
+            'settlementtime' => $request->settlementtime,
             'enddate' => $request->enddate,
             'uploaddocument' => $docPath,
 
