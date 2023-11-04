@@ -27,8 +27,14 @@
                 @endforeach
 
                 <div class="col-12 col-md-6 col-lg-3">
+                    <h5>نماد اعتماد</h5>
+                    <a referrerpolicy='origin' target='_blank'
+                        href='https://trustseal.enamad.ir/?id=415093&Code=H0hGLabjUsZEVske1xtadMMpzsSTyT4N'><img
+                            referrerpolicy='origin'
+                            src='https://trustseal.enamad.ir/logo.aspx?id=415093&Code=H0hGLabjUsZEVske1xtadMMpzsSTyT4N'
+                            alt='' style='cursor:pointer' Code='H0hGLabjUsZEVske1xtadMMpzsSTyT4N'></a>
 
-                    <div class="symbol footer-logo">
+                    {{-- <div class="symbol footer-logo">
 
                         @if (option('info_enamad'))
                             {!! option('info_enamad') !!}
@@ -77,7 +83,7 @@
 
                             </ul>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

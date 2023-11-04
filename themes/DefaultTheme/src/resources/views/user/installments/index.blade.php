@@ -117,8 +117,6 @@
 
                                                                 <a href="{{ route('front.installments.usrestatus.refuse', [$key->id]) }}"
                                                                     class="btn btn-warning ml-1" style="">انصراف</a>
-                                                                {{-- <button class="btn btn-warning ml-1"
-                                                                    id="refuse_button">انصراف</button> --}}
                                                                 <a href="{{ route('front.installments.usrestatus.edit', [$key->id]) }}"
                                                                     class="btn btn-success" style="">پرداخت</a>
                                                             </div>
@@ -210,10 +208,6 @@
                                             @endforeach --}}
                                             @foreach ($installmentsm as $value)
                                                 @if ($value->statususer == 1)
-                                                    @php
-                                                        $updated_date = \Carbon\Carbon::parse($key->datepayment);
-
-                                                    @endphp
                                                     @foreach ($value->installments as $key)
                                                         @if ($key->paymentstatus == 0)
                                                             <div class="border rounded p-2 my-1">
@@ -304,10 +298,6 @@
                                             </div>
                                             @foreach ($installmentsm as $value)
                                                 @if ($value->paymentstatus == 1)
-                                                    @php
-                                                        $updated_date = \Carbon\Carbon::parse($key->datepayment);
-
-                                                    @endphp
                                                     @foreach ($value->installments as $key)
                                                         @if ($key->paymentstatus == 1)
                                                             <div class="border rounded p-2 my-1">
