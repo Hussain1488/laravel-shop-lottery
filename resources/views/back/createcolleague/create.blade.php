@@ -33,6 +33,8 @@
                         <h6 class="card-title m-2">ساخت افرادی که همکاری در فروش دارند</h6>
                         <div class="container mt-3">
 
+
+                            {{-- creating new store form --}}
                             <!-- Tab panes -->
                             <div class="tab-content">
                                 <form action="{{ route('admin.createcolleague.store') }}" method="POST"
