@@ -9,6 +9,7 @@ class CooperationSales extends Model
 {
     use HasFactory;
 
+    // defining relation with MakeInstallments model
     public function makeInstallmentsms()
     {
         return $this->belongsTo(Makeinstallmentsm::class, 'userselected');
