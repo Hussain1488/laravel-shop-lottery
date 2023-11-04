@@ -21,13 +21,15 @@ class CreateColleagueController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // going to create colleague index view page
     public function index()
     {
         $users = User::where('level', 'user')->get();
         return view('back.createcolleague.index', compact('users'));
     }
 
-
+    // creating new seller from users
     public function create()
     {
 
@@ -51,6 +53,8 @@ class CreateColleagueController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    // storing new store
     public function store(CreateShopRequest $request)
     {
 
@@ -96,6 +100,7 @@ class CreateColleagueController extends Controller
 
 
 
+    // changin the level of user as user to createcreditoperator
     public function createcreditoperator(Request $request)
     {
         $users = User::where('level', 'user')->get();
@@ -103,6 +108,9 @@ class CreateColleagueController extends Controller
 
         return view('back.createcolleague.createcreditoperator', compact('users'));
     }
+
+    // storing storecreditoperator level for user
+
 
     public function storecreditoperator(Request $request)
     {
@@ -126,6 +134,7 @@ class CreateColleagueController extends Controller
         return view('back.createcolleague.createcreditoperator', compact('users'));
     }
 
+    // giving credit to user store function
     public function colleagueCreditStore(CreateColleagueIndexRequest $request)
     {
 
@@ -162,6 +171,7 @@ class CreateColleagueController extends Controller
 
 
 
+    // adding credit to store view page
     public function reaccreditationIndex()
     {
         $store = createstore::with('user')->get();
@@ -171,7 +181,7 @@ class CreateColleagueController extends Controller
 
 
 
-
+    // adding credit to store "store" function
     public function reaccreditationStore(ColleagueReAccreditionRequest $request)
     {
         $store = createstore::find($request->select_store);
@@ -184,6 +194,7 @@ class CreateColleagueController extends Controller
         return redirect()->back();
     }
 
+    // create document view page
     public function createdocument()
     {
         $users = User::where('level', 'user')->get();
@@ -198,6 +209,7 @@ class CreateColleagueController extends Controller
         return view('back.createcolleague.createdocument', compact('users', 'number'));
     }
 
+    // storing document store function
     public function createDocumentStore(ColleagueCreateDocument $request)
     {
         // dd($request->all());
