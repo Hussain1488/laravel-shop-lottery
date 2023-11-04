@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CooperationSalesController extends Controller
 {
-    //
+    //Cooperation Sales index page
     public function index()
     {
         $installmentsm = Makeinstallmentsm::where('seller_id', Auth::user()->id)->with('user')->get();
@@ -23,6 +23,8 @@ class CooperationSalesController extends Controller
         // dd($installmentsm);
         return view('back.cooperationsales.index', compact('installmentsm', 'store'));
     }
+
+    //Creating new installments page
     public function create()
     {
         $shopkeeper = Auth::user();
@@ -34,6 +36,8 @@ class CooperationSalesController extends Controller
 
         return view('back.cooperationsales.create', compact('users', 'shop'));
     }
+
+    // storing new installments function
     public function store(Request $request)
     {
         // dd($request->all());
@@ -76,14 +80,20 @@ class CooperationSalesController extends Controller
 
         return redirect()->back();
     }
+
+    // going to income view page
     public function Income()
     {
         return view('back.cooperationsales.Income');
     }
+
+    // going to clearing view page
     public function clearing()
     {
         return view('back.cooperationsales.clearing');
     }
+
+    // changing the status of installments status to paid.
     public function changeStatus($id)
     {
         $newUpdate = Makeinstallmentsm::find($id);
@@ -91,6 +101,4 @@ class CooperationSalesController extends Controller
         $newUpdate->save();
         return redirect()->back();
     }
-
-    
 }
