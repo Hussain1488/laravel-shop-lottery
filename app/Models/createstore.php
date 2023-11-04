@@ -12,6 +12,7 @@ class createstore extends Model
     protected $guarded = [];
 
 
+    //  defining relation with user model
     public function user()
     {
         return $this->belongsTo(User::class, 'selectperson');
