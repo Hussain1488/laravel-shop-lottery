@@ -24,6 +24,8 @@
                 </div>
 
             </div>
+
+            {{--  Creating documnet form --}}
             <div class="content-body">
                 <section class="card">
                     <div class="card-header">

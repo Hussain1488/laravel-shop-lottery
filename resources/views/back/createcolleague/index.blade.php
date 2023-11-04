@@ -33,6 +33,7 @@
                         <h6 class="card-title m-2">ساخت افرادی که همکاری در فروش دارند</h6>
                         <div class="container mt-3">
 
+                            {{-- giving creadit to users from seller --}}
 
                             <form action="{{ route('admin.colleagueCredit.store') }}" method="POST"
                                 enctype="multipart/form-data" id="createCredit">
@@ -163,7 +164,7 @@
                                             <div class="col d-flex align-items-baseline justify-content-center">
                                                 <input type="button" id="summit_button1"
                                                     class="btn btn-primary my-1"value=" تأیید
-                                                                                                                                                                تغییرات" />
+                                                                                                                                                                        تغییرات" />
                                             </div>
                                             <div class="col d-flex align-items-baseline justify-content-center">
                                                 <a href="" class="btn btn-danger my-1">انصراف </a>

@@ -32,6 +32,7 @@
                         <h6 class="card-title m-2">افزایش اعتبار فروشگاه</h6>
                         <div class="container mt-3">
 
+                            {{-- rising the credit of store form --}}
 
                             <form action="{{ route('admin.createcolleague.reaccreditation.store') }}" method="POST"
                                 enctype="multipart/form-data" id="reaccreditationStoreForm">
@@ -99,16 +100,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        {{-- <div class="row my-2">
-                                            <div class="col-md-6 col-12 pt-2">
-                                                <h5>
-                                                    شماره ثبت این سند به شماره ۹۸۵۶۳ میباشد.
-                                                </h5>
-                                                <h5>
-                                                    شماره پیگیری سند در سند اداری ثبت شده و تحویل بایگانی شود.</h5>
-                                            </div>
-
-                                        </div> --}}
 
                                         <div class="row ">
                                             <div class="col d-flex align-items-baseline justify-content-center">
