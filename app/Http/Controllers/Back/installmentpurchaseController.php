@@ -13,6 +13,8 @@ class installmentpurchaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //  installment index view page
     public function index()
     {
 
