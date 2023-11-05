@@ -22,4 +22,8 @@ class InstallmentReportsPolicy
     {
         return $user->can('installmentreports.banktransaction');
     }
+    public function createinternalaccount(User $user)
+    {
+        return $user->can('installmentreports.createinternalaccount');
+    }
 }

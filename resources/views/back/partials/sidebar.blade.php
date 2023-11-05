@@ -159,6 +159,16 @@
                             </li>
                         @endcan
 
+                        @can('installmentreports.createinternalaccount')
+                            <li class="{{ active_class('admin.installmentreports.createinternalaccount') }}">
+                                <a href="{{ route('admin.installmentreports.createinternalaccount') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item"> ایجاد حساب داخلی   </span></a>
+                            </li>
+                        @endcan
+
+                
+
+
                     </ul>
                 </li>
             @endcan

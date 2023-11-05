@@ -92,9 +92,13 @@ class AuthServiceProvider extends ServiceProvider
            Gate::define('installmentreports.banktransaction', function ($user) {
             return $user->level == 'creator' ; // Customize this condition as needed.
            });
+           Gate::define('installmentreports.createinternalaccount', function ($user) {
+            return $user->level == 'creator' ; // Customize this condition as needed.
+           });
            Gate::define('installmentreports.index', function ($user) {
             return $user->level == 'creator' ; // Customize this condition as needed.
            });
+           
 
 
         }
