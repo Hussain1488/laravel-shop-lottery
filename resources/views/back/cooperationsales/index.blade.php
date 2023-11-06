@@ -1,7 +1,7 @@
 @extends('back.layouts.master')
 
 @section('content')
-    <input type="hidden" id="new_date" value="{{ $today }}">
+    <input type="hidden" id="new_date" value="{{ \Carbon\Carbon::parse($today)->format('Y-m-d') }}">
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -172,13 +172,10 @@
                                         </section>
                                     @else
                                         @foreach ($installmentsm as $index)
-                                            @if ($index->statususer == 1)
+                                            @if ($index->statususer == 1 && $index->status == 0)
                                                 @php
                                                     $updated_date = \Carbon\Carbon::parse($index->datepayment);
                                                 @endphp
-
-
-
                                                 <div class="border rounded p-2 my-1">
                                                     <div class="row">
                                                         <h5>آقای:
@@ -191,35 +188,27 @@
                                                         مبلغ کل فروش:{{ $index->Creditamount }}
                                                     </div>
                                                     <div class="row">
-                                                        قسط به سر رسید
+                                                        تعداد {{ $key->numberofinstallments }} قسط به سر رسید تاریخ
                                                         ({{ \Carbon\Carbon::parse($index->datepayment)->format('d') }})
                                                         هر ماه
                                                         به مبلغ قسط
-                                                        {{ $key->installmentprice }} ریال
+                                                        {{ $key->amounteachinstallment }} ریال
                                                     </div>
 
                                                     <div class="row ">
 
                                                         مقدار پیش پرداخت {{ $index->prepaidamount }} ریال
 
-
                                                     </div>
+                                                    {{ $index->store->id }} <br />{{ $index->id }}
                                                     <div class="row d-flex justify-content-between p-1">
-
-
-
-
-                                                        <div class="col">
-
-                                                            قسط شماره {{ $index->installmentnumber }} به سر رسید
-                                                            تاریخ:
-                                                            {{ \Carbon\Carbon::parse($index->datepayment)->format('Y/m/d') }}
-                                                        </div>
                                                         <div class="col d-flex justify-content-end">
-                                                            <button data_date='{{ $index->datepayment }}'
+                                                            <button
+                                                                data_date='{{ \Carbon\Carbon::parse($index->CarbonDate)->format('Y-m-d') }}'
                                                                 data_day='{{ $index->store->settlementtime }}'
                                                                 class="btn btn-primary settlementtime_button"
-                                                                id="settlementtime_button">
+                                                                id="settlementtime_button" data-store-id ="{{ $index->id }}"
+                                                                data-route="{{ route('admin.installments.payrequest', ['store_id' => $index->store->id, 'installments_id' => $index->id]) }}">
                                                                 درخواست تسویه حساب
                                                             </button>
                                                         </div>
@@ -339,9 +328,57 @@
 
             </div>
             </section>
+            <div class="container" dir="rtl">
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title text-danger">هشدار!</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    برای فعلا شما اجازه درخواست تسویه را ندارید.
+                                </p>
+                                <p>این کاربر <span id="user_day_time" class="text-success"></span> روز دیگر وقت دارد.</p>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-center">
+                                <button type="button" class="btn btn-default text-danger"
+                                    data-dismiss="modal">بستن</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
 
         </div>
     </div>
+    <style>
+        .modal a.close-modal[class*="icon-"] {
+            direction: rtl;
+            top: -10px;
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            color: #fff;
+            line-height: 1.25;
+            text-align: center;
+            text-decoration: none;
+            text-indent: 0;
+            background: #900;
+            border: 2px solid #fff;
+            -webkit-border-radius: 26px;
+            -moz-border-radius: 26px;
+            -o-border-radius: 26px;
+            -ms-border-radius: 26px;
+            -moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        }
+    </style>
 @endsection
 
 @push('scripts')

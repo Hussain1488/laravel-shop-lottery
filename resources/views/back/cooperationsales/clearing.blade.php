@@ -44,7 +44,9 @@
                                             </label>
                                             <div class="d-flex align-items-center">
                                                 <input type="text" placeholder="100,000" class="form-control moneyInput"
-                                                    id="first_name" name="first_name" style="margin-left: 4px;">
+                                                    id="first_name" name="first_name"
+                                                    value="{{ $store->salesamount != null ? ($store->salesamount != 0 ? $store->salesamount : 0) : 0 }}"
+                                                    style="margin-left: 4px;">
                                                 <span>ریال</span>
                                             </div>
 

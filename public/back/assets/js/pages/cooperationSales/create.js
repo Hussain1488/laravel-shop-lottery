@@ -155,15 +155,21 @@ $(document).ready(function () {
 
     $('.settlementtime_button').click(function () {
         let b = $(this).attr('data_day');
-        let a = $(this).attr('data_date'); // Use $(this) to reference the clicked element
-        // Rest of your code
-        console.log(a);
-        console.log(b);
-        console.log($('#new_date').val() - a);
-        let timeDifference = a.getTime() - $('#new_date').val().getTime();
+        let a = $(this).attr('data_date');
+        let new_date = $('#new_date').val();
+
+        let dateA = new Date(a);
+        let dateNew = new Date(new_date);
+        let timeDifference = dateNew.getTime() - dateA.getTime();
         let daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-        console.log(daysDifference);
-        // if()
+
+        if (daysDifference >= b) {
+            let time = daysDifference - b + 1;
+            $('#user_day_time').text(time);
+            $('#myModal').modal();
+        } else {
+            window.location.href = $(this).attr('data-route');
+        }
     });
 
     // console.log(user);

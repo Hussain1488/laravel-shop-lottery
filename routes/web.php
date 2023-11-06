@@ -103,6 +103,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('cooperationsales/clearing', [CooperationSalesController::class, 'clearing'])->name('cooperationsales.clearing');
     Route::get('cooperationsales/changeStatus/{id}', [CooperationSalesController::class, 'changeStatus'])->name('cooperationsales.changeStatus');
     Route::post('cooperationsales/store', [CooperationSalesController::class, 'store'])->name('cooperationsales.store');
+    Route::get('installments/payrequest/{store_id}/{installments_id}', [CooperationSalesController::class, 'PayRequest'])->name('installments.payrequest');
 
 
     // ------------------ installmentpurchase
@@ -131,6 +132,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('installments/shop_installments/{id}/{slug}', [InstallmentReportsController::class, 'show_shop_installments'])->name('installments.shop.installments');
     Route::get('installments/shop_installments/filter', [InstallmentReportsController::class, 'show_shop_installments_filter'])->name('installments.shop.installments.filter');
     Route::get('installments/shop_installments_number/filter', [InstallmentReportsController::class, 'show_shop_installments_filter_name'])->name('installments.shop.installments.filter_name');
+
 
 
 

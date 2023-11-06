@@ -8,10 +8,11 @@ use App\Models\Makeinstallmentsm;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\CooperationSales;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Morilog\Jalali\Jalalian;
+use ParagonIE\Sodium\Compat;
 
 class CooperationSalesController extends Controller
 {
@@ -20,10 +21,14 @@ class CooperationSalesController extends Controller
     {
         $installmentsm = Makeinstallmentsm::where('seller_id', Auth::user()->id)->with('store', 'user')->get();
         $store = createstore::where('selectperson', Auth::user()->id)->first();
-        $today = Jalalian::now()->format('Y-m-d');
-        // $daysDifference = $date1->diff($date2)->format('%d');
-        // $installmentsm = $installmentsm1->where('status', 0);
-        // dd($installmentsm);
+        $today = Carbon::now();
+
+        foreach ($installmentsm as $key) {
+            $jalaliDate = Jalalian::fromFormat('Y-m-d', $key->datepayment);
+            $carbonDate = Carbon::createFromFormat('Y-m-d H:i:s', $jalaliDate->toCarbon()->toDateTimeString());
+            $key->CarbonDate = $carbonDate;
+        }
+
         return view('back.cooperationsales.index', compact('installmentsm', 'store', 'today'));
     }
 
@@ -91,7 +96,9 @@ class CooperationSalesController extends Controller
     // going to clearing view page
     public function clearing()
     {
-        return view('back.cooperationsales.clearing');
+        $store = createstore::where('selectperson', Auth::user()->id)->first();
+
+        return view('back.cooperationsales.clearing', Compact('store'));
     }
 
     // changing the status of installments status to paid.
@@ -100,6 +107,23 @@ class CooperationSalesController extends Controller
         $newUpdate = Makeinstallmentsm::find($id);
         $newUpdate->status = 1;
         $newUpdate->save();
+        return redirect()->back();
+    }
+    public function PayRequest($id, $id2)
+    {
+        // dd($id);
+        $store = createstore::find($id);
+        // dd($store);
+        $fee = $store->feepercentage;
+        $installment = Makeinstallmentsm::find($id2);
+        $result = $installment->Creditamount * $fee / 100;
+        $final = $installment->Creditamount - $result;
+        // dd($final, $result);
+        $store->salesamount += $final;
+        $installment->status = 1;
+        $installment->save();
+        $store->save();
+        toastr()->success('درخواست تصفیه حساب موفقیت آمیز انجام شد.');
         return redirect()->back();
     }
 }
