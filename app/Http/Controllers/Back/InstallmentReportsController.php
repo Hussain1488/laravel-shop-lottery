@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\back;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Back\internalBankStoreRequest;
+use App\Models\BankAccount;
 use App\Models\banktransaction;
 use App\Models\createstore;
 use App\Models\Makeinstallmentsm;
@@ -47,6 +49,16 @@ class InstallmentReportsController extends Controller
     {
 
         return view('back.installmentreports.createinternalaccount');
+    }
+    public function storebank(internalBankStoreRequest $request)
+    {
+        // dd($request->all());
+        BankAccount::create($request->all());
+
+        toastr()->success('حساب بانکی با موفقیت ایجاد شد.');
+
+        return redirect()->back();
+        // return view('back.installmentreports.createinternalaccount');
     }
 
 
