@@ -97,16 +97,19 @@
 
 
                                                     <div class="row">
-                                                        مبلغ کل فروش:{{ $key->Creditamount }}
+                                                        مبلغ کل فروش:<span
+                                                            class="monyInputSpan">{{ $key->Creditamount }}</span>ریال
                                                     </div>
                                                     <div class="row">
                                                         {{ $key->numberofinstallments }} عدد قسط به مبلغ هر قسط
-                                                        {{ $key->amounteachinstallment }} ریال
+                                                        <span class="monyInputSpan">{{ $key->amounteachinstallment }}</span>
+                                                        ریال
                                                     </div>
 
                                                     <div class="row">
 
-                                                        مقدار پیش پرداخت {{ $key->prepaidamount }} ریال
+                                                        مقدار پیش پرداخت <span
+                                                            class="monyInputSpan">{{ $key->prepaidamount }}</span> ریال
 
 
                                                     </div>
@@ -185,29 +188,32 @@
 
 
                                                     <div class="row">
-                                                        مبلغ کل فروش:{{ $index->Creditamount }}
+                                                        مبلغ کل فروش: <span
+                                                            class="monyInputSpan">{{ $index->Creditamount }}</span> ریال
                                                     </div>
                                                     <div class="row">
                                                         تعداد {{ $key->numberofinstallments }} قسط به سر رسید تاریخ
                                                         ({{ \Carbon\Carbon::parse($index->datepayment)->format('d') }})
                                                         هر ماه
                                                         به مبلغ قسط
-                                                        {{ $key->amounteachinstallment }} ریال
+                                                        <span
+                                                            class="monyInputSpan">{{ $key->amounteachinstallment }}</span>ریال
                                                     </div>
 
                                                     <div class="row ">
 
-                                                        مقدار پیش پرداخت {{ $index->prepaidamount }} ریال
+                                                        مقدار پیش پرداخت <span
+                                                            class="monyInputSpan">{{ $index->prepaidamount }}</span> ریال
 
                                                     </div>
-                                                    {{ $index->store->id }} <br />{{ $index->id }}
                                                     <div class="row d-flex justify-content-between p-1">
                                                         <div class="col d-flex justify-content-end">
                                                             <button
                                                                 data_date='{{ \Carbon\Carbon::parse($index->CarbonDate)->format('Y-m-d') }}'
                                                                 data_day='{{ $index->store->settlementtime }}'
                                                                 class="btn btn-primary settlementtime_button"
-                                                                id="settlementtime_button" data-store-id ="{{ $index->id }}"
+                                                                id="settlementtime_button"
+                                                                data-store-id ="{{ $index->id }}"
                                                                 data-route="{{ route('admin.installments.payrequest', ['store_id' => $index->store->id, 'installments_id' => $index->id]) }}">
                                                                 درخواست تسویه حساب
                                                             </button>

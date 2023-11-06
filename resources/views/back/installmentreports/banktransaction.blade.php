@@ -74,13 +74,13 @@
                                                     #
                                                 </th>
                                                 <th>
-                                                 شماره تراکنش 
+                                                    شماره تراکنش
                                                 </th>
                                                 <th>
-                                                    مبلغ تراکنش  
+                                                    مبلغ تراکنش(ریال)
                                                 </th>
                                                 <th class="text-danger">
-                                                    موجودی بانک 
+                                                    موجودی بانک(ریال)
                                                 </th>
                                                 <th>
                                                     تاریخ تراکنش
@@ -100,11 +100,11 @@
                                                         {{ $key->namebank }}
                                                     </td>
                                                     <td>
-                                                        {{ $key->transactionprice }}
+                                                        <span class="monyInputSpan">{{ $key->transactionprice }}</span>
 
                                                     </td>
                                                     <td class="text-danger">
-                                                        {{ $key->bankbalance }}
+                                                        <span class="monyInputSpan">{{ $key->bankbalance }}</span>
 
                                                     </td>
                                                     <td>
@@ -169,4 +169,6 @@
 
 @push('scripts')
     <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}"></script>
+
+    <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
 @endpush

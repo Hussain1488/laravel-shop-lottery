@@ -102,7 +102,8 @@
                                                         <div class="row my-1">
                                                             <div class="col">
                                                                 {{ $key->numberofinstallments }} عدد به
-                                                                مبلغ قسط {{ $key->Creditamount }} ریال
+                                                                مبلغ قسط <span class="moneyInputSpan">
+                                                                    {{ $key->Creditamount }} </span> ریال
                                                             </div>
 
                                                         </div>
@@ -111,7 +112,8 @@
 
                                                             <div class="">
 
-                                                                مقدار پیش پرداخت: {{ $key->prepaidamount }} ریال
+                                                                مقدار پیش پرداخت: <span class="moneyInputSpan">
+                                                                    {{ $key->prepaidamount }} </span> ریال
                                                             </div>
                                                             <div class="col d-flex justify-content-end">
 
@@ -221,7 +223,8 @@
 
                                                                 <div class="row mr-2">
 
-                                                                    مبلغ کل قسط: {{ $value->Creditamount }} ریال
+                                                                    مبلغ کل قسط: <span class="moneyInputSpan">
+                                                                        {{ $value->Creditamount }} </span> ریال
                                                                 </div>
 
                                                                 <div class="row m-2">
@@ -229,7 +232,8 @@
                                                                 </div>
                                                                 <div class="row mr-2">
 
-                                                                    مبلغ هر قسط: {{ $key->installmentprice }} ریال
+                                                                    مبلغ هر قسط: <span class="moneyInputSpan">
+                                                                        {{ $key->installmentprice }} </span> ریال
                                                                 </div>
 
                                                                 <div
@@ -311,7 +315,8 @@
 
                                                                 <div class="row mr-2">
 
-                                                                    مبلغ کل قسط {{ $value->Creditamount }} ریال
+                                                                    مبلغ کل قسط <span class="moneyInputSpan">
+                                                                        {{ $value->Creditamount }} </span> ریال
 
                                                                 </div>
 
@@ -327,7 +332,8 @@
                                                                 </div>
                                                                 <div class="row mr-2">
 
-                                                                    مبلغ هر قسط: {{ $key->installmentprice }} ریال
+                                                                    مبلغ هر قسط: <span class="moneyInputSpan">
+                                                                        {{ $key->installmentprice }} </span> ریال
                                                                 </div>
                                                                 <div
                                                                     class="row my-1 mx-2 p-1 d-flex justify-content-between">

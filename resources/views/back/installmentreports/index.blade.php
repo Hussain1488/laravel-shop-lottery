@@ -129,17 +129,21 @@
 
 
                                                     <div class="row">
-                                                        مبلغ کل فروش:{{ $key->Creditamount }}
+                                                        مبلغ کل فروش: <span class="monyInputSpan">
+                                                            {{ $key->Creditamount }}
+                                                        </span>
                                                     </div>
                                                     <div class="row">
                                                         {{ $key->numberofinstallments }} عدد قسط
                                                         به مبلغ قسط
-                                                        {{ $key->amounteachinstallment }} ریال
+                                                        <span class="monyInputSpan">
+                                                            {{ $key->amounteachinstallment }} </span> ریال
                                                     </div>
 
                                                     <div class="row mt-2">
                                                         <div class="col">
-                                                            مقدار پیش پرداخت {{ $key->prepaidamount }} ریال
+                                                            مقدار پیش پرداخت <span class="monyInputSpan">
+                                                                {{ $key->prepaidamount }} </span> ریال
                                                         </div>
                                                     </div>
                                                 </div>
@@ -221,18 +225,21 @@
 
 
                                                             <div class="row">
-                                                                مبلغ کل فروش:{{ $value->Creditamount }}
+                                                                مبلغ کل فروش: <span class="monyInputSpan">
+                                                                    {{ $value->Creditamount }} </span>
                                                             </div>
                                                             <div class="row">
                                                                 قسط شماره {{ $key->installmentnumber }}به سر رسید
                                                                 {{ \Carbon\Carbon::parse($key->duedate)->format('d') }}
                                                                 هر ماه به مبلغ قسط
-                                                                {{ $key->installmentprice }} ریال
+                                                                <span class="monyInputSpan">
+                                                                    {{ $key->installmentprice }} </span> ریال
                                                             </div>
 
                                                             <div class="row mt-2">
                                                                 <div class="col">
-                                                                    مقدار پیش پرداخت {{ $value->prepaidamount }} ریال
+                                                                    مقدار پیش پرداخت <span class="monyInputSpan">
+                                                                        {{ $value->prepaidamount }} </span> ریال
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -316,18 +323,21 @@
 
 
                                                             <div class="row">
-                                                                مبلغ کل فروش:{{ $value->Creditamount }}
+                                                                مبلغ کل فروش: <span class="monyInputSpan">
+                                                                    {{ $value->Creditamount }} </span> ریال
                                                             </div>
                                                             <div class="row">
                                                                 قسط شماره {{ $key->installmentnumber }}به سر رسید
                                                                 {{ \Carbon\Carbon::parse($key->duedate)->format('d') }}
                                                                 هر ماه به مبلغ قسط
-                                                                {{ $key->installmentprice }} ریال
+                                                                <span class="monyInputSpan">
+                                                                    {{ $key->installmentprice }} </span> ریال
                                                             </div>
 
                                                             <div class="row mt-2">
                                                                 <div class="col">
-                                                                    مقدار پیش پرداخت {{ $value->prepaidamount }} ریال
+                                                                    مقدار پیش پرداخت <span class="monyInputSpan">
+                                                                        {{ $value->prepaidamount }} </span> ریال
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -349,3 +359,8 @@
         </div>
     </div>
 @endsection
+@include('back.partials.plugins', ['plugins' => ['jquery.validate']])
+
+@push('scripts')
+    <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
+@endpush

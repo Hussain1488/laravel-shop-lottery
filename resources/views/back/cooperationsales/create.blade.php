@@ -269,6 +269,7 @@
                                         <div class="row">
                                             <div class="col-12">
                                                 <button type="button" id="submit_button"
+                                                    data-end-date="{{ $shop->enddate }}"
                                                     class="btn btn-primary mr-1 mb-1 waves-effect waves-light">
                                                     تأیید نهایی
                                                 </button>
@@ -306,9 +307,8 @@
                     <div class="modal-header">
                         <h4 class="modal-title text-danger">هشدار!</h4>
                     </div>
-                    <div class="modal-body">
-                        <p>مقدار قیمت اصلی نباید از اعتبار خریدار بیشتر باشد.<br />لطفا اصلاح کنید بعد تآیید و ارسال کنید.
-                        </p>
+                    <div class="modal-body" id="modal_body">
+
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
                         <button type="button" class="btn btn-default text-danger" data-dismiss="modal">بستن</button>
