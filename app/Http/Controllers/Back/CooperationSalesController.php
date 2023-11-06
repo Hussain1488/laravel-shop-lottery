@@ -21,11 +21,14 @@ class CooperationSalesController extends Controller
     {
         $installmentsm = Makeinstallmentsm::where('seller_id', Auth::user()->id)->with('store', 'user')->get();
         $store = createstore::where('selectperson', Auth::user()->id)->first();
+
         $today = Carbon::now();
 
         foreach ($installmentsm as $key) {
             $jalaliDate = Jalalian::fromFormat('Y-m-d', $key->datepayment);
+
             $carbonDate = Carbon::createFromFormat('Y-m-d H:i:s', $jalaliDate->toCarbon()->toDateTimeString());
+
             $key->CarbonDate = $carbonDate;
         }
 
@@ -38,6 +41,10 @@ class CooperationSalesController extends Controller
         $shopkeeper = Auth::user();
         // dd($shopkeeper->id);
         $shop = createstore::where('selectperson', $shopkeeper->id)->first();
+        $jalaliEndDate = Jalalian::fromFormat('Y-m-d', $shop->enddate);
+        $carbonEndDate = Carbon::createFromFormat('Y-m-d H:i:s', $jalaliEndDate->toCarbon()->toDateTimeString());
+        $shop->enddate = $carbonEndDate;
+        // dd($shop->enddate);
         // dd($shop);
         $users = User::where('level', 'user')->get();
         // dd($users);

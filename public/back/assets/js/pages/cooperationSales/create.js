@@ -1,4 +1,10 @@
 $(document).ready(function () {
+    $('.monyInputSpan').each(function () {
+        var input = $(this).text();
+        var digits = input.replace(/\D/g, '');
+        var formattedNumber = addCommas(digits);
+        $(this).text(formattedNumber);
+    });
     $('.moneyInput').each(function () {
         var input = $(this).val();
 
@@ -119,6 +125,8 @@ $(document).ready(function () {
     $('#submit_button').click(function () {
         // Get the values of input fields
 
+        let end_date = new Date($(this).attr('data-end-date'));
+
         var creadit = parseInt(
             $('#purchase_creadite').val().replace(/,/g, ''),
             10
@@ -128,26 +136,40 @@ $(document).ready(function () {
         $('#purchase_creadite').val();
         var main_price = $('#main_price').val().replace(/,/g, '');
         var store_creadit = $('#store_creadit').val();
-        if (main_price == '' || isNaN(main_price) || main_price <= 0) {
-            // console.log('this is NaN');
-            $('#myModal3').modal();
-        } else {
-            // console.log(main_price);
-            // console.log(store_creadit);
-            if (store_creadit >= main_price) {
-                if (creadit >= main_price) {
-                    $('#user-create-form').submit();
-                } else {
-                    // If the condition is not met, show a confirmation dialog
-
-                    $('#myModal').modal();
-
-                    // Close the popup when the close button is clicked
-                }
+        let toDay = new Date();
+        if (toDay <= end_date) {
+            if (main_price == '' || isNaN(main_price) || main_price <= 0) {
+                // console.log('this is NaN');
+                $('#myModal3').modal();
             } else {
-                $('#store_creadit2').text(store_creadit);
-                $('#myModal2').modal();
+                if (store_creadit >= main_price) {
+                    if (creadit >= main_price) {
+                        $('#user-create-form').submit();
+                    } else {
+                        // If the condition is not met, show a confirmation dialog
+                        $('#modal_body').html(
+                            '<p>' +
+                                'مقدار قیمت اصلی نباید از اعتبار خریدار بیشتر باشد.' +
+                                '<br />' +
+                                'لطفا اصلاح کنید بعد تآیید و ارسال کنید.' +
+                                '</p>'
+                        );
+                        $('#myModal').modal();
+
+                        // Close the popup when the close button is clicked
+                    }
+                } else {
+                    $('#store_creadit2').text(store_creadit);
+                    $('#myModal2').modal();
+                }
             }
+        } else {
+            $('#modal_body').html(
+                '<p>' +
+                    'مهلت اعتبار فروشگاه شما به اتمام رسیده است و شما نمیتوانید قسطی ایجاد کنید' +
+                    '</p>'
+            );
+            $('#myModal').modal();
         }
     });
 
