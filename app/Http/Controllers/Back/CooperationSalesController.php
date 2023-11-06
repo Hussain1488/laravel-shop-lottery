@@ -25,11 +25,11 @@ class CooperationSalesController extends Controller
         $today = Carbon::now();
 
         foreach ($installmentsm as $key) {
-            $jalaliDate = Jalalian::fromFormat('Y-m-d', $key->datepayment);
-
-            $carbonDate = Carbon::createFromFormat('Y-m-d H:i:s', $jalaliDate->toCarbon()->toDateTimeString());
-
-            $key->CarbonDate = $carbonDate;
+            if ($key->datepayment != null) {
+                $jalaliDate = Jalalian::fromFormat('Y-m-d', $key->datepayment);
+                $carbonDate = Carbon::createFromFormat('Y-m-d H:i:s', $jalaliDate->toCarbon()->toDateTimeString());
+                $key->CarbonDate = $carbonDate;
+            }
         }
 
         return view('back.cooperationsales.index', compact('installmentsm', 'store', 'today'));
@@ -104,6 +104,13 @@ class CooperationSalesController extends Controller
     public function clearing()
     {
         $store = createstore::where('selectperson', Auth::user()->id)->first();
+
+        return view('back.cooperationsales.clearing', Compact('store'));
+    }
+    public function clearingStore(Request $request)
+    {
+        dd($request->all());
+        // $store = createstore::where('selectperson', Auth::user()->id)->first();
 
         return view('back.cooperationsales.clearing', Compact('store'));
     }
