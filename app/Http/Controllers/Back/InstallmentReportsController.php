@@ -47,8 +47,9 @@ class InstallmentReportsController extends Controller
 
     public function createinternalaccount()
     {
-
-        return view('back.installmentreports.createinternalaccount');
+        $listbank = BankAccount::all();
+    
+        return view('back.installmentreports.createinternalaccount' , compact('listbank'));
     }
     public function storebank(internalBankStoreRequest $request)
     {
@@ -60,6 +61,7 @@ class InstallmentReportsController extends Controller
         return redirect()->back();
         // return view('back.installmentreports.createinternalaccount');
     }
+
 
 
 
