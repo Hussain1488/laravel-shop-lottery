@@ -31,5 +31,8 @@ $(document).ready(function () {
         return x1 + x2;
     }
 
-    // console.log(user);
+    $('#creating_bank_button').on('click', function () {
+        console.log('hey');
+        $('#create_bank_form').submit();
+    });
 });
