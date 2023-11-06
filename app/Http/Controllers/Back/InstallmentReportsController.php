@@ -43,6 +43,12 @@ class InstallmentReportsController extends Controller
         return view('back.installmentreports.banktransaction', compact('transaction', 'total'));
     }
 
+    public function createinternalaccount()
+    {
+
+        return view('back.installmentreports.createinternalaccount');
+    }
+
 
 
     /**
