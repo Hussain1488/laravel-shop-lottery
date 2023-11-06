@@ -258,8 +258,7 @@ class CreateColleagueController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function PayRequest($id)
-   
+
 
     /**
      * Update the specified resource in storage.

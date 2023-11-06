@@ -1,4 +1,16 @@
 $(document).ready(function () {
+    $('.moneyInputSpan').each(function () {
+        var input = $(this).text();
+
+        // Remove any non-digit characters (e.g., commas)
+        var digits = input.replace(/\D/g, '');
+
+        // Format the number with commas
+        var formattedNumber = addCommas(digits);
+
+        // Update the input field with the formatted number
+        $(this).text(formattedNumber);
+    });
     $('.moneyInput').each(function () {
         var input = $(this).val();
 
