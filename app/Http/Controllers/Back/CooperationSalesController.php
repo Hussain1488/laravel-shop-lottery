@@ -8,6 +8,7 @@ use App\Models\Makeinstallmentsm;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\CooperationSales;
+use App\Models\PaymentListModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -109,10 +110,28 @@ class CooperationSalesController extends Controller
     }
     public function clearingStore(Request $request)
     {
-        dd($request->all());
-        // $store = createstore::where('selectperson', Auth::user()->id)->first();
+        // dd($request->all());
+        $depositamount = str_replace(',', '', $request->depositamount);
 
-        return view('back.cooperationsales.clearing', Compact('store'));
+        $number = PaymentListModel::count();
+        if ($number > 0 && $number != 0) {
+            $number = PaymentListModel::latest()->first()->list_id  + 1;
+        } else {
+            $number = 10000;
+        }
+
+        PaymentListModel::create([
+            'list_id' => $number,
+            'store_id' => $request->store,
+            'depositamount' => $depositamount,
+            'shabanumber' => $request->shabanumber,
+            'factor' => 'factor kjlskdjfsldkfjlksdjf sdflkj lsdkfj',
+            'depositdate' => Jalalian::now()->format('Y-m-d'),
+        ]);
+
+        toastr()->success('درخواست تسویه حساب با موفقیت ارسال شد.');
+
+        return redirect()->back();
     }
 
     // changing the status of installments status to paid.

@@ -103,6 +103,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('cooperationsales/clearing', [CooperationSalesController::class, 'clearing'])->name('cooperationsales.clearing');
     Route::get('cooperationsales/changeStatus/{id}', [CooperationSalesController::class, 'changeStatus'])->name('cooperationsales.changeStatus');
     Route::post('cooperationsales/store', [CooperationSalesController::class, 'store'])->name('cooperationsales.store');
+    Route::post('cooperationsales/clearing', [CooperationSalesController::class, 'clearingStore'])->name('cooperationsales.clearing.store');
     Route::get('installments/payrequest/{store_id}/{installments_id}', [CooperationSalesController::class, 'PayRequest'])->name('installments.payrequest');
 
 

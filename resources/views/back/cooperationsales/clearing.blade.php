@@ -31,83 +31,105 @@
                     </div>
                     <div class="card-content">
                         <div class="container mt-3">
-
-
-                            <!-- Tab panes -->
                             <div id="home" class="container tab-pane active"><br>
-                                <div class="row">
+                                <form action="{{ route('admin.cooperationsales.clearing.store') }}"
+                                    enctype="multipart/form-data" id="" method="POST">
+                                    @csrf
+                                    <input type="hidden" value="{{ $store->id }}" name="store">
+                                    <div class="row">
 
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group d-flex align-items-center">
-                                            <label for="first_name" class="mr-2">
-                                                موجودی قابل برداشت
-                                            </label>
-                                            <div class="d-flex align-items-center">
-                                                <input type="text" placeholder="100,000" class="form-control moneyInput"
-                                                    id="first_name" name="first_name"
-                                                    value="{{ $store->salesamount != null ? ($store->salesamount != 0 ? $store->salesamount : 0) : 0 }}"
-                                                    style="margin-left: 4px;">
-                                                <span>ریال</span>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group d-flex align-items-center">
+                                                <label for="first_name" class="mr-2">
+                                                    موجودی قابل برداشت
+                                                </label>
+                                                <div class="d-flex align-items-center">
+                                                    <input type="text" placeholder="100,000"
+                                                        class="form-control moneyInput" id="first_name" name="first_name"
+                                                        value="{{ $store->salesamount != null ? ($store->salesamount != 0 ? $store->salesamount : 0) : 0 }}"
+                                                        style="margin-left: 4px;">
+                                                    <span>ریال</span>
+                                                </div>
+
+
                                             </div>
-
+                                        </div>
+                                        <div class="col-md-6 col-12">
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-12">
-
+                                    <div class="row my-3">
+                                        <div class="col">
+                                            <p class="">
+                                                لطفا بررسی نمایید که فاکتور هایی که تاریخ روز کاری آن سررسیده است را تسویه
+                                                بزنید، تا به موجودی کیف پول شما واریز شده و قابل برداشت باشد.
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row my-3">
-                                    <div class="col">
-                                        <p class="">
-                                            لطفا بررسی نمایید که فاکتور هایی که تاریخ روز کاری آن سررسیده است را تسویه
-                                            بزنید، تا به موجودی کیف پول شما واریز شده و قابل برداشت باشد.
-                                        </p>
+                                    <div class="form-group d-flex align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <input type="text" class="form-control moneyInput" id="depositamount"
+                                                name="depositamount" style="margin-left: 4px;"> ریال
+                                        </div>
+                                        <label for="first_name" class="ml-2">
+                                            مبلغ درخواست واریز
+                                        </label>
+                                        @error('depositamount')
+                                            <span class="text-danger">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
                                     </div>
-                                </div>
-                                <div class="form-group d-flex align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <input type="text" class="form-control moneyInput" id="first_name"
-                                            name="first_name" style="margin-left: 4px;"> ریال
-                                    </div>
-                                    <label for="first_name" class="ml-2">
-                                        مبلغ درخواست واریز
-                                    </label>
-                                </div>
-                                {{-- <div class="input-group">
+                                    {{-- <div class="input-group">
                                     <input type="text" aria-label="First name" class="form-control">
                                     <input type="text" style="width: 20px; border-right: none;" class="form-control" value="ریال" disabled>
                                 </div> --}}
-                                <div class="row mt-4 mb-2">
-                                    <p class="text-center">
-                                        در صورتی که تأمین کننده کالا فردی غیر از شما میباشد فاکتور فروش از نام فروشنده به
-                                        خریدار تهیه و در قسمت عکس فاکتور آپلود نمایید.
-                                    </p>
+                                    <div class="row mt-4 mb-2">
+                                        <p class="text-center">
+                                            در صورتی که تأمین کننده کالا فردی غیر از شما میباشد فاکتور فروش از نام فروشنده
+                                            به
+                                            خریدار تهیه و در قسمت عکس فاکتور آپلود نمایید.
+                                        </p>
 
 
-                                </div>
-                                <div class="row">
-                                    <input type="file" accept=".pdf, .doc" accept-language="fa">
-                                    <label for="">افزودن عکس فاکتور فروش</label>
-                                    {{-- <br>
-                                    <input type="file" class="custom-file-input" id="customFile">
-                                    <label class="custom-file-label" for="customFile">انتخاب فایل</label> --}}
-                                </div>
-                                <div class="row mt-1">
-                                    <input type="text">
-                                    <label for="">ثبت شماره شبا</label>
-                                </div>
+                                    </div>
+                                    <div class="row">
+                                        <input type="file" accept=".pdf, .doc" accept-language="fa" name="factor">
+                                        <label for="">افزودن عکس فاکتور فروش</label>
 
-                                <div class="my-4 border rounded bg-danger text-dark p-1 text-center">
-                                    ثبت شد ۲۹۳۹۷۴۲ شماره پیگیری را روی فاکتور بنویسید
-                                    <br>
-                                    تا همکاران ما فاکتور را به شما مراجعه کنند و به صورت فیزیکی فاکتور ها را تحویل بگیرند.
-                                </div>
-                                <div class="row mb-2" style="align-items:center ;display: flex;flex-direction: column;">
-                                    <input type="submit" value="تأیید" class="btn btn-lg"
-                                        style="background-color: none; text-color:black">
-                                </div>
+                                    </div>
+                                    @error('factor')
+                                        <span class="text-danger">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
 
+
+                                    <div class="form-group d-flex align-items-center my-1">
+                                        <div class="d-flex align-items-center">
+                                            <input type="number" class="form-control" name="shabanumber"
+                                                style="margin-left: 4px;">
+                                        </div>
+                                        <label for="first_name" class="ml-2">
+                                            شماره ثبت شبا </label>
+                                    </div>
+                                    @error('shabanumber')
+                                        <span class="text-danger">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
+
+                                    <div class="my-4 border rounded bg-danger text-dark p-1 text-center">
+                                        ثبت شد ۲۹۳۹۷۴۲ شماره پیگیری را روی فاکتور بنویسید
+                                        <br>
+                                        تا همکاران ما فاکتور را به شما مراجعه کنند و به صورت فیزیکی فاکتور ها را تحویل
+                                        بگیرند.
+                                    </div>
+                                    <div class="row mb-2" style="align-items:center ;display: flex;flex-direction: column;">
+                                        <input type="submit" value="تأیید" class="btn btn-lg"
+                                            style="background-color: none; text-color:black">
+                                    </div>
+                                </form>
                             </div>
 
                         </div>
