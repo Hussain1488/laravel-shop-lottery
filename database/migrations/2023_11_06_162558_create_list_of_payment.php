@@ -19,7 +19,7 @@ class CreateListOfPayment extends Migration
             $table->unsignedBigInteger('store_id');
             $table->bigInteger('depositamount');
             $table->bigInteger('shabanumber');
-            $table->string('factor');
+            $table->text('factor');
             $table->date('depositdate');
             $table->tinyInteger('status')->default(0);
             $table->foreign('store_id')->references('id')->on('createstores')->onDelete('cascade');
