@@ -28,6 +28,11 @@
                             <div class="card-content">
                                 <div class="container mt-3">
 
+                                    @if (session('warning'))
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ session('warning') }}
+                                        </div>
+                                    @endif
                                     <!-- Nav tabs -->
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item">
@@ -49,6 +54,7 @@
                                         </li>
 
                                     </ul>
+
 
                                     <!-- Tab panes -->
                                     <div class="tab-content">
@@ -242,7 +248,8 @@
                                                                     <div>
 
                                                                         <div class="row m-2">
-                                                                            قسط شماره {{ $key->installmentnumber }} به سر
+                                                                            قسط شماره {{ $key->installmentnumber }} به
+                                                                            سر
                                                                             رسید تاریخ:
                                                                             {{ \Carbon\Carbon::parse($key->duedate)->format('Y/m/d') }}
                                                                         </div>
@@ -341,7 +348,8 @@
                                                                     <div>
 
                                                                         <div class="row m-2">
-                                                                            قسط شماره {{ $key->installmentnumber }} به سر
+                                                                            قسط شماره {{ $key->installmentnumber }} به
+                                                                            سر
                                                                             رسید تاریخ:
                                                                             {{ \Carbon\Carbon::parse($key->duedate)->format('Y/m/d') }}
                                                                         </div>

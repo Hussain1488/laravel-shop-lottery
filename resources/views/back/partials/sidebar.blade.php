@@ -154,19 +154,20 @@
 
                         @can('installmentreports.banktransaction')
                             <li class="{{ active_class('admin.installmentreports.banktransaction') }}">
-                                <a href="{{ route('admin.installmentreports.banktransaction') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item"> لیست  تراکنش بانک  </span></a>
+                                <a href="{{ route('admin.installmentreports.banktransaction') }}"><i
+                                        class="feather icon-circle"></i><span class="menu-item"> لیست تراکنش بانک </span></a>
                             </li>
                         @endcan
 
-                        @can('installmentreports.createinternalaccount')
-                            <li class="{{ active_class('admin.installmentreports.createinternalaccount') }}">
-                                <a href="{{ route('admin.installmentreports.createinternalaccount') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item"> ایجاد حساب داخلی   </span></a>
+                        @can('installmentreports.banklist')
+                            <li class="{{ active_class('admin.installmentreports.banklist') }}">
+                                <a href="{{ route('admin.installmentreports.banklist') }}"><i
+                                        class="feather icon-circle"></i><span class="menu-item"> لیست حساب های داخلی
+                                    </span></a>
                             </li>
                         @endcan
 
-                
+
 
 
                     </ul>
