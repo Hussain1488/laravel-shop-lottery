@@ -245,7 +245,7 @@ class CreateColleagueController extends Controller
         toastr()->success('ایجاد سند جدید با شماره ' . $request->numberofdocuments . ' با موفقیت ثبت گردید.');
 
 
-        return redirect()->back();
+        return redirect()->back()->with('number', $request->numberofdocuments);
     }
 
 

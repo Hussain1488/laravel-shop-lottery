@@ -145,16 +145,21 @@
                                         </div>
 
 
-                                        <div class="row my-2">
-                                            <div class="col-md-6 col-12 pt-2">
+
+
+                                        @if (session('number'))
+                                            <div class="alert alert-success mt-2" role="alert">
+
                                                 <h5>
-                                                    شماره ثبت این سند به شماره {{ $number }} میباشد.
+                                                    شماره ثبت این سند به شماره {{ session('number') }} میباشد.
                                                 </h5>
                                                 <h5>
                                                     شماره پیگیری سند در سند اداری ثبت شده و تحویل بایگانی شود.</h5>
-                                            </div>
 
-                                        </div>
+                                            </div>
+                                        @endif
+
+
 
                                         <div class="row ">
                                             <div class="col d-flex align-items-baseline justify-content-center">
