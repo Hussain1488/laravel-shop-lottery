@@ -196,3 +196,48 @@ $(document).ready(function () {
 
     // console.log(user);
 });
+
+$('#clearing_button').on('click', function () {
+    let total_amount = parseFloat($('#total_amount').val().replace(/\D/g, ''));
+    let reqest_amount = parseFloat(
+        $('#reqest_amount').val().replace(/\D/g, '')
+    );
+    let shaba_number = $('#shaba_number').val();
+    let digitPattern = /^\d{16}$/;
+
+    if (total_amount >= reqest_amount) {
+        if (reqest_amount <= 0) {
+            $('.modal-body').html(
+                '<p>' + 'مقدار درخواست واریز معتبر نمیباشد' + '</p>'
+            );
+            $('#myModal').modal();
+        } else {
+            if (digitPattern.test(shaba_number)) {
+                $('#reqest_amount').val(reqest_amount);
+                // console.log($('#reqest_amount').val());
+                $('#clearing_form').submit();
+            } else {
+                $('.modal-body').html(
+                    '<p>' +
+                        'شماره ثبت شبا درست نمیباشد،‌لطفا اصلاح کرده دوباره امتهان کنید.' +
+                        '</p>'
+                );
+                $('#myModal').modal();
+            }
+        }
+    } else {
+        let a = $('#total_amount').val();
+        $('.modal-body').html(
+            '<p>' +
+                'شما نمیتوانید از موجودی قابل برداشت خود بیشتر درخواست بدهید.' +
+                '<br />' +
+                ' موجودی قابل برداشت شما فعلا:' +
+                '<span class="text-success" id="total_amount_text" >' +
+                '</span> ' +
+                ' ریال میباشد.' +
+                '</p>'
+        );
+        $('#total_amount_text').text(a);
+        $('#myModal').modal();
+    }
+});
