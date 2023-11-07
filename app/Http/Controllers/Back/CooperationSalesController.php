@@ -10,8 +10,10 @@ use App\Models\User;
 use App\Models\CooperationSales;
 use App\Models\PaymentListModel;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Melipayamak\MelipayamakApi;
 use Morilog\Jalali\Jalalian;
 use ParagonIE\Sodium\Compat;
 
@@ -169,5 +171,25 @@ class CooperationSalesController extends Controller
         $store->save();
         toastr()->success('درخواست تصفیه حساب موفقیت آمیز انجام شد.');
         return redirect()->back();
+    }
+    public function smsTest()
+    {
+        // dd($_ENV['MELIPAYAMAK_USER']);
+
+        try {
+            $username = $_ENV['MELIPAYAMAK_USER'];
+            $password = $_ENV['MELIPAYAMAK_PASSWORD'];;
+            $api = new MelipayamakApi($username, $password);
+            $sms = $api->sms();
+            $to = '09038261488';
+            $from = '50004001000143';
+            $text = 'سلام حسین چطوری این تست دوم است';
+            $response = $sms->send($to, $from, $text);
+            $json = json_decode($response);
+            echo $json->Value; //RecId or Error Number
+        } catch (Exception $e) {
+            echo $e->getMessage();
+            // dd($e->getMessage());
+        }
     }
 }

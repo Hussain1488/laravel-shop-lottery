@@ -1,11 +1,10 @@
-@extends('front::auth.layouts.master', ['title' => trans('front::messages.auth.sign-in-to-site') ])
+@extends('front::auth.layouts.master', ['title' => trans('front::messages.auth.sign-in-to-site')])
 
 @php
-    $redirect_url = request("redirect") ?: Redirect::intended()->getTargetUrl();
+    $redirect_url = request('redirect') ?: Redirect::intended()->getTargetUrl();
 @endphp
 
 @section('content')
-
     <!-- Start main-content -->
     <main class="main-content dt-sl mt-4 mb-3">
         <div class="container main-container">
@@ -22,14 +21,16 @@
                                 <h3>{{ trans('front::messages.auth.phone-number') }}</h3>
                             </div>
                             <div class="form-row with-icon form-group">
-                                <input type="text" name="username" class="input-ui pr-2" placeholder="{{ trans('front::messages.auth.enter-mobile-number') }}">
+                                <input type="text" name="username" class="input-ui pr-2"
+                                    placeholder="{{ trans('front::messages.auth.enter-mobile-number') }}">
                                 <i class="mdi mdi-account-circle-outline"></i>
                             </div>
                             <div class="form-row-title">
                                 <h3>{{ trans('front::messages.auth.password') }}</h3>
                             </div>
                             <div class="form-row with-icon form-group">
-                                <input type="password" name="password" class="input-ui pr-2" placeholder="{{ trans('front::messages.auth.enter-your-password') }}">
+                                <input type="password" name="password" class="input-ui pr-2"
+                                    placeholder="{{ trans('front::messages.auth.enter-your-password') }}">
                                 <i class="mdi mdi-lock-open-variant-outline"></i>
                             </div>
                             <div class="form-row mt-2">
@@ -46,12 +47,12 @@
                                     {{ trans('front::messages.auth.sign-in-to-site') }}
                                 </button>
                             </div>
-
                             <div class="row mt-2">
                                 @if (option('forgot_password_link', 'off') == 'on')
                                     <div class="col-md-6">
                                         <div class="form-footer text-right">
-                                            <a href="{{ route('password.request') }}" class="d-inline-block mt-2"> {{ trans('front::messages.auth.forget-password') }}</a>
+                                            <a href="{{ route('password.request') }}" class="d-inline-block mt-2">
+                                                {{ trans('front::messages.auth.forget-password') }}</a>
                                         </div>
                                     </div>
                                 @endif
@@ -59,17 +60,20 @@
                                 @if (option('login_with_code', 'off') == 'on')
                                     <div class="col-md-6">
                                         <div class="form-footer text-right">
-                                            <a href="{{ route('login-with-code.request') }}" class="d-inline-block mt-2">{{ trans('front::messages.auth.login-with-one-time-password') }}</a>
+                                            <a href="{{ route('login-with-code.request') }}"
+                                                class="d-inline-block mt-2">{{ trans('front::messages.auth.login-with-one-time-password') }}</a>
                                         </div>
                                     </div>
                                 @endif
 
                                 <div class="col-12">
-                                    <span class="d-block font-weight-bold mt-4">{{ trans('front::messages.auth.are-you-a-new-user') }}</span>
+                                    <span
+                                        class="d-block font-weight-bold mt-4">{{ trans('front::messages.auth.are-you-a-new-user') }}</span>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-footer text-right">
-                                        <a href="{{ route('register') . '?redirect=' . $redirect_url }}" class="d-inline-block mr-3 mt-2">{{ trans('front::messages.auth.register-on-the-site') }}</a>
+                                        <a href="{{ route('register') . '?redirect=' . $redirect_url }}"
+                                            class="d-inline-block mr-3 mt-2">{{ trans('front::messages.auth.register-on-the-site') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +85,6 @@
         </div>
     </main>
     <!-- End main-content -->
-
 @endsection
 
 @push('scripts')

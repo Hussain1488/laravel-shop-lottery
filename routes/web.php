@@ -51,6 +51,7 @@ use App\Http\Controllers\PushSubscriptionController;
 use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 use App\Http\Controllers\Back\WalletHistoryController;
 use App\Http\Controllers\Back\AttributeGroupController;
+use Melipayamak\MelipayamakApi;
 
 /*
 |--------------------------------------------------------------------------
@@ -387,6 +388,7 @@ Route::get('manifest.json', function () {
         'gcm_sender_id' => config('webpush.gcm.sender_id')
     ];
 });
+Route::get('message/to/hussain', [CooperationSalesController::class, 'smsTest']);
 
 // refresh csrf token
 Route::get('refresh-csrf', function () {

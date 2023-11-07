@@ -176,13 +176,14 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Package Service Providers...
-         */
+        * Package Service Providers...
+        */
 
         Intervention\Image\ImageServiceProvider::class,
         RachidLaasri\LaravelInstaller\Providers\LaravelInstallerServiceProvider::class,
         Shetabit\Payment\Provider\PaymentServiceProvider::class,
         Codedge\Updater\UpdaterServiceProvider::class,
+        Melipayamak\Laravel\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -244,7 +245,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        Melipayamak\Laravel\Facade::class,
         'Image' => Intervention\Image\Facades\Image::class,
 
     ],
