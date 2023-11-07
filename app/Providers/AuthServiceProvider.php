@@ -54,7 +54,7 @@ class AuthServiceProvider extends ServiceProvider
                 // Customize this condition as needed.
             });
             Gate::define('installmentpurchase.index', function ($user) {
-                return $user->level == 'creator'; // Customize this condition as needed.
+                // Customize this condition as needed.
             });
             // createcolleague
             Gate::define('createcolleague', function ($user) {
