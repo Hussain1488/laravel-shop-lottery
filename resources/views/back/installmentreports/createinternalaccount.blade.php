@@ -111,7 +111,6 @@
                                 ماهیت  حساب : {{$item->accounttype}}
                               </div>
 
-
                             </div>
                         </div>
                         @endforeach

@@ -55,7 +55,7 @@ class InstallmentsController extends Controller
         // dd($id);
 
         $installments = Makeinstallmentsm::find($id);
-        $user = User::find(Auth::user()->id);
+        $user = User::find(Auth::user()->id); 
         $user->inventory -= $installments->prepaidamount;
         $Insta_dateils = new installmentdetails();
 
