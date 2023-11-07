@@ -1,180 +1,189 @@
-@extends('front::user.layouts.master')
+@extends('front::layouts.master')
 
-@section('user-content')
+@section('content')
     <!-- Start Content -->
 
 
+    <main class="main-content dt-sl mt-4 mb-3">
+        <div class="container main-container">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
 
-    <div class="col-xl-9 col-lg-8 col-md-8 col-sm-12">
 
-
-        <div class="row">
-            <div class=" page col-12">
-                <div class="section-title text-sm-title title-wide mb-1 no-after-title-wide dt-sl mb-2 px-res-1">
-                    <h2>{{ trans('front::messages.wallet.wallet-history') }}</h2>
-                    <a href="{{ route('front.wallet.create') }}"
-                        class="m-0 d-block">{{ trans('front::messages.wallet.increase-wallet-inventory') }}</a>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="page dt-sl dt-sn pt-3">
-                    <div class="content-body">
-                        <section class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">اسم کاربر</h4>
+                    <div class="row">
+                        <div class=" page col-12">
+                            <div class="section-title text-sm-title title-wide mb-1 no-after-title-wide dt-sl mb-2 px-res-1">
+                                <h2>{{ trans('front::messages.wallet.wallet-history') }}</h2>
+                                <a href="{{ route('front.wallet.create') }}"
+                                    class="m-0 d-block">{{ trans('front::messages.wallet.increase-wallet-inventory') }}</a>
                             </div>
-                            <div class="card-content">
-                                <div class="container mt-3">
-
-                                    @if (session('warning'))
-                                        <div class="alert alert-danger" role="alert">
-                                            {{ session('warning') }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page dt-sl dt-sn pt-3">
+                                <div class="content-body">
+                                    <section class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title">اسم کاربر</h4>
                                         </div>
-                                    @endif
-                                    <!-- Nav tabs -->
-                                    <ul class="nav nav-tabs">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" style="font-size: .625rem" data-toggle="tab"
-                                                href="#home">در
-                                                انتظار تأیید</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" style="font-size: .625rem" data-toggle="tab"
-                                                href="#menu1">اقساط
-                                                پرداخت
-                                                نشده</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" style="font-size: .625rem" data-toggle="tab"
-                                                href="#menu2">اقساط
-                                                پرداخت
-                                                شده</a>
-                                        </li>
+                                        <div class="card-content">
+                                            <div class="container mt-3">
 
-                                    </ul>
-
-
-                                    <!-- Tab panes -->
-                                    <div class="tab-content">
-                                        <div id="home" class="container tab-pane active my-2 py-3"><br>
-                                            <div class="row">
-
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group d-flex align-items-center">
-                                                        <label for="first_name" class="mr-2">
-                                                            مقدار اعتبار خرید اقساطی
-                                                        </label>
-                                                        <div class="d-flex">
-                                                            <input readonly type="text" class="form-control moneyInput"
-                                                                id="first_name" name="first_name"
-                                                                value="{{ $user->purchasecredit != null ? $user->purchasecredit : 0 }}">
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group d-flex align-items-center">
-                                                        <label for="first_name" class="mr-2">
-                                                            موجودی نقدی کیف پول </label>
-                                                        <div class="d-flex ">
-                                                            <input readonly type="text" class="form-control moneyInput"
-                                                                id="first_name" name="first_name"
-                                                                value="{{ $user->inventory != null ? $user->inventory : 0 }}"
-                                                                style="margin-left: 4px"><span> ریال</span>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-
-                                                </div>
-                                            </div>
-                                            @foreach ($installmentsm as $key)
-                                                @if ($key->statususer == 0 && $key->paymentstatus == 0)
-                                                    <div class="border rounded p-2 my-2">
-                                                        <div class="row text-center" style="flex-direction: column;">
-                                                            <h5>
-                                                                {{ $key->user->username }}
-                                                            </h5>
-                                                        </div>
-
-                                                        <div class="row my-1">
-                                                            <div class="col">
-                                                                {{ $key->numberofinstallments }} عدد به
-                                                                مبلغ قسط <span class="moneyInputSpan">
-                                                                    {{ $key->Creditamount }} </span> ریال
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="row px-3">
-
-                                                            <div class="">
-
-                                                                مقدار پیش پرداخت: <span class="moneyInputSpan">
-                                                                    {{ $key->prepaidamount }} </span> ریال
-                                                            </div>
-                                                            <div class="col d-flex justify-content-end">
-
-                                                                <a href="{{ route('front.installments.usrestatus.refuse', [$key->id]) }}"
-                                                                    class="btn btn-warning ml-1" style="">انصراف</a>
-                                                                <a href="{{ route('front.installments.usrestatus.edit', [$key->id]) }}"
-                                                                    class="btn btn-success" style="">پرداخت</a>
-                                                            </div>
-
-                                                        </div>
+                                                @if (session('warning'))
+                                                    <div class="alert alert-danger" role="alert">
+                                                        {{ session('warning') }}
                                                     </div>
                                                 @endif
-                                            @endforeach
+                                                <!-- Nav tabs -->
+                                                <ul class="nav nav-tabs">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" style="font-size: .625rem"
+                                                            data-toggle="tab" href="#home">در
+                                                            انتظار تأیید</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" style="font-size: .625rem" data-toggle="tab"
+                                                            href="#menu1">اقساط
+                                                            پرداخت
+                                                            نشده</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" style="font-size: .625rem" data-toggle="tab"
+                                                            href="#menu2">اقساط
+                                                            پرداخت
+                                                            شده</a>
+                                                    </li>
+
+                                                </ul>
 
 
-                                        </div>
+                                                <!-- Tab panes -->
+                                                <div class="tab-content">
+                                                    <div id="home" class="container tab-pane active my-2 py-3"><br>
+                                                        <div class="row">
 
-                                        <div id="menu1" class="container tab-pane fade"><br>
-                                            <div class="row">
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group d-flex align-items-center">
+                                                                    <label for="first_name" class="mr-2">
+                                                                        مقدار اعتبار خرید اقساطی
+                                                                    </label>
+                                                                    <div class="d-flex">
+                                                                        <input readonly type="text"
+                                                                            class="form-control moneyInput" id="first_name"
+                                                                            name="first_name"
+                                                                            value="{{ $user->purchasecredit != null ? $user->purchasecredit : 0 }}">
+                                                                    </div>
 
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group d-flex align-items-center">
-                                                        <label for="first_name" class="mr-2">
-                                                            مقدار اعتبار خرید اقساطی
-                                                        </label>
-                                                        <div class="d-flex">
-                                                            <input readonly type="text" class="form-control moneyInput"
-                                                                id="first_name" name="first_name"
-                                                                value="{{ $user->purchasecredit != null ? $user->purchasecredit : 0 }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+
+                                                            </div>
                                                         </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group d-flex align-items-center">
+                                                                    <label for="first_name" class="mr-2">
+                                                                        موجودی نقدی کیف پول </label>
+                                                                    <div class="d-flex ">
+                                                                        <input readonly type="text"
+                                                                            class="form-control moneyInput" id="first_name"
+                                                                            name="first_name"
+                                                                            value="{{ $user->inventory != null ? $user->inventory : 0 }}"
+                                                                            style="margin-left: 4px"><span> ریال</span>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+
+                                                            </div>
+                                                        </div>
+                                                        @foreach ($installmentsm as $key)
+                                                            @if ($key->statususer == 0 && $key->paymentstatus == 0)
+                                                                <div class="border rounded p-2 my-2">
+                                                                    <div class="row text-center"
+                                                                        style="flex-direction: column;">
+                                                                        <h5>
+                                                                            {{ $key->user->username }}
+                                                                        </h5>
+                                                                    </div>
+
+                                                                    <div class="row my-1">
+                                                                        <div class="col">
+                                                                            {{ $key->numberofinstallments }} عدد به
+                                                                            مبلغ قسط <span class="moneyInputSpan">
+                                                                                {{ $key->Creditamount }} </span> ریال
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <div class="row px-3">
+
+                                                                        <div class="">
+
+                                                                            مقدار پیش پرداخت: <span class="moneyInputSpan">
+                                                                                {{ $key->prepaidamount }} </span> ریال
+                                                                        </div>
+                                                                        <div class="col d-flex justify-content-end">
+
+                                                                            <a href="{{ route('front.installments.usrestatus.refuse', [$key->id]) }}"
+                                                                                class="btn btn-warning ml-1"
+                                                                                style="">انصراف</a>
+                                                                            <a href="{{ route('front.installments.usrestatus.edit', [$key->id]) }}"
+                                                                                class="btn btn-success"
+                                                                                style="">پرداخت</a>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+
 
                                                     </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
 
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group d-flex align-items-center">
-                                                        <label for="first_name" class="mr-2">
-                                                            موجودی نقدی کیف پول </label>
-                                                        <div class="d-flex ">
-                                                            <input readonly type="text" class="form-control moneyInput"
-                                                                id="first_name" name="first_name"
-                                                                value="{{ $user->inventory != null ? $user->inventory : 0 }}">
+                                                    <div id="menu1" class="container tab-pane fade"><br>
+                                                        <div class="row">
+
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group d-flex align-items-center">
+                                                                    <label for="first_name" class="mr-2">
+                                                                        مقدار اعتبار خرید اقساطی
+                                                                    </label>
+                                                                    <div class="d-flex">
+                                                                        <input readonly type="text"
+                                                                            class="form-control moneyInput" id="first_name"
+                                                                            name="first_name"
+                                                                            value="{{ $user->purchasecredit != null ? $user->purchasecredit : 0 }}">
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+
+                                                            </div>
                                                         </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group d-flex align-items-center">
+                                                                    <label for="first_name" class="mr-2">
+                                                                        موجودی نقدی کیف پول </label>
+                                                                    <div class="d-flex ">
+                                                                        <input readonly type="text"
+                                                                            class="form-control moneyInput"
+                                                                            id="first_name" name="first_name"
+                                                                            value="{{ $user->inventory != null ? $user->inventory : 0 }}">
+                                                                    </div>
 
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
 
-                                                </div>
-                                            </div>
-                                            {{-- @foreach ($installmentsm as $key)
+                                                            </div>
+                                                        </div>
+                                                        {{-- @foreach ($installmentsm as $key)
                                                 @if ($key->statususer == 1)
                                                     <div class="border rounded p-2 my-1">
                                                         <div class="row text-center " style="flex-direction: column;">
@@ -214,181 +223,188 @@
                                                     </div>
                                                 @endif
                                             @endforeach --}}
-                                            @foreach ($installmentsm as $value)
-                                                @if ($value->statususer == 1)
-                                                    @foreach ($value->installments as $key)
-                                                        @if ($key->paymentstatus == 0)
-                                                            <div class="border rounded p-2 my-1">
-                                                                <div class="row text-center "
-                                                                    style="flex-direction: column;">
-                                                                    <h5>
-                                                                        اقساط فروشگاه:
-                                                                        {{ $value->store->nameofstore != '' ? $value->store->nameofstore : '...' }}
-                                                                    </h5>
-                                                                </div>
+                                                        @foreach ($installmentsm as $value)
+                                                            @if ($value->statususer == 1)
+                                                                @foreach ($value->installments as $key)
+                                                                    @if ($key->paymentstatus == 0)
+                                                                        <div class="border rounded p-2 my-1">
+                                                                            <div class="row text-center "
+                                                                                style="flex-direction: column;">
+                                                                                <h5>
+                                                                                    اقساط فروشگاه:
+                                                                                    {{ $value->store->nameofstore != '' ? $value->store->nameofstore : '...' }}
+                                                                                </h5>
+                                                                            </div>
 
-                                                                <div class="row mr-2">
+                                                                            <div class="row mr-2">
 
-                                                                    مبلغ کل قسط: <span class="moneyInputSpan">
-                                                                        {{ $value->Creditamount }} </span> ریال
-                                                                </div>
+                                                                                مبلغ کل قسط: <span class="moneyInputSpan">
+                                                                                    {{ $value->Creditamount }} </span> ریال
+                                                                            </div>
 
-                                                                <div class="row m-2">
-                                                                    مقدار جریمه دیر کرد ۰ ریال
-                                                                </div>
-                                                                <div class="row mr-2">
+                                                                            <div class="row m-2">
+                                                                                مقدار جریمه دیر کرد ۰ ریال
+                                                                            </div>
+                                                                            <div class="row mr-2">
 
-                                                                    مبلغ هر قسط: <span class="moneyInputSpan">
-                                                                        {{ $key->installmentprice }} </span> ریال
-                                                                </div>
+                                                                                مبلغ هر قسط: <span class="moneyInputSpan">
+                                                                                    {{ $key->installmentprice }} </span>
+                                                                                ریال
+                                                                            </div>
 
-                                                                <div
-                                                                    class="row my-1 mx-2 p-1 d-flex justify-content-between">
+                                                                            <div
+                                                                                class="row my-1 mx-2 p-1 d-flex justify-content-between">
 
-                                                                    <div>
+                                                                                <div>
 
-                                                                        <div class="row m-2">
-                                                                            قسط شماره {{ $key->installmentnumber }} به
-                                                                            سر
-                                                                            رسید تاریخ:
-                                                                            {{ \Carbon\Carbon::parse($key->duedate)->format('Y/m/d') }}
+                                                                                    <div class="row m-2">
+                                                                                        قسط شماره
+                                                                                        {{ $key->installmentnumber }} به
+                                                                                        سر
+                                                                                        رسید تاریخ:
+                                                                                        {{ \Carbon\Carbon::parse($key->duedate)->format('Y/m/d') }}
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="">
+
+
+                                                                                    <a href="{{ route('front.installments.paymentStatus.edit', ['id1' => $key->id, 'id2' => $value->id]) }}"
+                                                                                        class="btn btn-info btn-sm"
+                                                                                        style="">پرداخت</a>
+                                                                                </div>
+                                                                            </div>
+
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="">
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
+                                                        @endforeach
 
+                                                    </div>
+                                                    <div id="menu2" class="container tab-pane fade"><br>
+                                                        <div class="row">
 
-                                                                        <a href="{{ route('front.installments.paymentStatus.edit', ['id1' => $key->id, 'id2' => $value->id]) }}"
-                                                                            class="btn btn-info btn-sm"
-                                                                            style="">پرداخت</a>
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group d-flex align-items-center">
+                                                                    <label for="first_name" class="mr-2">
+                                                                        مقدار اعتبار خرید اقساطی
+                                                                    </label>
+                                                                    <div class="d-flex">
+                                                                        <input readonly type="text"
+                                                                            class="form-control moneyInput"
+                                                                            id="first_name" name="first_name"
+                                                                            value="{{ $user->purchasecredit != null ? $user->purchasecredit : 0 }}">
                                                                     </div>
+
                                                                 </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
 
                                                             </div>
-                                                        @endif
-                                                    @endforeach
-                                                @endif
-                                            @endforeach
-
-                                        </div>
-                                        <div id="menu2" class="container tab-pane fade"><br>
-                                            <div class="row">
-
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group d-flex align-items-center">
-                                                        <label for="first_name" class="mr-2">
-                                                            مقدار اعتبار خرید اقساطی
-                                                        </label>
-                                                        <div class="d-flex">
-                                                            <input readonly type="text" class="form-control moneyInput"
-                                                                id="first_name" name="first_name"
-                                                                value="{{ $user->purchasecredit != null ? $user->purchasecredit : 0 }}">
                                                         </div>
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-group d-flex align-items-center">
-                                                        <label for="first_name" class="mr-2">
-                                                            موجودی نقدی کیف پول </label>
-                                                        <div class="d-flex ">
-                                                            <input readonly type="text" class="form-control moneyInput"
-                                                                id="first_name" name="first_name"
-                                                                value="{{ $user->inventory != null ? $user->inventory : 0 }}">
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-
-                                                </div>
-                                            </div>
-                                            @foreach ($installmentsm as $value)
-                                                @if ($value->paymentstatus == 1)
-                                                    @foreach ($value->installments as $key)
-                                                        @if ($key->paymentstatus == 1)
-                                                            <div class="border rounded p-2 my-1">
-                                                                <div class="row text-center "
-                                                                    style="flex-direction: column;">
-                                                                    <h5>
-                                                                        اقساط فروشگاه:
-                                                                        {{ $value->store->nameofstore != '' ? $value->store->nameofstore : '...' }}
-                                                                    </h5>
-                                                                </div>
-
-                                                                <div class="row mr-2">
-
-                                                                    مبلغ کل قسط <span class="moneyInputSpan">
-                                                                        {{ $value->Creditamount }} </span> ریال
-
-                                                                </div>
-
-                                                                <div class="row m-2">
-                                                                    مقدار جریمه دیر کرد ۰ ریال
-                                                                </div>
-                                                                <div>
-
-                                                                </div>
-
-                                                                <div class="row m-2">
-                                                                    وضعیت: پرداخت شده در تاریخ ۱۴۰۲/۸/۲۵
-                                                                </div>
-                                                                <div class="row mr-2">
-
-                                                                    مبلغ هر قسط: <span class="moneyInputSpan">
-                                                                        {{ $key->installmentprice }} </span> ریال
-                                                                </div>
-                                                                <div
-                                                                    class="row my-1 mx-2 p-1 d-flex justify-content-between">
-
-                                                                    <div>
-
-                                                                        <div class="row m-2">
-                                                                            قسط شماره {{ $key->installmentnumber }} به
-                                                                            سر
-                                                                            رسید تاریخ:
-                                                                            {{ \Carbon\Carbon::parse($key->duedate)->format('Y/m/d') }}
-                                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-12">
+                                                                <div class="form-group d-flex align-items-center">
+                                                                    <label for="first_name" class="mr-2">
+                                                                        موجودی نقدی کیف پول </label>
+                                                                    <div class="d-flex ">
+                                                                        <input readonly type="text"
+                                                                            class="form-control moneyInput"
+                                                                            id="first_name" name="first_name"
+                                                                            value="{{ $user->inventory != null ? $user->inventory : 0 }}">
                                                                     </div>
-                                                                    <div class="">
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6 col-12">
+
+                                                            </div>
+                                                        </div>
+                                                        @foreach ($installmentsm as $value)
+                                                            @if ($value->paymentstatus == 1)
+                                                                @foreach ($value->installments as $key)
+                                                                    @if ($key->paymentstatus == 1)
+                                                                        <div class="border rounded p-2 my-1">
+                                                                            <div class="row text-center "
+                                                                                style="flex-direction: column;">
+                                                                                <h5>
+                                                                                    اقساط فروشگاه:
+                                                                                    {{ $value->store->nameofstore != '' ? $value->store->nameofstore : '...' }}
+                                                                                </h5>
+                                                                            </div>
+
+                                                                            <div class="row mr-2">
+
+                                                                                مبلغ کل قسط <span class="moneyInputSpan">
+                                                                                    {{ $value->Creditamount }} </span> ریال
+
+                                                                            </div>
+
+                                                                            <div class="row m-2">
+                                                                                مقدار جریمه دیر کرد ۰ ریال
+                                                                            </div>
+                                                                            <div>
+
+                                                                            </div>
+
+                                                                            <div class="row m-2">
+                                                                                وضعیت: پرداخت شده در تاریخ ۱۴۰۲/۸/۲۵
+                                                                            </div>
+                                                                            <div class="row mr-2">
+
+                                                                                مبلغ هر قسط: <span class="moneyInputSpan">
+                                                                                    {{ $key->installmentprice }} </span>
+                                                                                ریال
+                                                                            </div>
+                                                                            <div
+                                                                                class="row my-1 mx-2 p-1 d-flex justify-content-between">
+
+                                                                                <div>
+
+                                                                                    <div class="row m-2">
+                                                                                        قسط شماره
+                                                                                        {{ $key->installmentnumber }} به
+                                                                                        سر
+                                                                                        رسید تاریخ:
+                                                                                        {{ \Carbon\Carbon::parse($key->duedate)->format('Y/m/d') }}
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="">
 
 
-                                                                        {{-- <a href="{{ route('front.installments.usrestatus.pay', [$key->id]) }}"
+                                                                                    {{-- <a href="{{ route('front.installments.usrestatus.pay', [$key->id]) }}"
                                                                         class="btn btn-info btn-sm"
                                                                         style="">پرداخت</a> --}}
-                                                                    </div>
-                                                                </div>
+                                                                                </div>
+                                                                            </div>
 
-                                                            </div>
-                                                        @endif
-                                                    @endforeach
-                                                @endif
-                                            @endforeach
+                                                                        </div>
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
+                                                        @endforeach
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
 
                                         </div>
+                                    </section>
 
-                                    </div>
+
                                 </div>
-
                             </div>
-                        </section>
-
-
+                        </div>
                     </div>
+
+
+
                 </div>
             </div>
         </div>
+    </main>
 
-
-        <div class="mt-3">
-            {{-- {{ $histories->links('front::components.paginate') }} --}}
-        </div>
-
-    </div>
     <!-- End Content -->
 @endsection
 

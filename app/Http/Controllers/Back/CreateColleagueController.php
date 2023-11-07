@@ -7,12 +7,15 @@ use App\Http\Requests\Back\ColleagueCreateDocument;
 use App\Http\Requests\Back\ColleagueReAccreditionRequest;
 use App\Http\Requests\Back\CreateColleagueIndexRequest;
 use App\Http\Requests\Back\CreateShopRequest;
+use App\Models\BankAccount;
+use App\Models\banktransaction;
 use App\Models\createdocument;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\createstore;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
+use Morilog\Jalali\Jalalian;
 
 class CreateColleagueController extends Controller
 {
@@ -198,6 +201,8 @@ class CreateColleagueController extends Controller
     // create document view page
     public function createdocument()
     {
+        $bank = BankAccount::get();
+
         $users = User::where('level', 'user')->get();
         $number = createdocument::count();
         if ($number > 0 && $number != 0) {
@@ -207,12 +212,35 @@ class CreateColleagueController extends Controller
         }
 
         // dd($number);
-        return view('back.createcolleague.createdocument', compact('users', 'number'));
+        return view('back.createcolleague.createdocument', compact('users', 'number', 'bank'));
     }
 
     // storing document store function
     public function createDocumentStore(ColleagueCreateDocument $request)
     {
+
+        $bankName = BankAccount::find($request->namedebtor);
+        $bank = new banktransaction();
+
+        $recordCount = banktransaction::count();
+        if ($recordCount > 0) {
+            $lastRecord = banktransaction::latest()->first();
+            $bank = new banktransaction();
+            $bank->create([
+                'namebank' => $bankName->bankname,
+                'bankbalance' => $lastRecord->bankbalance - $request->ReCredintAmount,
+                'transactionprice' => $request->ReCredintAmount,
+                'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+            ]);
+        } else {
+            $bank = new banktransaction();
+            $bank->create([
+                'namebank' => $bankName->bankname,
+                'bankbalance' => -$request->ReCredintAmount,
+                'transactionprice' => $request->ReCredintAmount,
+                'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+            ]);
+        }
         // dd($request->all());
 
         $user = User::find($request->namecreditor);

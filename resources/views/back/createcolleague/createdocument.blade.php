@@ -53,10 +53,17 @@
                                             </div>
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group">
-                                                    <label>سرچ بر اساس شماره تلفن</label>
+                                                    <label></label>
                                                     <select type="text" class="form-control" name="namedebtor">
-
-                                                        <option value="mellat bank">بانک ملت</option>
+                                                        @isset($bank)
+                                                            <option value="mellat bank">بده کار را انتخاب کنید</option>
+                                                            @foreach ($bank as $key)
+                                                                <option value="{{ $key->id }}">{{ $key->bankname }}
+                                                                </option>
+                                                            @endforeach
+                                                        @else
+                                                            <option value="mellat bank">گزینه ای برای انتخاب وجود ندارد</option>
+                                                        @endisset
 
                                                     </select>
                                                     @error('namedebtor')

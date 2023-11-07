@@ -85,7 +85,7 @@
                                             <a href="{{ route('front.installments.index') }}"
                                                 class="{{ active_class('front.installments.index') }}">
                                                 <i class="mdi mdi-credit-card-outline"></i>
-                                                {{ trans('front::messages.profile.installments') }}
+                                                {{ trans('front::messages.header.my_installments') }}
                                             </a>
                                         </li>
                                         <li>

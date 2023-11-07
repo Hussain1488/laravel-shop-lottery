@@ -74,7 +74,7 @@
                                                     #
                                                 </th>
                                                 <th>
-                                                    شماره تراکنش
+                                                    نام بانک
                                                 </th>
                                                 <th>
                                                     مبلغ تراکنش(ریال)
@@ -104,7 +104,7 @@
 
                                                     </td>
                                                     <td class="text-danger">
-                                                        <span class="monyInputSpan">{{ $key->bankbalance }}</span>
+                                                        -<span class="monyInputSpan">{{ $key->bankbalance }}</span>
 
                                                     </td>
                                                     <td>

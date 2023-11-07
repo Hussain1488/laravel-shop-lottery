@@ -21,6 +21,10 @@
                 <a class="dropdown-item" href="{{ route('front.user.profile') }}">
                     <i class="mdi mdi-account-card-details-outline"></i>{{ trans('front::messages.header.profile') }}
                 </a>
+                <a class="dropdown-item" href="{{ route('front.installments.index') }}">
+                    <i class="mdi mdi-credit-card-outline"></i>{{ trans('front::messages.header.my_installments') }}
+
+                </a>
                 <a class="dropdown-item" href="{{ route('front.orders.index') }}">
                     <i class="mdi mdi-account-edit-outline"></i>{{ trans('front::messages.header.my-orders') }}
 

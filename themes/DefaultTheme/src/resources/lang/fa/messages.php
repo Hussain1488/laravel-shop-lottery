@@ -17,6 +17,7 @@ return [
         'total'                  => 'جمع :',
         'kala'                   => ' کالا ',
         'add-to-cart'            => 'افزودن به سبد',
+        'my_installments'        => 'اقساط من',
     ],
 
     'currency' => [
