@@ -113,6 +113,17 @@ class CooperationSalesController extends Controller
         // dd($request->all());
         $depositamount = str_replace(',', '', $request->depositamount);
 
+        if ($request->hasFile('factor')) {
+            // dd($request->file('factor'));
+            $files = $request->file('factor');
+            $paths = [];
+            foreach ($files as $file) {
+                $path = $file->store('document/ClearingDoc', 'public');
+                $paths[] = $path;
+            }
+            $docPath = json_encode($paths);
+        }
+
         $number = PaymentListModel::count();
         if ($number > 0 && $number != 0) {
             $number = PaymentListModel::latest()->first()->list_id  + 1;
@@ -125,7 +136,7 @@ class CooperationSalesController extends Controller
             'store_id' => $request->store,
             'depositamount' => $depositamount,
             'shabanumber' => $request->shabanumber,
-            'factor' => 'factor kjlskdjfsldkfjlksdjf sdflkj lsdkfj',
+            'factor' => $docPath,
             'depositdate' => Jalalian::now()->format('Y-m-d'),
         ]);
 
