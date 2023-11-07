@@ -130,7 +130,7 @@ class CooperationSalesController extends Controller
         } else {
             $number = 10000;
         }
-
+        $register_number = $number;
         PaymentListModel::create([
             'list_id' => $number,
             'store_id' => $request->store,
@@ -142,7 +142,7 @@ class CooperationSalesController extends Controller
 
         toastr()->success('درخواست تسویه حساب با موفقیت ارسال شد.');
 
-        return redirect()->back();
+        return redirect()->back()->with('register_number', $register_number);
     }
 
     // changing the status of installments status to paid.

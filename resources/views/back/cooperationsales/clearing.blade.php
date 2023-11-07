@@ -121,12 +121,17 @@
                                         </span>
                                     @enderror
 
-                                    {{-- <div class="my-4 border rounded bg-danger text-dark p-1 text-center">
-                                        ثبت شد ۲۹۳۹۷۴۲ شماره پیگیری را روی فاکتور بنویسید
-                                        <br>
-                                        تا همکاران ما فاکتور را به شما مراجعه کنند و به صورت فیزیکی فاکتور ها را تحویل
-                                        بگیرند.
-                                    </div> --}}
+                                    @if (session('register_number'))
+                                        <div class="my-4 border rounded bg-danger text-dark p-1 text-center">
+                                            ثبت شد <span class="badge badge-success"> {{ session('register_number') }}
+                                            </span> شماره
+                                            پیگیری را روی فاکتور بنویسید
+                                            <br>
+                                            تا همکاران ما فاکتور را به شما مراجعه کنند و به صورت فیزیکی فاکتور ها را تحویل
+                                            بگیرند.
+                                        </div>
+                                    @endif
+
                                     <div class="row mb-2" style="align-items:center ;display: flex;flex-direction: column;">
                                         <input type="button" id="clearing_button" value="تأیید"
                                             class="btn btn-lg btn-success">
