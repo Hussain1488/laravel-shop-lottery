@@ -34,14 +34,14 @@ class AuthServiceProvider extends ServiceProvider
             }
             // cooperationsales
             Gate::define('cooperationsales', function ($user) {
-                return $user->level == 'creator' || $user->level == 'seller'; // Customize this condition as needed.
+                return  $user->level == 'seller'; // Customize this condition as needed.
             });
             Gate::define('cooperationsales.index', function ($user) {
                 return $user->level == 'creator' || $user->level == 'seller'; // Customize this condition as needed.
             });
 
             Gate::define('cooperationsales.create', function ($user) {
-                return $user->level == 'creator' || $user->level == 'seller'; // Customize this condition as needed.
+                return $user->level == 'seller'; // Customize this condition as needed.
             });
             Gate::define('cooperationsales.Income', function ($user) {
                 return $user->level == 'creator'  || $user->level == 'seller'; // Customize this condition as needed.
@@ -51,7 +51,7 @@ class AuthServiceProvider extends ServiceProvider
             });
             // installmentpurchase
             Gate::define('installmentpurchase', function ($user) {
-                return $user->level == 'creator'; // Customize this condition as needed.
+                // Customize this condition as needed.
             });
             Gate::define('installmentpurchase.index', function ($user) {
                 return $user->level == 'creator'; // Customize this condition as needed.
@@ -85,22 +85,19 @@ class AuthServiceProvider extends ServiceProvider
             Gate::define('installmentreports.index', function ($user) {
                 return $user->level == 'creator'; // Customize this condition as needed.
             });
-           // installmentreports
-           Gate::define('installmentreports', function ($user) {
-            return $user->level == 'creator' ; // Customize this condition as needed.
-           });
-           Gate::define('installmentreports.banktransaction', function ($user) {
-            return $user->level == 'creator' ; // Customize this condition as needed.
-           });
-           Gate::define('installmentreports.createinternalaccount', function ($user) {
-            return $user->level == 'creator' ; // Customize this condition as needed.
-           });
-           Gate::define('installmentreports.index', function ($user) {
-            return $user->level == 'creator' ; // Customize this condition as needed.
-           });
-           
-
-
+            // installmentreports
+            Gate::define('installmentreports', function ($user) {
+                return $user->level == 'creator'; // Customize this condition as needed.
+            });
+            Gate::define('installmentreports.banktransaction', function ($user) {
+                return $user->level == 'creator'; // Customize this condition as needed.
+            });
+            Gate::define('installmentreports.createinternalaccount', function ($user) {
+                return $user->level == 'creator'; // Customize this condition as needed.
+            });
+            Gate::define('installmentreports.index', function ($user) {
+                return $user->level == 'creator'; // Customize this condition as needed.
+            });
         }
     }
 
