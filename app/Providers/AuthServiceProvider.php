@@ -44,7 +44,7 @@ class AuthServiceProvider extends ServiceProvider
                 return $user->level == 'seller'; // Customize this condition as needed.
             });
             Gate::define('cooperationsales.Income', function ($user) {
-                return $user->level == 'creator'  || $user->level == 'seller'; // Customize this condition as needed.
+                // Customize this condition as needed.
             });
             Gate::define('cooperationsales.clearing', function ($user) {
                 return $user->level == 'creator' || $user->level == 'seller'; // Customize this condition as needed.
