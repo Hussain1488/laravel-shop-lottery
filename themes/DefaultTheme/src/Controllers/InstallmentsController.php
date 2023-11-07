@@ -51,35 +51,40 @@ class InstallmentsController extends Controller
     // paying the prepayment and creating the installments according its number.
     public function userStatus($id)
     {
-
-        // dd($id);
-
         $installments = Makeinstallmentsm::find($id);
         $user = User::find(Auth::user()->id);
-        $user->inventory -= $installments->prepaidamount;
-        $Insta_dateils = new installmentdetails();
 
-        $jalali_date_now = Jalalian::now();
-        // $new_date = $jalali_date_now->addMonths(1)->format('Y-m-d');
-        for ($i = 0; $i < $installments->numberofinstallments; $i++) {
-            $dutedate = $jalali_date_now->addMonths($i + 1)->format('Y-m-d');
-            $Insta_dateils->create([
-                'installment_id' => $installments->id,
-                'installmentnumber' => $i + 1,
-                'installmentprice' => $installments->amounteachinstallment,
-                'paymentstatus' => 0,
-                'duedate' => $dutedate,
-            ]);
+        // dd('this is ');
+        if ($user->inventory >= $installments->prepaidamount) {
+
+            $user->inventory -= $installments->prepaidamount;
+
+            $Insta_dateils = new installmentdetails();
+
+            $jalali_date_now = Jalalian::now();
+            // $new_date = $jalali_date_now->addMonths(1)->format('Y-m-d');
+            for ($i = 0; $i < $installments->numberofinstallments; $i++) {
+                $dutedate = $jalali_date_now->addMonths($i + 1)->format('Y-m-d');
+                $Insta_dateils->create([
+                    'installment_id' => $installments->id,
+                    'installmentnumber' => $i + 1,
+                    'installmentprice' => $installments->amounteachinstallment,
+                    'paymentstatus' => 0,
+                    'duedate' => $dutedate,
+                ]);
+            }
+
+            $user->save();
+            $installments->statususer = 1;
+            $jalaliNow = Jalalian::now()->format('Y-m-d');
+            $installments->datepayment = $jalaliNow;
+            $installments->save();
+            // dd($user->inventory, $installments->prepaidamount);
+            return redirect()->back();
+        } else {
+            // dd('if');
+            return redirect()->back()->with('warning', 'موجودی شما کمتر از مقدار پیش پرداخت است، لطفا کیف پول خود را شارژ نموده دوباره تلاش کنید.');
         }
-
-        $user->save();
-        $installments->statususer = 1;
-        $jalaliNow = Jalalian::now()->format('Y-m-d');
-        $installments->datepayment = $jalaliNow;
-        $installments->save();
-        // dd($installments->datepayment);
-
-        return redirect()->back();
     }
 
     //  Paying specific installments and creating its bank transaction.
