@@ -46,9 +46,11 @@ $(document).ready(function () {
     });
 
     $('#payment').on('change', function () {
-        updatePayment();
+        if ($('#cash_status').val() == 'installment') {
+            updatePayment();
+        }
     });
-    
+
     function updatePayment() {
         let payment = parseFloat($('#main_price').val().replace(/,/g, ''));
         let installment = parseFloat($('#payment').val());
