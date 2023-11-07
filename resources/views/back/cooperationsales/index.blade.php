@@ -347,7 +347,8 @@
                                 <p>
                                     برای فعلا شما اجازه درخواست تسویه را ندارید.
                                 </p>
-                                <p>این کاربر <span id="user_day_time" class="text-success"></span> روز دیگر وقت دارد.</p>
+                                <p>برای این کاربر <span id="user_day_time" class="text-success"></span> روز دیگر از وقت
+                                    درخواست تسویه مانده است .</p>
                             </div>
                             <div class="modal-footer d-flex justify-content-center">
                                 <button type="button" class="btn btn-default text-danger"
