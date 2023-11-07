@@ -35,7 +35,7 @@
                                 <form action="{{ route('admin.cooperationsales.clearing.store') }}"
                                     enctype="multipart/form-data" id="clearing_form" method="POST">
                                     @csrf
-                                    <input type="hidden" value="{{ $store->id }}" name="store">
+                                    <input type="hidden" value="{{ isset($store->id) ? $store->id : 0 }}" name="store">
                                     <div class="row">
 
                                         <div class="col-md-6 col-12">
