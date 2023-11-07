@@ -33,19 +33,7 @@ $(document).ready(function () {
             $('#payment').prop('disabled', false);
 
             // $('#payment').on('change', function () {
-            function updatePayment() {
-                let payment = parseFloat(
-                    $('#main_price').val().replace(/,/g, '')
-                );
-                let installment = parseFloat($('#payment').val());
-                let total_pay = payment + payment * (30 / 100);
-                let prepayment = total_pay * 0.3;
-                let rest_pay = total_pay - prepayment;
-                let each_pay = Math.round(rest_pay / $('#payment').val());
-                $('#prepayment').val(addCommas(prepayment));
-                $('#each_pay').val(addCommas(each_pay));
-                // console.log(total_pay);
-            }
+
             updatePayment();
         } else {
             $('#payment').prop('disabled', true);
@@ -57,15 +45,21 @@ $(document).ready(function () {
         }
     });
 
-    // $('#payment').on('change', function () {
-    //     var payment = $('#totalMoney').val();
-    //     var pay_status = $('#pay_status').val(); // Replace with the desired value
-
-    //     if (pay_status == 'installment') {
-    //     }
-
-    //     $('#prepayment').val(payment);
-    // });
+    $('#payment').on('change', function () {
+        updatePayment();
+    });
+    
+    function updatePayment() {
+        let payment = parseFloat($('#main_price').val().replace(/,/g, ''));
+        let installment = parseFloat($('#payment').val());
+        let total_pay = payment + payment * (30 / 100);
+        let prepayment = total_pay * 0.3;
+        let rest_pay = total_pay - prepayment;
+        let each_pay = Math.round(rest_pay / $('#payment').val());
+        $('#prepayment').val(addCommas(prepayment));
+        $('#each_pay').val(addCommas(each_pay));
+        // console.log(total_pay);
+    }
 
     $('.custom-file-input').on('change', function () {
         var fileName = $(this).val();
@@ -176,17 +170,22 @@ $(document).ready(function () {
     $('.user_select2').select2();
 
     $('.settlementtime_button').click(function () {
-        let b = $(this).attr('data_day');
-        let a = $(this).attr('data_date');
+        let data_day = $(this).attr('data_day');
+        let data_date = $(this).attr('data_date');
         let new_date = $('#new_date').val();
 
-        let dateA = new Date(a);
+        let dateA = new Date(data_date);
         let dateNew = new Date(new_date);
+
         let timeDifference = dateNew.getTime() - dateA.getTime();
         let daysDifference = timeDifference / (1000 * 60 * 60 * 24);
 
-        if (daysDifference >= b) {
-            let time = daysDifference - b + 1;
+        var DaysDiff = parseInt(daysDifference);
+        var data_date_update = parseInt(data_day);
+
+        if (data_date_update >= DaysDiff) {
+            console.log('if');
+            let time = data_date_update - DaysDiff + 1;
             $('#user_day_time').text(time);
             $('#myModal').modal();
         } else {

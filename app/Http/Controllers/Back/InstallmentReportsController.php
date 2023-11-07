@@ -45,11 +45,18 @@ class InstallmentReportsController extends Controller
         return view('back.installmentreports.banktransaction', compact('transaction', 'total'));
     }
 
+    public function bankList()
+    {
+        $listbank = BankAccount::all();
+
+        return view('back.installmentreports.bank_list', compact('listbank'));
+    }
+
     public function createinternalaccount()
     {
         $listbank = BankAccount::all();
-    
-        return view('back.installmentreports.createinternalaccount' , compact('listbank'));
+
+        return view('back.installmentreports.createinternalaccount', compact('listbank'));
     }
     public function storebank(internalBankStoreRequest $request)
     {
