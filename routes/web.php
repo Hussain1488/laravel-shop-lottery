@@ -125,6 +125,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
 
     // ------------------ installment Reports
     Route::get('installmentreports/index', [InstallmentReportsController::class, 'index'])->name('installmentreports.index');
+    Route::get('installmentreports/bankList', [InstallmentReportsController::class, 'bankList'])->name('installmentreports.banklist');
     Route::get('installmentreports/createinternalaccount', [InstallmentReportsController::class, 'createinternalaccount'])->name('installmentreports.createinternalaccount');
     Route::post('installmentreports/storebank', [InstallmentReportsController::class, 'storebank'])->name('installmentreports.storebank');
 

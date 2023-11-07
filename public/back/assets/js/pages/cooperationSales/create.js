@@ -176,20 +176,26 @@ $(document).ready(function () {
     $('.user_select2').select2();
 
     $('.settlementtime_button').click(function () {
-        let b = $(this).attr('data_day');
-        let a = $(this).attr('data_date');
+        let data_day = $(this).attr('data_day');
+        let data_date = $(this).attr('data_date');
         let new_date = $('#new_date').val();
 
-        let dateA = new Date(a);
+        let dateA = new Date(data_date);
         let dateNew = new Date(new_date);
+
         let timeDifference = dateNew.getTime() - dateA.getTime();
         let daysDifference = timeDifference / (1000 * 60 * 60 * 24);
 
-        if (daysDifference >= b) {
-            let time = daysDifference - b + 1;
+        var DaysDiff = parseInt(daysDifference);
+        var data_date_update = parseInt(data_day);
+
+        if (data_date_update >= DaysDiff) {
+            console.log('if');
+            let time = data_date_update - DaysDiff + 1;
             $('#user_day_time').text(time);
             $('#myModal').modal();
         } else {
+            // console.log('else');
             window.location.href = $(this).attr('data-route');
         }
     });
