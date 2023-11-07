@@ -33,7 +33,7 @@
                         <div class="container mt-3">
                             <div id="home" class="container tab-pane active"><br>
                                 <form action="{{ route('admin.cooperationsales.clearing.store') }}"
-                                    enctype="multipart/form-data" id="" method="POST">
+                                    enctype="multipart/form-data" id="clearing_form" method="POST">
                                     @csrf
                                     <input type="hidden" value="{{ $store->id }}" name="store">
                                     <div class="row">
@@ -44,8 +44,8 @@
                                                     موجودی قابل برداشت
                                                 </label>
                                                 <div class="d-flex align-items-center">
-                                                    <input type="text" placeholder="100,000"
-                                                        class="form-control moneyInput" id="first_name" name="first_name"
+                                                    <input readonly type="text" placeholder="100,000"
+                                                        class="form-control moneyInput" id="total_amount" name="first_name"
                                                         value="{{ $store->salesamount != null ? ($store->salesamount != 0 ? $store->salesamount : 0) : 0 }}"
                                                         style="margin-left: 4px;">
                                                     <span>ریال</span>
@@ -68,8 +68,9 @@
                                     </div>
                                     <div class="form-group d-flex align-items-center">
                                         <div class="d-flex align-items-center">
-                                            <input type="text" class="form-control moneyInput" id="depositamount"
-                                                name="depositamount" style="margin-left: 4px;"> ریال
+                                            <input type="text" class="form-control moneyInput" id="reqest_amount"
+                                                name="depositamount" value="{{ old('depositamount', 0) }}"
+                                                style="margin-left: 4px;"> ریال
                                         </div>
                                         <label for="first_name" class="ml-2">
                                             مبلغ درخواست واریز
@@ -94,7 +95,8 @@
 
                                     </div>
                                     <div class="row">
-                                        <input type="file" accept=".pdf, .doc" accept-language="fa" name="factor">
+                                        <input multiple type="file" accept=".pdf, .doc" accept-language="fa"
+                                            name="factor[]">
                                         <label for="">افزودن عکس فاکتور فروش</label>
 
                                     </div>
@@ -107,7 +109,7 @@
 
                                     <div class="form-group d-flex align-items-center my-1">
                                         <div class="d-flex align-items-center">
-                                            <input type="number" class="form-control" name="shabanumber"
+                                            <input type="number" id="shaba_number" class="form-control" name="shabanumber"
                                                 style="margin-left: 4px;">
                                         </div>
                                         <label for="first_name" class="ml-2">
@@ -119,25 +121,70 @@
                                         </span>
                                     @enderror
 
-                                    <div class="my-4 border rounded bg-danger text-dark p-1 text-center">
+                                    {{-- <div class="my-4 border rounded bg-danger text-dark p-1 text-center">
                                         ثبت شد ۲۹۳۹۷۴۲ شماره پیگیری را روی فاکتور بنویسید
                                         <br>
                                         تا همکاران ما فاکتور را به شما مراجعه کنند و به صورت فیزیکی فاکتور ها را تحویل
                                         بگیرند.
-                                    </div>
+                                    </div> --}}
                                     <div class="row mb-2" style="align-items:center ;display: flex;flex-direction: column;">
-                                        <input type="submit" value="تأیید" class="btn btn-lg"
-                                            style="background-color: none; text-color:black">
+                                        <input type="button" id="clearing_button" value="تأیید"
+                                            class="btn btn-lg btn-success">
                                     </div>
                                 </form>
                             </div>
 
                         </div>
                 </section>
+                <div class="container" dir="rtl">
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-danger">هشدار!</h4>
+                                </div>
+                                <div class="modal-body">
+
+                                </div>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <button type="button" class="btn btn-default text-danger"
+                                        data-dismiss="modal">بستن</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
 
             </div>
         </div>
     </div>
+    <style>
+        .modal a.close-modal[class*="icon-"] {
+            direction: rtl;
+            top: -10px;
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            color: #fff;
+            line-height: 1.25;
+            text-align: center;
+            text-decoration: none;
+            text-indent: 0;
+            background: #900;
+            border: 2px solid #fff;
+            -webkit-border-radius: 26px;
+            -moz-border-radius: 26px;
+            -o-border-radius: 26px;
+            -ms-border-radius: 26px;
+            -moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        }
+    </style>
 @endsection
 
 @push('scripts')
