@@ -218,7 +218,7 @@ class CreateColleagueController extends Controller
     // storing document store function
     public function createDocumentStore(ColleagueCreateDocument $request)
     {
-
+        // dd($request->all());
         $bankName = BankAccount::find($request->namedebtor);
         $bank = new banktransaction();
 
@@ -257,7 +257,7 @@ class CreateColleagueController extends Controller
             $docPath = json_encode($paths);
         }
 
-        $user->inventory += $request->price;
+        $user->inventory += $request->ReCredintAmount;
 
         createdocument::create([
             'namedebtor' => $request->namedebtor,
