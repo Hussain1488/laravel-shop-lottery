@@ -106,6 +106,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::post('cooperationsales/store', [CooperationSalesController::class, 'store'])->name('cooperationsales.store');
     Route::post('cooperationsales/clearing', [CooperationSalesController::class, 'clearingStore'])->name('cooperationsales.clearing.store');
     Route::get('installments/payrequest/{store_id}/{installments_id}', [CooperationSalesController::class, 'PayRequest'])->name('installments.payrequest');
+    Route::get('installments/mainWallet/{store_id}', [CooperationSalesController::class, 'mainWallet'])->name('cooperationsales.mainWallet');
 
 
     // ------------------ installmentpurchase
@@ -113,7 +114,11 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
 
     // ------------------ Create colleague
     Route::get('createcolleague/index', [CreateColleagueController::class, 'index'])->name('createcolleague.index');
+    Route::get('createcolleague/shopList', [CreateColleagueController::class, 'shopList'])->name('createcolleague.shopList');
     Route::get('createcolleague/create', [CreateColleagueController::class, 'create'])->name('createcolleague.create');
+    Route::get('createcolleague/shopedit/{id}', [CreateColleagueController::class, 'shopedit'])->name('createcolleague.shopedit');
+    Route::get('createcolleague/show/{id}', [CreateColleagueController::class, 'show'])->name('createcolleague.show');
+    Route::put('createcolleague/shopUpdate/{id}', [CreateColleagueController::class, 'shopUpdate'])->name('createcolleague.shopUpdate');
     Route::post('createcolleague/store', [CreateColleagueController::class, 'store'])->name('createcolleague.store');
     Route::post('admin.colleagueCredit/store', [CreateColleagueController::class, 'colleagueCreditStore'])->name('colleagueCredit.store');
     Route::get('createcolleague/createcreditoperator', [CreateColleagueController::class, 'createcreditoperator'])->name('createcolleague.createcreditoperator');

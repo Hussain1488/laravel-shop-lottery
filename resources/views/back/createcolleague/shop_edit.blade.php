@@ -30,15 +30,16 @@
                         <h4 class="card-title">همکاری در فروش</h4>
                     </div>
                     <div class="card-content">
-                        <h6 class="card-title m-2">ساخت افرادی که همکاری در فروش دارند</h6>
+                        <h6 class="card-title m-2">اصلاح فروشگاه: {{ $store->nameofstore }}</h6>
                         <div class="container mt-3">
 
 
                             {{-- creating new store form --}}
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <form action="{{ route('admin.createcolleague.store') }}" method="POST"
+                                <form action="{{ route('admin.createcolleague.shopUpdate', [$store->id]) }}" method="POST"
                                     enctype="multipart/form-data" id="store_create_form">
+                                    @method('PUT')
                                     @csrf
 
                                     <div id="home" class="container tab-pane active"><br>
@@ -47,29 +48,14 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group align-items-center">
                                                     <h6 for="first_name" class="mr-2">
-                                                        انتخاب فرد مورد نظر از بین افرادی که لاگین کردند
+                                                        مسئول فروشگاه
                                                     </h6>
 
                                                     <div class="d-flex">
-                                                        <select type="text" class="form-control user_select1"
-                                                            name="selectperson">
-                                                            @isset($users)
-                                                                <option value="">کاربر را انتخاب کنید
-                                                                </option>
-                                                                @foreach ($users as $item)
-                                                                    <option value="{{ $item->id }}">
-                                                                        {{ $item->username }}</option>
-                                                                @endforeach
-                                                            @else
-                                                                <option value="">کاربری برای انتخاب وجود ندارد</option>
-                                                            @endisset
-                                                        </select>
+                                                        <input readonly type="selectperson" class="form-control"
+                                                            value="{{ $store->user->id }}">
                                                     </div>
-                                                    @error('selectperson')
-                                                        <span class="text-danger">
-                                                            {{ $message }}
-                                                        </span>
-                                                    @enderror
+
 
                                                 </div>
                                             </div>
@@ -114,7 +100,7 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" name="nameofstore"
-                                                        value="{{ old('nameofstore') }}">
+                                                        value="{{ $store->nameofstore }}">
                                                     <span class="text-danger">
                                                         @error('nameofstore')
                                                             {{ $message }}
@@ -132,7 +118,7 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" name="addressofstore"
-                                                        value="{{ old('addressofstore') }}">
+                                                        value="{{ $store->addressofstore }}">
                                                     <span class="text-danger">
                                                         @error('addressofstore')
                                                             {{ $message }}
@@ -154,7 +140,7 @@
                                                     <div class="d-flex align-items-center">
                                                         <input type="text" class="form-control moneyInput"
                                                             id="moneyInput" name="storecredit" style="margin-left: 4px"
-                                                            value="{{ old('storecredit') }} ">
+                                                            value="{{ $store->storecredit }} ">
                                                         ریال
 
                                                     </div>
@@ -175,7 +161,7 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <input type="number" class="form-control" name="feepercentage"
-                                                        value="{{ old('feepercentage') }}">
+                                                        value="{{ $store->feepercentage }}">
                                                     <span class="text-danger">
                                                         @error('feepercentage')
                                                             {{ $message }}
@@ -193,7 +179,7 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <input type="number" class="form-control" name="settlementtime"
-                                                        value="{{ old('settlementtime') }}">
+                                                        value="{{ $store->settlementtime }}">
                                                     <span class="text-danger">
                                                         @error('settlementtime')
                                                             {{ $message }}
@@ -212,7 +198,7 @@
                                                 <div class="form-group">
                                                     <input type="text" placeholder="تاریخ پایان قرار داد را مشخص کنید."
                                                         class="form-control persian-date-picker" name="enddate"
-                                                        value="{{ old('enddate') }}" data-timestamps="false">
+                                                        value="{{ $store->enddate }}" data-timestamps="false">
                                                     <span class="text-danger">
                                                         @error('enddate')
                                                             {{ $message }}

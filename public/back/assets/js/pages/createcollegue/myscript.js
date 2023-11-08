@@ -50,4 +50,8 @@ $(document).ready(function () {
         return x1 + x2;
     }
     $('.user_select1').select2();
+
+    $('#enddate_field').ready(function () {
+        
+    });
 });

@@ -7,6 +7,7 @@ use App\Http\Requests\Back\ColleagueCreateDocument;
 use App\Http\Requests\Back\ColleagueReAccreditionRequest;
 use App\Http\Requests\Back\CreateColleagueIndexRequest;
 use App\Http\Requests\Back\CreateShopRequest;
+use App\Http\Requests\Back\ShopShopUpdateRequest;
 use App\Models\BankAccount;
 use App\Models\banktransaction;
 use App\Models\createdocument;
@@ -33,6 +34,72 @@ class CreateColleagueController extends Controller
     }
 
     // creating new seller from users
+    public function shopList()
+    {
+
+        $store = createstore::with('user')->get();
+
+        return view('back.createcolleague.shop_list', compact('store'));
+    }
+
+    public function shopedit($id)
+    {
+
+        $store = createstore::with('user')->find($id);
+        $user = User::get();
+        // dd($store);
+
+        return view('back.createcolleague.shop_edit', compact('store', 'user'));
+    }
+
+    public function shopUpdate(ShopShopUpdateRequest $request, $id)
+    {
+
+        $store = createstore::find($id);
+
+        $storecredit = intval(str_replace(',', '', $request->storecredit));
+
+        $newCredit = $store->storecredit + $storecredit;
+
+        $paths = json_decode($store->uploaddocument);
+        $docPath = '';
+        if ($request->file('uploaddocument')) {
+            $files = $request->file('uploaddocument');
+            foreach ($files as $file) {
+                $path = $file->store('document/createstore', 'public');
+                $paths[] = $path;
+            }
+            // dd($paths);
+            $docPath = json_encode($paths);
+        }
+
+
+        // dd($request);
+        $store->update([
+            'storecredit' => $newCredit,
+            'nameofstore' => $request->nameofstore,
+            'addressofstore' => $request->addressofstore,
+            'feepercentage' => $request->feepercentage,
+            'settlementtime' => $request->settlementtime,
+            'enddate' => $request->enddate,
+            'uploaddocument' => $docPath,
+        ]);
+
+        toastr()->success('فروشگاه با موفقیت اصلاح شد.');
+
+        return redirect(route('admin.createcolleague.shopList'));
+    }
+
+
+    public function show($id)
+    {
+        $store = createstore::find($id);
+        $doc = json_decode($store->uploaddocument);
+        // dd($doc);
+
+        return view('back.createcolleague.show', compact('store', 'doc'));
+    }
+
     public function create()
     {
 

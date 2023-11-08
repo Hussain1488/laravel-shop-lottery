@@ -8,6 +8,7 @@ use App\Models\Makeinstallmentsm;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\CooperationSales;
+use App\Models\createstoretransaction;
 use App\Models\PaymentListModel;
 use Carbon\Carbon;
 use Exception;
@@ -157,6 +158,12 @@ class CooperationSalesController extends Controller
     }
     public function PayRequest($id, $id2)
     {
+
+
+        $transaction = new createstoretransaction();
+
+
+
         // dd($id);
         $store = createstore::find($id);
         // dd($store);
@@ -167,6 +174,31 @@ class CooperationSalesController extends Controller
         // dd($final, $result);
         $store->salesamount += $final;
         $installment->status = 1;
+
+        $number = createstoretransaction::count();
+
+        if ($number > 0 && $number != 0) {
+            $number = createstoretransaction::latest()->first()->documentnumber  + 1;
+            // $final_price = createstoretransaction::latest()->first()->finalprice;
+        } else {
+            $number = 10000;
+            // $final_price =
+        }
+
+        $transaction->create([
+            'store_id' => $id,
+            'datetransaction' => Jalalian::now()->format('Y-m-d'),
+            // 1 is for main wallet
+            'flag' => 1,
+            // pay request
+            'typeoftransaction' => 1,
+            'price' => $installment->Creditamount,
+            'finalprice' => $store->salesamount,
+            'documentnumber' => $number,
+        ]);
+
+
+
         $installment->save();
         $store->save();
         toastr()->success('درخواست تصفیه حساب موفقیت آمیز انجام شد.');
@@ -191,5 +223,13 @@ class CooperationSalesController extends Controller
             echo $e->getMessage();
             // dd($e->getMessage());
         }
+    }
+    public function mainWallet($id)
+    {
+
+        $trans = createstoretransaction::where('flag', 1)->where('store_id', $id)->get();
+        $store = createstore::find($id);
+
+        return view('back.cooperationsales.transaction_records', compact('trans', 'store'));
     }
 }

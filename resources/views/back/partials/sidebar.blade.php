@@ -113,10 +113,11 @@
                             </li>
                         @endcan
 
-                        @can('createcolleague.create')
-                            <li class="{{ active_class('admin.createcolleague.create') }}">
-                                <a href="{{ route('admin.createcolleague.create') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item"> ایجاد فروشگاه</span></a>
+                        @can('createcolleague.shopList')
+                            <li
+                                class="{{ active_class('admin.createcolleague.shopList') }} {{ active_class('admin.createcolleague.create') }}">
+                                <a href="{{ route('admin.createcolleague.shopList') }}"><i
+                                        class="feather icon-circle"></i><span>لیست فروشگاه ها</span></a>
                             </li>
                         @endcan
 
