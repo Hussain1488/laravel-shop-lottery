@@ -133,8 +133,8 @@ class CooperationSalesController extends Controller
             $number = PaymentListModel::latest()->first()->list_id  + 1;
             $final_price = PaymentListModel::latest()->first()->final_price  + $depositamount;
         } else {
-            $number = 10000;
             $final_price = $depositamount;
+            $number = 10000;
         }
         // dd($final_price);
         $store->salesamount -= $depositamount;
