@@ -264,4 +264,8 @@ class User extends Authenticatable
             'admin.users_count'
         ];
     }
+    public function store()
+    {
+        return $this->hasOne(createstore::class, 'selectperson');
+    }
 }
