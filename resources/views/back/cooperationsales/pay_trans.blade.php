@@ -74,8 +74,11 @@
                                                 <th>
                                                     مبلغ تراکنش
                                                 </th>
-                                                <th class="text-danger">
-                                                    قیمت نهایی
+                                                <th>
+                                                    مجموع تراکنش
+                                                </th>
+                                                <th class="">
+                                                    شماره شبا
                                                 </th>
                                                 <th>
                                                     شماره سند
@@ -92,21 +95,24 @@
                                                         {{ $counter++ }}
                                                     </td>
                                                     <td>
-                                                        {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y/m/d') }}
+                                                        {{ \Carbon\Carbon::parse($key->depositdate)->format('Y/m/d') }}
                                                     </td>
                                                     <td>
-                                                        {{ $key->flag == 1 ? 'کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
+                                                        {{ 'درخواست واریز' }}
                                                     </td>
                                                     <td>
-                                                        <span class="monyInputSpan">{{ $key->price }}</span>
+                                                        <span class="monyInputSpan">{{ $key->depositamount }}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="monyInputSpan">{{ $key->final_price }}</span>
                                                     </td>
                                                     <td class="text-danger">
-                                                        <span class="monyInputSpan">{{ $key->finalprice }}</span>
+                                                        <span class="">{{ $key->shabanumber }}</span>
 
                                                     </td>
                                                     <td>
 
-                                                        {{ $key->documentnumber }}
+                                                        {{ $key->list_id }}
                                                     </td>
 
                                                 </tr>

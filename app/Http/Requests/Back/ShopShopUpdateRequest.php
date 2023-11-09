@@ -23,6 +23,28 @@ class ShopShopUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        return [];
+        return [
+            'selectperson' => 'required',
+            'uploaddocument' => 'required',
+            'nameofstore' => 'required|string',
+            'addressofstore' => 'required|string',
+            'storecredit' => 'numeric',
+            'enddate' => 'date',
+            'feepercentage' => 'required|numeric',
+            'settlementtime' => 'required',
+        ];
+    }
+    public function attributes()
+    {
+        return [
+            'selectperson' => 'کاربر',
+            'uploaddocument' => 'فایل مستندات',
+            'nameofstore' => 'نام فروشگاه',
+            'addressofstore' => 'آدرس فروشگاه',
+            'storecredit' => 'اعتبار فروشگاه',
+            'enddate' => 'تاریخ پایان قرارداد',
+            'feepercentage' => 'درصد کارمزد فروشگاه',
+            'settlementtime' => 'زمان تصفیه',
+        ];
     }
 }

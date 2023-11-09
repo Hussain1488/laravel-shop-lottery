@@ -107,6 +107,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::post('cooperationsales/clearing', [CooperationSalesController::class, 'clearingStore'])->name('cooperationsales.clearing.store');
     Route::get('installments/payrequest/{store_id}/{installments_id}', [CooperationSalesController::class, 'PayRequest'])->name('installments.payrequest');
     Route::get('installments/mainWallet/{store_id}', [CooperationSalesController::class, 'mainWallet'])->name('cooperationsales.mainWallet');
+    Route::get('installments/payRequestWallet/{store_id}', [CooperationSalesController::class, 'payRequestWallet'])->name('cooperationsales.payRequestWallet');
+    Route::get('installments/paidSales/{store_id}', [CooperationSalesController::class, 'paidSales'])->name('cooperationsales.paidSales');
 
 
     // ------------------ installmentpurchase

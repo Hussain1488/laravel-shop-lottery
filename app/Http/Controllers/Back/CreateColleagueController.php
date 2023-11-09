@@ -14,6 +14,7 @@ use App\Models\createdocument;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\createstore;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Morilog\Jalali\Jalalian;
@@ -46,6 +47,9 @@ class CreateColleagueController extends Controller
     {
 
         $store = createstore::with('user')->find($id);
+        $jalaliEndDate = Jalalian::fromFormat('Y-m-d', $store->enddate);
+        $carbonEndDate = Carbon::createFromFormat('Y-m-d H:i:s', $jalaliEndDate->toCarbon()->toDateTimeString());
+        $store->enddate = $carbonEndDate;
         $user = User::get();
         // dd($store);
 
@@ -81,7 +85,7 @@ class CreateColleagueController extends Controller
             'addressofstore' => $request->addressofstore,
             'feepercentage' => $request->feepercentage,
             'settlementtime' => $request->settlementtime,
-            'enddate' => $request->enddate,
+            'enddate' => $request->enddate != null ? $request->enddate : $store->enddate,
             'uploaddocument' => $docPath,
         ]);
 

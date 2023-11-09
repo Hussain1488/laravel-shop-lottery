@@ -114,8 +114,9 @@ class CooperationSalesController extends Controller
     public function clearingStore(Request $request)
     {
         // dd($request->all());
+        $store = createstore::find($request->store);
         $depositamount = str_replace(',', '', $request->depositamount);
-
+        $docPath = '';
         if ($request->hasFile('factor')) {
             // dd($request->file('factor'));
             $files = $request->file('factor');
@@ -130,18 +131,48 @@ class CooperationSalesController extends Controller
         $number = PaymentListModel::count();
         if ($number > 0 && $number != 0) {
             $number = PaymentListModel::latest()->first()->list_id  + 1;
+            $final_price = PaymentListModel::latest()->first()->final_price  + $depositamount;
         } else {
             $number = 10000;
         }
+        // dd($final_price);
+        $store->salesamount -= $depositamount;
         $register_number = $number;
+        // creating new payment request transaction.
         PaymentListModel::create([
             'list_id' => $number,
             'store_id' => $request->store,
             'depositamount' => $depositamount,
+            'final_price' => $final_price,
             'shabanumber' => $request->shabanumber,
             'factor' => $docPath,
             'depositdate' => Jalalian::now()->format('Y-m-d'),
         ]);
+        // creating new
+        $transaction = new createstoretransaction();
+        $number1 = createstoretransaction::count();
+
+        if ($number1 > 0 && $number1 != 0) {
+            $number1 = createstoretransaction::latest()->first()->documentnumber  + 1;
+            $final_price1 = createstoretransaction::latest()->first()->finalprice - $depositamount;
+        } else {
+            $number1 = 10000;
+            // $final_price =
+        }
+        // creating new store transaction for mainWallet transaction.
+        $transaction->create([
+            'store_id' => $request->store,
+            'datetransaction' => Jalalian::now()->format('Y-m-d'),
+            // 1 is for main wallet
+            'flag' => 0,
+            // pay request
+            'typeoftransaction' => 0,
+            'price' => $depositamount,
+            'finalprice' => $final_price1,
+            'documentnumber' => $number1,
+        ]);
+
+        $store->save();
 
         toastr()->success('درخواست تسویه حساب با موفقیت ارسال شد.');
 
@@ -161,9 +192,6 @@ class CooperationSalesController extends Controller
 
 
         $transaction = new createstoretransaction();
-
-
-
         // dd($id);
         $store = createstore::find($id);
         // dd($store);
@@ -227,9 +255,39 @@ class CooperationSalesController extends Controller
     public function mainWallet($id)
     {
 
-        $trans = createstoretransaction::where('flag', 1)->where('store_id', $id)->get();
+        $trans = createstoretransaction::where('store_id', $id)->latest()->get();
+        if (count($trans) > 0) {
+            $total = createstoretransaction::where('flag', 1)->where('store_id', $id)->latest()->first()->finalprice;
+        } else {
+            $total = 0;
+        }
         $store = createstore::find($id);
 
-        return view('back.cooperationsales.transaction_records', compact('trans', 'store'));
+
+        return view('back.cooperationsales.transaction_records', compact('trans', 'store', 'total'));
+    }
+    public function payRequestWallet($id)
+    {
+
+        $trans = PaymentListModel::where('store_id', $id)->latest()->get();
+        $store = createstore::find($id);
+        if (count($trans) > 0) {
+            $total = PaymentListModel::where('store_id', $id)->latest()->first()->final_price;
+        } else {
+            $total = 0;
+        }
+        return view('back.cooperationsales.pay_trans', compact('trans', 'store', 'total'));
+    }
+    public function paidSales($id)
+    {
+
+        $trans = createstoretransaction::where('flag', 2)->where('store_id', $id)->latest()->get();
+        $store = createstore::find($id);
+        if (count($trans) > 0) {
+            $total = createstoretransaction::where('flag', 2)->where('store_id', $id)->latest()->first()->finalprice;
+        } else {
+            $total = 0;
+        }
+        return view('back.cooperationsales.transaction_records', compact('trans', 'store', 'total'));
     }
 }

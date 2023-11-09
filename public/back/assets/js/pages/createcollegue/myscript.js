@@ -1,4 +1,15 @@
 $(document).ready(function () {
+    // console.log($('.persian-date-picker-value').val().pDatepicker());
+    $('.persian-date-picker-value').pDatepicker({
+        altFormat: 'YYYY-mm-dd',
+        time: {
+            enabled: false
+        },
+        minute: {
+            enabled: false
+        }
+    });
+    // $('.persian-date-picker-value').customPersianDate();
     $('#summit_button').on('click', function (e) {
         e.preventDefault(); // Prevent the default form submission
 
@@ -51,7 +62,5 @@ $(document).ready(function () {
     }
     $('.user_select1').select2();
 
-    $('#enddate_field').ready(function () {
-        
-    });
+    $('#enddate_field').ready(function () {});
 });

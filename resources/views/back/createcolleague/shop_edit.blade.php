@@ -53,7 +53,7 @@
 
                                                     <div class="d-flex">
                                                         <input readonly type="selectperson" class="form-control"
-                                                            value="{{ $store->user->id }}">
+                                                            value="{{ $store->user->username }}">
                                                     </div>
 
 
@@ -197,7 +197,7 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <input type="text" placeholder="تاریخ پایان قرار داد را مشخص کنید."
-                                                        class="form-control persian-date-picker" name="enddate"
+                                                        class="form-control persian-date-picker-value" name="enddate"
                                                         value="{{ $store->enddate }}" data-timestamps="false">
                                                     <span class="text-danger">
                                                         @error('enddate')
