@@ -50,9 +50,11 @@
                                 <a href="{{ route('admin.cooperationsales.mainWallet', [$store->id]) }}"
                                     class="btn btn-success">کیف پول
                                     اصلی</a>
-                                <a href="" class="btn btn-success">کیف پول درخواست واریز</a>
-                                <a href="" class="btn btn-success">فروش های تسویه شده</a>
-                                <a href="" class="btn btn-success">مقدار فروش اقساط ماهانه</a>
+                                <a href="{{ route('admin.cooperationsales.payRequestWallet', [$store->id]) }}"
+                                    class="btn btn-success">کیف پول درخواست واریز</a>
+                                <a href="{{ route('admin.cooperationsales.paidSales', [$store->id]) }}"
+                                    class="btn btn-success">فروش های تسویه شده</a>
+                                {{-- <a href="" class="btn btn-success">مقدار فروش اقساط ماهانه</a> --}}
                             </div>
 
 

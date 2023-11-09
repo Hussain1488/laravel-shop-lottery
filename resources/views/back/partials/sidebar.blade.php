@@ -72,6 +72,27 @@
                                         class="feather icon-circle"></i><span class="menu-item"> درخواست تسویه حساب </span></a>
                             </li>
                         @endcan
+                        @can('cooperationsales.mainWallet')
+                            <li class="{{ active_class('admin.cooperationsales.mainWallet') }}">
+                                <a href="{{ route('admin.cooperationsales.mainWallet', [Auth::user()->store->id]) }}"><i
+                                        class="feather icon-circle"></i><span class="menu-item">تراکنش های کیف پول
+                                        اصلی</span></a>
+                            </li>
+                        @endcan
+                        @can('cooperationsales.payRequestWallet')
+                            <li class="{{ active_class('admin.cooperationsales.payRequestWallet') }}">
+                                <a href="{{ route('admin.cooperationsales.payRequestWallet', [Auth::user()->store->id]) }}"><i
+                                        class="feather icon-circle"></i><span class="menu-item">تراکنش های درخواست
+                                        واریز</span></a>
+                            </li>
+                        @endcan
+                        @can('cooperationsales.paidSales')
+                            <li class="{{ active_class('admin.cooperationsales.paidSales') }}">
+                                <a href="{{ route('admin.cooperationsales.paidSales', [Auth::user()->store->id]) }}"><i
+                                        class="feather icon-circle"></i><span class="menu-item">تراکنش های فروش های پرداخت
+                                        شده</span></a>
+                            </li>
+                        @endcan
 
 
                     </ul>

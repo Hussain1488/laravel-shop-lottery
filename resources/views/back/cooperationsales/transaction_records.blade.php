@@ -54,7 +54,7 @@
                                         </div>
                                         <div class="g-col-6 d-col-sm-12 d-flex align-items-center">
                                             <input id="total_transaction" readonly class="form-control mr-1" type="text"
-                                                value="">
+                                                value="{{ $total }}">
                                             ریال
                                         </div>
                                     </div>
@@ -95,7 +95,7 @@
                                                         {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y/m/d') }}
                                                     </td>
                                                     <td>
-                                                        {{ $key->flag == 1 ? 'درخواست واریز' : '' }}
+                                                        {{ $key->flag == 1 ? 'کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
                                                     </td>
                                                     <td>
                                                         <span class="monyInputSpan">{{ $key->price }}</span>
