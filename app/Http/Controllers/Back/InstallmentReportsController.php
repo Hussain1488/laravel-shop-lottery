@@ -63,7 +63,7 @@ class InstallmentReportsController extends Controller
             $final_price1 = createstoretransaction::latest()->first()->finalprice - $payList->depositamount;
         } else {
             $number1 = 10000;
-            $final_price1 = 0;
+            $final_price1 = - $payList->depositamount;
         }
         $transaction->create([
             'store_id' => $payList->store->id,

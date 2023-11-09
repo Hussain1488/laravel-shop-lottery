@@ -49,7 +49,7 @@
                                     <div class="row mb-2">
                                         <div class="g-col-6 g-col-sm-12">
                                             <h4>
-                                                مجموعه تراکنش ها
+                                                مجموعه تراکنش ها 
                                             </h4>
                                         </div>
                                         <div class="g-col-6 d-col-sm-12 d-flex align-items-center">
@@ -75,7 +75,7 @@
                                                     مبلغ تراکنش
                                                 </th>
                                                 <th class="text-danger">
-                                                    قیمت نهایی
+                                                    مجموع تراکنش با کسر کارمزد
                                                 </th>
                                                 <th>
                                                     شماره سند
