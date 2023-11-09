@@ -52,6 +52,36 @@
                                     </div>
                                 </div>
 
+                        
+                                <div class="row mt-8">
+                                    <div class="col-md-3 col-6 pt-2 ">
+                                        <h5>
+                                            ماهیت حساب
+                                        </h5>
+                                    </div>
+                                    <div class="col-md-3 col-6">
+
+                                        <div class="form-group">
+
+                                            <select type="text" class="form-control user_select2" name="accounttype">
+                                                <option value="bank"> بانک </option>
+                                                <option value="expense"> هزینه </option>
+                                                <option value="income"> دآرمد </option>
+                                                <option value="expense"> واسط قسط ها  </option>
+                                                <option value="expense"> واسط اعتبار فروش فروشگاه ها  </option>
+                                                
+                                            </select>
+
+                                            @error('accounttype')
+                                                <span class="text-danger">
+                                                    {{ $message }}
+                                                </span>
+                                            @enderror
+
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="row mt-8">
                                     <div class="col-md-3 col-6 pt-2">
                                         <h5>
@@ -66,37 +96,6 @@
                                                 {{ $message }}
                                             </span>
                                         @enderror
-                                    </div>
-                                </div>
-
-
-
-                                <div class="row mt-8">
-                                    <div class="col-md-3 col-6 pt-2 ">
-                                        <h5>
-                                            ماهیت حساب
-                                        </h5>
-                                    </div>
-                                    <div class="col-md-3 col-6">
-
-                                        <div class="form-group">
-
-                                            <select type="text" class="form-control user_select2" name="accounttype">
-                                                <option value="bank"> بانک </option>
-                                                <option value="income"> دآرمد </option>
-                                                <option value="expense"> هزینه </option>
-                                                <option value="expense"> واسط قسط ها  </option>
-                                                <option value="expense"> واسط اعتبار فروش فروشگاه ها  </option>
-                                                
-                                            </select>
-
-                                            @error('accounttype')
-                                                <span class="text-danger">
-                                                    {{ $message }}
-                                                </span>
-                                            @enderror
-
-                                        </div>
                                     </div>
                                 </div>
 
