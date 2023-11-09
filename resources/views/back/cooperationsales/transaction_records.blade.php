@@ -95,7 +95,7 @@
                                                         {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y/m/d') }}
                                                     </td>
                                                     <td>
-                                                        {{ $key->flag == 1 ? 'کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
+                                                        {{ $key->flag == 1 ? 'درخواست برداشت از کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
                                                     </td>
                                                     <td>
                                                         <span class="monyInputSpan">{{ $key->price }}</span>

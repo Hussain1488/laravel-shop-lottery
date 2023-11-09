@@ -189,6 +189,13 @@
                             </li>
                         @endcan
 
+                        @can('installmentreports.payRequestList')
+                            <li class="{{ active_class('admin.installmentreports.payRequestList') }}">
+                                <a href="{{ route('admin.installmentreports.payRequestList') }}"><i
+                                        class="feather icon-circle"></i><span class="menu-item"> لیست درخواست های تسویه
+                                    </span></a>
+                            </li>
+                        @endcan
 
 
 

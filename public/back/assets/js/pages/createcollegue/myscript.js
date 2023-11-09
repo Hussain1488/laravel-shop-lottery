@@ -2,7 +2,7 @@ $(document).ready(function () {
     // console.log($('.persian-date-picker-value').val().pDatepicker());
     $('.persian-date-picker-value').pDatepicker({
         altFormat: 'YYYY-mm-dd',
-        time: {
+        time    : {
             enabled: false
         },
         minute: {

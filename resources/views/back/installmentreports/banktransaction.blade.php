@@ -116,36 +116,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    {{-- @foreach ($transaction as $key)
-                                        <div class="border rounded p-2 my-1">
-                                            <div class="row grid d-flex justify-content-start">
-                                                <div class="">
-                                                    <h6>
-                                                        اسم بانک: {{ $key->namebank }}
-                                                    </h6>
-                                                </div>
-                                                <div class="">
-                                                    <h6>
-                                                        مقدار تراکنش: {{ $key->transactionprice }}
-                                                    </h6>
-                                                </div>
-                                                <div class="">
-                                                    <h6>
-                                                        بالانس بانک : {{ $key->bankbalance }}
-                                                    </h6>
-                                                </div>
-                                                <div class="">
-                                                    <h6>
-                                                        تاریخ تراکنش :
-                                                        {{ \Carbon\Carbon::parse($key->transactionsdate)->format('Y/m/d') }}
-                                                    </h6>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    @endforeach
- --}}
-
+                               
                                 </div>
                             </div>
 

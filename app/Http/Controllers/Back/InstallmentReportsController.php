@@ -7,10 +7,13 @@ use App\Http\Requests\Back\internalBankStoreRequest;
 use App\Models\BankAccount;
 use App\Models\banktransaction;
 use App\Models\createstore;
+use App\Models\createstoretransaction;
 use App\Models\Makeinstallmentsm;
+use App\Models\PaymentListModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+use Morilog\Jalali\Jalalian;
 use function PHPUnit\Framework\isEmpty;
 
 class InstallmentReportsController extends Controller
@@ -32,6 +35,57 @@ class InstallmentReportsController extends Controller
         // dd($installments);
 
         return view('back.installmentreports.index', compact('installments', 'installments1', 'installments2', 'payment_stat'));
+    }
+    public function payRequestlist()
+    {
+        $transaction = PaymentListModel::with('store')->latest()->get();
+        $total[1] = $transaction->where('status', 1)->sum('depositamount');
+        $total[0] = $transaction->where('status', 0)->sum('depositamount');
+
+        // dd($transaction);
+
+        return view('back.installmentreports.PayRequestList', compact('transaction', 'total'));
+    }
+    public function RequestPayment($id)
+    {
+
+        $payList = PaymentListModel::with('store')->find($id);
+        $payList->status = 1;
+
+        // dd($payList);
+
+
+        $transaction = new createstoretransaction();
+        $number1 = createstoretransaction::count();
+
+        if ($number1 > 0 && $number1 != 0) {
+            $number1 = createstoretransaction::latest()->first()->documentnumber  + 1;
+            $final_price1 = createstoretransaction::latest()->first()->finalprice - $payList->depositamount;
+        } else {
+            $number1 = 10000;
+            $final_price1 = 0;
+        }
+        $transaction->create([
+            'store_id' => $payList->store->id,
+            'datetransaction' => Jalalian::now()->format('Y-m-d'),
+            // 1 is for main wallet
+            'flag' => 2,
+            // pay request
+            'typeoftransaction' => 0,
+            'price' => $payList->depositamount,
+            'finalprice' => $final_price1,
+            'documentnumber' => $number1,
+        ]);
+
+        // $transaction = PaymentListModel::with('store')->latest()->get();
+        // $total[1] = $transaction->where('status', 1)->sum('depositamount');
+        // $total[0] = $transaction->where('status', 0)->sum('depositamount');
+
+
+        $payList->save();
+        // dd($transaction);
+        toastr()->success('پرداخت درخواست تسویه با موفقیت انجام شد.');
+        return redirect()->back();
     }
 
     //  bank transaction list view page
