@@ -158,7 +158,7 @@ class CooperationSalesController extends Controller
             $final_price1 = createstoretransaction::latest()->first()->finalprice - $depositamount;
         } else {
             $number1 = 10000;
-            // $final_price =
+            $final_price1 =                -$depositamount;
         }
         // creating new store transaction for mainWallet transaction.
         $transaction->create([

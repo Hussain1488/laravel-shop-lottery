@@ -139,7 +139,7 @@
                                                         </td>
                                                         <td>
                                                             <a href="{{ route('admin.installmentreports.RequestPayment', [$key->id]) }}"
-                                                                class="btn btn-success">پرداخت {{ $key->id }}</a>
+                                                                class="btn btn-success">پرداخت</a>
                                                         </td>
 
                                                     </tr>
