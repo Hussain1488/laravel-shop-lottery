@@ -52,7 +52,9 @@
                                     </div>
                                 </div>
 
-                        
+
+
+
                                 <div class="row mt-8">
                                     <div class="col-md-3 col-6 pt-2 ">
                                         <h5>
@@ -63,13 +65,15 @@
 
                                         <div class="form-group">
 
-                                            <select type="text" class="form-control user_select2" name="accounttype">
+                                            <select type="text" id="Account_type" class="form-control user_select2"
+                                                name="accounttype">
                                                 <option value="bank"> بانک </option>
                                                 <option value="expense"> هزینه </option>
                                                 <option value="income"> دآرمد </option>
-                                                <option value="expense"> واسط قسط ها  </option>
-                                                <option value="expense"> واسط اعتبار فروش فروشگاه ها  </option>
-                                                
+                                                <option value="intermediaryـinstallments"> واسط قسط ها </option>
+                                                <option value="store_credit_interface"> واسط اعتبار فروش فروشگاه ها
+                                                </option>
+
                                             </select>
 
                                             @error('accounttype')
@@ -81,7 +85,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row mt-8">
                                     <div class="col-md-3 col-6 pt-2">
                                         <h5>
@@ -89,8 +92,15 @@
                                         </h5>
                                     </div>
                                     <div class="col-md-3 col-6">
-                                        <input type="text" class="form-control" name="accountnumber"
-                                            value="{{ old('accountnumber') }}">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder="شماره حساب"
+                                                id="mail" name="email">
+                                            <div class="input-group-append">
+                                                <input class="input-group-text" name='' id="Acount_number_prefix"
+                                                    style="width: 40px" value="0">
+                                                {{-- 1</span> --}}
+                                            </div>
+                                        </div>
                                         @error('accountnumber')
                                             <span class="text-danger">
                                                 {{ $message }}

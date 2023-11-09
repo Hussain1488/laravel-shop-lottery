@@ -36,3 +36,18 @@ $(document).ready(function () {
         $('#create_bank_form').submit();
     });
 });
+
+$('#Account_type').on('change', function () {
+    let account_type = $('#Account_type').val();
+    if (account_type == 'bank') {
+        $('#Acount_number_prefix').val(21);
+    } else if (account_type == 'expense') {
+        $('#Acount_number_prefix').val(22);
+    } else if (account_type == 'income') {
+        $('#Acount_number_prefix').val(23);
+    } else if (account_type == 'intermediaryـinstallments') {
+        $('#Acount_number_prefix').val(24);
+    } else if (account_type == 'store_credit_interface') {
+        $('#Acount_number_prefix').val(25);
+    }
+});
