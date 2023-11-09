@@ -48,7 +48,7 @@
                                                 <div class="form-group align-items-center">
                                                     <h6 for="first_name" class="mr-2">
                                                         انتخاب فرد مورد نظر از بین افرادی که لاگین کردند
-                                                    </h6>
+                                                    </h6> 
 
                                                     <div class="d-flex">
                                                         <select type="text" class="form-control user_select1"
@@ -194,6 +194,37 @@
                                                 <div class="form-group">
                                                     <input type="number" class="form-control" name="settlementtime"
                                                         value="{{ old('settlementtime') }}">
+                                                    <span class="text-danger">
+                                                        @error('settlementtime')
+                                                            {{ $message }}
+                                                        @enderror
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 pt-2">
+                                                <h5>
+                                                    حساب واریز درامد 
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+                                                <div class="d-flex">
+                                                        <select type="text" class="form-control user_select1"
+                                                            name="selectperson">
+                                                            @isset($users)
+                                                                <option value="">کاربر را انتخاب کنید
+                                                                </option>
+                                                                @foreach ($users as $item)
+                                                                    <option value="{{ $item->id }}">
+                                                                        {{ $item->username }}</option>
+                                                                @endforeach
+                                                            @else
+                                                                <option value="">کاربری برای انتخاب وجود ندارد</option>
+                                                            @endisset
+                                                        </select>
+                                                    </div>
                                                     <span class="text-danger">
                                                         @error('settlementtime')
                                                             {{ $message }}
