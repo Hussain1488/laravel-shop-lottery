@@ -37,7 +37,7 @@ class AuthServiceProvider extends ServiceProvider
                 return  $user->level == 'seller'; // Customize this condition as needed.
             });
             Gate::define('cooperationsales.index', function ($user) {
-                return $user->level == 'creator' || $user->level == 'seller'; // Customize this condition as needed.
+                return $user->level == 'seller'; // Customize this condition as needed.
             });
 
             Gate::define('cooperationsales.create', function ($user) {
@@ -47,7 +47,16 @@ class AuthServiceProvider extends ServiceProvider
                 // Customize this condition as needed.
             });
             Gate::define('cooperationsales.clearing', function ($user) {
-                return $user->level == 'creator' || $user->level == 'seller'; // Customize this condition as needed.
+                return  $user->level == 'seller'; // Customize this condition as needed.
+            });
+            Gate::define('cooperationsales.mainWallet', function ($user) {
+                return  $user->level == 'seller'; // Customize this condition as needed.
+            });
+            Gate::define('cooperationsales.payRequestWallet', function ($user) {
+                return  $user->level == 'seller'; // Customize this condition as needed.
+            });
+            Gate::define('cooperationsales.paidSales', function ($user) {
+                return  $user->level == 'seller'; // Customize this condition as needed.
             });
             // installmentpurchase
             Gate::define('installmentpurchase', function ($user) {
