@@ -19,17 +19,6 @@ $(document).ready(function () {
     });
 
     // Function to add commas as a thousands separator
-    function addCommas(nStr) {
-        nStr += '';
-        var x = nStr.split('.');
-        var x1 = x[0];
-        var x2 = x.length > 1 ? '.' + x[1] : '';
-        var rgx = /(\d+)(\d{3})/;
-        while (rgx.test(x1)) {
-            x1 = x1.replace(rgx, '$1' + ',' + '$2');
-        }
-        return x1 + x2;
-    }
 
     $('#creating_bank_button').on('click', function () {
         console.log('hey');
@@ -51,3 +40,30 @@ $('#Account_type').on('change', function () {
         $('#Acount_number_prefix').val(25);
     }
 });
+
+$('.pay_button').on('click', function () {
+    let dataId = $(this).data('id');
+    let amount = String($(this).data('amount')).replace(/\D/g, '');
+    let final = addCommas(amount);
+    $('#deposit_amount_show').text(final);
+    $('#pay_list_id').val(dataId);
+    $('#myModal').modal();
+});
+
+$('#submit_form_pay').on('click', function () {
+    // let pay_list = $('#pay_id').val();
+    $('#payment_form').attr('action', pay_url);
+    $('#payment_form').submit();
+});
+
+function addCommas(nStr) {
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+}
