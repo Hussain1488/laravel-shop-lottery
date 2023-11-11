@@ -138,8 +138,9 @@
                                                             {{ $key->list_id }}
                                                         </td>
                                                         <td>
-                                                            <a href="{{ route('admin.installmentreports.RequestPayment', [$key->id]) }}"
-                                                                class="btn btn-success">پرداخت</a>
+                                                            <button data-id="{{ $key->id }}"
+                                                                data-amount="{{ $key->depositamount }}"
+                                                                class="btn btn-success pay_button">پرداخت</button>
                                                         </td>
 
                                                     </tr>
@@ -243,61 +244,9 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <a data-toggle="modal" href="#myModal">Open Modal</a>
+                                    {{-- <a data-toggle="modal" href="#myModal">Open Modal</a> --}}
 
 
-                                    <div class="modal fade" id="myModal">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-
-                                                <!-- Modal Header -->
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">درخواست تسویه حساب به مبلغ: </h4>
-                                                </div>
-
-                                                <!-- Modal body -->
-                                                <div class="modal-body">
-                                                    <form action="{{ '#' }}" method="POST">
-                                                        @csrf
-                                                        <div class="d-flex justify-content-around my-1">
-                                                            <div>
-                                                                <label for="">شماره پیگیری:</label>
-                                                            </div>
-                                                            <div>
-                                                                <input type="text" class="form-control" name="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="d-flex justify-content-around my-1">
-                                                            <div>
-                                                                <label for="">نام بانک</label>
-                                                            </div>
-                                                            <div>
-                                                                <input type="text" class="form-control" name="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="d-flex justify-content-around my-1">
-                                                            <div>
-                                                                <label for="">ارسال سند:</label>
-                                                            </div>
-                                                            <div>
-                                                                <input type="file" class="form-control" name="">
-                                                            </div>
-                                                        </div>
-                                                    </form>
-
-                                                </div>
-
-                                                <!-- Modal footer -->
-                                                <div class="modal-footer d-flex justify-content-between">
-                                                    <input type="button" id="submit_form" class="btn btn-success"
-                                                        value="تأیید">
-                                                    <input type="button" class="btn btn-danger" data-dismiss="modal"
-                                                        value="انصراف">
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
 
 
                                 </div>
@@ -309,29 +258,63 @@
 
                 </section>
                 <!-- Vertically centered modal -->
-                <div class="modalss fade" id="myModals">
+                <div class="modal fade" id="myModal">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
 
                             <!-- Modal Header -->
                             <div class="modal-header">
-                                <h4 class="modal-title">Modal Heading</h4>
-                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h4 class="modal-title">درخواست تسویه حساب به مبلغ:<span class="text-success"
+                                        id="deposit_amount_show"></span>ریال
+                                </h4>
                             </div>
 
                             <!-- Modal body -->
                             <div class="modal-body">
-                                Modal body..
+                                <form id="payment_form" action="{{ '#' }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <input id="pay_list_id" type="hidden" value="" name="pay_list_id">
+                                    <div class="d-flex justify-content-around my-1">
+                                        <div>
+                                            <label for="">شماره پیگیری:</label>
+                                        </div>
+                                        <div>
+                                            <input required type="number" class="form-control" name="Issuetracking">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-around my-1">
+                                        <div>
+                                            <label for="">نام بانک</label>
+                                        </div>
+                                        <div>
+                                            <input required type="text" class="form-control" name="nameofbank">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-around my-1">
+                                        <div>
+                                            <label for="">ارسال سند:</label>
+                                        </div>
+                                        <div>
+                                            <input required type="file" class="form-control" name="documentpayment">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-between">
+                                        <input type="button" id="submit_form_pay" class="btn btn-success"
+                                            value="تأیید">
+                                        <input type="button" class="btn btn-danger" data-dismiss="modal"
+                                            value="انصراف">
+                                    </div>
+                                </form>
+
                             </div>
 
                             <!-- Modal footer -->
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
 
                         </div>
                     </div>
                 </div>
+
             </div>
 
         </div>
@@ -340,8 +323,9 @@
 @include('back.partials.plugins', ['plugins' => ['jquery.validate']])
 
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var pay_url = "{{ route('admin.installmentreports.RequestPaymentStore') }}"
+    </script>
+
     <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
 @endpush
