@@ -15,9 +15,11 @@ class CreatePaymentdetailsTable extends Migration
     {
         Schema::create('paymentdetails', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("list_of_payment_id");
             $table->bigInteger("Issuetracking");
             $table->string("nameofbank");
             $table->string("documentpayment");
+            $table->foreign("list_of_payment_id")->references("id")->on("list_of_payment")->onDelete('cascade');
             $table->timestamps();
         });
     }
