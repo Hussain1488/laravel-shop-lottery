@@ -9,6 +9,7 @@ use App\Models\banktransaction;
 use App\Models\createstore;
 use App\Models\createstoretransaction;
 use App\Models\Makeinstallmentsm;
+use App\Models\paymentdetails;
 use App\Models\PaymentListModel;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -63,7 +64,7 @@ class InstallmentReportsController extends Controller
             $final_price1 = createstoretransaction::latest()->first()->finalprice - $payList->depositamount;
         } else {
             $number1 = 10000;
-            $final_price1 = - $payList->depositamount;
+            $final_price1 = -$payList->depositamount;
         }
         $transaction->create([
             'store_id' => $payList->store->id,
@@ -84,10 +85,34 @@ class InstallmentReportsController extends Controller
 
         $payList->save();
         // dd($transaction);
-        toastr()->success('پرداخت درخواست تسویه با موفقیت انجام شد.');
-        return redirect()->back();
+        // toastr()->success('پرداخت درخواست تسویه با موفقیت انجام شد.');
+        return true;
     }
 
+    public function RequestPaymentStore(Request $request)
+    {
+
+        // dd($request->all());
+        if ($request->hasFile('documentpayment')) {
+            $file = $request->file('documentpayment');
+            $path = $file->store('document/payDetails', 'public');
+            // dd($path());
+        } else {
+            $path = '';
+        }
+
+        paymentdetails::create([
+            'list_of_payment_id' => $request->pay_list_id,
+            'Issuetracking' => $request->Issuetracking,
+            'nameofbank'  => $request->nameofbank,
+            'documentpayment'  => $path,
+        ]);
+
+        $this->RequestPayment($request->pay_list_id);
+
+        toastr()->success('اطلاعات پرداخت موفقیت آمیز ذخیره شد.');
+        return redirect()->back();
+    }
     //  bank transaction list view page
     public function banktransaction()
     {
