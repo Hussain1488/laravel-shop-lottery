@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\internalBankStoreRequest;
 use App\Models\BankAccount;
 use App\Models\banktransaction;
+use App\Models\bankTypeModel;
 use App\Models\createstore;
 use App\Models\createstoretransaction;
 use App\Models\Makeinstallmentsm;
@@ -42,40 +43,41 @@ class InstallmentReportsController extends Controller
         $transaction = PaymentListModel::with('store')->latest()->get();
         $total[1] = $transaction->where('status', 1)->sum('depositamount');
         $total[0] = $transaction->where('status', 0)->sum('depositamount');
+        $bank = BankAccount::get();
 
         // dd($transaction);
 
-        return view('back.installmentreports.PayRequestList', compact('transaction', 'total'));
+        return view('back.installmentreports.PayRequestList', compact('transaction', 'total', 'bank'));
     }
-    public function RequestPayment($id)
+
+    public function RequestPayment($id, $bank_id)
     {
 
         $payList = PaymentListModel::with('store')->find($id);
         $payList->status = 1;
 
         // dd($payList);
+        // dd($payList);
 
 
-        $transaction = new createstoretransaction();
-        $number1 = createstoretransaction::count();
+        $transaction = new banktransaction();
+        //  ['bank_id', 'bankbalance', 'transactionprice', 'transactionsdate']
+        $number1 = banktransaction::count();
 
         if ($number1 > 0 && $number1 != 0) {
-            $number1 = createstoretransaction::latest()->first()->documentnumber  + 1;
-            $final_price1 = createstoretransaction::latest()->first()->finalprice - $payList->depositamount;
+            // $number1 = banktransaction::latest()->first()->documentnumber  + 1;
+            $final_price1 = banktransaction::latest()->first()->bankbalance  +  $payList->depositamount;
         } else {
-            $number1 = 10000;
-            $final_price1 = -$payList->depositamount;
+            // $number1 = 10000;
+            $final_price1 = +$payList->depositamount;
         }
+        // dd($final_price1);
         $transaction->create([
-            'store_id' => $payList->store->id,
-            'datetransaction' => Jalalian::now()->format('Y-m-d'),
-            // 1 is for main wallet
-            'flag' => 2,
-            // pay request
-            'typeoftransaction' => 0,
-            'price' => $payList->depositamount,
-            'finalprice' => $final_price1,
-            'documentnumber' => $number1,
+            'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+            'transactionprice' => $payList->depositamount,
+            'bankbalance' => $final_price1,
+            'bank_id' => $bank_id,
+            'pay_request_list_id' => $id,
         ]);
 
         // $transaction = PaymentListModel::with('store')->latest()->get();
@@ -93,6 +95,7 @@ class InstallmentReportsController extends Controller
     {
 
         // dd($request->all());
+        $bank_name = $request->nameofbank;
         if ($request->hasFile('documentpayment')) {
             $file = $request->file('documentpayment');
             $path = $file->store('document/payDetails', 'public');
@@ -104,11 +107,11 @@ class InstallmentReportsController extends Controller
         paymentdetails::create([
             'list_of_payment_id' => $request->pay_list_id,
             'Issuetracking' => $request->Issuetracking,
-            'nameofbank'  => $request->nameofbank,
+            'nameofbank'  => $bank_name,
             'documentpayment'  => $path,
         ]);
 
-        $this->RequestPayment($request->pay_list_id);
+        $this->RequestPayment($request->pay_list_id, $request->nameofbank);
 
         toastr()->success('اطلاعات پرداخت موفقیت آمیز ذخیره شد.');
         return redirect()->back();
@@ -117,7 +120,7 @@ class InstallmentReportsController extends Controller
     public function banktransaction()
     {
 
-        $transaction = banktransaction::latest()->get();
+        $transaction = banktransaction::with('bank')->latest()->get();
         $total  = collect($transaction)->sum('transactionprice');
         // dd($total);
 
@@ -126,7 +129,7 @@ class InstallmentReportsController extends Controller
 
     public function bankList()
     {
-        $listbank = BankAccount::all();
+        $listbank = BankAccount::with('account_type')->get();
 
         return view('back.installmentreports.bank_list', compact('listbank'));
     }
@@ -134,13 +137,19 @@ class InstallmentReportsController extends Controller
     public function createinternalaccount()
     {
         $listbank = BankAccount::all();
+        $types = bankTypeModel::all();
 
-        return view('back.installmentreports.createinternalaccount', compact('listbank'));
+        return view('back.installmentreports.createinternalaccount', compact('listbank', 'types'));
     }
     public function storebank(internalBankStoreRequest $request)
     {
         // dd($request->all());
-        BankAccount::create($request->all());
+        BankAccount::create([
+            'bankname' => $request->bankname,
+            'accountnumber' => $request->accountnumber_prefix . $request->accountnumber,
+            'account_type_id' => $request->account_type_id,
+            'accounttype' => $request->accounttype,
+        ]);
 
         toastr()->success('حساب بانکی با موفقیت ایجاد شد.');
 
@@ -392,5 +401,14 @@ class InstallmentReportsController extends Controller
 
         toastr()->success('قسط مورد نظر با موفقیت حذف شد.');
         return redirect()->back();
+    }
+
+    public function transactionFilter($id)
+    {
+        $transaction = banktransaction::where('bank_id', $id)->with('bank')->latest()->get();
+        $total  = $transaction->first()->bankbalance;
+        // dd($total);
+
+        return view('back.installmentreports.banktransaction', compact('transaction', 'total'));
     }
 }

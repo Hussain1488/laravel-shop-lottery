@@ -55,9 +55,9 @@
                                             لیست تراکنش های بانکی </h3>
                                     </div>
                                     <div class="row mb-2">
-                                        <div class="g-col-6 g-col-sm-12">
+                                        <div class="g-col-6 g-col-sm-12 d-flex align-items-center">
                                             <h4>
-                                                مجموعه تراکنش ها
+                                                موجودی بانک
                                             </h4>
                                         </div>
                                         <div class="g-col-6 d-col-sm-12 d-flex align-items-center">
@@ -97,14 +97,16 @@
                                                         {{ $counter++ }}
                                                     </td>
                                                     <td>
-                                                        {{ $key->namebank }}
+                                                        {{ $key->bank->bankname }}
                                                     </td>
                                                     <td>
                                                         <span class="monyInputSpan">{{ $key->transactionprice }}</span>
 
                                                     </td>
                                                     <td class="text-danger">
-                                                        -<span class="monyInputSpan">{{ $key->bankbalance }}</span>
+                                                        <span
+                                                            class="text-danger">{{ $key->bankbalance < 0 ? '-' : '' }}</span>
+                                                        <span class="monyInputSpan">{{ $key->bankbalance }}</span>
 
                                                     </td>
                                                     <td>
@@ -116,7 +118,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                               
+
                                 </div>
                             </div>
 

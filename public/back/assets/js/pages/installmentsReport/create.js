@@ -21,22 +21,23 @@ $(document).ready(function () {
     // Function to add commas as a thousands separator
 
     $('#creating_bank_button').on('click', function () {
-        console.log('hey');
+        // console.log('hey');
         $('#create_bank_form').submit();
     });
 });
 
 $('#Account_type').on('change', function () {
-    let account_type = $('#Account_type').val();
-    if (account_type == 'bank') {
+    let account_type = $('#Account_type option:selected').text();
+    console.log(account_type);
+    if (account_type == 'بانک') {
         $('#Acount_number_prefix').val(21);
-    } else if (account_type == 'expense') {
+    } else if (account_type == 'هزینه') {
         $('#Acount_number_prefix').val(22);
-    } else if (account_type == 'income') {
+    } else if (account_type == 'درامد') {
         $('#Acount_number_prefix').val(23);
-    } else if (account_type == 'intermediaryـinstallments') {
+    } else if (account_type == 'واسط قسط ها') {
         $('#Acount_number_prefix').val(24);
-    } else if (account_type == 'store_credit_interface') {
+    } else if (account_type == 'واسط اعتبار فروش فروشگاه ها') {
         $('#Acount_number_prefix').val(25);
     }
 });
@@ -51,7 +52,16 @@ $('.pay_button').on('click', function () {
 });
 
 $('#submit_form_pay').on('click', function () {
-    // let pay_list = $('#pay_id').val();
+    // let issue_number = $('#Issuetracking').val() != null;
+    // let bank_list = $('#bank_list').val() != '';
+    // let issue_doc = $('#issue_doc').val() != null;
+    // console.log(issue_number);
+    // console.log(bank_list);
+    // console.log(issue_doc);
+    // if()
+    // if()
+    // if()
+
     $('#payment_form').attr('action', pay_url);
     $('#payment_form').submit();
 });

@@ -26,7 +26,7 @@ class internalBankStoreRequest extends FormRequest
         return [
             "bankname" => "required|string",
             "accountnumber" => "required|numeric",
-            "accounttype" => "required|in:expense,income,bank",
+            "account_type_id" => "required ",
         ];
     }
 
@@ -35,7 +35,7 @@ class internalBankStoreRequest extends FormRequest
         return [
             "bankname" => "اسم بانک",
             "accountnumber" => "شماره حساب",
-            "accounttype" => "نوع حساب",
+            "account_type_id" => "نوع حساب",
         ];
     }
 }

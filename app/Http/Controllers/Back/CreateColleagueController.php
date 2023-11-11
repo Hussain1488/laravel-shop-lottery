@@ -114,11 +114,16 @@ class CreateColleagueController extends Controller
                 $users[] = $key;
             };
         }
+        // $accounts = BankAccount::where('account_type.name', 'درامد')->get();
+        $accounts = BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'درامد');
+        })->get();
+
 
         // dd($users);
 
         // dd($users);
-        return view('back.createcolleague.create', compact('users'));
+        return view('back.createcolleague.create', compact('users', 'accounts'));
     }
 
     /**
@@ -290,7 +295,7 @@ class CreateColleagueController extends Controller
     public function createDocumentStore(ColleagueCreateDocument $request)
     {
         // dd($request->all());
-        $bankName = BankAccount::find($request->namedebtor);
+        // $bankName = BankAccount::find($request->namedebtor);
         $bank = new banktransaction();
 
         $recordCount = banktransaction::count();
@@ -298,7 +303,7 @@ class CreateColleagueController extends Controller
             $lastRecord = banktransaction::latest()->first();
             $bank = new banktransaction();
             $bank->create([
-                'namebank' => $bankName->bankname,
+                'bank_id' => $request->namedebtor,
                 'bankbalance' => $lastRecord->bankbalance - $request->ReCredintAmount,
                 'transactionprice' => $request->ReCredintAmount,
                 'transactionsdate' => Jalalian::now()->format('Y-m-d'),
@@ -306,7 +311,7 @@ class CreateColleagueController extends Controller
         } else {
             $bank = new banktransaction();
             $bank->create([
-                'namebank' => $bankName->bankname,
+                'bank_id' => $request->namedebtor,
                 'bankbalance' => -$request->ReCredintAmount,
                 'transactionprice' => $request->ReCredintAmount,
                 'transactionsdate' => Jalalian::now()->format('Y-m-d'),

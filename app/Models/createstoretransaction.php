@@ -10,7 +10,7 @@ class createstoretransaction extends Model
     use HasFactory;
 
     protected $table = "createstoretransactions";
-    protected $fillable = ["store_id", "flag", "datetransaction", "typeoftransaction", "price", "finalprice", "documentnumber"];
+    protected $fillable = ["store_id", "flag", "datetransaction", "typeoftransaction", "price", "finalprice", "documentnumber","bank_id"];
 
-    
+
 }

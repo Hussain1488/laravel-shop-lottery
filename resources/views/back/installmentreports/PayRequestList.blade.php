@@ -276,28 +276,47 @@
                                     @csrf
                                     <input id="pay_list_id" type="hidden" value="" name="pay_list_id">
                                     <div class="d-flex justify-content-around my-1">
-                                        <div>
+                                        <div class="col">
                                             <label for="">شماره پیگیری:</label>
                                         </div>
-                                        <div>
+                                        <div class="col">
                                             <input required type="number" class="form-control" name="Issuetracking">
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-around my-1">
-                                        <div>
-                                            <label for="">نام بانک</label>
+                                        <div class="col d-flex align-items-center">
+                                            <label for="">:نام بانک</label>
                                         </div>
-                                        <div>
-                                            <input required type="text" class="form-control" name="nameofbank">
+                                        <div class="form-group col">
+                                            <label></label>
+                                            <select id="bank_list" type="text" class="form-control" name="nameofbank">
+                                                @isset($bank)
+                                                    <option value="">انتخاب بانک</option>
+                                                    @foreach ($bank as $key)
+                                                        <option value="{{ $key->id }}">{{ $key->bankname }}
+                                                        </option>
+                                                    @endforeach
+                                                @else
+                                                    <option value="">گزینه ای برای انتخاب وجود ندارد</option>
+                                                @endisset
+
+                                            </select>
+
                                         </div>
+
                                     </div>
                                     <div class="d-flex justify-content-around my-1">
-                                        <div>
+                                        <div class="col">
                                             <label for="">ارسال سند:</label>
                                         </div>
-                                        <div>
-                                            <input required type="file" class="form-control" name="documentpayment">
+                                        <div class="col">
+                                            <input required id="issue_doc" type="file" class="form-control"
+                                                name="documentpayment">
                                         </div>
+                                    </div>
+                                    <div class="row d-flex justify-center my-1">
+                                        <span class="text-danger" style="display: none">لطفا فورم را دقیق پر کرده بعد کلید
+                                            تأیید را بزنید.</span>
                                     </div>
                                     <div class="modal-footer d-flex justify-content-between">
                                         <input type="button" id="submit_form_pay" class="btn btn-success"

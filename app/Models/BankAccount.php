@@ -10,5 +10,10 @@ class BankAccount extends Model
     use HasFactory;
 
     protected $table = "createbankaccounts";
-    protected $fillable = ['bankname', 'accountnumber', 'accounttype'];
+    protected $fillable = ['bankname', 'accountnumber', 'accounttype', 'account_type_id'];
+
+    public function account_type()
+    {
+        return $this->belongsTo(bankTypeModel::class, 'account_type_id');
+    }
 }

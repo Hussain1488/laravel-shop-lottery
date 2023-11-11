@@ -15,13 +15,13 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $permissions = Permission::pluck('id');
+        // $permissions = Permission::pluck('id');
 
-        $role = Role::create([
-            'title' => 'مدیر کل',
-            'description' => 'دسترسی به همه قسمت های وبسایت',
-        ]);
+        // $role = Role::create([
+        //     'title' => 'مدیر کل',
+        //     'description' => 'دسترسی به همه قسمت های وبسایت',
+        // ]);
 
-        $role->permissions()->sync($permissions);
+        // $role->permissions()->sync($permissions);
     }
 }

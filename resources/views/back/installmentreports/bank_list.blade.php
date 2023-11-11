@@ -44,14 +44,18 @@
                                 <div class="border rounded p-2 my-1">
                                     <div class="row">
                                         <div class="col">
-                                            نام حساب : {{ $item->bankname }}
+                                            نام حساب :
+                                            <a
+                                                href="{{ route('admin.installmentreports.transactionFilter', [$item->id]) }}">
+                                                {{ $item->bankname }}
+                                            </a>
                                         </div>
                                         <div class="col">
                                             شماره حساب : {{ $item->accountnumber }}
                                         </div>
                                         <div class="col">
                                             ماهیت حساب :
-                                            {{ $item->accounttype == 'income' ? 'درآمد' : ($item->accounttype == 'expense' ? 'هزینه' : 'بانک') }}
+                                            {{ $item->account_type->name }}
                                         </div>
 
 

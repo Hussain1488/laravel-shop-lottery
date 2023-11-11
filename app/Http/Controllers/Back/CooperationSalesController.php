@@ -171,6 +171,7 @@ class CooperationSalesController extends Controller
             'price' => $depositamount,
             'finalprice' => $final_price1,
             'documentnumber' => $number1,
+            // 'bank_id' => $request->;
         ]);
 
         $store->save();
@@ -256,7 +257,8 @@ class CooperationSalesController extends Controller
     public function mainWallet($id)
     {
 
-        $trans = createstoretransaction::where('store_id', $id)->latest()->get();
+        $trans = createstoretransaction::where('flag', 1)->where('store_id', $id)->latest()->get();
+        // dd(count($trans));
         if (count($trans) > 0) {
             $total = createstoretransaction::where('flag', 1)->where('store_id', $id)->latest()->first()->finalprice;
         } else {

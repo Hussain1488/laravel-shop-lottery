@@ -1,8 +1,15 @@
 $(document).ready(function () {
     $(function () {
-        let a = $('#total_transaction').val().replace(/\D/g, '');
-        let b = addCommas(a);
-        $('#total_transaction').val(b);
+        let a = $('#total_transaction').val();
+        let sign = '';
+        if (a < 0) {
+            sign = '-';
+        } else {
+            sign = '';
+        }
+
+        let b = addCommas(a.replace(/\D/g, ''));
+        $('#total_transaction').val(sign + b);
     });
 
     function addCommas(nStr) {

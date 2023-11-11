@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Events\OrderPaid;
 use App\Events\WalletAmountIncreased;
 use App\Http\Controllers\Controller;
+use App\Models\BankAccount;
 use App\Models\banktransaction;
 use App\Models\createstore;
 use App\Models\Gateway;
@@ -96,6 +97,10 @@ class InstallmentsController extends Controller
         $recordCount = banktransaction::count();
 
 
+        // it should be updated.
+        $b = BankAccount::first();
+
+
         // dd($id, $st);
         $installments = Makeinstallmentsm::find($st);
         $insta_dateils = installmentdetails::find($id);
@@ -109,7 +114,7 @@ class InstallmentsController extends Controller
             $lastRecord = banktransaction::latest()->first();
             $bank = new banktransaction();
             $bank->create([
-                'namebank' => 'Mellat',
+                'bank_id' => $b->id,
                 'bankbalance' => $lastRecord->bankbalance - $insta_dateils->installmentprice,
                 'transactionprice' => $insta_dateils->installmentprice,
                 'transactionsdate' => Jalalian::now()->format('Y-m-d'),
@@ -117,7 +122,7 @@ class InstallmentsController extends Controller
         } else {
             $bank = new banktransaction();
             $bank->create([
-                'namebank' => 'Mellat',
+                'bank_id' => $b->id,
                 'bankbalance' => -$insta_dateils->installmentprice,
                 'transactionprice' => $insta_dateils->installmentprice,
                 'transactionsdate' => Jalalian::now()->format('Y-m-d'),

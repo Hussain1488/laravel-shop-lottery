@@ -33,6 +33,7 @@
                         <form action="{{ route('admin.installmentreports.storebank') }}" id="create_bank_form"
                             method="POST">
                             @csrf
+                            <input type="hidden" name="accounttype" value="none">
                             <div class="container mt-3">
 
                                 <div class="row">
@@ -66,14 +67,10 @@
                                         <div class="form-group">
 
                                             <select type="text" id="Account_type" class="form-control user_select2"
-                                                name="accounttype">
-                                                <option value="bank"> بانک </option>
-                                                <option value="expense"> هزینه </option>
-                                                <option value="income"> دآرمد </option>
-                                                <option value="intermediaryـinstallments"> واسط قسط ها </option>
-                                                <option value="store_credit_interface"> واسط اعتبار فروش فروشگاه ها
-                                                </option>
-
+                                                name="account_type_id">
+                                                @foreach ($types as $key)
+                                                    <option value="{{ $key->id }}">{{ $key->name }}</option>
+                                                @endforeach
                                             </select>
 
                                             @error('accounttype')
@@ -94,10 +91,10 @@
                                     <div class="col-md-3 col-6">
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" placeholder="شماره حساب"
-                                                id="mail" name="email">
+                                                id="mail" name="accountnumber">
                                             <div class="input-group-append">
-                                                <input class="input-group-text" name='' id="Acount_number_prefix"
-                                                    style="width: 40px" value="0">
+                                                <input class="input-group-text" name='accountnumber_prefix'
+                                                    id="Acount_number_prefix" style="width: 40px" value="0">
                                                 {{-- 1</span> --}}
                                             </div>
                                         </div>
