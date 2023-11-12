@@ -406,7 +406,12 @@ class InstallmentReportsController extends Controller
     public function transactionFilter($id)
     {
         $transaction = banktransaction::where('bank_id', $id)->with('bank')->latest()->get();
-        $total  = $transaction->first()->bankbalance;
+        // dd($transaction);
+        if ($transaction->isNotEmpty()) {
+            $total = $transaction->first()->bankbalance;
+        } else {
+            $total = 0;
+        }
         // dd($total);
 
         return view('back.installmentreports.banktransaction', compact('transaction', 'total'));
