@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BannerSeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(AttributeSeeder::class);
+        $this->call(BankTypeSeeder::class);
         $this->call(StaticFilterSeeder::class);
         $this->call(LinkSeeder::class);
     }
