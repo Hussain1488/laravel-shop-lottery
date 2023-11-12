@@ -13,6 +13,7 @@ class RenameAccounttypTo extends Migration
      */
     public function up()
     {
+
         Schema::table('createbankaccounts', function (Blueprint $table) {
             $table->renameColumn('accounttype', 'account_type_id');
         });

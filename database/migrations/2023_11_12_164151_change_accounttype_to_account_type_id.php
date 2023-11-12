@@ -16,6 +16,7 @@ class ChangeAccounttypeToAccountTypeId extends Migration
 
         Schema::table('createbankaccounts', function (Blueprint $table) {
 
+
             $table->unsignedBigInteger('account_type_id')->change();
             $table->foreign('account_type_id')->references('id')->on('type_of_account')->onUpdate('cascade')->onDelete('cascade');
         });

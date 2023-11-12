@@ -13,12 +13,12 @@ class CreateTypeOfAccountTable extends Migration
      */
     public function up()
     {
+
         Schema::create('type_of_account', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
         });
-
     }
 
     /**
