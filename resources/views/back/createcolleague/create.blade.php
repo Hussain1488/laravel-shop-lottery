@@ -57,7 +57,9 @@
                                                                 <option value="">کاربر را انتخاب کنید
                                                                 </option>
                                                                 @foreach ($users as $item)
-                                                                    <option value="{{ $item->id }}">
+                                                                    <option
+                                                                        {{ old('selectperson') == $item->id ? 'selected' : '' }}
+                                                                        value="{{ $item->id }}">
                                                                         {{ $item->username }}</option>
                                                                 @endforeach
                                                             @else
@@ -212,12 +214,14 @@
                                                 <div class="form-group">
                                                     <div class="d-flex">
                                                         <select type="text" class="form-control user_select1"
-                                                            name="selectperson">
+                                                            name="account_id">
                                                             @isset($accounts)
-                                                                <option value="">کاربر را انتخاب کنید
+                                                                <option value="">انتخاب حساب درآمد
                                                                 </option>
                                                                 @foreach ($accounts as $item)
-                                                                    <option value="{{ $item->id }}">
+                                                                    <option
+                                                                        {{ old('account_id') == $item->id ? 'selected' : '' }}
+                                                                        value="{{ $item->id }}">
                                                                         {{ $item->accountnumber }}</option>
                                                                 @endforeach
                                                             @else
@@ -226,7 +230,7 @@
                                                         </select>
                                                     </div>
                                                     <span class="text-danger">
-                                                        @error('settlementtime')
+                                                        @error('account_id')
                                                             {{ $message }}
                                                         @enderror
                                                     </span>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\BankAccount;
+use App\Models\banktransaction;
 use App\Models\createstore;
 use App\Models\Makeinstallmentsm;
 use App\Models\Role;
@@ -113,7 +115,7 @@ class CooperationSalesController extends Controller
     }
     public function clearingStore(Request $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $store = createstore::find($request->store);
         $depositamount = str_replace(',', '', $request->depositamount);
         $docPath = '';
@@ -158,7 +160,7 @@ class CooperationSalesController extends Controller
             $final_price1 = createstoretransaction::latest()->first()->finalprice - $depositamount;
         } else {
             $number1 = 10000;
-            $final_price1 =                -$depositamount;
+            $final_price1 = -$depositamount;
         }
         // creating new store transaction for mainWallet transaction.
         $transaction->create([
@@ -225,6 +227,23 @@ class CooperationSalesController extends Controller
             'price' => $installment->Creditamount,
             'finalprice' => $store->salesamount,
             'documentnumber' => $number,
+        ]);
+
+
+
+        $incomeBank = BankAccount::find($store->account_id);
+        $bank_trans_record = banktransaction::where('bank_id', $incomeBank->id)->latest()->get();
+        if (count($bank_trans_record) > 0) {
+            $final1 =
+                banktransaction::where('bank_id', $incomeBank->id)->latest()->first()->bankbalance + $result;
+        } else {
+            $final1 = +$result;
+        }
+        $incomeTrans = banktransaction::create([
+            'bank_id' => $store->account_id,
+            'bankbalance' => $final1,
+            'transactionprice' => $result,
+            'transactionsdate' => Jalalian::now(),
         ]);
 
 

@@ -167,15 +167,16 @@ class CreateColleagueController extends Controller
             'settlementtime' => $request->settlementtime,
             'enddate' => $request->enddate,
             'uploaddocument' => $docPath,
+            'account_id' => $request->account_id
 
         ]);
 
-        $users = User::where('level', 'user')->get();
+        // $users = User::where('level', 'user')->get();
 
         toastr()->success('  فروشگاه با موفقیت ایجاد شد.');
 
         // dd($users);
-        return view('back.createcolleague.create', compact('users'));
+        return redirect()->back();
     }
 
 

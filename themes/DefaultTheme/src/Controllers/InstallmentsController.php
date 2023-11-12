@@ -39,6 +39,7 @@ class InstallmentsController extends Controller
         // $jalaliNow = Jalalian::now();
         // dd($jalaliNow->format('Y/m/d'));
         $installmentsm = Makeinstallmentsm::where('userselected', Auth::user()->id)->with('installments', 'store', 'user')->get();
+        
         // dd($installmentsm);
         $user = Auth::user();
 

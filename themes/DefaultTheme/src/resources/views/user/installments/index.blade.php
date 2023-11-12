@@ -232,6 +232,7 @@
                                                                                 style="flex-direction: column;">
                                                                                 <h5>
                                                                                     اقساط فروشگاه:
+
                                                                                     {{ $value->store->nameofstore != '' ? $value->store->nameofstore : '...' }}
                                                                                 </h5>
                                                                             </div>
