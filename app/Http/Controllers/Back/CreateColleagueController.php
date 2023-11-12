@@ -278,7 +278,10 @@ class CreateColleagueController extends Controller
     // create document view page
     public function createdocument()
     {
-        $bank = BankAccount::get();
+
+        $bank = BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'بانک');
+        })->get();
 
         $users = User::where('level', 'user')->get();
         $number = createdocument::count();

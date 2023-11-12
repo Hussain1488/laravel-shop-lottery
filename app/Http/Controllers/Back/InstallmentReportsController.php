@@ -148,7 +148,7 @@ class InstallmentReportsController extends Controller
             'bankname' => $request->bankname,
             'accountnumber' => $request->accountnumber_prefix . $request->accountnumber,
             'account_type_id' => $request->account_type_id,
-            'accounttype' => $request->accounttype,
+            // 'accounttype' => $request->accounttype,
         ]);
 
         toastr()->success('حساب بانکی با موفقیت ایجاد شد.');

@@ -115,7 +115,7 @@ class CooperationSalesController extends Controller
     }
     public function clearingStore(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $store = createstore::find($request->store);
         $depositamount = str_replace(',', '', $request->depositamount);
         $docPath = '';
