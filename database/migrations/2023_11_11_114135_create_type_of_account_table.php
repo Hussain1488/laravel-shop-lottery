@@ -18,10 +18,7 @@ class CreateTypeOfAccountTable extends Migration
             $table->string('name');
             $table->timestamps();
         });
-        Schema::table('createbankaccounts', function (Blueprint $table) {
-            $table->unsignedBigInteger('accounttype')->change();
-            $table->foreign('accounttype')->references('id')->on('type_of_account')->onUpdate('cascade')->onDelete('cascade');
-        });
+
     }
 
     /**
