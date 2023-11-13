@@ -22,24 +22,12 @@ $(document).ready(function () {
 
     $('#creating_bank_button').on('click', function () {
         // console.log('hey');
+        let Prefix = $('#Acount_number_prefix').val();
+        let main_account_number = $('#main_account_number').val();
+        $('#main_account_number').val(Prefix + main_account_number);
         $('#create_bank_form').submit();
     });
-});
-
-$('#Account_type').on('change', function () {
-    let account_type = $('#Account_type option:selected').text();
-    console.log(account_type);
-    if (account_type == 'بانک') {
-        $('#Acount_number_prefix').val(21);
-    } else if (account_type == 'هزینه') {
-        $('#Acount_number_prefix').val(22);
-    } else if (account_type == 'درامد') {
-        $('#Acount_number_prefix').val(23);
-    } else if (account_type == 'واسط قسط ها') {
-        $('#Acount_number_prefix').val(24);
-    } else if (account_type == 'واسط اعتبار فروش فروشگاه ها') {
-        $('#Acount_number_prefix').val(25);
-    }
+    accountType();
 });
 
 $('.pay_button').on('click', function () {
@@ -51,16 +39,52 @@ $('.pay_button').on('click', function () {
     $('#myModal').modal();
 });
 
+$('#Account_type').on('change', function () {
+    accountType();
+});
+
+function accountType() {
+    let account_type = $('#Account_type option:selected').text();
+    console.log(account_type);
+    if (account_type == 'بانک') {
+        $('#Acount_number_prefix').val(21);
+    } else if (account_type == 'هزینه') {
+        $('#Acount_number_prefix').val(22);
+    } else if (account_type == 'درآمد') {
+        $('#Acount_number_prefix').val(23);
+    } else if (account_type == 'واسط قسط ها') {
+        $('#Acount_number_prefix').val(24);
+    } else if (account_type == 'واسط اعتبار فروش فروشگاه ها') {
+        $('#Acount_number_prefix').val(25);
+    }
+}
+
 $('#submit_form_pay').on('click', function () {
-    // let issue_number = $('#Issuetracking').val() != null;
-    // let bank_list = $('#bank_list').val() != '';
-    // let issue_doc = $('#issue_doc').val() != null;
-    // console.log(issue_number);
-    // console.log(bank_list);
-    // console.log(issue_doc);
-    // if()
-    // if()
-    // if()
+    // Prevent the form from submitting immediately
+    // e.preventDefault();
+    // Initialize the validation
+    // $('#payment_form').validate({
+    //     rules: {
+    //         Issuetracking: {
+    //             required: true,
+    //             minlength: 4
+    //         },
+    //         nameofbank: {
+    //             required: true
+    //         },
+    //         documentpayment: {
+    //             required: true
+    //         }
+    //     },
+    //     // Specify where to display error messages
+    //     errorPlacement: function (error, element) {
+    //         error.appendTo('#validation-messages');
+    //     }
+    // });
+    // // Trigger the
+    // $('#payment_form').attr('action', pay_url);
+    // // $('#payment_form').valid();
+    // console.log($('#payment_form').valid());
 
     $('#payment_form').attr('action', pay_url);
     $('#payment_form').submit();
