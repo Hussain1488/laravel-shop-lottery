@@ -293,7 +293,7 @@
                                                 @isset($bank)
                                                     <option value="">انتخاب بانک</option>
                                                     @foreach ($bank as $key)
-                                                        <option value="{{ $key->id }}">{{ $key->bankname }}
+                                                        <option value="{{ $key->id }}">{{ $key->accountnumber }}
                                                         </option>
                                                     @endforeach
                                                 @else
@@ -315,6 +315,8 @@
                                         </div>
                                     </div>
                                     <div class="row d-flex justify-center my-1">
+                                        <div id="validation-messages"></div>
+
                                         <span class="text-danger" style="display: none">لطفا فورم را دقیق پر کرده بعد کلید
                                             تأیید را بزنید.</span>
                                     </div>

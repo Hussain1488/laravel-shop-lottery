@@ -58,7 +58,7 @@
                                                         @isset($bank)
                                                             <option value="mellat bank">بده کار را انتخاب کنید</option>
                                                             @foreach ($bank as $key)
-                                                                <option value="{{ $key->id }}">{{ $key->bankname }}
+                                                                <option value="{{ $key->id }}">{{ $key->accountnumber }}
                                                                 </option>
                                                             @endforeach
                                                         @else

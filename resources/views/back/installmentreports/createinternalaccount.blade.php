@@ -91,7 +91,7 @@
                                     <div class="col-md-3 col-6">
                                         <div class="input-group mb-3">
                                             <input type="text" class="form-control" placeholder="شماره حساب"
-                                                id="mail" name="accountnumber">
+                                                id="main_account_number" name="accountnumber">
                                             <div class="input-group-append">
                                                 <input class="input-group-text" name='accountnumber_prefix'
                                                     id="Acount_number_prefix" style="width: 40px" value="0">
@@ -126,7 +126,7 @@
         </div>
     </div>
 @endsection
-
+@include('back.partials.plugins', ['plugins' => ['jquery.validate']])
 @push('scripts')
     <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
 @endpush
