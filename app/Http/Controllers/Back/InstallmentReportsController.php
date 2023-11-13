@@ -43,7 +43,9 @@ class InstallmentReportsController extends Controller
         $transaction = PaymentListModel::with('store')->latest()->get();
         $total[1] = $transaction->where('status', 1)->sum('depositamount');
         $total[0] = $transaction->where('status', 0)->sum('depositamount');
-        $bank = BankAccount::get();
+        $bank =  BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'بانک');
+        })->get();
 
         // dd($transaction);
 
@@ -110,6 +112,30 @@ class InstallmentReportsController extends Controller
             'nameofbank'  => $bank_name,
             'documentpayment'  => $path,
         ]);
+        $payList = PaymentListModel::find($request->pay_list_id);
+        // $store = createstore::where('id', $payList);
+
+        $transaction = new createstoretransaction();
+        $number1 = createstoretransaction::count();
+
+        if ($number1 > 0 && $number1 != 0) {
+            $final_price1 = createstoretransaction::where('flag', 2)->latest()->first()->finalprice - $payList->depositamount;
+        } else {
+            $number1 = 10000;
+            $final_price1 = -$payList->depositamount;
+        }
+        // creating new store transaction for mainWallet transaction.
+        $transaction->create([
+            'store_id' => $payList->store_id,
+            'datetransaction' => Jalalian::now()->format('Y-m-d'),
+            // 1 is for main wallet
+            'flag' => 2,
+            // pay request
+            'typeoftransaction' => 1,
+            'price' => $payList->depositamount,
+            'finalprice' => $final_price1,
+            'documentnumber' => $number1,
+        ]);
 
         $this->RequestPayment($request->pay_list_id, $request->nameofbank);
 
@@ -146,7 +172,7 @@ class InstallmentReportsController extends Controller
         // dd($request->all());
         BankAccount::create([
             'bankname' => $request->bankname,
-            'accountnumber' => $request->accountnumber_prefix . $request->accountnumber,
+            'accountnumber' => $request->accountnumber,
             'account_type_id' => $request->account_type_id,
             // 'accounttype' => $request->accounttype,
         ]);
