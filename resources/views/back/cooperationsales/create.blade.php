@@ -35,7 +35,8 @@
                     <section id="main-card" class="card">
                         <div class="card-header">
                             <h4 class="card-title">پنل اصلی فروشات {{ $shop->nameofstore }}</h4>
-                            <input type="hidden" value="{{ $shop->storecredit }}" name="store_creadit" id="store_creadit">
+                            <input type="hidden" value="{{ $shop->storecredit == null ? 0 : $shop->storecredit }}"
+                                name="store_creadit" id="store_creadit">
 
                         </div>
 
