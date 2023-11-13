@@ -39,7 +39,7 @@ class InstallmentsController extends Controller
         // $jalaliNow = Jalalian::now();
         // dd($jalaliNow->format('Y/m/d'));
         $installmentsm = Makeinstallmentsm::where('userselected', Auth::user()->id)->with('installments', 'store', 'user')->get();
-        
+
         // dd($installmentsm);
         $user = Auth::user();
 
@@ -75,6 +75,23 @@ class InstallmentsController extends Controller
                     'duedate' => $dutedate,
                 ]);
             }
+            $bank_id = BankAccount::whereHas('account_type', function ($query) {
+                $query->where('name', 'واسط قسط ها');
+            })->first();
+
+            $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
+            if ($trans->count()  > 0) {
+                $exBalance = $trans->first()->bankbalance + $installments->prepaidamount;
+            } else {
+                $exBalance = +$installments->prepaidamount;
+            }
+            // $bank_id = createbankaccounts::where();
+            $banktransaction = banktransaction::create([
+                'bank_id' => $bank_id->id,
+                'transactionprice' => $installments->prepaidamount,
+                'bankbalance' => $exBalance,
+                'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+            ]);
 
             $user->save();
             $installments->statususer = 1;
@@ -130,6 +147,26 @@ class InstallmentsController extends Controller
             ]);
         }
         // toster->success('قسط شما با موفقیت پرداخت شد.');
+
+        $bank_id = BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'واسط قسط ها');
+        })->first();
+
+        $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
+        if ($trans->count()  > 0) {
+            $exBalance = $trans->first()->bankbalance + $insta_dateils->installmentprice;
+        } else {
+            $exBalance = +$insta_dateils->installmentprice;
+        }
+        // $bank_id = createbankaccounts::where();
+        $banktransaction = banktransaction::create([
+            'bank_id' => $bank_id->id,
+            'transactionprice' => $insta_dateils->installmentprice,
+            'bankbalance' => $exBalance,
+            'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+        ]);
+
+
         $user->save();
         $insta_dateils->save();
         $installments->save();
