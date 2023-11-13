@@ -88,6 +88,14 @@
                                                 {{ trans('front::messages.header.my_installments') }}
                                             </a>
                                         </li>
+
+                                        <li>
+                                            <a href="{{ route('front.installments.list') }}"
+                                                class="{{ active_class('front.installments.list') }}">
+                                                <i class="mdi mdi-credit-card-outline"></i>
+                                                {{ trans('front::messages.header.Installmentـpurchaseـcreditـlist') }}
+                                            </a>
+                                        </li>
                                         <li>
                                             <a href="{{ route('front.orders.index') }}"
                                                 class="{{ active_class('front.orders.index') }}">
