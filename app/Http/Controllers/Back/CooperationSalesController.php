@@ -167,13 +167,32 @@ class CooperationSalesController extends Controller
             'store_id' => $request->store,
             'datetransaction' => Jalalian::now()->format('Y-m-d'),
             // 1 is for main wallet
-            'flag' => 0,
+            'flag' => 1,
             // pay request
             'typeoftransaction' => 0,
             'price' => $depositamount,
             'finalprice' => $final_price1,
             'documentnumber' => $number1,
             // 'bank_id' => $request->;
+        ]);
+
+        $bank_id = BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'واسط قسط ها');
+        })->first();
+
+        $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
+        if ($trans->count()  > 0) {
+            $exBalance = $trans->first()->bankbalance - $depositamount;
+        } else {
+            $exBalance = -$depositamount;
+        }
+        // $bank_id = createbankaccounts::where();
+        $banktransaction = banktransaction::create([
+            'bank_id' => $bank_id->id,
+            'transactionprice' => $depositamount,
+            'bankbalance' => $exBalance,
+            'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+
         ]);
 
         $store->save();
