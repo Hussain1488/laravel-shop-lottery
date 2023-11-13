@@ -18,6 +18,9 @@ return [
         'kala'                   => ' کالا ',
         'add-to-cart'            => 'افزودن به سبد',
         'my_installments'        => 'اقساط من',
+        'Installmentـpurchaseـcreditـlist' => 'لیست تراکنش های اعتبار خرید',
+
+
     ],
 
     'currency' => [
