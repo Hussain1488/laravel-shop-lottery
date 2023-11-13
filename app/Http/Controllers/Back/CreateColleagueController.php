@@ -116,7 +116,7 @@ class CreateColleagueController extends Controller
         }
         // $accounts = BankAccount::where('account_type.name', 'درامد')->get();
         $accounts = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'درامد');
+            $query->where('name', 'درآمد');
         })->get();
 
 
@@ -142,7 +142,7 @@ class CreateColleagueController extends Controller
         $storecredit = intval(str_replace(',', '', $request->storecredit));
 
         $docPath = '';
-        // dd($request->all());
+        // dd($storecredit);
         if ($request->file('uploaddocument')) {
             $files = $request->file('uploaddocument');
             $paths = [];
@@ -168,8 +168,27 @@ class CreateColleagueController extends Controller
             'enddate' => $request->enddate,
             'uploaddocument' => $docPath,
             'account_id' => $request->account_id
+        ]);
+
+        $bank_id = BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
+        })->first();
+
+        $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
+        if ($trans->count()  > 0) {
+            $exBalance = $trans->first()->bankbalance - $storecredit;
+        } else {
+            $exBalance = -$storecredit;
+        }
+        // $bank_id = createbankaccounts::where();
+        $banktransaction = banktransaction::create([
+            'bank_id' => $bank_id->id,
+            'transactionprice' => $storecredit,
+            'bankbalance' => $exBalance,
+            'transactionsdate' => Jalalian::now()->format('Y-m-d'),
 
         ]);
+
 
         // $users = User::where('level', 'user')->get();
 
@@ -241,6 +260,8 @@ class CreateColleagueController extends Controller
         $userUpdate->purchasecredit += $request->purchasecredit;
         $userUpdate->enddate = $request->enddate;
         $userUpdate->documents = $docPath;
+
+
         // dd($userUpdate);
         $userUpdate->save();
 
@@ -269,6 +290,26 @@ class CreateColleagueController extends Controller
         // dd($store);
         $ex_credit = $store->storecredit;
         $store->storecredit = $request->storecredit + $ex_credit;
+
+        $bank_id = BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
+        })->first();
+
+        $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
+        if ($trans->count()  > 0) {
+            $exBalance = $trans->first()->bankbalance - $request->storecredit;
+        } else {
+            $exBalance = -$request->storecredit;
+        }
+        // $bank_id = createbankaccounts::where();
+        $banktransaction = banktransaction::create([
+            'bank_id' => $bank_id->id,
+            'transactionprice' => $request->storecredit,
+            'bankbalance' => $exBalance,
+            'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+
+        ]);
+
         $store->save();
         toastr()->success('افزایش اعتبار فروشگاه با موفقیت انجام شد.');
 
@@ -301,10 +342,12 @@ class CreateColleagueController extends Controller
         // dd($request->all());
         // $bankName = BankAccount::find($request->namedebtor);
         $bank = new banktransaction();
-
+        // $bank_id = BankAccount::whereHas('account_type', function ($query) {
+        //     $query->where('name', 'بانک');
+        // })->first();
         $recordCount = banktransaction::count();
         if ($recordCount > 0) {
-            $lastRecord = banktransaction::latest()->first();
+            $lastRecord = banktransaction::where('bank_id', $request->namedebtor)->latest()->first();
             $bank = new banktransaction();
             $bank->create([
                 'bank_id' => $request->namedebtor,
