@@ -19,19 +19,19 @@
 
 
 
-                            <div class="row mt-1 ml-2 mb-2">
-                                <h3>
-                                    لیست تراکنش های بانکی </h3>
+                            <div class="row mt-1 ml-2 mb-2 mr-1">
+                                <h5>
+                                    لیست تراکنش های بانکی </h5>
                             </div>
-                            <div class="row mb-2">
+                            <div class="row m-2 mb-3">
                                 <div class="g-col-6 g-col-sm-12">
-                                    <h4>
+                                    <h6>
                                         مجموعه تراکنش ها
-                                    </h4>
+                                    </h6>
                                 </div>
                                 <div class="g-col-6 d-col-sm-12 d-flex align-items-center">
                                     <input id="total_transaction" readonly class="form-control mr-1" type="text"
-                                        value="">
+                                        value="{{ $latest }}">
                                     ریال
                                 </div>
                             </div>

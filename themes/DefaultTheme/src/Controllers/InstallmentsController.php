@@ -11,6 +11,7 @@ use App\Events\WalletAmountIncreased;
 use App\Http\Controllers\Controller;
 use App\Models\BankAccount;
 use App\Models\banktransaction;
+use App\Models\buyertransaction;
 use App\Models\createstore;
 use App\Models\Gateway;
 use App\Models\Transaction;
@@ -75,6 +76,26 @@ class InstallmentsController extends Controller
                     'duedate' => $dutedate,
                 ]);
             }
+
+            $user_transaction_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->count();
+            if ($user_transaction_number > 0) {
+                $doc_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->latest()->first()->documentnumber + 1;
+                $final_price = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->latest()->first()->finalprice - $installments->Creditamount;
+            } else {
+                $doc_number = 10000;
+                $final_price = -$installments->Creditamount;
+            }
+
+            $user_trans = buyertransaction::create([
+                'user_id' => Auth::user()->id,
+                'flag' => 1,
+                'datetransaction' => Jalalian::now(),
+                'typeoftransaction' => 1,
+                'price' => $installments->Creditamount,
+                'finalprice' => $final_price,
+                'documentnumber' => $doc_number
+            ]);
+
             $bank_id = BankAccount::whereHas('account_type', function ($query) {
                 $query->where('name', 'واسط قسط ها');
             })->first();

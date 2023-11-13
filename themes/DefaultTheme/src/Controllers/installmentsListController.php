@@ -35,7 +35,8 @@ class installmentsListController extends Controller
 
     public function purchaseList()
     {
-        $trans = buyertransaction::get();
-        return view('front::user.installments.installment_list', compact('trans'));
+        $trans = buyertransaction::latest()->get();
+        $latest = buyertransaction::latest()->first()->finalprice;
+        return view('front::user.installments.installment_list', compact('trans', 'latest'));
     }
 }
