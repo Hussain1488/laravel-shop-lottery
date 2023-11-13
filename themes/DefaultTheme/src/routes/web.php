@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Themes\DefaultTheme\src\Controllers\installmentsListController;
 use Themes\DefaultTheme\src\Controllers\MainController;
 use Themes\DefaultTheme\src\Controllers\PostController;
 use Themes\DefaultTheme\src\Controllers\ProductController;
@@ -95,11 +96,18 @@ Route::group(['as' => 'front.'], function () {
 
         // ------------------ wallet
         Route::resource('wallet', WalletController::class)->only(['index', 'show', 'create', 'store']);
+
+        // installmentsController
         Route::resource('installments', InstallmentsController::class)->only(['index', 'show', 'create', 'store']);
         Route::get('installments/userstatus/{id}', [InstallmentsController::class, 'userStatus'])->name('installments.usrestatus.edit');
         Route::get('installments/payment/{id1}/{id2}', [InstallmentsController::class, 'paymentStatus'])->name('installments.paymentStatus.edit');
         Route::get('installments/refuse/{id}', [InstallmentsController::class, 'refuse'])->name('installments.usrestatus.refuse');
         Route::get('installments/pay/{id}', [InstallmentsController::class, 'pay'])->name('installments.usrestatus.pay');
+
+        // installment LIst:
+        Route::get('user/purchaselist', [installmentsListController::class, 'purchaseList'])->name('installments.list');
+
+
 
         // ------------------ user
         Route::get('user/profile', [UserController::class, 'profile'])->name('user.profile');
@@ -109,6 +117,7 @@ Route::group(['as' => 'front.'], function () {
         Route::get('user/change-password', [UserController::class, 'changePassword'])->name('user.password');
         Route::put('user/change-password', [UserController::class, 'updatePassword'])->name('user.password.update');
         Route::get('user/referrals', [UserController::class, 'referrals'])->name('user.referrals.index');
+
 
         Route::group(['middleware' => ['EnsureForceChange']], function () {
             Route::get('user/force-change-password', [UserController::class, 'forceChangePassword'])->name('user.force-change-password');
@@ -143,6 +152,8 @@ Route::group(['as' => 'front.'], function () {
         Route::post('change-username', [VerifyController::class, 'changeUsername'])->name('verify.changeUsername');
     });
 });
+
+
 
 // get auth user in 404 page
 Route::fallback(function () {
