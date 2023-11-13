@@ -174,12 +174,12 @@
                             </li>
                         @endcan
 
-                        @can('installmentreports.banktransaction')
+                        {{-- @can('installmentreports.banktransaction')
                             <li class="{{ active_class('admin.installmentreports.banktransaction') }}">
                                 <a href="{{ route('admin.installmentreports.banktransaction') }}"><i
                                         class="feather icon-circle"></i><span class="menu-item"> لیست تراکنش بانک </span></a>
                             </li>
-                        @endcan
+                        @endcan --}}
 
                         @can('installmentreports.banklist')
                             <li class="{{ active_class('admin.installmentreports.banklist') }}">
