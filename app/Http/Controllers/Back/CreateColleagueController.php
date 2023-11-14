@@ -15,6 +15,7 @@ use App\Models\createdocument;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\createstore;
+use App\Models\createstoretransaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -159,7 +160,7 @@ class CreateColleagueController extends Controller
 
         // dd(json_decode($docPath, true));
 
-        createstore::create([
+        $store = createstore::create([
             'storecredit' => $storecredit,
             'selectperson' => $request->selectperson,
             'nameofstore' => $request->nameofstore,
@@ -181,13 +182,16 @@ class CreateColleagueController extends Controller
         } else {
             $exBalance = -$storecredit;
         }
+
+        // ($store, $CreditAmount, $status, $type, $flag)
+        $trans_id = $this->storeTransaction($store, $storecredit, true, 1, 0);
         // $bank_id = createbankaccounts::where();
         $banktransaction = banktransaction::create([
             'bank_id' => $bank_id->id,
             'transactionprice' => $storecredit,
             'bankbalance' => $exBalance,
             'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-            // 'store_trans_id' => $transaction->id
+            'store_trans_id' => $trans_id
 
         ]);
 
@@ -240,10 +244,8 @@ class CreateColleagueController extends Controller
     public function colleagueCreditStore(CreateColleagueIndexRequest $request)
     {
 
-
-        // dd('hey');
         $docPath = '';
-        // dd($request->all());
+
         if ($request->file('documents')) {
             $files = $request->file('documents');
             $paths = [];
@@ -253,18 +255,12 @@ class CreateColleagueController extends Controller
             }
             $docPath = json_encode($paths);
         }
-        // dd($docPath);
-        // $purchasecredit = intval(str_replace(',', '', $request->purchasecredit));
-        // $inventory = intval(str_replace(',', '', $request->inventory));
-
 
         $userUpdate = User::find($request->userselected);
         $userUpdate->purchasecredit += $request->purchasecredit;
         $userUpdate->enddate = $request->enddate;
         $userUpdate->documents = $docPath;
 
-
-        // dd($userUpdate);
         $userUpdate->save();
 
         toastr()->success('اعتبار دهی به کاربر با موفقیت انجام شد.');
@@ -283,9 +279,6 @@ class CreateColleagueController extends Controller
     }
 
 
-
-
-    // adding credit to store "store" function
     public function reaccreditationStore(ColleagueReAccreditionRequest $request)
     {
         $store = createstore::find($request->select_store);
@@ -297,18 +290,24 @@ class CreateColleagueController extends Controller
             $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
         })->first();
 
+        $trans_id = $this->storeTransaction($store, $request->storecredit, true, 1, 0);
+
         $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
         if ($trans->count()  > 0) {
             $exBalance = $trans->first()->bankbalance - $request->storecredit;
         } else {
             $exBalance = -$request->storecredit;
         }
+
+        // dd($trans_id);
+
         // $bank_id = createbankaccounts::where();
         $banktransaction = banktransaction::create([
             'bank_id' => $bank_id->id,
             'transactionprice' => $request->storecredit,
             'bankbalance' => $exBalance,
             'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+            'store_trans_id' => $trans_id
 
         ]);
 
@@ -344,11 +343,6 @@ class CreateColleagueController extends Controller
 
 
         $bank = new banktransaction();
-
-
-
-
-        // dd($request->all());
 
         $user = User::find($request->namecreditor);
         // dd($user);
@@ -431,37 +425,50 @@ class CreateColleagueController extends Controller
         return redirect()->back()->with('number', $request->numberofdocuments);
     }
 
-
-
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function bankTransaction()
     {
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function storeTransaction($store, $CreditAmount, $status, $type, $flag)
     {
-        //
+        $count = createstoretransaction::count();
+        if ($count > 0) {
+            $number = createstoretransaction::latest()->first()->documentnumber + 1;
+            if (createstoretransaction::exists()) {
+                if ($status) {
+                    $finalprice = createstoretransaction::latest()->first()->finalprice + $CreditAmount;
+                } else {
+                    $finalprice = createstoretransaction::latest()->first()->finalprice - $CreditAmount;
+                }
+            } else {
+                if ($status) {
+
+                    $finalprice = +$CreditAmount;
+                } else {
+                    $finalprice = -$CreditAmount;
+                }
+            }
+        } else {
+            $number = 10000;
+            if ($status) {
+
+                $finalprice = +$CreditAmount;
+            } else {
+                $finalprice = -$CreditAmount;
+            }
+        }
+        $transaction = createstoretransaction::create([
+            'store_id' => $store->id,
+            'datetransaction' => Jalalian::now()->format('Y-m-d'),
+            // 1 is for main wallet
+            'flag' => $flag,
+            // pay request
+            'typeoftransaction' => $type,
+            'price' => $CreditAmount,
+            'finalprice' => $finalprice,
+            'documentnumber' => $number,
+        ]);
+        // dd($transaction);
+        return $transaction->id;
     }
 }

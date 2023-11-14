@@ -92,6 +92,7 @@ class CooperationSalesController extends Controller
             'statususer' => 0,
             'store_id' => $store->id,
         ]);
+
         $number1 = createstoretransaction::count();
         if ($number1 > 0 && $number1 != 0) {
             $number1 = createstoretransaction::latest()->first()->documentnumber  + 1;
