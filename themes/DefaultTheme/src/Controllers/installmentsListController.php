@@ -35,7 +35,10 @@ class installmentsListController extends Controller
 
     public function purchaseList()
     {
-        $trans = buyertransaction::latest()->get();
+        // $bank_id = BankAccount::whereHas('account_type', function ($query) {
+        //     $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
+        // })->first()->id;
+        $trans = buyertransaction::where('flag', 0)->latest()->get();
         $latest = buyertransaction::latest()->first()->finalprice;
         return view('front::user.installments.installment_list', compact('trans', 'latest'));
     }
