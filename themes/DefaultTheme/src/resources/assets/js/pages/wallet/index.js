@@ -14,6 +14,10 @@ $('.show-history').on('click', function () {
         },
         complete: function () {
             unblock(btn);
-        },
+        }
     });
+});
+$('#wallet_recharg_button').on('click', function () {
+    // console.log('hey');
+    $('#my-modal').modal();
 });

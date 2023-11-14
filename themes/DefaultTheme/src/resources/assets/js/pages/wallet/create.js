@@ -7,7 +7,9 @@ $(document).on('keyup', '.amount-input', function () {
     }
 
     if (!$(this).next('.form-text').length) {
-        $(this).after('<small class="form-text text-success amount-helper"></small>');
+        $(this).after(
+            '<small class="form-text text-success amount-helper"></small>'
+        );
     }
 
     var text = number_format($(this).val()) + ' تومان';
@@ -22,10 +24,11 @@ $('#wallet-create-form').validate({
         amount: {
             required: true,
             max: 500000000,
-            min: 1000,
+            min: 1000
         },
         gateway: {
-            required: true,
-        },
-    },
+            required: true
+        }
+    }
 });
+
