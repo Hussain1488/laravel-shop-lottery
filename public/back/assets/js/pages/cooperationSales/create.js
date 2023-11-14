@@ -110,6 +110,11 @@ $(document).ready(function () {
         var creditAttrValue = selectedOption.attr('creadit_attr');
         // var orginal_value = selectedOption.attr('creadit_attr');
 
+        let name = selectedOption.attr('data-name');
+        let lastname = selectedOption.attr('data-lastname');
+        $('#user_title').text(':');
+        $('#user_name').text(name + ' ' + lastname);
+
         if (creditAttrValue == '') {
             creditAttrValue = 0;
         }
@@ -241,4 +246,13 @@ $('#clearing_button').on('click', function () {
         $('#total_amount_text').text(a);
         $('#myModal').modal();
     }
+});
+
+$('.user_selection').change(function () {
+    let selectedOption = $(this).find(':selected');
+    let name = selectedOption.attr('data-name');
+    let lastname = selectedOption.attr('data-lastname');
+    $('.user_title').text('کاربر:' + ' ');
+    $('.user_name').text(name + ' ' + lastname);
+    // console.log(name + ' ' + lastname);
 });

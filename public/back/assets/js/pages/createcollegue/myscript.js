@@ -1,8 +1,10 @@
+// const {last} = require('lodash');
+
 $(document).ready(function () {
     // console.log($('.persian-date-picker-value').val().pDatepicker());
     $('.persian-date-picker-value').pDatepicker({
         altFormat: 'YYYY-mm-dd',
-        time    : {
+        time: {
             enabled: false
         },
         minute: {
@@ -60,7 +62,16 @@ $(document).ready(function () {
         }
         return x1 + x2;
     }
-    $('.user_select1').select2();
+    $('.select2').select2();
 
     $('#enddate_field').ready(function () {});
+
+    $('#user_selection').change(function () {
+        let selectedOption = $(this).find(':selected');
+        let name = selectedOption.attr('data-name');
+        let lastname = selectedOption.attr('data-lastname');
+        $('#user_title').text('کاربر:' + ' ');
+        $('#user_name').text(name + ' ' + lastname);
+        // console.log(name + ' ' + lastname);
+    });
 });

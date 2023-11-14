@@ -11,6 +11,7 @@ $(document).ready(function () {
         // Update the input field with the formatted number
         $(this).text(formattedNumber);
     });
+
     $('.moneyInput').each(function () {
         var input = $(this).val();
 
