@@ -10,6 +10,7 @@ use App\Http\Requests\Back\CreateShopRequest;
 use App\Http\Requests\Back\ShopShopUpdateRequest;
 use App\Models\BankAccount;
 use App\Models\banktransaction;
+use App\Models\buyertransaction;
 use App\Models\createdocument;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -186,6 +187,7 @@ class CreateColleagueController extends Controller
             'transactionprice' => $storecredit,
             'bankbalance' => $exBalance,
             'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+            // 'store_trans_id' => $transaction->id
 
         ]);
 
@@ -339,12 +341,41 @@ class CreateColleagueController extends Controller
     // storing document store function
     public function createDocumentStore(ColleagueCreateDocument $request)
     {
-        // dd($request->all());
-        // $bankName = BankAccount::find($request->namedebtor);
+
+
         $bank = new banktransaction();
-        // $bank_id = BankAccount::whereHas('account_type', function ($query) {
-        //     $query->where('name', 'بانک');
-        // })->first();
+
+
+
+
+        // dd($request->all());
+
+        $user = User::find($request->namecreditor);
+        // dd($user);
+
+        $user_transaction_number = buyertransaction::count();
+        if ($user_transaction_number > 0) {
+            $doc_number = buyertransaction::latest()->first()->documentnumber + 1;
+            if (buyertransaction::where('flag', 1)->where('user_id', $user->id)->count() > 0) {
+                $final_price = buyertransaction::where('flag', 1)->where('user_id', $user->id)->latest()->first()->finalprice + $request->ReCredintAmount;
+            } else {
+                $final_price = +$request->ReCredintAmount;
+            }
+        } else {
+            $doc_number = 10000;
+            $final_price = +$request->ReCredintAmount;
+        }
+
+        $user_trans = buyertransaction::create([
+            'user_id' => $user->id,
+            'flag' => 1,
+            'datetransaction' => Jalalian::now(),
+            'typeoftransaction' => 0,
+            'price' => $request->ReCredintAmount,
+            'finalprice' => $final_price,
+            'documentnumber' => $doc_number
+        ]);
+
         $recordCount = banktransaction::count();
         if ($recordCount > 0) {
             $lastRecord = banktransaction::where('bank_id', $request->namedebtor)->latest()->first();
@@ -354,6 +385,8 @@ class CreateColleagueController extends Controller
                 'bankbalance' => $lastRecord->bankbalance - $request->ReCredintAmount,
                 'transactionprice' => $request->ReCredintAmount,
                 'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+                'buyer_trans_id' => $user_trans->id
+
             ]);
         } else {
             $bank = new banktransaction();
@@ -362,12 +395,9 @@ class CreateColleagueController extends Controller
                 'bankbalance' => -$request->ReCredintAmount,
                 'transactionprice' => $request->ReCredintAmount,
                 'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+                'buyer_trans_id' => $user_trans->id
             ]);
         }
-        // dd($request->all());
-
-        $user = User::find($request->namecreditor);
-        // dd($user);
 
 
         if ($request->hasFile('documents')) {
@@ -389,6 +419,8 @@ class CreateColleagueController extends Controller
             'documents' => $docPath,
             'numberofdocuments' => $request->numberofdocuments,
         ]);
+
+
 
         // dd($request->numberofdocuments);
         $user->save();
