@@ -58,9 +58,10 @@ class InstallmentsController extends Controller
         $user = User::find(Auth::user()->id);
 
         // dd('this is ');
-        if ($user->inventory >= $installments->prepaidamount) {
+        if ($user->inventory >= $installments->prepaidamount || $user->purchasecredit >= $installments->prepaidamount) {
 
             $user->inventory -= $installments->prepaidamount;
+            $user->purchasecredit -= $installments->Creditamount;
 
             $Insta_dateils = new installmentdetails();
 
@@ -79,16 +80,43 @@ class InstallmentsController extends Controller
 
             $user_transaction_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->count();
             if ($user_transaction_number > 0) {
-                $doc_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->latest()->first()->documentnumber + 1;
-                $final_price = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->latest()->first()->finalprice - $installments->Creditamount;
+                $doc_number = buyertransaction::latest()->first()->documentnumber + 1;
+                if (buyertransaction::where('flag', 0)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->count() > 0) {
+                    $final_price = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->latest()->first()->finalprice - $installments->prepaidamount;
+                } else {
+                    $final_price = -$installments->prepaidamount;
+                }
             } else {
                 $doc_number = 10000;
-                $final_price = -$installments->Creditamount;
+                $final_price = -$installments->prepaidamount;
             }
 
             $user_trans = buyertransaction::create([
                 'user_id' => Auth::user()->id,
                 'flag' => 1,
+                'datetransaction' => Jalalian::now(),
+                'typeoftransaction' => 1,
+                'price' => $installments->prepaidamount,
+                'finalprice' => $final_price,
+                'documentnumber' => $doc_number
+            ]);
+
+            $user_transaction_number1 = buyertransaction::count();
+            if ($user_transaction_number1 > 0) {
+                $doc_number = buyertransaction::latest()->first()->documentnumber + 1;
+                if (buyertransaction::where('flag', 0)->where('user_id', Auth::user()->id)->count() > 0) {
+                    $final_price = buyertransaction::where('flag', 0)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->latest()->first()->finalprice - $installments->Creditamount;
+                } else {
+                    $final_price = -$installments->Creditamount;
+                }
+            } else {
+                $doc_number = 10000;
+                $final_price = -$installments->Creditamount;
+            }
+
+            $user_trans1 = buyertransaction::create([
+                'user_id' => Auth::user()->id,
+                'flag' => 0,
                 'datetransaction' => Jalalian::now(),
                 'typeoftransaction' => 1,
                 'price' => $installments->Creditamount,
@@ -112,6 +140,7 @@ class InstallmentsController extends Controller
                 'transactionprice' => $installments->prepaidamount,
                 'bankbalance' => $exBalance,
                 'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+                'buyer_trans_id' => $user_trans->id
             ]);
 
             $user->save();
@@ -123,7 +152,7 @@ class InstallmentsController extends Controller
             return redirect()->back();
         } else {
             // dd('if');
-            return redirect()->back()->with('warning', 'موجودی شما کمتر از مقدار پیش پرداخت است، لطفا کیف پول خود را شارژ نموده دوباره تلاش کنید.');
+            return redirect()->back()->with('warning', 'موجودی شما کمتر از مقدار پیش پرداخت است و یا اعتبار شما کمتر از مقدار خرید است، لطفا کیف پول خود را شارژ نموده دوباره تلاش کنید.');
         }
     }
 
@@ -149,12 +178,31 @@ class InstallmentsController extends Controller
         $user = User::find($installments->userselected);
         $user->inventory -= $insta_dateils->installmentprice;
 
+        $user_transaction_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->count();
+        if ($user_transaction_number > 0) {
+            $doc_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->latest()->first()->documentnumber + 1;
+            $final_price = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->latest()->first()->finalprice - $installments->Creditamount;
+        } else {
+            $doc_number = 10000;
+            $final_price = -$installments->Creditamount;
+        }
+
+        $user_trans = buyertransaction::create([
+            'user_id' => Auth::user()->id,
+            'flag' => 1,
+            'datetransaction' => Jalalian::now(),
+            'typeoftransaction' => 1,
+            'price' => $installments->Creditamount,
+            'finalprice' => $final_price,
+            'documentnumber' => $doc_number
+        ]);
+
         if ($recordCount > 0) {
             $lastRecord = banktransaction::latest()->first();
             $bank = new banktransaction();
             $bank->create([
                 'bank_id' => $b->id,
-                'bankbalance' => $lastRecord->bankbalance - $insta_dateils->installmentprice,
+                'bankbalance' => $lastRecord->bankbalance + $insta_dateils->installmentprice,
                 'transactionprice' => $insta_dateils->installmentprice,
                 'transactionsdate' => Jalalian::now()->format('Y-m-d'),
             ]);
@@ -162,7 +210,7 @@ class InstallmentsController extends Controller
             $bank = new banktransaction();
             $bank->create([
                 'bank_id' => $b->id,
-                'bankbalance' => -$insta_dateils->installmentprice,
+                'bankbalance' => +$insta_dateils->installmentprice,
                 'transactionprice' => $insta_dateils->installmentprice,
                 'transactionsdate' => Jalalian::now()->format('Y-m-d'),
             ]);
@@ -195,15 +243,6 @@ class InstallmentsController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     // Destroying specific installments
     public function refuse($id)
@@ -223,61 +262,5 @@ class InstallmentsController extends Controller
     public function pay()
     {
         dd('this is pay');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
