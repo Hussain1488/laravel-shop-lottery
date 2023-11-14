@@ -54,7 +54,7 @@
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group">
                                                     <label></label>
-                                                    <select type="text" class="form-control" name="namedebtor">
+                                                    <select type="text" class="form-control select2" name="namedebtor">
                                                         @isset($bank)
                                                             <option value="mellat bank">بده کار را انتخاب کنید</option>
                                                             @foreach ($bank as $key)
@@ -83,13 +83,15 @@
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
-                                                    <select type="text" class="form-control user_select1"
+                                                    <select type="text" class="form-control select2" id="user_selection"
                                                         name="namecreditor">
                                                         @isset($users)
                                                             <option value="">کاربر را انتخاب کنید
                                                             </option>
                                                             @foreach ($users as $item)
-                                                                <option value="{{ $item->id }}">
+                                                                <option data-name="{{ $item->first_name }}"
+                                                                    data-lastname="{{ $item->last_name }}"
+                                                                    value="{{ $item->id }}">
                                                                     {{ $item->username }}</option>
                                                             @endforeach
                                                         @else
@@ -101,6 +103,10 @@
                                                             {{ $message }}
                                                         </span>
                                                     @enderror
+                                                    <div class="m-1">
+                                                        <span class="user_title" id="user_title"></span>
+                                                        <span class="text-success user_name" id="user_name"></span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

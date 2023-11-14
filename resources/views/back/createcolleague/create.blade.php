@@ -46,18 +46,20 @@
 
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group align-items-center">
+
                                                     <h6 for="first_name" class="mr-2">
                                                         انتخاب فرد مورد نظر از بین افرادی که لاگین کردند
                                                     </h6>
 
                                                     <div class="d-flex">
-                                                        <select type="text" class="form-control user_select1"
-                                                            name="selectperson">
+                                                        <select type="text" id="user_selection"
+                                                            class="form-control select2" name="selectperson">
                                                             @isset($users)
                                                                 <option value="">کاربر را انتخاب کنید
                                                                 </option>
                                                                 @foreach ($users as $item)
-                                                                    <option
+                                                                    <option data-name="{{ $item->first_name }}"
+                                                                        data-lastname="{{ $item->last_name }}"
                                                                         {{ old('selectperson') == $item->id ? 'selected' : '' }}
                                                                         value="{{ $item->id }}">
                                                                         {{ $item->username }}</option>
@@ -72,6 +74,11 @@
                                                             {{ $message }}
                                                         </span>
                                                     @enderror
+
+                                                    <div class="m-1">
+                                                        <span class="" id="user_title"></span>
+                                                        <span class="text-success" id="user_name"></span>
+                                                    </div>
 
                                                 </div>
                                             </div>
@@ -213,7 +220,7 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <div class="d-flex">
-                                                        <select type="text" class="form-control user_select1"
+                                                        <select type="text" class="form-control select2"
                                                             name="account_id">
                                                             @isset($accounts)
                                                                 <option value="">انتخاب حساب درآمد

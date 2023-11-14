@@ -62,7 +62,12 @@
                                                             ریال
                                                         </div>
                                                         <label for="first_name" class="ml-2">اعتبار کاربر
-                                                            خریدار</label>
+                                                            خریدار
+                                                            <span class="user_title" id="user_title"></span>
+                                                            <span class="text-success user_name" id="user_name"></span>
+
+                                                        </label>
+
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-12">
@@ -98,7 +103,9 @@
                                                             name="userselected">
                                                             <option value="0">کاربر را انتخاب کنید</option>
                                                             @foreach ($users as $item)
-                                                                <option creadit_attr="{{ $item->purchasecredit }}"
+                                                                <option data-name="{{ $item->first_name }}"
+                                                                    data-lastname="{{ $item->last_name }}"
+                                                                    creadit_attr="{{ $item->purchasecredit }}"
                                                                     value="{{ $item->id }}">
                                                                     {{ $item->username }}
                                                                 </option>

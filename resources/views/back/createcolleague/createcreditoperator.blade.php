@@ -49,21 +49,28 @@
 
                                         <div class="form-group">
                                             <label>سرچ بر اساس شماره تلفن</label>
-                                            <select type="text" class="form-control user_select2" name="user">
+                                            <select type="text" class="form-control user_select2 user_selection"
+                                                name="user">
                                                 <option value="">کاربر را انتخاب کنید</option>
                                                 @isset($users)
                                                     @foreach ($users as $item)
-                                                        <option value="{{ $item->id }}">{{ $item->username }}</option>
+                                                        <option data-name="{{ $item->first_name }}"
+                                                            data-lastname="{{ $item->last_name }}" value="{{ $item->id }}">
+                                                            {{ $item->username }}</option>
                                                     @endforeach
                                                 @endisset
 
 
                                             </select>
                                             @error('user')
-                                                <span class="text-danger">
-                                                    {{ $message }}
-                                                </span>
+                                            <span class="text-danger">
+                                                {{ $message }}
+                                            </span>
                                             @enderror
+                                            <div class="m-1">
+                                                <span class="user_title" id="user_title"></span>
+                                                <span class="text-success user_name" id="user_name"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
