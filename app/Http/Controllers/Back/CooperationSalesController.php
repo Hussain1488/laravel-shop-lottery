@@ -73,6 +73,8 @@ class CooperationSalesController extends Controller
         $user->purchasecredit -= $Creditamount;
         $store->storecredit -= $Creditamount;
 
+
+
         // dd($store->id);
 
 
@@ -89,6 +91,27 @@ class CooperationSalesController extends Controller
             'paymentstatus' => 0,
             'statususer' => 0,
             'store_id' => $store->id,
+        ]);
+        $number1 = createstoretransaction::count();
+        if ($number1 > 0 && $number1 != 0) {
+            $number1 = createstoretransaction::latest()->first()->documentnumber  + 1;
+            $final_price1 = createstoretransaction::latest()->first()->finalprice - $Creditamount;
+        } else {
+            $number1 = 10000;
+            $final_price1 = -$Creditamount;
+        }
+        $store_trans = createstoretransaction::create([
+            'store_id' => $request->store_id,
+            'datetransaction' => Jalalian::now()->format('Y-m-d'),
+            // 1 is for main wallet
+            'flag' => 0,
+            // pay request
+            'typeoftransaction' => 0,
+            'price' => $Creditamount,
+            'finalprice' => $final_price1,
+            'documentnumber' => $number1,
+            // 'bank_id' => $request->;
+
         ]);
 
         $store->save();
@@ -192,6 +215,7 @@ class CooperationSalesController extends Controller
             'transactionprice' => $depositamount,
             'bankbalance' => $exBalance,
             'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+            'store_trans_id' => $transaction->id
 
         ]);
 
@@ -263,6 +287,7 @@ class CooperationSalesController extends Controller
             'bankbalance' => $final1,
             'transactionprice' => $result,
             'transactionsdate' => Jalalian::now(),
+            'store_trans_id' => $transaction->id
         ]);
 
 
