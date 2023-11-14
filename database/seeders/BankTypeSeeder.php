@@ -14,7 +14,7 @@ class BankTypeSeeder extends Seeder
      */
     public function run()
     {
-        $names = ['بانک', 'درآمد', 'هزینه', 'واسط قسط ها', 'واسط اعتبار فروش فروشگاه ها'];
+        $names = ['بانک', 'درآمد', 'هزینه', 'واسط قسط ها', 'واسط اعتبار فروش فروشگاه ها', 'مقدار اعتبار خرید خریدارها'];
         foreach ($names as $name) {
             bankTypeModel::create([
                 "name" => $name
