@@ -79,7 +79,7 @@ class InstallmentReportsController extends Controller
             'transactionprice' => $payList->depositamount,
             'bankbalance' => $final_price1,
             'bank_id' => $bank_id,
-            'pay_request_list_id' => $id,
+            // 'pay_request_list_id' => $id,
         ]);
 
         // $transaction = PaymentListModel::with('store')->latest()->get();
@@ -119,6 +119,7 @@ class InstallmentReportsController extends Controller
         $number1 = createstoretransaction::count();
 
         if ($number1 > 0 && $number1 != 0) {
+            $number1 = createstoretransaction::latest()->first()->documentnumber + 1;
             $final_price1 = createstoretransaction::where('flag', 2)->latest()->first()->finalprice - $payList->depositamount;
         } else {
             $number1 = 10000;
