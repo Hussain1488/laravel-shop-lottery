@@ -52,7 +52,7 @@
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
-                                                    <select dir="rtl" type="text" class="form-control user_select1"
+                                                    <select dir="rtl" type="text" class="form-control select2"
                                                         name="select_store">
                                                         <option value="">فروشگاه را انتخاب کنید</option>
                                                         @foreach ($store as $item)
@@ -63,7 +63,6 @@
                                                                 {{ $item->user->username . ' ' . $item->nameofstore }}
                                                             </option>
                                                         @endforeach
-                                                        <option value="">Hussian</option>
 
                                                     </select>
                                                     @error('select_store')
