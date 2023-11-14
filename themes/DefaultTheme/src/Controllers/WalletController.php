@@ -5,13 +5,19 @@ namespace Themes\DefaultTheme\src\Controllers;
 use App\Events\OrderPaid;
 use App\Events\WalletAmountIncreased;
 use App\Http\Controllers\Controller;
+use App\Models\BankAccount;
+use App\Models\banktransaction;
+use App\Models\buyertransaction;
 use App\Models\Gateway;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\WalletHistory;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Morilog\Jalali\Jalalian;
 use Shetabit\Payment\Facade\Payment;
 use Shetabit\Multipay\Invoice;
 
@@ -19,10 +25,10 @@ class WalletController extends Controller
 {
     public function index()
     {
-        $wallet    = auth()->user()->getWallet();
-        $histories = $wallet->histories()->latest()->paginate(20);
+        $trans = buyertransaction::where('flag', 1)->latest()->get();
+        $user = User::find(Auth::user()->id);
 
-        return view('front::user.wallet.index', compact('wallet', 'histories'));
+        return view('front::user.wallet.index', compact('trans', 'user'));
     }
 
     public function show(WalletHistory $wallet)
@@ -155,5 +161,55 @@ class WalletController extends Controller
 
             return redirect()->route('front.wallet.index', ['history' => $history])->with('transaction-error', $exception->getMessage());
         }
+    }
+    public function recharge(Request $request)
+    {
+        // buyer Transaction Creating
+        $user_transaction_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', $request->user_id)->count();
+        if ($user_transaction_number > 0) {
+            $doc_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', $request->user_id)->latest()->first()->documentnumber + 1;
+            $final_price = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', $request->user_id)->latest()->first()->finalprice - $request->recharge_amount;
+        } else {
+            $doc_number = 10000;
+            $final_price = -$request->recharge_amount;
+        }
+
+        $user_trans = buyertransaction::create([
+            'user_id' => $request->user_id,
+            'flag' => 1,
+            'datetransaction' => Jalalian::now(),
+            'typeoftransaction' => 1,
+            'price' => $request->recharge_amount,
+            'finalprice' => $final_price,
+            'documentnumber' => $doc_number
+        ]);
+
+
+        // creating banktransaction
+        $bank_id = BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'بانک');
+        })->first();
+
+        $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
+        if ($trans->count()  > 0) {
+            $exBalance = $trans->first()->bankbalance - $request->recharge_amount;
+        } else {
+            $exBalance = -$request->recharge_amount;
+        }
+        // $bank_id = createbankaccounts::where();
+        $banktransaction = banktransaction::create([
+            'bank_id' => $bank_id->id,
+            'transactionprice' => $request->recharge_amount,
+            'bankbalance' => $exBalance,
+            'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+            'buyer_trans_id' => $user_trans->id
+        ]);
+
+
+        // dd($request->all());
+        $user = User::find($request->user_id);
+        $user->inventory += $request->recharge_amount;
+        $user->save();
+        return redirect()->back()->with('success', 'شارژ کیف پول برای شما با موفقیت انجام شد!');
     }
 }
