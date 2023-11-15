@@ -445,7 +445,7 @@ class InstallmentReportsController extends Controller
             $title = $transactions->first()->bank->account_type->name;
 
             // Summing up bank balances from all transactions
-            $total = $transactions->sum('bankbalance');
+            $total = $transactions->first()->bankbalance;
         }
 
         return view('back.installmentreports.banktransaction', compact('transactions', 'total', 'title', 'log'));
