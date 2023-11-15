@@ -390,7 +390,7 @@ class CreateColleagueController extends Controller
         // ]);
         // public function transaction($user, $amount, $status)
 
-        $buyerTrans = buyertransaction::transaction($user, $request->ReCredintAmount, true);
+        $buyerTrans = buyertransaction::transaction($user, $request->ReCredintAmount, true, 1, 0);
 
         // transaction($bank_id, $creditAmount, $status, $trans_id)
         $bank = banktransaction::transaction($request->namedebtor, $request->ReCredintAmount, false, $buyerTrans->id);
