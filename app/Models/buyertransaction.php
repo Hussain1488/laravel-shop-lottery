@@ -19,16 +19,16 @@ class buyertransaction extends Model
         return  $this->belongsTo(User::class);
     }
 
-    public function transaction($user, $amount, $status)
+    public function transaction($user, $amount, $status, $flag, $type)
     {
         $user_transaction_number = buyertransaction::count();
         if ($user_transaction_number > 0) {
             $doc_number = buyertransaction::latest()->first()->documentnumber + 1;
-            if (buyertransaction::where('flag', 1)->where('user_id', $user->id)->count() > 0) {
+            if (buyertransaction::where('flag', $flag)->where('user_id', $user->id)->count() > 0) {
                 if ($status) {
-                    $final_price = buyertransaction::where('flag', 1)->where('user_id', $user->id)->latest()->first()->finalprice + $amount;
+                    $final_price = buyertransaction::where('flag', $flag)->where('user_id', $user->id)->latest()->first()->finalprice + $amount;
                 } else {
-                    $final_price = buyertransaction::where('flag', 1)->where('user_id', $user->id)->latest()->first()->finalprice - $amount;
+                    $final_price = buyertransaction::where('flag', $flag)->where('user_id', $user->id)->latest()->first()->finalprice - $amount;
                 }
             } else {
                 if ($status) {
@@ -52,9 +52,9 @@ class buyertransaction extends Model
 
         $user_trans = buyertransaction::create([
             'user_id' => $user->id,
-            'flag' => 1,
+            'flag' => $flag,
             'datetransaction' => Jalalian::now(),
-            'typeoftransaction' => 0,
+            'typeoftransaction' => $type,
             'price' => $amount,
             'finalprice' => $final_price,
             'documentnumber' => $doc_number
