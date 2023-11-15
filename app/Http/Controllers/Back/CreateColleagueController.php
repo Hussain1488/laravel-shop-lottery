@@ -267,10 +267,25 @@ class CreateColleagueController extends Controller
             $docPath = json_encode($paths);
         }
 
+        $account =   BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'مقدار اعتبار خرید خریدارها');
+        })->first();
+
+        if ($account) {
+            $bank_id = $account->id;
+        } else {
+            toastr()->error('شما هیچ بانکی با ماهیت اعتبار خرید خریدارها ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
+            return redirect()->back();
+        }
+
         $userUpdate = User::find($request->userselected);
         $userUpdate->purchasecredit += $request->purchasecredit;
         $userUpdate->enddate = $request->enddate;
         $userUpdate->documents = $docPath;
+        // public function transaction($user, $amount, $status, $flag, $type)
+        $buyer_trans = buyertransaction::transaction($userUpdate, $request->purchasecredit, true, 0, 0);
+        // transaction($bank_id, $creditAmount, $status, $trans_id)
+        $bank_trans = banktransaction::transaction($bank_id, $request->purchasecredit, false, $buyer_trans->id, 'user');
 
         $userUpdate->save();
 
@@ -369,7 +384,7 @@ class CreateColleagueController extends Controller
         $buyerTrans = buyertransaction::transaction($user, $request->ReCredintAmount, true, 1, 0);
 
         // transaction($bank_id, $creditAmount, $status, $trans_id)
-        $bank = banktransaction::transaction($request->namedebtor, $request->ReCredintAmount, false, $buyerTrans->id);
+        $bank = banktransaction::transaction($request->namedebtor, $request->ReCredintAmount, false, $buyerTrans->id, 'user');
 
 
         if ($request->hasFile('documents')) {

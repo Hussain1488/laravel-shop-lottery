@@ -29,7 +29,7 @@ class banktransaction extends Model
         return $this->belongsTo(buyertransaction::class, 'buyer_trans_id');
     }
 
-    public function transaction($bank_id, $creditAmount, $status, $trans_id)
+    public function transaction($bank_id, $creditAmount, $status, $trans_id, $user)
     {
 
         $recordCount = banktransaction::where('bank_id', $bank_id)->count();
@@ -40,7 +40,8 @@ class banktransaction extends Model
                 'bankbalance' => $status ? $lastRecord->bankbalance + $creditAmount : $lastRecord->bankbalance - $creditAmount,
                 'transactionprice' => $creditAmount,
                 'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-                'buyer_trans_id' => $trans_id
+                'buyer_trans_id' => $user == 'user' ? $trans_id : null,
+                'store_trans_id' => $user == 'store' ? $trans_id : null
 
             ]);
         } else {
@@ -49,7 +50,8 @@ class banktransaction extends Model
                 'bankbalance' => $status ? $creditAmount : -$creditAmount,
                 'transactionprice' => $creditAmount,
                 'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-                'buyer_trans_id' => $trans_id
+                'buyer_trans_id' => $user == 'user' ? $trans_id : null,
+                'store_trans_id' => $user == 'store' ? $trans_id : null
             ]);
         }
         return $bank;

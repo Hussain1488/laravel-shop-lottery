@@ -100,7 +100,7 @@ class InstallmentsController extends Controller
 
             $buyer_trans = buyertransaction::transaction(Auth::user(), $installments->Creditamount, false, 0, 1);
 
-            $bank = banktransaction::transaction($bank_id, $installments->prepaidamount, true, $buyer_trans1->id);
+            $bank = banktransaction::transaction($bank_id, $installments->prepaidamount, true, $buyer_trans1->id, 'user');
 
             $user->save();
             $installments->statususer = 1;
@@ -145,43 +145,7 @@ class InstallmentsController extends Controller
         // transaction($user, $amount, $status, $flag)
         $buyer_trans = buyertransaction::transaction(Auth::user(), $insta_dateils->installmentprice, false, 1, 0);
 
-        $bank = banktransaction::transaction($bank_id, $installments->Creditamount, true, $buyer_trans->id);
-        // if ($recordCount > 0) {
-        //     $lastRecord = banktransaction::latest()->first();
-        //     $bank = new banktransaction();
-        //     $bank->create([
-        //         'bank_id' => $b->id,
-        //         'bankbalance' => $lastRecord->bankbalance + $insta_dateils->installmentprice,
-        //         'transactionprice' => $insta_dateils->installmentprice,
-        //         'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-        //     ]);
-        // } else {
-        //     $bank = new banktransaction();
-        //     $bank->create([
-        //         'bank_id' => $b->id,
-        //         'bankbalance' => +$insta_dateils->installmentprice,
-        //         'transactionprice' => $insta_dateils->installmentprice,
-        //         'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-        //     ]);
-        // }
-
-        // $bank = banktransaction::transaction($b->id, $installments->Creditamount, true, $buyer_trans->id);
-
-
-
-        // $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
-        // if ($trans->count()  > 0) {
-        //     $exBalance = $trans->first()->bankbalance + $insta_dateils->installmentprice;
-        // } else {
-        //     $exBalance = +$insta_dateils->installmentprice;
-        // }
-        // // $bank_id = createbankaccounts::where();
-        // $banktransaction = banktransaction::create([
-        //     'bank_id' => $bank_id->id,
-        //     'transactionprice' => $insta_dateils->installmentprice,
-        //     'bankbalance' => $exBalance,
-        //     'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-        // ]);
+        $bank = banktransaction::transaction($bank_id, $installments->Creditamount, true, $buyer_trans->id, 'user');
 
 
         $user->save();
