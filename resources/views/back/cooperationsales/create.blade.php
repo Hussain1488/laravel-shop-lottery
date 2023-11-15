@@ -86,19 +86,7 @@
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label>سرچ بر اساس شماره تلفن</label>
-                                                        {{-- <select type="text" class="form-control user_select2"
-                                                            id="user_select" name="userselected"
-                                                            value="{{ old('userselected') }}">
-                                                            <option value="0">کاربر
-                                                                را انتخاب کنید</option>
-                                                            @foreach ($users as $item)
-                                                                <option creadit_attr="{{ $item->purchasecredit }}"
-                                                                    value="{{ $item->id }}">
-                                                                    {{ $item->username }}
-                                                                </option>
-                                                            @endforeach
 
-                                                        </select> --}}
                                                         <select class="form-control user_select2" id="user_select"
                                                             name="userselected">
                                                             <option value="0">کاربر را انتخاب کنید</option>
