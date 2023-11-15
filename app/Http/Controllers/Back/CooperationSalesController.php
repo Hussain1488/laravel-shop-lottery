@@ -62,6 +62,7 @@ class CooperationSalesController extends Controller
     public function store(Request $request)
     {
 
+        // dd($request->all());
         $store = createstore::find($request->store_id);
         $Creditamount = intval(str_replace(',', '', $request->Creditamount));
         $prepaidamount = intval(str_replace(',', '', $request->prepaidamount));
@@ -75,7 +76,6 @@ class CooperationSalesController extends Controller
 
 
 
-        // dd($store->id);
 
 
         Makeinstallmentsm::create([
@@ -84,7 +84,7 @@ class CooperationSalesController extends Controller
             'Creditamount' => $Creditamount,
             'userselected' => $request->userselected,
             'typeofpayment' => $request->typeofpayment,
-            'numberofinstallments' => $request->typeofpayment == 'cash' ? 1 : $request->numberofinstallments,
+            'numberofinstallments' => $request->typeofpayment == 'cash' ? 0 : $request->numberofinstallments,
             'prepaidamount' => $prepaidamount,
             'amounteachinstallment' => $amounteachinstallment,
             'buyerstatus' => 0,
