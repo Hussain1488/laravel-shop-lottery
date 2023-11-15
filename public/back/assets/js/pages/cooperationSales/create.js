@@ -26,6 +26,7 @@ $(document).ready(function () {
             $('#each_pay').val(0);
         });
     }
+
     $('#cash_status').on('change', function () {
         var cash_status = $('#cash_status').val();
 
@@ -44,7 +45,11 @@ $(document).ready(function () {
             $('#each_pay').val(0);
         }
     });
-
+    $('#main_price').on('input', function () {
+        if ($('#cash_status').val() == 'installment') {
+            updatePayment();
+        }
+    });
     $('#payment').on('change', function () {
         if ($('#cash_status').val() == 'installment') {
             updatePayment();
