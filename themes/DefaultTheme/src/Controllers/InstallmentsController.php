@@ -57,8 +57,21 @@ class InstallmentsController extends Controller
         $installments = Makeinstallmentsm::find($id);
         $user = User::find(Auth::user()->id);
 
+        $bank = BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'واسط قسط ها');
+        })->first();
+        // dd($bank);
+        if ($bank) {
+            // dd('ehy');
+            $bank_id = $bank->id;
+        } else {
+            return redirect()->back()->with('warning', 'درخواست شماب با مشکل مواجه شده است،‌لطفا با مرکز تماس بگیرید!');
+        }
+
+        // dd($user->inventory, $installments->prepaidamount, $user->purchasecredit, $installments->prepaidamount);
+
         // dd('this is ');
-        if ($user->inventory >= $installments->prepaidamount || $user->purchasecredit >= $installments->prepaidamount) {
+        if ($user->inventory >= $installments->prepaidamount && $user->purchasecredit >= $installments->prepaidamount) {
 
             $user->inventory -= $installments->prepaidamount;
             $user->purchasecredit -= $installments->Creditamount;
@@ -67,81 +80,27 @@ class InstallmentsController extends Controller
 
             $jalali_date_now = Jalalian::now();
             // $new_date = $jalali_date_now->addMonths(1)->format('Y-m-d');
-            for ($i = 0; $i < $installments->numberofinstallments; $i++) {
-                $dutedate = $jalali_date_now->addMonths($i + 1)->format('Y-m-d');
-                $Insta_dateils->create([
-                    'installment_id' => $installments->id,
-                    'installmentnumber' => $i + 1,
-                    'installmentprice' => $installments->amounteachinstallment,
-                    'paymentstatus' => 0,
-                    'duedate' => $dutedate,
-                ]);
-            }
-
-            $user_transaction_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->count();
-            if ($user_transaction_number > 0) {
-                $doc_number = buyertransaction::latest()->first()->documentnumber + 1;
-                if (buyertransaction::where('flag', 0)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->count() > 0) {
-                    $final_price = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->latest()->first()->finalprice - $installments->prepaidamount;
-                } else {
-                    $final_price = -$installments->prepaidamount;
+            if ($installments->numberofinstallments > 0) {
+                for ($i = 0; $i < $installments->numberofinstallments; $i++) {
+                    $dutedate = $jalali_date_now->addMonths($i + 1)->format('Y-m-d');
+                    $Insta_dateils->create([
+                        'installment_id' => $installments->id,
+                        'installmentnumber' => $i + 1,
+                        'installmentprice' => $installments->amounteachinstallment,
+                        'paymentstatus' => 0,
+                        'duedate' => $dutedate,
+                    ]);
                 }
+                $message = 'پیش پرداخت شما با موفقیت پرداخت شده و اقساط شما ایجاد شد.';
             } else {
-                $doc_number = 10000;
-                $final_price = -$installments->prepaidamount;
+                $message = 'پرداخت شما با موفقیت انجام شد.';
             }
 
-            $user_trans = buyertransaction::create([
-                'user_id' => Auth::user()->id,
-                'flag' => 1,
-                'datetransaction' => Jalalian::now(),
-                'typeoftransaction' => 1,
-                'price' => $installments->prepaidamount,
-                'finalprice' => $final_price,
-                'documentnumber' => $doc_number
-            ]);
+            $buyer_trans1 = buyertransaction::transaction(Auth::user(), $installments->prepaidamount, false, 1, 1);
 
-            $user_transaction_number1 = buyertransaction::count();
-            if ($user_transaction_number1 > 0) {
-                $doc_number = buyertransaction::latest()->first()->documentnumber + 1;
-                if (buyertransaction::where('flag', 0)->where('user_id', Auth::user()->id)->count() > 0) {
-                    $final_price = buyertransaction::where('flag', 0)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->latest()->first()->finalprice - $installments->Creditamount;
-                } else {
-                    $final_price = -$installments->Creditamount;
-                }
-            } else {
-                $doc_number = 10000;
-                $final_price = -$installments->Creditamount;
-            }
+            $buyer_trans = buyertransaction::transaction(Auth::user(), $installments->Creditamount, false, 0, 1);
 
-            $user_trans1 = buyertransaction::create([
-                'user_id' => Auth::user()->id,
-                'flag' => 0,
-                'datetransaction' => Jalalian::now(),
-                'typeoftransaction' => 1,
-                'price' => $installments->Creditamount,
-                'finalprice' => $final_price,
-                'documentnumber' => $doc_number
-            ]);
-
-            $bank_id = BankAccount::whereHas('account_type', function ($query) {
-                $query->where('name', 'واسط قسط ها');
-            })->first();
-
-            $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
-            if ($trans->count()  > 0) {
-                $exBalance = $trans->first()->bankbalance + $installments->prepaidamount;
-            } else {
-                $exBalance = +$installments->prepaidamount;
-            }
-            // $bank_id = createbankaccounts::where();
-            $banktransaction = banktransaction::create([
-                'bank_id' => $bank_id->id,
-                'transactionprice' => $installments->prepaidamount,
-                'bankbalance' => $exBalance,
-                'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-                'buyer_trans_id' => $user_trans->id
-            ]);
+            $bank = banktransaction::transaction($bank_id, $installments->prepaidamount, true, $buyer_trans1->id);
 
             $user->save();
             $installments->statususer = 1;
@@ -149,7 +108,8 @@ class InstallmentsController extends Controller
             $installments->datepayment = $jalaliNow;
             $installments->save();
             // dd($user->inventory, $installments->prepaidamount);
-            return redirect()->back();
+
+            return redirect()->back()->with('success', $message);
         } else {
             // dd('if');
             return redirect()->back()->with('warning', 'موجودی شما کمتر از مقدار پیش پرداخت است و یا اعتبار شما کمتر از مقدار خرید است، لطفا کیف پول خود را شارژ نموده دوباره تلاش کنید.');
@@ -164,11 +124,14 @@ class InstallmentsController extends Controller
 
         $recordCount = banktransaction::count();
 
-
-        // it should be updated.
-        $b = BankAccount::first();
-
-
+        $bank = BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'واسط قسط ها');
+        })->first();
+        if ($bank) {
+            $bank_id = $bank->id;
+        } else {
+            redirect()->back()->with('warning', 'درخواست شماب با مشکل مواجه شده است،‌لطفا با مرکز تماس بگیرید!');
+        }
         // dd($id, $st);
         $installments = Makeinstallmentsm::find($st);
         $insta_dateils = installmentdetails::find($id);
@@ -178,62 +141,47 @@ class InstallmentsController extends Controller
         $user = User::find($installments->userselected);
         $user->inventory -= $insta_dateils->installmentprice;
 
-        $user_transaction_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->count();
-        if ($user_transaction_number > 0) {
-            $doc_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->latest()->first()->documentnumber + 1;
-            $final_price = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', Auth::user()->id)->latest()->first()->finalprice - $installments->Creditamount;
-        } else {
-            $doc_number = 10000;
-            $final_price = -$installments->Creditamount;
-        }
 
-        $user_trans = buyertransaction::create([
-            'user_id' => Auth::user()->id,
-            'flag' => 1,
-            'datetransaction' => Jalalian::now(),
-            'typeoftransaction' => 1,
-            'price' => $installments->Creditamount,
-            'finalprice' => $final_price,
-            'documentnumber' => $doc_number
-        ]);
+        // transaction($user, $amount, $status, $flag)
+        $buyer_trans = buyertransaction::transaction(Auth::user(), $insta_dateils->installmentprice, false, 1, 0);
 
-        if ($recordCount > 0) {
-            $lastRecord = banktransaction::latest()->first();
-            $bank = new banktransaction();
-            $bank->create([
-                'bank_id' => $b->id,
-                'bankbalance' => $lastRecord->bankbalance + $insta_dateils->installmentprice,
-                'transactionprice' => $insta_dateils->installmentprice,
-                'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-            ]);
-        } else {
-            $bank = new banktransaction();
-            $bank->create([
-                'bank_id' => $b->id,
-                'bankbalance' => +$insta_dateils->installmentprice,
-                'transactionprice' => $insta_dateils->installmentprice,
-                'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-            ]);
-        }
-        // toster->success('قسط شما با موفقیت پرداخت شد.');
+        $bank = banktransaction::transaction($bank_id, $installments->Creditamount, true, $buyer_trans->id);
+        // if ($recordCount > 0) {
+        //     $lastRecord = banktransaction::latest()->first();
+        //     $bank = new banktransaction();
+        //     $bank->create([
+        //         'bank_id' => $b->id,
+        //         'bankbalance' => $lastRecord->bankbalance + $insta_dateils->installmentprice,
+        //         'transactionprice' => $insta_dateils->installmentprice,
+        //         'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+        //     ]);
+        // } else {
+        //     $bank = new banktransaction();
+        //     $bank->create([
+        //         'bank_id' => $b->id,
+        //         'bankbalance' => +$insta_dateils->installmentprice,
+        //         'transactionprice' => $insta_dateils->installmentprice,
+        //         'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+        //     ]);
+        // }
 
-        $bank_id = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'واسط قسط ها');
-        })->first();
+        // $bank = banktransaction::transaction($b->id, $installments->Creditamount, true, $buyer_trans->id);
 
-        $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
-        if ($trans->count()  > 0) {
-            $exBalance = $trans->first()->bankbalance + $insta_dateils->installmentprice;
-        } else {
-            $exBalance = +$insta_dateils->installmentprice;
-        }
-        // $bank_id = createbankaccounts::where();
-        $banktransaction = banktransaction::create([
-            'bank_id' => $bank_id->id,
-            'transactionprice' => $insta_dateils->installmentprice,
-            'bankbalance' => $exBalance,
-            'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-        ]);
+
+
+        // $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
+        // if ($trans->count()  > 0) {
+        //     $exBalance = $trans->first()->bankbalance + $insta_dateils->installmentprice;
+        // } else {
+        //     $exBalance = +$insta_dateils->installmentprice;
+        // }
+        // // $bank_id = createbankaccounts::where();
+        // $banktransaction = banktransaction::create([
+        //     'bank_id' => $bank_id->id,
+        //     'transactionprice' => $insta_dateils->installmentprice,
+        //     'bankbalance' => $exBalance,
+        //     'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+        // ]);
 
 
         $user->save();
