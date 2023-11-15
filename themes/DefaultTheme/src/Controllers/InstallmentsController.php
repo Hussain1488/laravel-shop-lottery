@@ -145,7 +145,7 @@ class InstallmentsController extends Controller
         // transaction($user, $amount, $status, $flag)
         $buyer_trans = buyertransaction::transaction(Auth::user(), $insta_dateils->installmentprice, false, 1, 0);
 
-        $bank = banktransaction::transaction($bank_id, $installments->Creditamount, true, $buyer_trans->id, 'user');
+        $bank = banktransaction::transaction($bank_id, $insta_dateils->installmentprice, true, $buyer_trans->id, 'user');
 
 
         $user->save();
