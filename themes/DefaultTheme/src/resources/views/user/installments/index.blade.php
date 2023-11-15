@@ -416,7 +416,6 @@
     <!-- End Content -->
 @endsection
 @include('back.partials.plugins', ['plugins' => ['jquery.validate']])
-@include('front::user.installments.recharge_modal')
 @push('scripts')
     <!-- show Modal -->
     <div class="modal fade" id="my-modal">
