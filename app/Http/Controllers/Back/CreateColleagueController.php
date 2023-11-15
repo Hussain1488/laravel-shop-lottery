@@ -139,6 +139,19 @@ class CreateColleagueController extends Controller
     public function store(CreateShopRequest $request)
     {
 
+
+        $bank_id = BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
+        })->first();
+        if ($bank_id) {
+            $bank_id = BankAccount::whereHas('account_type', function ($query) {
+                $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
+            })->first();
+        } else {
+            toastr()->error('شما هیچ بانکی با ماهیت واسط اعتبار فروشگاه ها ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
+            return redirect()->back();
+        }
+
         // dd($request->all());
 
         $storecredit = intval(str_replace(',', '', $request->storecredit));
@@ -172,9 +185,7 @@ class CreateColleagueController extends Controller
             'account_id' => $request->account_id
         ]);
 
-        $bank_id = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
-        })->first();
+
 
         $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
         if ($trans->count()  > 0) {
@@ -184,7 +195,7 @@ class CreateColleagueController extends Controller
         }
 
         // ($store, $CreditAmount, $status, $type, $flag)
-        $trans_id = $this->storeTransaction($store, $storecredit, true, 1, 0);
+        $trans_id = createstoretransaction::storeTransaction($store, $storecredit, true, 1, 0);
         // $bank_id = createbankaccounts::where();
         $banktransaction = banktransaction::create([
             'bank_id' => $bank_id->id,
@@ -289,8 +300,16 @@ class CreateColleagueController extends Controller
         $bank_id = BankAccount::whereHas('account_type', function ($query) {
             $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
         })->first();
+        if ($bank_id) {
+            $bank_id = BankAccount::whereHas('account_type', function ($query) {
+                $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
+            })->first();
+        } else {
+            toastr()->error('شما هیچ بانکی با ماهیت واسط اعتبار فروشگاه ها ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
+            return redirect()->back();
+        }
 
-        $trans_id = $this->storeTransaction($store, $request->storecredit, true, 1, 0);
+        $trans_id = createstoretransaction::storeTransaction($store, $request->storecredit, true, 1, 0);
 
         $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
         if ($trans->count()  > 0) {
@@ -347,51 +366,34 @@ class CreateColleagueController extends Controller
         $user = User::find($request->namecreditor);
         // dd($user);
 
-        $user_transaction_number = buyertransaction::count();
-        if ($user_transaction_number > 0) {
-            $doc_number = buyertransaction::latest()->first()->documentnumber + 1;
-            if (buyertransaction::where('flag', 1)->where('user_id', $user->id)->count() > 0) {
-                $final_price = buyertransaction::where('flag', 1)->where('user_id', $user->id)->latest()->first()->finalprice + $request->ReCredintAmount;
-            } else {
-                $final_price = +$request->ReCredintAmount;
-            }
-        } else {
-            $doc_number = 10000;
-            $final_price = +$request->ReCredintAmount;
-        }
+        // $user_transaction_number = buyertransaction::count();
+        // if ($user_transaction_number > 0) {
+        //     $doc_number = buyertransaction::latest()->first()->documentnumber + 1;
+        //     if (buyertransaction::where('flag', 1)->where('user_id', $user->id)->count() > 0) {
+        //         $final_price = buyertransaction::where('flag', 1)->where('user_id', $user->id)->latest()->first()->finalprice + $request->ReCredintAmount;
+        //     } else {
+        //         $final_price = +$request->ReCredintAmount;
+        //     }
+        // } else {
+        //     $doc_number = 10000;
+        //     $final_price = +$request->ReCredintAmount;
+        // }
 
-        $user_trans = buyertransaction::create([
-            'user_id' => $user->id,
-            'flag' => 1,
-            'datetransaction' => Jalalian::now(),
-            'typeoftransaction' => 0,
-            'price' => $request->ReCredintAmount,
-            'finalprice' => $final_price,
-            'documentnumber' => $doc_number
-        ]);
+        // $user_trans = buyertransaction::create([
+        //     'user_id' => $user->id,
+        //     'flag' => 1,
+        //     'datetransaction' => Jalalian::now(),
+        //     'typeoftransaction' => 0,
+        //     'price' => $request->ReCredintAmount,
+        //     'finalprice' => $final_price,
+        //     'documentnumber' => $doc_number
+        // ]);
+        // public function transaction($user, $amount, $status)
 
-        $recordCount = banktransaction::count();
-        if ($recordCount > 0) {
-            $lastRecord = banktransaction::where('bank_id', $request->namedebtor)->latest()->first();
-            $bank = new banktransaction();
-            $bank->create([
-                'bank_id' => $request->namedebtor,
-                'bankbalance' => $lastRecord->bankbalance - $request->ReCredintAmount,
-                'transactionprice' => $request->ReCredintAmount,
-                'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-                'buyer_trans_id' => $user_trans->id
+        $buyerTrans = buyertransaction::transaction($user, $request->ReCredintAmount, true);
 
-            ]);
-        } else {
-            $bank = new banktransaction();
-            $bank->create([
-                'bank_id' => $request->namedebtor,
-                'bankbalance' => -$request->ReCredintAmount,
-                'transactionprice' => $request->ReCredintAmount,
-                'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-                'buyer_trans_id' => $user_trans->id
-            ]);
-        }
+        // transaction($bank_id, $creditAmount, $status, $trans_id)
+        $bank = banktransaction::transaction($request->namedebtor, $request->ReCredintAmount, false, $buyerTrans->id);
 
 
         if ($request->hasFile('documents')) {
@@ -429,46 +431,46 @@ class CreateColleagueController extends Controller
     {
     }
 
-    public function storeTransaction($store, $CreditAmount, $status, $type, $flag)
-    {
-        $count = createstoretransaction::count();
-        if ($count > 0) {
-            $number = createstoretransaction::latest()->first()->documentnumber + 1;
-            if (createstoretransaction::exists()) {
-                if ($status) {
-                    $finalprice = createstoretransaction::latest()->first()->finalprice + $CreditAmount;
-                } else {
-                    $finalprice = createstoretransaction::latest()->first()->finalprice - $CreditAmount;
-                }
-            } else {
-                if ($status) {
+    // public function storeTransaction($store, $CreditAmount, $status, $type, $flag)
+    // {
+    //     $count = createstoretransaction::count();
+    //     if ($count > 0) {
+    //         $number = createstoretransaction::latest()->first()->documentnumber + 1;
+    //         if (createstoretransaction::exists()) {
+    //             if ($status) {
+    //                 $finalprice = createstoretransaction::latest()->first()->finalprice + $CreditAmount;
+    //             } else {
+    //                 $finalprice = createstoretransaction::latest()->first()->finalprice - $CreditAmount;
+    //             }
+    //         } else {
+    //             if ($status) {
 
-                    $finalprice = +$CreditAmount;
-                } else {
-                    $finalprice = -$CreditAmount;
-                }
-            }
-        } else {
-            $number = 10000;
-            if ($status) {
+    //                 $finalprice = +$CreditAmount;
+    //             } else {
+    //                 $finalprice = -$CreditAmount;
+    //             }
+    //         }
+    //     } else {
+    //         $number = 10000;
+    //         if ($status) {
 
-                $finalprice = +$CreditAmount;
-            } else {
-                $finalprice = -$CreditAmount;
-            }
-        }
-        $transaction = createstoretransaction::create([
-            'store_id' => $store->id,
-            'datetransaction' => Jalalian::now()->format('Y-m-d'),
-            // 1 is for main wallet
-            'flag' => $flag,
-            // pay request
-            'typeoftransaction' => $type,
-            'price' => $CreditAmount,
-            'finalprice' => $finalprice,
-            'documentnumber' => $number,
-        ]);
-        // dd($transaction);
-        return $transaction->id;
-    }
+    //             $finalprice = +$CreditAmount;
+    //         } else {
+    //             $finalprice = -$CreditAmount;
+    //         }
+    //     }
+    //     $transaction = createstoretransaction::create([
+    //         'store_id' => $store->id,
+    //         'datetransaction' => Jalalian::now()->format('Y-m-d'),
+    //         // 1 is for main wallet
+    //         'flag' => $flag,
+    //         // pay request
+    //         'typeoftransaction' => $type,
+    //         'price' => $CreditAmount,
+    //         'finalprice' => $finalprice,
+    //         'documentnumber' => $number,
+    //     ]);
+    //     // dd($transaction);
+    //     return $transaction->id;
+    // }
 }

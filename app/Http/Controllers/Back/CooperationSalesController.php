@@ -139,6 +139,17 @@ class CooperationSalesController extends Controller
     }
     public function clearingStore(Request $request)
     {
+
+        $account =   BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'واسط قسط ها');
+        })->first();
+
+        if ($account) {
+            $bank_id = $account->id;
+        } else {
+            toastr()->error('شما هیچ بانکی با ماهیت واسط اقساط ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
+            return redirect()->back();
+        }
         // dd($request->all());
         $store = createstore::find($request->store);
         $depositamount = str_replace(',', '', $request->depositamount);
@@ -200,9 +211,6 @@ class CooperationSalesController extends Controller
             // 'bank_id' => $request->;
         ]);
 
-        $bank_id = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'واسط قسط ها');
-        })->first();
 
         $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
         if ($trans->count()  > 0) {
