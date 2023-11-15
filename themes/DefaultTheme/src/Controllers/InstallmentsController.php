@@ -152,7 +152,7 @@ class InstallmentsController extends Controller
         $insta_dateils->save();
         $installments->save();
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'قسط شما با موفقیت پرداخت شد!');
     }
 
 

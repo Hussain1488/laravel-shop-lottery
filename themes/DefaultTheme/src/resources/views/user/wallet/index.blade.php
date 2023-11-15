@@ -86,10 +86,10 @@
                                                     {{ $key->flag == 1 ? 'درخواست برداشت از کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
                                                 </td>
                                                 <td>
-                                                    <span class="monyInputSpan">{{ $key->price }}</span>
+                                                    <span class="moneyInputSpan">{{ $key->price }}</span>
                                                 </td>
                                                 <td class="text-danger">
-                                                    <span class="monyInputSpan">{{ $key->finalprice }}</span>
+                                                    <span class="moneyInputSpan">{{ $key->finalprice }}</span>
 
                                                 </td>
                                                 <td>
