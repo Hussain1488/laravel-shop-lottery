@@ -25,7 +25,7 @@
 
                                 <div class="row mt-1 ml-2 mb-2 mr-1">
                                     <h6>
-                                        لیست تراکنش های بانکی </h6>
+                                        لیست تراکنش اعتباری شما </h6>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 col-12 d-flex justify-content-between align-items-center">
@@ -63,7 +63,7 @@
                                                 مبلغ تراکنش
                                             </th>
                                             <th class="text-danger">
-                                                مجموع تراکنش با کسر کارمزد
+                                                مجموع تراکنش ها
                                             </th>
                                             <th>
                                                 شماره سند

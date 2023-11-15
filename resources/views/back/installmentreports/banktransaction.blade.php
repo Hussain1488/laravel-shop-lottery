@@ -28,7 +28,7 @@
                 <section class="card">
                     <div class="card-header">
                         {{-- @isset($store) --}}
-                        <h4 class="card-title">کاربر خریدار محسن احمد زاده</h4>
+                        <h4 class="card-title">لیست تراکنش های: {{ $title }}</h4>
                         {{-- @else
                             <h4 class="text-warning">
                                 شما فروشگاهی برای نمایش ندارید!
@@ -74,7 +74,14 @@
                                                     #
                                                 </th>
                                                 <th>
-                                                    نام بانک
+                                                    @if ($log)
+                                                        نام فروشگاه
+                                                    @else
+                                                        خریدار
+                                                    @endif
+                                                </th>
+                                                <th>
+                                                    شماره تماس
                                                 </th>
                                                 <th>
                                                     مبلغ تراکنش(ریال)
@@ -91,13 +98,25 @@
                                             $counter = 1;
                                         @endphp
                                         <tbody>
-                                            @foreach ($transaction as $key)
+                                            @foreach ($transactions as $key)
                                                 <tr>
                                                     <td>
                                                         {{ $counter++ }}
                                                     </td>
+
                                                     <td>
-                                                        {{ $key->bank->bankname }}
+                                                        @if ($log)
+                                                            {{ $key->storeTransaction->store->nameofstore }}
+                                                        @else
+                                                            {{ $key->buyerTransaction->user->first_name . ' ' . $key->buyerTransaction->user->last_name }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($log)
+                                                            {{ $key->storeTransaction->store->user->username }}
+                                                        @else
+                                                            {{ $key->buyerTransaction->user->username }}
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         <span class="monyInputSpan">{{ $key->transactionprice }}</span>

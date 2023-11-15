@@ -364,31 +364,7 @@ class CreateColleagueController extends Controller
         $bank = new banktransaction();
 
         $user = User::find($request->namecreditor);
-        // dd($user);
 
-        // $user_transaction_number = buyertransaction::count();
-        // if ($user_transaction_number > 0) {
-        //     $doc_number = buyertransaction::latest()->first()->documentnumber + 1;
-        //     if (buyertransaction::where('flag', 1)->where('user_id', $user->id)->count() > 0) {
-        //         $final_price = buyertransaction::where('flag', 1)->where('user_id', $user->id)->latest()->first()->finalprice + $request->ReCredintAmount;
-        //     } else {
-        //         $final_price = +$request->ReCredintAmount;
-        //     }
-        // } else {
-        //     $doc_number = 10000;
-        //     $final_price = +$request->ReCredintAmount;
-        // }
-
-        // $user_trans = buyertransaction::create([
-        //     'user_id' => $user->id,
-        //     'flag' => 1,
-        //     'datetransaction' => Jalalian::now(),
-        //     'typeoftransaction' => 0,
-        //     'price' => $request->ReCredintAmount,
-        //     'finalprice' => $final_price,
-        //     'documentnumber' => $doc_number
-        // ]);
-        // public function transaction($user, $amount, $status)
 
         $buyerTrans = buyertransaction::transaction($user, $request->ReCredintAmount, true, 1, 0);
 
@@ -426,51 +402,4 @@ class CreateColleagueController extends Controller
 
         return redirect()->back()->with('number', $request->numberofdocuments);
     }
-
-    public function bankTransaction()
-    {
-    }
-
-    // public function storeTransaction($store, $CreditAmount, $status, $type, $flag)
-    // {
-    //     $count = createstoretransaction::count();
-    //     if ($count > 0) {
-    //         $number = createstoretransaction::latest()->first()->documentnumber + 1;
-    //         if (createstoretransaction::exists()) {
-    //             if ($status) {
-    //                 $finalprice = createstoretransaction::latest()->first()->finalprice + $CreditAmount;
-    //             } else {
-    //                 $finalprice = createstoretransaction::latest()->first()->finalprice - $CreditAmount;
-    //             }
-    //         } else {
-    //             if ($status) {
-
-    //                 $finalprice = +$CreditAmount;
-    //             } else {
-    //                 $finalprice = -$CreditAmount;
-    //             }
-    //         }
-    //     } else {
-    //         $number = 10000;
-    //         if ($status) {
-
-    //             $finalprice = +$CreditAmount;
-    //         } else {
-    //             $finalprice = -$CreditAmount;
-    //         }
-    //     }
-    //     $transaction = createstoretransaction::create([
-    //         'store_id' => $store->id,
-    //         'datetransaction' => Jalalian::now()->format('Y-m-d'),
-    //         // 1 is for main wallet
-    //         'flag' => $flag,
-    //         // pay request
-    //         'typeoftransaction' => $type,
-    //         'price' => $CreditAmount,
-    //         'finalprice' => $finalprice,
-    //         'documentnumber' => $number,
-    //     ]);
-    //     // dd($transaction);
-    //     return $transaction->id;
-    // }
 }

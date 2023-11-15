@@ -14,6 +14,15 @@ class createstoretransaction extends Model
     protected $fillable = ["store_id", "flag", "datetransaction", "typeoftransaction", "price", "finalprice", "documentnumber", "bank_id"];
 
 
+    public function store()
+    {
+        return $this->belongsTo(createstore::class, 'store_id');
+    }
+    public function bankTransaction()
+    {
+        return $this->hasOne(BankTransaction::class, 'store_trans_id');
+    }
+
 
     public function storeTransaction($store, $CreditAmount, $status, $type, $flag)
     {

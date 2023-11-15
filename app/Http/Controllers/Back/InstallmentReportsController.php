@@ -423,24 +423,31 @@ class InstallmentReportsController extends Controller
     // destroying the specific installments.
     public function refuse($id)
     {
-        $refuse = Makeinstallmentsm::find($id);
-        $refuse->delete();
-
+        Makeinstallmentsm::refuse($id);
         toastr()->success('قسط مورد نظر با موفقیت حذف شد.');
         return redirect()->back();
     }
 
     public function transactionFilter($id)
     {
-        $transaction = banktransaction::where('bank_id', $id)->with('bank')->latest()->get();
-        // dd($transaction);
-        if ($transaction->isNotEmpty()) {
-            $total = $transaction->first()->bankbalance;
-        } else {
-            $total = 0;
-        }
-        // dd($total);
+        $transactions = BankTransaction::where('bank_id', $id)
+            ->with('bank.account_type', 'buyerTransaction.user', 'storeTransaction.store.user')
+            ->latest()
+            ->get();
 
-        return view('back.installmentreports.banktransaction', compact('transaction', 'total'));
+        $log = false;
+        $title = 'No transactions found';
+        $total = 0;
+
+        if ($transactions->isNotEmpty()) {
+            $log = $transactions->first()->storeTransaction !== null;
+            // Assuming you want to set the title based on the first transaction
+            $title = $transactions->first()->bank->account_type->name;
+
+            // Summing up bank balances from all transactions
+            $total = $transactions->sum('bankbalance');
+        }
+
+        return view('back.installmentreports.banktransaction', compact('transactions', 'total', 'title', 'log'));
     }
 }

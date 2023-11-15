@@ -62,21 +62,14 @@ class CooperationSalesController extends Controller
     public function store(Request $request)
     {
 
-        // dd($request->all());
         $store = createstore::find($request->store_id);
         $Creditamount = intval(str_replace(',', '', $request->Creditamount));
         $prepaidamount = intval(str_replace(',', '', $request->prepaidamount));
         $amounteachinstallment = intval(str_replace(',', '', $request->amounteachinstallment));
 
-        // dd($prepaidamount);
-
         $user = User::find($request->userselected);
         $user->purchasecredit -= $Creditamount;
         $store->storecredit -= $Creditamount;
-
-
-
-
 
         Makeinstallmentsm::create([
             'status' => 0,
@@ -93,27 +86,7 @@ class CooperationSalesController extends Controller
             'store_id' => $store->id,
         ]);
 
-        $number1 = createstoretransaction::count();
-        if ($number1 > 0 && $number1 != 0) {
-            $number1 = createstoretransaction::latest()->first()->documentnumber  + 1;
-            $final_price1 = createstoretransaction::latest()->first()->finalprice - $Creditamount;
-        } else {
-            $number1 = 10000;
-            $final_price1 = -$Creditamount;
-        }
-        $store_trans = createstoretransaction::create([
-            'store_id' => $request->store_id,
-            'datetransaction' => Jalalian::now()->format('Y-m-d'),
-            // 1 is for main wallet
-            'flag' => 0,
-            // pay request
-            'typeoftransaction' => 0,
-            'price' => $Creditamount,
-            'finalprice' => $final_price1,
-            'documentnumber' => $number1,
-            // 'bank_id' => $request->;
-
-        ]);
+        $store_trans = createstoretransaction::storeTransaction($store, $Creditamount, false, 0, 0);
 
         $store->save();
         $user->save();

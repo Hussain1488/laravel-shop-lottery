@@ -44,9 +44,9 @@
                                 <div class="border rounded p-2 my-1">
                                     <div class="row">
                                         <div class="col">
-                                            نام حساب :
                                             <a
                                                 href="{{ route('admin.installmentreports.transactionFilter', [$item->id]) }}">
+                                                نام حساب :
                                                 {{ $item->bankname }}
                                             </a>
                                         </div>

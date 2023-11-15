@@ -19,6 +19,16 @@ class banktransaction extends Model
         return $this->belongsTo(BankAccount::class, 'bank_id');
     }
 
+    public function storeTransaction()
+    {
+        return $this->belongsTo(createstoretransaction::class, 'store_trans_id');
+    }
+
+    public function buyerTransaction()
+    {
+        return $this->belongsTo(buyertransaction::class, 'buyer_trans_id');
+    }
+
     public function transaction($bank_id, $creditAmount, $status, $trans_id)
     {
 

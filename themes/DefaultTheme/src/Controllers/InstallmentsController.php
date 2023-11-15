@@ -195,17 +195,10 @@ class InstallmentsController extends Controller
     // Destroying specific installments
     public function refuse($id)
     {
-        $refuse = Makeinstallmentsm::find($id);
-        $store = createstore::find($refuse->store_id);
-        $user = User::find($refuse->userselected);
-        $store->storecredit += $refuse->Creditamount;
-        $user->purchasecredit += $refuse->Creditamount;
-        // dd($refuse->Creditamount, $user->purchasecredit);
+        $refuse1 = Makeinstallmentsm::refuse($id);
 
-        $user->save();
-        $store->save();
-        $refuse->delete();
-        return redirect()->back();
+
+        return redirect()->back()->with('success', 'خرید شما با موفقیت حذف گردید');
     }
     public function pay()
     {

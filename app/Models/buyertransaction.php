@@ -18,6 +18,10 @@ class buyertransaction extends Model
     {
         return  $this->belongsTo(User::class);
     }
+    public function bankTransaction()
+    {
+        return $this->hasOne(BankTransaction::class, 'buyer_trans_id');
+    }
 
     public function transaction($user, $amount, $status, $flag, $type)
     {

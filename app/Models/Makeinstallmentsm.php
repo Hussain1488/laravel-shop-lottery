@@ -38,4 +38,22 @@ class Makeinstallmentsm extends Model
     {
         return $this->hasMany(installmentdetails::class, 'installment_id');
     }
+
+    public function refuse($id)
+    {
+        $refuse = Makeinstallmentsm::find($id);
+        $store = createstore::find($refuse->store_id);
+        $user = User::find($refuse->userselected);
+        $store->storecredit += $refuse->Creditamount;
+        $user->purchasecredit += $refuse->Creditamount;
+        // dd($refuse->Creditamount, $user->purchasecredit);
+        $store_trans = createstoretransaction::storeTransaction($store, $refuse->Creditamount, true, 0, 0);
+
+
+        $user->save();
+        $store->save();
+        $refuse->delete();
+
+        return true;
+    }
 }
