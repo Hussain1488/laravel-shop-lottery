@@ -116,6 +116,9 @@ class AuthServiceProvider extends ServiceProvider
             Gate::define('installmentreports.index', function ($user) {
                 return $user->level == 'creator'; // Customize this condition as needed.
             });
+            Gate::define('installmentreports.paidList', function ($user) {
+                return $user->level == 'creator'; // Customize this condition as needed.
+            });
         }
     }
 
