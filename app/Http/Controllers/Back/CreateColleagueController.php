@@ -417,10 +417,12 @@ class CreateColleagueController extends Controller
 
         $user->inventory += $request->ReCredintAmount;
 
+        // dd($request->all());
         createdocument::create([
             'namedebtor' => $request->namedebtor,
             'namecreditor' => $user->first_name,
-            'price' => $request->price,
+            'price' => $request->ReCredintAmount,
+            'description' => $request->description,
             'documents' => $docPath,
             'numberofdocuments' => $request->numberofdocuments,
         ]);
