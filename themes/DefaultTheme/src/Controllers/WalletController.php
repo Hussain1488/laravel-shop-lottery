@@ -165,45 +165,50 @@ class WalletController extends Controller
     public function recharge(Request $request)
     {
         // buyer Transaction Creating
-        $user_transaction_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', $request->user_id)->count();
-        if ($user_transaction_number > 0) {
-            $doc_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', $request->user_id)->latest()->first()->documentnumber + 1;
-            $final_price = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', $request->user_id)->latest()->first()->finalprice - $request->recharge_amount;
-        } else {
-            $doc_number = 10000;
-            $final_price = -$request->recharge_amount;
-        }
+        // $user_transaction_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', $request->user_id)->count();
+        // if ($user_transaction_number > 0) {
+        //     $doc_number = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', $request->user_id)->latest()->first()->documentnumber + 1;
+        //     $final_price = buyertransaction::where('flag', 1)->where('typeoftransaction', 1)->where('user_id', $request->user_id)->latest()->first()->finalprice - $request->recharge_amount;
+        // } else {
+        //     $doc_number = 10000;
+        //     $final_price = -$request->recharge_amount;
+        // }
 
-        $user_trans = buyertransaction::create([
-            'user_id' => $request->user_id,
-            'flag' => 1,
-            'datetransaction' => Jalalian::now(),
-            'typeoftransaction' => 1,
-            'price' => $request->recharge_amount,
-            'finalprice' => $final_price,
-            'documentnumber' => $doc_number
-        ]);
-
-
-        // creating banktransaction
         $bank_id = BankAccount::whereHas('account_type', function ($query) {
             $query->where('name', 'بانک');
         })->first();
 
-        $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
-        if ($trans->count()  > 0) {
-            $exBalance = $trans->first()->bankbalance - $request->recharge_amount;
-        } else {
-            $exBalance = -$request->recharge_amount;
-        }
-        // $bank_id = createbankaccounts::where();
-        $banktransaction = banktransaction::create([
-            'bank_id' => $bank_id->id,
-            'transactionprice' => $request->recharge_amount,
-            'bankbalance' => $exBalance,
-            'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-            'buyer_trans_id' => $user_trans->id
-        ]);
+        // $user_trans = buyertransaction::create([
+        //     'user_id' => $request->user_id,
+        //     'flag' => 1,
+        //     'datetransaction' => Jalalian::now(),
+        //     'typeoftransaction' => 1,
+        //     'price' => $request->recharge_amount,
+        //     'finalprice' => $final_price,
+        //     'documentnumber' => $doc_number
+        // ]);
+        $user = User::find($request->user_id);
+
+        $user_trans = buyertransaction::transaction($user, $request->recharge_amount, false, 1, 1);
+
+
+        // creating banktransaction
+
+        // $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
+        // if ($trans->count()  > 0) {
+        //     $exBalance = $trans->first()->bankbalance - $request->recharge_amount;
+        // } else {
+        //     $exBalance = -$request->recharge_amount;
+        // }
+        // // $bank_id = createbankaccounts::where();
+        // $banktransaction = banktransaction::create([
+        //     'bank_id' => $bank_id->id,
+        //     'transactionprice' => $request->recharge_amount,
+        //     'bankbalance' => $exBalance,
+        //     'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+        //     'buyer_trans_id' => $user_trans->id
+        // ]);
+        banktransaction::transaction($bank_id->id, $request->recharge_amount, false, $user_trans->id, 'user'){
 
 
         // dd($request->all());
