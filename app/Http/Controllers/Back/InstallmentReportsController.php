@@ -439,14 +439,17 @@ class InstallmentReportsController extends Controller
         $title = 'No transactions found';
         $total = 0;
 
-        if ($transactions->isNotEmpty()) {
-            $log = $transactions->first()->storeTransaction !== null;
-            // Assuming you want to set the title based on the first transaction
-            $title = $transactions->first()->bank->account_type->name;
+        foreach ($transactions as $key) {
+            if ($key->storeTransaction != null) {
+                $key->log = $key->storeTransaction !== null;
+                // Assuming you want to set the title based on the first transaction
+                $title = $transactions->first()->bank->account_type->name;
 
-            // Summing up bank balances from all transactions
-            $total = $transactions->first()->bankbalance;
+                // Summing up bank balances from all transactions
+                $total = $transactions->first()->bankbalance;
+            }
         }
+        // dd($transactions);
 
         return view('back.installmentreports.banktransaction', compact('transactions', 'total', 'title', 'log'));
     }

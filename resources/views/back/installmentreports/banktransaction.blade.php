@@ -105,14 +105,14 @@
                                                     </td>
 
                                                     <td>
-                                                        @if ($log)
+                                                        @if ($key->log)
                                                             {{ $key->storeTransaction->store->nameofstore }}
                                                         @else
                                                             {{ $key->buyerTransaction->user->first_name . ' ' . $key->buyerTransaction->user->last_name }}
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        @if ($log)
+                                                        @if ($key->log)
                                                             {{ $key->storeTransaction->store->user->username }}
                                                         @else
                                                             {{ $key->buyerTransaction->user->username }}
