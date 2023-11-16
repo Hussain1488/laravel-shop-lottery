@@ -113,30 +113,10 @@ class InstallmentReportsController extends Controller
             'documentpayment'  => $path,
         ]);
         $payList = PaymentListModel::find($request->pay_list_id);
-        // $store = createstore::where('id', $payList);
 
-        $transaction = new createstoretransaction();
-        $number1 = createstoretransaction::count();
+        $store = createstore::find($payList->store_id);
 
-        if ($number1 > 0 && $number1 != 0) {
-            $number1 = createstoretransaction::latest()->first()->documentnumber + 1;
-            $final_price1 = createstoretransaction::where('flag', 2)->latest()->first()->finalprice - $payList->depositamount;
-        } else {
-            $number1 = 10000;
-            $final_price1 = -$payList->depositamount;
-        }
-        // creating new store transaction for mainWallet transaction.
-        $transaction->create([
-            'store_id' => $payList->store_id,
-            'datetransaction' => Jalalian::now()->format('Y-m-d'),
-            // 1 is for main wallet
-            'flag' => 2,
-            // pay request
-            'typeoftransaction' => 1,
-            'price' => $payList->depositamount,
-            'finalprice' => $final_price1,
-            'documentnumber' => $number1,
-        ]);
+        createstoretransaction::storeTransaction($store, $payList->depositamount, false, 1, 2);
 
         $this->RequestPayment($request->pay_list_id, $request->nameofbank);
 
