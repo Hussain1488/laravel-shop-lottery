@@ -58,9 +58,7 @@ class InstallmentReportsController extends Controller
         $payList = PaymentListModel::with('store')->find($id);
         $payList->status = 1;
 
-        $transaction = new banktransaction();
         //  ['bank_id', 'bankbalance', 'transactionprice', 'transactionsdate']
-        $number1 = banktransaction::count();
 
         $bankt_trans = banktransaction::transaction($bank_id, $payList->depositamount, true, $trans_id, 'store');
 
@@ -114,7 +112,7 @@ class InstallmentReportsController extends Controller
 
         $store = createstore::find($payList->store_id);
 
-        $trans_id = createstoretransaction::storeTransaction($store, $payList->depositamount, false, 1, 2);
+        $trans_id = createstoretransaction::storeTransaction($store, $payList->depositamount, true, 1, 2);
         // creating new store transaction for mainWallet transaction.
         // $transaction->create([
         //     'store_id' => $payList->store_id,
