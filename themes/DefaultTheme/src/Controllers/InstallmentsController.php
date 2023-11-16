@@ -120,8 +120,6 @@ class InstallmentsController extends Controller
     public function paymentStatus($id, $st)
     {
 
-        $bank = new banktransaction();
-
         $recordCount = banktransaction::count();
 
         $bank = BankAccount::whereHas('account_type', function ($query) {
