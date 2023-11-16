@@ -159,8 +159,7 @@ class CooperationSalesController extends Controller
             'factor' => $docPath,
             'depositdate' => Jalalian::now()->format('Y-m-d'),
         ]);
-        // creating new
-        $transaction = new createstoretransaction();
+
         $number1 = createstoretransaction::count();
 
         if ($number1 > 0 && $number1 != 0) {
