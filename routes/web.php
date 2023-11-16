@@ -105,7 +105,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('cooperationsales/changeStatus/{id}', [CooperationSalesController::class, 'changeStatus'])->name('cooperationsales.changeStatus');
     Route::post('cooperationsales/store', [CooperationSalesController::class, 'store'])->name('cooperationsales.store');
     Route::post('cooperationsales/clearing', [CooperationSalesController::class, 'clearingStore'])->name('cooperationsales.clearing.store');
-    Route::get('installments/payrequest/{store_id}/{installments_id}', [CooperationSalesController::class, 'PayRequest'])->name('installments.payrequest');
+    Route::get('installments/payrequest/{store_id}/{installments_id}', [CooperationSalesController::class, 'Pa\yRequest'])->name('installments.payrequest');
     Route::get('installments/mainWallet/{store_id}', [CooperationSalesController::class, 'mainWallet'])->name('cooperationsales.mainWallet');
     Route::get('installments/payRequestWallet/{store_id}', [CooperationSalesController::class, 'payRequestWallet'])->name('cooperationsales.payRequestWallet');
     Route::get('installments/paidSales/{store_id}', [CooperationSalesController::class, 'paidSales'])->name('cooperationsales.paidSales');
@@ -140,6 +140,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('installmentreports/bankList', [InstallmentReportsController::class, 'bankList'])->name('installmentreports.banklist');
     Route::get('installmentreports/createinternalaccount', [InstallmentReportsController::class, 'createinternalaccount'])->name('installmentreports.createinternalaccount');
     Route::post('installmentreports/storebank', [InstallmentReportsController::class, 'storebank'])->name('installmentreports.storebank');
+    Route::get('installmentreports/paidList', [InstallmentReportsController::class, 'paidList'])->name('installmentreports.paidList');
 
     Route::get('installmentreports/filter', [InstallmentReportsController::class, 'filter'])->name('installments.filter');
     Route::get('installmentreports/filter1', [InstallmentReportsController::class, 'filter1'])->name('installments.filter1');
