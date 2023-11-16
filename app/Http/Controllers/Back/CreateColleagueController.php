@@ -37,17 +37,11 @@ class CreateColleagueController extends Controller
     }
 
     // creating new seller from users
-    public function shopList($filter = null)
+    public function shopList()
     {
-        // dd($filter);
-
-        // if ($filter) {
-        //     $store = CreateStore::whereHas('user', function ($query) {
-        //         $query->where('first_name', 'like', '%' . $filter . '%');
-        //     })->get();
-        // } else {
+     
         $store = createstore::with('user')->get();
-        // }
+      
 
         return view('back.createcolleague.shop_list', compact('store'));
     }
