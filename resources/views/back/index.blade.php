@@ -1,7 +1,6 @@
 @extends('back.layouts.master')
 
 @section('content')
-
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -24,7 +23,131 @@
 
             </div>
             <div class="content-body">
+                @can('cooperationsales')
+                    <section id="statistics-card">
 
+                        <div class="row match-height">
+                            @can('cooperationsales.index')
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <a href="{{ route('admin.cooperationsales.index') }}">
+                                        <div class="card">
+                                            <div class="card-header d-flex flex-column align-items-center pb-0">
+                                                <div class="avatar bg-rgba-primary p-50 m-0">
+                                                    <div class="avatar-content">
+                                                        <i class="feather icon-list text-primary font-medium-5"></i>
+                                                    </div>
+                                                </div>
+                                                <p class="mb-0 mt-1">لیست فروش</p>
+                                            </div>
+                                            <div class="card-content">
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
+                            @can('cooperationsales.create')
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <a href="{{ route('admin.cooperationsales.create') }}">
+                                        <div class="card">
+                                            <div class="card-header d-flex flex-column align-items-center pb-0">
+                                                <div class="avatar bg-rgba-info p-50 m-0">
+                                                    <div class="avatar-content">
+                                                        <i class="feather icon-file-plus text-info font-medium-5"></i>
+                                                    </div>
+                                                </div>
+                                                <p class="mb-0 mt-1">ایجاد قسط</p>
+                                            </div>
+                                            <div class="card-content">
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
+
+
+                            @can('cooperationsales.clearing')
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <a href="{{ route('admin.cooperationsales.clearing') }}">
+                                        <div class="card">
+                                            <div class="card-header d-flex flex-column align-items-center pb-0">
+                                                <div class="avatar bg-rgba-primary p-50 m-0">
+                                                    <div class="avatar-content">
+                                                        <i class="feather icon-repeat text-primary font-medium-5"></i>
+                                                    </div>
+                                                </div>
+                                                <p class="mb-0 mt-1">درخواست تسویه حساب</p>
+                                            </div>
+                                            <div class="card-content">
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
+                        </div>
+                        <div class="row match-height">
+                            @can('cooperationsales.mainWallet')
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <a href="{{ route('admin.cooperationsales.mainWallet', [Auth::user()->store->id]) }}">
+                                        <div class="card">
+                                            <div class="card-header d-flex flex-column align-items-center pb-0">
+                                                <div class="avatar bg-rgba-primary p-50 m-0">
+                                                    <div class="avatar-content">
+                                                        <i class="feather icon-credit-card text-primary font-medium-5"></i>
+                                                    </div>
+                                                </div>
+                                                <p class="mb-0 mt-1">تراکنش های کیف پول اصلی</p>
+                                            </div>
+                                            <div class="card-content">
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
+                            @can('cooperationsales.payRequestWallet')
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <a href="{{ route('admin.cooperationsales.payRequestWallet', [Auth::user()->store->id]) }}">
+                                        <div class="card">
+                                            <div class="card-header d-flex flex-column align-items-center pb-0">
+                                                <div class="avatar bg-rgba-primary p-50 m-0">
+                                                    <div class="avatar-content">
+                                                        <i class="feather icon-download text-primary font-medium-5"></i>
+                                                    </div>
+                                                </div>
+                                                <p class="mb-0 mt-1">تراکنش های درخواست واریز</p>
+                                            </div>
+                                            <div class="card-content">
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
+                            @can('cooperationsales.paidSales')
+                                <div class="col-lg-3 col-sm-6 col-12">
+                                    <a href="{{ route('admin.cooperationsales.paidSales', [Auth::user()->store->id]) }}">
+                                        <div class="card">
+                                            <div class="card-header d-flex flex-column align-items-center pb-0">
+                                                <div class="avatar bg-rgba-primary p-50 m-0">
+                                                    <div class="avatar-content">
+                                                        <i class="feather icon-dollar-sign text-primary font-medium-5"></i>
+                                                    </div>
+                                                </div>
+                                                <p class="mb-0 mt-1">تراکنش های فورش های پرداخت شده</p>
+                                            </div>
+                                            <div class="card-content">
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
+                        </div>
+                    </section>
+                @endcan
                 <section id="statistics-card">
                     <div class="row match-height">
                         <div class="col-lg-3 col-sm-6 col-12">
@@ -42,6 +165,7 @@
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="col-lg-3 col-sm-6 col-12">
                             <div class="card">
@@ -66,7 +190,8 @@
                                         <div class="card-body">
                                             <h4 class="card-title mt-3">فیلم های آموزشی</h4>
                                             <p class="card-text">آموزش تصویری بخش های پنل مدیریت</p>
-                                            <button type="button" data-toggle="modal" data-target="#video-helpe-modal" class="btn btn-info">مشاهده</button>
+                                            <button type="button" data-toggle="modal" data-target="#video-helpe-modal"
+                                                class="btn btn-info">مشاهده</button>
                                         </div>
                                     </div>
                                 </div>
@@ -132,7 +257,8 @@
                                                     <i class="feather icon-credit-card text-success font-medium-5"></i>
                                                 </div>
                                             </div>
-                                            <h2 class="text-bold-700" title="{{ number_format($total_sell) }} تومان">{{ formatPriceUnits($total_sell) }}</h2>
+                                            <h2 class="text-bold-700" title="{{ number_format($total_sell) }} تومان">
+                                                {{ formatPriceUnits($total_sell) }}</h2>
                                             <p class="mb-0 line-ellipsis">جمع فروش</p>
                                         </div>
                                     </div>
@@ -144,10 +270,10 @@
 
                 </section>
 
+
             </div>
         </div>
     </div>
-
 @endsection
 
 @php
@@ -159,22 +285,22 @@
 
     <script>
         @php
-            $data   = viewers_data(7);
+            $data = viewers_data(7);
             $labels = array_keys($data);
-            $views  = array_values($data);
+            $views = array_values($data);
         @endphp
 
         var viewerChartLabels = [{!! array_to_string($labels) !!}];
-        var ViewerChartData   = [{!! array_to_string($views) !!}];
+        var ViewerChartData = [{!! array_to_string($views) !!}];
 
         @php
-            $data   = ip_data(7);
+            $data = ip_data(7);
             $labels = array_keys($data);
-            $views  = array_values($data);
+            $views = array_values($data);
         @endphp
 
         var ipChartLabels = [{!! array_to_string($labels) !!}];
-        var ipChartData   = [{!! array_to_string($views) !!}];
+        var ipChartData = [{!! array_to_string($views) !!}];
     </script>
     <script src="{{ asset('back/assets/js/pages/dashboard-ecommerce.js') }}"></script>
 @endpush
