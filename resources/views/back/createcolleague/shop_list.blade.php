@@ -50,7 +50,9 @@
                             <div class="mb-3">
                                 <div id="home" class="container tab-pane  mb-5"><br>
 
-
+                                    {{-- <div class="">
+                                        <form action="{{ route() }}"></form>
+                                    </div> --}}
 
                                     <div class="row mt-1 ml-2 mb-2">
                                         <h3>
