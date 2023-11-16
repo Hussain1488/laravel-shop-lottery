@@ -140,6 +140,21 @@
                                             <div class="col-md-3 col-6 pt-2">
                                                 <div class="form-group d-flex align-items-center">
                                                     <h5 for="documents" class="mr-2">
+                                                        توضیحات:
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-6 pt-2">
+                                                <div class="d-flex align-items-center">
+                                                    <textarea class="form-control mt-1 mr-1" name="description"></textarea>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3 col-6 pt-2">
+                                                <div class="form-group d-flex align-items-center">
+                                                    <h5 for="documents" class="mr-2">
                                                         آپلود مدارک
                                                     </h5>
                                                 </div>
