@@ -39,14 +39,27 @@ class CreateColleagueController extends Controller
     // creating new seller from users
     public function shopList($filter = null)
     {
-        if ($filter) {
-            $store = CreateStore::whereHas('user', function ($query) use ($filter) {
-                $query->where('first_name', 'like', '%' . $filter . '%');
-            })->get();
-        } else {
-            $store = createstore::with('user')->get();
-        }
+        // dd($filter);
 
+        // if ($filter) {
+        //     $store = CreateStore::whereHas('user', function ($query) {
+        //         $query->where('first_name', 'like', '%' . $filter . '%');
+        //     })->get();
+        // } else {
+        //     $store = createstore::with('user')->get();
+        // }
+
+        return view('back.createcolleague.shop_list', compact('store'));
+    }
+    public function shopListFilter(Request $request)
+    {
+        $filter = $request->filter;
+        $store = CreateStore::where('nameofstore', 'like', '%' . $filter . '%')->get();
+        // dd($store);
+        if ($store->isEmpty()) {
+            $store = createstore::with('user')->get();
+            toastr()->error('هیچ فروشگاهی برای شما یافت نشد.');
+        }
         return view('back.createcolleague.shop_list', compact('store'));
     }
 

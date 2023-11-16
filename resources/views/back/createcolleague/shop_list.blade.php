@@ -50,9 +50,29 @@
                             <div class="mb-3">
                                 <div id="home" class="container tab-pane  mb-5"><br>
 
-                                    {{-- <div class="">
-                                        <form action="{{ route() }}"></form>
-                                    </div> --}}
+                                    <div class="">
+
+                                        <form action="{{ route('admin.createcolleague.shopListFilter') }}" method="post">
+                                            @csrf
+                                            <div class="row ">
+
+                                                <div class="col-md-6 col-12 d-flex justify-content-around">
+
+                                                    <h4>
+                                                        جستوجو بر اساس نام فروشگاه
+                                                    </h4>
+
+                                                    <div class="d-flex">
+                                                        <input type="text" name="filter"
+                                                            class="form-control w-auto mr-1" placeholder="جستجو">
+                                                        <input type="submit" class="btn btn-info" value="جستجو">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
 
                                     <div class="row mt-1 ml-2 mb-2">
                                         <h3>

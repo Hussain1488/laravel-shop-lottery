@@ -117,6 +117,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     // ------------------ Create colleague
     Route::get('createcolleague/index', [CreateColleagueController::class, 'index'])->name('createcolleague.index');
     Route::get('createcolleague/shopList{filter?}', [CreateColleagueController::class, 'shopList'])->name('createcolleague.shopList');
+    Route::post('createcolleague/shopListFilter', [CreateColleagueController::class, 'shopListFilter'])->name('createcolleague.shopListFilter');
     Route::get('createcolleague/create', [CreateColleagueController::class, 'create'])->name('createcolleague.create');
     Route::get('createcolleague/shopedit/{id}', [CreateColleagueController::class, 'shopedit'])->name('createcolleague.shopedit');
     Route::get('createcolleague/show/{id}', [CreateColleagueController::class, 'show'])->name('createcolleague.show');
