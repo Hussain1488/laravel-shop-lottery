@@ -29,6 +29,7 @@ class ColleagueCreateDocument extends FormRequest
             "namecreditor" => "required",
             "ReCredintAmount" => "required",
             "documents" => "required",
+            "description" => "string|max:700",
         ];
     }
     public function attributes()
@@ -39,6 +40,7 @@ class ColleagueCreateDocument extends FormRequest
             "namecreditor" => "اسم بستانکار",
             "ReCredintAmount" => "مقدار اعتبار",
             "documents" => "اسناد",
+            "description" => "توضیحات",
         ];
     }
 }

@@ -133,6 +133,7 @@
                                                         {{ $message }}
                                                     </span>
                                                 @enderror
+
                                             </div>
                                         </div>
 
@@ -148,7 +149,11 @@
                                                 <div class="d-flex align-items-center">
                                                     <textarea class="form-control mt-1 mr-1" name="description"></textarea>
                                                 </div>
-
+                                                @error('description')
+                                                    <span class="text-danger">
+                                                        {{ $message }}
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="row">

@@ -14,7 +14,7 @@ class AddToCreatedocumentsTable extends Migration
     public function up()
     {
         Schema::table('createdocuments', function (Blueprint $table) {
-            $table->string('description', 700)->nullable();
+            $table->string('description', 710)->nullable();
         });
     }
 
