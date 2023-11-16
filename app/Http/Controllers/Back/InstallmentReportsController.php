@@ -117,6 +117,18 @@ class InstallmentReportsController extends Controller
         $store = createstore::find($payList->store_id);
 
         createstoretransaction::storeTransaction($store, $payList->depositamount, false, 1, 2);
+        // creating new store transaction for mainWallet transaction.
+        // $transaction->create([
+        //     'store_id' => $payList->store_id,
+        //     'datetransaction' => Jalalian::now()->format('Y-m-d'),
+        //     // 1 is for main wallet
+        //     'flag' => 2,
+        //     // pay request
+        //     'typeoftransaction' => 1,
+        //     'price' => $payList->depositamount,
+        //     'finalprice' => $final_price1,
+        //     'documentnumber' => $number1,
+        // ]);
 
         $this->RequestPayment($request->pay_list_id, $request->nameofbank);
 

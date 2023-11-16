@@ -29,11 +29,11 @@ class createstoretransaction extends Model
         $count = createstoretransaction::count();
         if ($count > 0) {
             $number = createstoretransaction::latest()->first()->documentnumber + 1;
-            if (createstoretransaction::exists()) {
+            if (createstoretransaction::where('flag', $flag)->where('store_id', $store->id)->exists()) {
                 if ($status) {
-                    $finalprice = createstoretransaction::latest()->first()->finalprice + $CreditAmount;
+                    $finalprice = createstoretransaction::where('flag', $flag)->where('store_id', $store->id)->latest()->first()->finalprice + $CreditAmount;
                 } else {
-                    $finalprice = createstoretransaction::latest()->first()->finalprice - $CreditAmount;
+                    $finalprice = createstoretransaction::where('flag', $flag)->where('store_id', $store->id)->latest()->first()->finalprice - $CreditAmount;
                 }
             } else {
                 if ($status) {
