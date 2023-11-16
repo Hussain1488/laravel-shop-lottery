@@ -227,19 +227,9 @@ class CooperationSalesController extends Controller
             // $final_price =
         }
 
-        $transaction = createstoretransaction::create([
-            'store_id' => $id,
-            'datetransaction' => Jalalian::now()->format('Y-m-d'),
-            // 1 is for main wallet
-            'flag' => 1,
-            // pay request
-            'typeoftransaction' => 1,
-            'price' => $installment->Creditamount,
-            'finalprice' => $store->salesamount,
-            'documentnumber' => $number,
-        ]);
+        $transaction = createstoretransaction::storeTransaction($store, $installment->Creditamount, true, 1, 1);
 
-        $bank_trans = banktransaction::transaction($store->account_id, $result, false, $transaction->id, 'store');
+        $bank_trans = banktransaction::transaction($store->account_id, $result, true, $transaction, 'store');
 
         $installment->save();
         $store->save();
