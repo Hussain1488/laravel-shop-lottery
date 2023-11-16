@@ -171,7 +171,7 @@ class CooperationSalesController extends Controller
             $final_price1 = -$depositamount;
         }
         // creating new store transaction for mainWallet transaction.
-        $transaction->create([
+        $transaction = createstoretransaction::create([
             'store_id' => $request->store,
             'datetransaction' => Jalalian::now()->format('Y-m-d'),
             // 1 is for main wallet
@@ -185,21 +185,7 @@ class CooperationSalesController extends Controller
         ]);
 
 
-        $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
-        if ($trans->count()  > 0) {
-            $exBalance = $trans->first()->bankbalance - $depositamount;
-        } else {
-            $exBalance = -$depositamount;
-        }
-        // $bank_id = createbankaccounts::where();
-        $banktransaction = banktransaction::create([
-            'bank_id' => $bank_id->id,
-            'transactionprice' => $depositamount,
-            'bankbalance' => $exBalance,
-            'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-            'store_trans_id' => $transaction->id
-
-        ]);
+        $bank_trans = banktransaction::transaction($bank_id, $depositamount, false, $transaction->id, 'store');
 
         $store->save();
 
@@ -254,23 +240,6 @@ class CooperationSalesController extends Controller
             'documentnumber' => $number,
         ]);
 
-        // $incomeBank = BankAccount::find($store->account_id);
-        // $bank_trans_record = banktransaction::where('bank_id', $incomeBank->id)->latest()->get();
-        // if (count($bank_trans_record) > 0) {
-        //     $final1 =
-        //         banktransaction::where('bank_id', $incomeBank->id)->latest()->first()->bankbalance + $result;
-        // } else {
-        //     $final1 = +$result;
-        // }
-        // $incomeTrans = banktransaction::create([
-        //     'bank_id' => $store->account_id,
-        //     'bankbalance' => $final1,
-        //     'transactionprice' => $result,
-        //     'transactionsdate' => Jalalian::now(),
-        //     'store_trans_id' => $transaction->id
-        // ]);
-
-        // public function transaction($bank_id, $creditAmount, $status, $trans_id, $user)
         $bank_trans = banktransaction::transaction($store->account_id, $result, false, $transaction->id, 'store');
 
         $installment->save();
