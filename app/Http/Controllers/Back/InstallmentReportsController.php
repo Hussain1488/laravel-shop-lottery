@@ -441,4 +441,17 @@ class InstallmentReportsController extends Controller
 
         return view('back.installmentreports.banktransaction', compact('transactions', 'total', 'title', 'log'));
     }
+
+    public function paidList()
+    {
+        // dd('hey');
+
+        $paidList = paymentdetails::with('payments.store')->get();
+        $paidList = $paidList->map(function ($item) {
+            $item->date = Jalalian::fromCarbon($item->created_at)->format('Y-m-d');
+            return $item;
+        });
+        // dd($paidList);
+        return view('back.installmentreports.paidList', compact('paidList'));
+    }
 }
