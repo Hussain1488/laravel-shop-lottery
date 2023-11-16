@@ -39,9 +39,9 @@ class CreateColleagueController extends Controller
     // creating new seller from users
     public function shopList()
     {
-     
+
         $store = createstore::with('user')->get();
-      
+
 
         return view('back.createcolleague.shop_list', compact('store'));
     }
@@ -199,24 +199,26 @@ class CreateColleagueController extends Controller
 
 
 
-        $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
-        if ($trans->count()  > 0) {
-            $exBalance = $trans->first()->bankbalance - $storecredit;
-        } else {
-            $exBalance = -$storecredit;
-        }
+        // $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
+        // if ($trans->count()  > 0) {
+        //     $exBalance = $trans->first()->bankbalance - $storecredit;
+        // } else {
+        //     $exBalance = -$storecredit;
+        // }
 
         // ($store, $CreditAmount, $status, $type, $flag)
         $trans_id = createstoretransaction::storeTransaction($store, $storecredit, true, 1, 0);
         // $bank_id = createbankaccounts::where();
-        $banktransaction = banktransaction::create([
-            'bank_id' => $bank_id->id,
-            'transactionprice' => $storecredit,
-            'bankbalance' => $exBalance,
-            'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-            'store_trans_id' => $trans_id
+        // $banktransaction = banktransaction::create([
+        //     'bank_id' => $bank_id->id,
+        //     'transactionprice' => $storecredit,
+        //     'bankbalance' => $exBalance,
+        //     'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+        //     'store_trans_id' => $trans_id
 
-        ]);
+        // ]);
+        // transaction($bank_id, $creditAmount, $status, $trans_id, $user)
+        $bankt_tras = banktransaction::transaction($bank_id->id, $storecredit, false, $trans_id, 'store');
 
 
         // $users = User::where('level', 'user')->get();
@@ -338,24 +340,25 @@ class CreateColleagueController extends Controller
 
         $trans_id = createstoretransaction::storeTransaction($store, $request->storecredit, true, 1, 0);
 
-        $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
-        if ($trans->count()  > 0) {
-            $exBalance = $trans->first()->bankbalance - $request->storecredit;
-        } else {
-            $exBalance = -$request->storecredit;
-        }
+        // $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
+        // if ($trans->count()  > 0) {
+        //     $exBalance = $trans->first()->bankbalance - $request->storecredit;
+        // } else {
+        //     $exBalance = -$request->storecredit;
+        // }
 
         // dd($trans_id);
 
         // $bank_id = createbankaccounts::where();
-        $banktransaction = banktransaction::create([
-            'bank_id' => $bank_id->id,
-            'transactionprice' => $request->storecredit,
-            'bankbalance' => $exBalance,
-            'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-            'store_trans_id' => $trans_id
+        // $banktransaction = banktransaction::create([
+        //     'bank_id' => $bank_id->id,
+        //     'transactionprice' => $request->storecredit,
+        //     'bankbalance' => $exBalance,
+        //     'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+        //     'store_trans_id' => $trans_id
 
-        ]);
+        // ]);
+        $bank_trans = banktransaction::transaction($store->account_id, $request->storecredit, false, $trans_id, 'store');
 
         $store->save();
         toastr()->success('افزایش اعتبار فروشگاه با موفقیت انجام شد.');
@@ -386,9 +389,6 @@ class CreateColleagueController extends Controller
     // storing document store function
     public function createDocumentStore(ColleagueCreateDocument $request)
     {
-
-
-        $bank = new banktransaction();
 
         $user = User::find($request->namecreditor);
 
