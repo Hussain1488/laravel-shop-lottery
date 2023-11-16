@@ -129,7 +129,13 @@
 
                                                     </td>
                                                     <td>
-                                                        {{ \Carbon\Carbon::parse($key->transactionsdate)->format('Y/m/d') }}
+                                                        <span class="transaction_datetime">
+                                                            {{ \Carbon\Carbon::parse($key->transactionsdate)->format('Y-m-d') }}
+                                                            <br>
+                                                            {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                        </span>
+
+
 
                                                     </td>
 

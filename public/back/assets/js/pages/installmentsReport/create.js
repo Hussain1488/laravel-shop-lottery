@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    // $('.transaction_date').pDatePicker();
+
     $('.monyInputSpan').each(function () {
         var input = $(this).text();
         var digits = input.replace(/\D/g, '');

@@ -49,7 +49,7 @@
                                     <div class="row mb-2">
                                         <div class="g-col-6 g-col-sm-12">
                                             <h4>
-                                                مجموعه تراکنش ها 
+                                                مجموعه تراکنش ها
                                             </h4>
                                         </div>
                                         <div class="g-col-6 d-col-sm-12 d-flex align-items-center">
@@ -92,7 +92,12 @@
                                                         {{ $counter++ }}
                                                     </td>
                                                     <td>
-                                                        {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y/m/d') }}
+
+                                                        <span class="transaction_datetime">
+                                                            {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y-m-d') }}
+                                                            <br>
+                                                            {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                        </span>
                                                     </td>
                                                     <td>
                                                         {{ $key->flag == 1 ? 'درخواست برداشت از کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
