@@ -29,11 +29,13 @@
                     <div class="card-header">
                         <div class="m-1">
                             <h2>
-                                <a href="{{ route('admin.createcolleague.create') }}" style="font-size:16px"
-                                    class=""><i style="font-size:30px"
-                                        class="feather icon-plus-circle text-success"></i>ایجاد فروشگاه
+                                @can('createcolleague.create')
+                                    <a href="{{ route('admin.createcolleague.create') }}" style="font-size:16px"
+                                        class=""><i style="font-size:30px"
+                                            class="feather icon-plus-circle text-success"></i>ایجاد فروشگاه
 
-                                </a>
+                                    </a>
+                                @endcan
                             </h2>
                         </div>
                     </div>
@@ -104,9 +106,11 @@
                                                 <th>
                                                     تاریخ ختم قرارداد
                                                 </th>
-                                                <th>
-                                                    عملیات
-                                                </th>
+                                                @can('createcolleague.shopedit')
+                                                    <th>
+                                                        عملیات
+                                                    </th>
+                                                @endcan
                                             </tr>
                                         </thead>
                                         @php
@@ -121,9 +125,13 @@
 
 
                                                     <td>
-                                                        <a href="{{ route('admin.createcolleague.show', [$key->id]) }}">
+                                                        @can('createcolleague.show')
+                                                            <a href="{{ route('admin.createcolleague.show', [$key->id]) }}">
+                                                                {{ $key->nameofstore }}
+                                                            </a>
+                                                        @else
                                                             {{ $key->nameofstore }}
-                                                        </a>
+                                                        @endcan
                                                     </td>
                                                     <td>
                                                         {{ $key->user->first_name . ' ' . $key->user->last_name }}
@@ -142,13 +150,15 @@
                                                         {{ \Carbon\Carbon::parse($key->enddate)->format('Y/m/d') }}
 
                                                     </td>
-                                                    <td>
-                                                        <a href="{{ route('admin.createcolleague.shopedit', [$key->id]) }}"
-                                                            class="text-success">
-                                                            <i class="feather icon-edit"></i>
-                                                        </a>
+                                                    @can('createcolleague.shopedit')
+                                                        <td>
+                                                            <a href="{{ route('admin.createcolleague.shopedit', [$key->id]) }}"
+                                                                class="text-success">
+                                                                <i class="feather icon-edit"></i>
+                                                            </a>
 
-                                                    </td>
+                                                        </td>
+                                                    @endcan
 
                                                 </tr>
                                             @endforeach
