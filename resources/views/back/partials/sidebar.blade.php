@@ -40,83 +40,69 @@
                     </ul>
                 </li>
             @endcan
+            @if (optional(Auth::user()->store)->exists())
+                @can('cooperationsales')
+                    <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
+                                class="feather icon-users"></i><span class="menu-title"> همکاران</span></a>
+                        <ul class="menu-content">
+                            @can('cooperationsales.index')
+                                <li class="{{ active_class('admin.cooperationsales.index') }}">
+                                    <a href="{{ route('admin.cooperationsales.index') }}"><i
+                                            class="feather icon-circle"></i><span class="menu-item">لیست فروش </span></a>
+                                </li>
+                            @endcan
 
-            @can('operatoractivity')
-                <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
-                            class="feather icon-users"></i><span class="menu-title"> فعالیت های اپراتورها</span></a>
-                    <ul class="menu-content">
-                        @can('operator activity.index')
-                            <li class="{{ active_class('admin.cooperationsales.index') }}">
-                                <a href="{{ route('admin.cooperationsales.index') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item">لیست فروش </span></a>
-                            </li>
-                        @endcan
+                            @can('cooperationsales.create')
+                                <li class="{{ active_class('admin.cooperationsales.create') }}">
+                                    <a href="{{ route('admin.cooperationsales.create') }}"><i
+                                            class="feather icon-circle"></i><span class="menu-item">ایجاد قسط</span></a>
+                                </li>
+                            @endcan
 
-                  
-
-
-                    </ul>
-                </li>
-            @endcan
-
-            @can('cooperationsales')
-                <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
-                            class="feather icon-users"></i><span class="menu-title"> همکاران</span></a>
-                    <ul class="menu-content">
-                        @can('cooperationsales.index')
-                            <li class="{{ active_class('admin.cooperationsales.index') }}">
-                                <a href="{{ route('admin.cooperationsales.index') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item">لیست فروش </span></a>
-                            </li>
-                        @endcan
-
-                        @can('cooperationsales.create')
-                            <li class="{{ active_class('admin.cooperationsales.create') }}">
-                                <a href="{{ route('admin.cooperationsales.create') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item">ایجاد قسط</span></a>
-                            </li>
-                        @endcan
-
-                        @can('cooperationsales.Income')
-                            <li class="{{ active_class('admin.cooperationsales.Income') }}">
-                                <a href="{{ route('admin.cooperationsales.Income') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item"> اقساط پرداخت شده کاربر </span></a>
-                            </li>
-                        @endcan
+                            @can('cooperationsales.Income')
+                                <li class="{{ active_class('admin.cooperationsales.Income') }}">
+                                    <a href="{{ route('admin.cooperationsales.Income') }}"><i
+                                            class="feather icon-circle"></i><span class="menu-item"> اقساط پرداخت شده کاربر
+                                        </span></a>
+                                </li>
+                            @endcan
 
 
-                        @can('cooperationsales.clearing')
-                            <li class="{{ active_class('admin.cooperationsales.clearing') }}">
-                                <a href="{{ route('admin.cooperationsales.clearing') }}"><i
-                                        class="feather icon-circle"></i><span class="menu-item"> درخواست تسویه حساب </span></a>
-                            </li>
-                        @endcan
-                        @can('cooperationsales.mainWallet')
-                            <li class="{{ active_class('admin.cooperationsales.mainWallet') }}">
-                                <a href="{{ route('admin.cooperationsales.mainWallet', [Auth::user()->store->id]) }}"><i
-                                        class="feather icon-circle"></i><span class="menu-item">تراکنش های کیف پول
-                                        اصلی</span></a>
-                            </li>
-                        @endcan
-                        @can('cooperationsales.payRequestWallet')
-                            <li class="{{ active_class('admin.cooperationsales.payRequestWallet') }}">
-                                <a href="{{ route('admin.cooperationsales.payRequestWallet', [Auth::user()->store->id]) }}"><i
-                                        class="feather icon-circle"></i><span class="menu-item">تراکنش های درخواست
-                                        واریز</span></a>
-                            </li>
-                        @endcan
-                        @can('cooperationsales.paidSales')
-                            <li class="{{ active_class('admin.cooperationsales.paidSales') }}">
-                                <a href="{{ route('admin.cooperationsales.paidSales', [Auth::user()->store->id]) }}"><i
-                                        class="feather icon-circle"></i><span class="menu-item">تراکنش های فروش های پرداخت
-                                        شده</span></a>
-                            </li>
-                        @endcan
+                            @can('cooperationsales.clearing')
+                                <li class="{{ active_class('admin.cooperationsales.clearing') }}">
+                                    <a href="{{ route('admin.cooperationsales.clearing') }}"><i
+                                            class="feather icon-circle"></i><span class="menu-item"> درخواست تسویه حساب
+                                        </span></a>
+                                </li>
+                            @endcan
+                            @can('cooperationsales.mainWallet')
+                                <li class="{{ active_class('admin.cooperationsales.mainWallet') }}">
+                                    <a href="{{ route('admin.cooperationsales.mainWallet', [Auth::user()->store->id]) }}"><i
+                                            class="feather icon-circle"></i><span class="menu-item">تراکنش های کیف پول
+                                            اصلی</span></a>
+                                </li>
+                            @endcan
+                            @can('cooperationsales.payRequestWallet')
+                                <li class="{{ active_class('admin.cooperationsales.payRequestWallet') }}">
+                                    <a
+                                        href="{{ route('admin.cooperationsales.payRequestWallet', [Auth::user()->store->id]) }}"><i
+                                            class="feather icon-circle"></i><span class="menu-item">تراکنش های درخواست
+                                            واریز</span></a>
+                                </li>
+                            @endcan
+                            @can('cooperationsales.paidSales')
+                                <li class="{{ active_class('admin.cooperationsales.paidSales') }}">
+                                    <a href="{{ route('admin.cooperationsales.paidSales', [Auth::user()->store->id]) }}"><i
+                                            class="feather icon-circle"></i><span class="menu-item">تراکنش های فروش های پرداخت
+                                            شده</span></a>
+                                </li>
+                            @endcan
 
 
-                    </ul>
-                </li>
-            @endcan
+                        </ul>
+                    </li>
+                @endcan
+            @endif
 
             @can('installmentpurchase')
                 <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
