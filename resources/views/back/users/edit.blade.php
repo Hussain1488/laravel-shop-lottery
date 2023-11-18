@@ -81,12 +81,12 @@
                                                     <select id="level" class="form-control" name="level">
                                                         <option {{ $user->level == 'user' ? 'selected' : '' }}
                                                             value="user">کاربر عادی</option>
-                                                        <option {{ $user->level == 'seller' ? 'selected' : '' }}
-                                                            value="seller"> فروشنده </option>
                                                         <option {{ $user->level == 'admin' ? 'selected' : '' }}
                                                             value="admin">مدیر وبسایت</option>
+                                                        {{-- <option {{ $user->level == 'seller' ? 'selected' : '' }}
+                                                            value="seller"> فروشنده </option>
                                                         <option {{ $user->level == 'creator' ? 'selected' : '' }}
-                                                            value="creator">سازنده</option>
+                                                            value="creator">سازنده</option> --}}
                                                     </select>
                                                 </div>
                                             </div>
