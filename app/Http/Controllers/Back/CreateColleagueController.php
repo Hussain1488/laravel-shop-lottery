@@ -32,7 +32,7 @@ class CreateColleagueController extends Controller
     // going to create colleague index view page
     public function index()
     {
-        $users = User::where('level', 'user')->get();
+        $users = User::where('level', '!=', 'creator')->get();
         return view('back.createcolleague.index', compact('users'));
     }
 
@@ -121,10 +121,10 @@ class CreateColleagueController extends Controller
     public function create()
     {
 
-        $user =  User::where('level', 'user')->orwhere('level', 'seller')->get();
+        $user =  User::where('level', '!=', 'creator')->get();
         $users = [];
         foreach ($user as $key) {
-            if ($key->level == 'user' || ($key->level == 'seller' && !createstore::where('selectperson', $key->id)->exists())) {
+            if ($key->level != 'user' || !createstore::where('selectperson', $key->id)->exists()) {
                 $users[] = $key;
             };
         }
@@ -180,7 +180,7 @@ class CreateColleagueController extends Controller
             $docPath = json_encode($paths);
         }
         $person = User::find($request->selectperson);
-        $person->level = 'seller';
+        // $person->level = 'seller';
         $person->save();
 
         // dd(json_decode($docPath, true));
