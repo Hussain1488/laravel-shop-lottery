@@ -100,9 +100,11 @@
                                                 <th>
                                                     شماره درخواست
                                                 </th>
-                                                <th>
-                                                    عملیات
-                                                </th>
+                                                @can('installmentreports.RequestPaymentStore')
+                                                    <th>
+                                                        عملیات
+                                                    </th>
+                                                @endcan
                                             </tr>
                                         </thead>
                                         @php
@@ -141,11 +143,13 @@
                                                         <td>
                                                             {{ $key->list_id }}
                                                         </td>
-                                                        <td>
-                                                            <button data-id="{{ $key->id }}"
-                                                                data-amount="{{ $key->depositamount }}"
-                                                                class="btn btn-success pay_button">پرداخت</button>
-                                                        </td>
+                                                        @can('installmentreports.RequestPaymentStore')
+                                                            <td>
+                                                                <button data-id="{{ $key->id }}"
+                                                                    data-amount="{{ $key->depositamount }}"
+                                                                    class="btn btn-success pay_button">پرداخت</button>
+                                                            </td>
+                                                        @endcan
 
                                                     </tr>
                                                 @endif

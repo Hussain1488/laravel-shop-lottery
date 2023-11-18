@@ -28,11 +28,13 @@
                         <div>
                             <div class="m-1">
                                 <h2>
-                                    <a href="{{ route('admin.installmentreports.createinternalaccount') }}"
-                                        style="font-size:16px" class=""><i style="font-size:30px"
-                                            class="feather icon-plus-circle text-success"></i> ایجاد
-                                        حساب
-                                    </a>
+                                    @can('installmentreports.createinternalaccount')
+                                        <a href="{{ route('admin.installmentreports.createinternalaccount') }}"
+                                            style="font-size:16px" class=""><i style="font-size:30px"
+                                                class="feather icon-plus-circle text-success"></i> ایجاد
+                                            حساب
+                                        </a>
+                                    @endcan
                                 </h2>
                             </div>
                             <div class="mx-2 my-2">
