@@ -105,10 +105,10 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('cooperationsales/changeStatus/{id}', [CooperationSalesController::class, 'changeStatus'])->name('cooperationsales.changeStatus');
     Route::post('cooperationsales/store', [CooperationSalesController::class, 'store'])->name('cooperationsales.store');
     Route::post('cooperationsales/clearing', [CooperationSalesController::class, 'clearingStore'])->name('cooperationsales.clearing.store');
-    Route::get('installments/payrequest/{store_id}/{installments_id}', [CooperationSalesController::class, 'Pa\yRequest'])->name('installments.payrequest');
-    Route::get('installments/mainWallet/{store_id}', [CooperationSalesController::class, 'mainWallet'])->name('cooperationsales.mainWallet');
-    Route::get('installments/payRequestWallet/{store_id}', [CooperationSalesController::class, 'payRequestWallet'])->name('cooperationsales.payRequestWallet');
-    Route::get('installments/paidSales/{store_id}', [CooperationSalesController::class, 'paidSales'])->name('cooperationsales.paidSales');
+    Route::get('cooperationsales/payrequest/{store_id}/{installments_id}', [CooperationSalesController::class, 'PayRequest'])->name('installments.payrequest');
+    Route::get('cooperationsales/mainWallet/{store_id}', [CooperationSalesController::class, 'mainWallet'])->name('cooperationsales.mainWallet');
+    Route::get('cooperationsales/payRequestWallet/{store_id}', [CooperationSalesController::class, 'payRequestWallet'])->name('cooperationsales.payRequestWallet');
+    Route::get('cooperationsales/paidSales/{store_id}', [CooperationSalesController::class, 'paidSales'])->name('cooperationsales.paidSales');
 
 
     // ------------------ installmentpurchase
@@ -123,14 +123,14 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('createcolleague/show/{id}', [CreateColleagueController::class, 'show'])->name('createcolleague.show');
     Route::put('createcolleague/shopUpdate/{id}', [CreateColleagueController::class, 'shopUpdate'])->name('createcolleague.shopUpdate');
     Route::post('createcolleague/store', [CreateColleagueController::class, 'store'])->name('createcolleague.store');
-    Route::post('admin.colleagueCredit/store', [CreateColleagueController::class, 'colleagueCreditStore'])->name('colleagueCredit.store');
+    Route::post('createcolleague/Creditstore', [CreateColleagueController::class, 'colleagueCreditStore'])->name('createcolleague.Creditstore');
     Route::get('createcolleague/createcreditoperator', [CreateColleagueController::class, 'createcreditoperator'])->name('createcolleague.createcreditoperator');
     Route::post('createcolleague/storecreditoperator', [CreateColleagueController::class, 'storecreditoperator'])->name('createcolleague.storecreditoperator');
     Route::get('createcolleague/createdocument', [CreateColleagueController::class, 'createdocument'])->name('createcolleague.createdocument');
     Route::get('createcolleague/resalecredit', [CreateColleagueController::class, 'resalecredit'])->name('createcolleague.resalecredit');
     Route::get('createcolleague/reaccreditation', [CreateColleagueController::class, 'reaccreditationIndex'])->name('createcolleague.reaccreditation.index');
     Route::post('createcolleague/reaccreditationStore', [CreateColleagueController::class, 'reaccreditationStore'])->name('createcolleague.reaccreditation.store');
-    Route::post('createcolleague/createDocumentStore', [CreateColleagueController::class, 'createDocumentStore'])->name('colleagueDocument.store');
+    Route::post('createcolleague/createDocumentStore', [CreateColleagueController::class, 'createDocumentStore'])->name('createcolleague.Documentstore');
 
     // ------------------ installment Reports
     Route::get('installmentreports/index', [InstallmentReportsController::class, 'index'])->name('installmentreports.index');
@@ -145,7 +145,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('installmentreports/filter', [InstallmentReportsController::class, 'filter'])->name('installments.filter');
     Route::get('installmentreports/filter1', [InstallmentReportsController::class, 'filter1'])->name('installments.filter1');
     Route::get('installmentreports/filter2', [InstallmentReportsController::class, 'filter2'])->name('installments.filter2');
-    Route::get('installmentreports/banktransaction', [InstallmentReportsController::class, 'banktransaction'])->name('installmentreports.banktransaction');
+    Route::get('installmentreports/banktransaction', [InstallmentReportsController::class, 'banktransaction'])->name('installments.banktransaction');
     Route::get('installments/refuse/{id}', [InstallmentReportsController::class, 'refuse'])->name('installments.usrestatus.refuse');
     Route::get('installments/shop_installments/{id}/{slug}', [InstallmentReportsController::class, 'show_shop_installments'])->name('installments.shop.installments');
     Route::get('installments/shop_installments/filter', [InstallmentReportsController::class, 'show_shop_installments_filter'])->name('installments.shop.installments.filter');
