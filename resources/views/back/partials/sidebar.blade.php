@@ -104,6 +104,21 @@
                 @endcan
             @endif
 
+            @can('operatoractivity')
+                <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
+                            class="feather icon-users"></i><span class="menu-title"> فعالیت های اپراتورها</span></a>
+                    <ul class="menu-content">
+                        @can('operatoractivity.index')
+                            <li class="{{ active_class('admin.operatoractivity.index') }}">
+                                <a href="{{ route('admin.operatoractivity.index') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item">لیست اپراتور </span></a>
+                            </li>
+                        @endcan
+
+                    </ul>
+                </li>
+            @endcan
+
             @can('installmentpurchase')
                 <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
                             class="feather icon-users"></i><span class="menu-title"> خریدار</span></a>
@@ -157,7 +172,8 @@
                         @can('createcolleague.reaccreditation.index')
                             <li class="{{ active_class('admin.createcolleague.reaccreditation.index') }}">
                                 <a href="{{ route('admin.createcolleague.reaccreditation.index') }}"><i
-                                        class="feather icon-circle"></i><span class="menu-item">افزایش اعتبار فروشگاه</span></a>
+                                        class="feather icon-circle"></i><span class="menu-item">افزایش اعتبار
+                                        فروشگاه</span></a>
                             </li>
                         @endcan
 
