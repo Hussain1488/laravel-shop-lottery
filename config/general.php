@@ -23,6 +23,7 @@ return [
             ]
         ],
 
+
         'posts' => [
             'title'  => 'مدیریت نوشته ها',
             'values' => [
@@ -269,6 +270,72 @@ return [
                 'gateway'            => 'درگاه های پرداخت',
                 'others'             => 'تنظیمات دیگر',
                 'sms'                => 'تنظیمات پیامک',
+            ]
+        ],
+        'cooperationsales' => [
+            'title' =>  'همکاران',
+            'values' => [
+                'index' => 'لیست فروش',
+                'create' => 'ایجاد قسط',
+                'Income' => 'اقساط پرداخت شده کاربر',
+                'clearing' => 'درخواست تسویه حساب',
+                // 'changeStatus' => 'تغیر وضعیت قسط',
+                'store' => 'ذخیره قسط',
+                // 'clearing.store' => 'ثبت درخواست تسویه',
+                'mainWallet' => 'کیف پول اصلی',
+                'payRequestWallet' => 'تراکنش های درخواست واریز',
+                'paidSales' => 'تراکنش های فورشات پرداخت شده',
+            ]
+        ],
+        // 'installments' => [
+        //     'title' =>  'اقساط',
+        //     'values' => [
+
+
+        //         // 'shop.installments.filter' => 'فیلتر اقساط فروشگاه',
+        //         // 'shop.installments.filter_name' => 'فیلتر اقساط فروشگاه با اسم',
+
+        //     ]
+        // ],
+        'installmentreports' => [
+            'title' =>  'گزارش اقساط',
+            'values' => [
+                'index' => 'لیست تمامی اقساط',
+                'usrestatus.refuse' => 'انصراف از خرید قسط',
+                'payRequestList' => 'لیست درخواست تسویه',
+                'RequestPaymentStore' => 'ثبت تسویه درخواست تسویه',
+                // 'shop.installments' => 'اقساط فروشگاه',
+                // 'filter' => 'فیلتر قسط وضعیت انتظار',
+                // 'filter1' => 'فیلتر قسط وضعیت پرداخت نشده',
+                // 'filter2' => 'فیلتر قسط وضعیت پرداخت شده',
+                // 'transactionFilter' => 'فیلتر تراکنش ها',
+                'banklist' => 'لیست بانک ها',
+                'storebank' => 'ذخیره بانک جدید',
+                'paidList' => 'لیست پرداخت ها',
+                'createinternalaccount' => 'ایجاد حساب داخلی',
+
+            ]
+        ],
+        'createcolleague' => [
+            'title' =>  'ایجاد همکار',
+            'values' => [
+                'index' => 'اعتبار دهی به خریدار',
+                'create' => 'ایجاد فروشگاه',
+                'shopList' => 'لیست فروشگاه ها',
+                // 'store' => 'ذخیره فروشگاه جدید',
+                // 'shopListFilter' => 'فیلتر لیست فروشگاه',
+                'shopedit' => 'ویرایش فروشگاه',
+                'show' => 'جزئیات فروشگاه',
+                // 'shopUpdate' => 'آپدیت فروشگاه',
+                'reaccreditation.index' => 'صفحه افزایش اعتبار فروشگاه ',
+                // 'reaccreditation.store' => 'ذخیره افزایش اعتبار فروشگاه',
+                // 'Creditstore' => 'ذخیره افزایش اعتبار فروشگاه',
+                // 'createcreditoperator' => 'ساخت اپراتور اعتبار دهی',
+                // 'storecreditoperator' => 'ذخیره اپراتور اعتبار دهی',
+                'createdocument' => 'ایجاد سند مالی',
+                // 'Documentstore' => 'ذخیره ایجاد سند مالی',
+                // 'resalecredit' => 'لیست پرداخت ها',
+
             ]
         ],
 
