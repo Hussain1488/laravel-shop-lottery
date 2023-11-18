@@ -45,15 +45,12 @@
                 <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
                             class="feather icon-users"></i><span class="menu-title"> فعالیت های اپراتورها</span></a>
                     <ul class="menu-content">
-                        @can('operator activity.index')
-                            <li class="{{ active_class('admin.cooperationsales.index') }}">
-                                <a href="{{ route('admin.cooperationsales.index') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item">لیست فروش </span></a>
+                        @can('operatoractivity.index')
+                            <li class="{{ active_class('admin.operatoractivity.index') }}">
+                                <a href="{{ route('admin.operatoractivity.index') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item">لیست اپراتور </span></a>
                             </li>
                         @endcan
-
-                  
-
 
                     </ul>
                 </li>

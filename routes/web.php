@@ -8,6 +8,8 @@ use App\Http\Controllers\Back\LinkController;
 use App\Http\Controllers\Back\installmentpurchaseController;
 use App\Http\Controllers\Back\CreateColleagueController;
 use App\Http\Controllers\Back\InstallmentReportsController;
+use App\Http\Controllers\Back\OperatorActivityController;
+
 
 use App\Http\Controllers\Back\MainController;
 use App\Http\Controllers\Back\MenuController;
@@ -95,7 +97,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::post('backups/create', [BackupController::class, 'create'])->name('backups.create');
     Route::get('backups/{backup}/download', [BackupController::class, 'download'])->name('backups.download');
     Route::delete('backups/{backup}', [BackupController::class, 'destroy'])->name('backups.destroy');
-
+    
 
     // ------------------ cooperation Sales
     Route::get('cooperationsales/index', [CooperationSalesController::class, 'index'])->name('cooperationsales.index');
@@ -110,6 +112,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('installments/payRequestWallet/{store_id}', [CooperationSalesController::class, 'payRequestWallet'])->name('cooperationsales.payRequestWallet');
     Route::get('installments/paidSales/{store_id}', [CooperationSalesController::class, 'paidSales'])->name('cooperationsales.paidSales');
 
+    // ------------------ OperatorActivity
+    Route::get('operatoractivity/index', [OperatorActivityController::class, 'index'])->name('operatoractivity.index');
 
     // ------------------ installmentpurchase
     Route::get('installmentpurchase/index', [installmentpurchaseController::class, 'index'])->name('installmentpurchase.index');
