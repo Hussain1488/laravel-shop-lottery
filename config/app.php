@@ -184,7 +184,6 @@ return [
         Shetabit\Payment\Provider\PaymentServiceProvider::class,
         Codedge\Updater\UpdaterServiceProvider::class,
         Melipayamak\Laravel\ServiceProvider::class,
-
         /*
          * Application Service Providers...
          */
