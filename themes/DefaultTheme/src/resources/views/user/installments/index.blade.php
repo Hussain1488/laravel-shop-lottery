@@ -102,8 +102,9 @@
                                                             </div>
                                                             <div class="col-md-6 col-12 d-flex justify-content-end">
                                                                 <div class=""><input type="button"
+                                                                        data-url="{{ route('front.wallet.codeGenerate') }}"
                                                                         value="شارژ کیف پول" class="btn btn-success"
-                                                                        id="wallet_recharg_button"></div>
+                                                                        id="wallet_recharg_button1"></div>
 
                                                             </div>
                                                         </div>
@@ -138,9 +139,12 @@
                                                                             <a href="{{ route('front.installments.usrestatus.refuse', [$key->id]) }}"
                                                                                 class="btn btn-warning ml-1"
                                                                                 style="">انصراف</a>
-                                                                            <a href="{{ route('front.installments.usrestatus.edit', [$key->id]) }}"
-                                                                                class="btn btn-success"
-                                                                                style="">پرداخت</a>
+                                                                            <input type="button"
+                                                                                data-url="{{ route('front.wallet.codeGenerate') }}"
+                                                                                data-href="{{ route('front.installments.usrestatus.edit', [$key->id]) }}"
+                                                                                class="btn btn-success smsGeneratButton"
+                                                                                id="pre_pay_button" style=""
+                                                                                value="پرداخت">
                                                                         </div>
 
                                                                     </div>
@@ -161,8 +165,8 @@
                                                                     </label>
                                                                     <div class="d-flex">
                                                                         <input readonly type="text"
-                                                                            class="form-control moneyInput" id="first_name"
-                                                                            name="first_name"
+                                                                            class="form-control moneyInput"
+                                                                            id="first_name" name="first_name"
                                                                             value="{{ $user->purchasecredit != null ? $user->purchasecredit : 0 }}">
                                                                     </div>
 
@@ -190,46 +194,7 @@
 
                                                             </div>
                                                         </div>
-                                                        {{-- @foreach ($installmentsm as $key)
-                                                @if ($key->statususer == 1)
-                                                    <div class="border rounded p-2 my-1">
-                                                        <div class="row text-center " style="flex-direction: column;">
-                                                            <h5>
-                                                                {{ $key->user->username }} </h5>
-                                                        </div>
 
-                                                        <div class="row my-1">
-                                                            <div class="col-5">
-                                                                1402/2/2
-                                                            </div>
-                                                            <div class="col-7">
-                                                                مبلغ قسط {{ $key->Creditamount }} ریال
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="row m-2">
-                                                            مقدار جریمه دیر کرد ۰ ریال
-                                                        </div>
-
-                                                        <div class="row m-2">
-                                                            وضعیت: پرداخت شده در تاریخ ۱۴۰۲/۸/۲۵
-                                                        </div>
-                                                        <div class="row px-3">
-
-                                                            <div class="col d-flex justify-content-center">
-                                                                <a href="{{ route('front.installments.usrestatus.refuse', [$key->id]) }}"
-                                                                    class="btn btn-warning" style="">انصراف</a>
-                                                            </div>
-                                                            <div class="col d-flex justify-content-center">
-                                                                <a href="{{ route('front.installments.usrestatus.pay', [$key->id]) }}"
-                                                                    class="btn btn-success" style="">پرداخت</a>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                @endif
-                                            @endforeach --}}
                                                         @foreach ($installmentsm as $value)
                                                             @if ($value->statususer == 1)
                                                                 @foreach ($value->installments as $key)
@@ -276,9 +241,12 @@
                                                                                 <div class="">
 
 
-                                                                                    <a href="{{ route('front.installments.paymentStatus.edit', ['id1' => $key->id, 'id2' => $value->id]) }}"
+                                                                                    <input type='button'
+                                                                                        data-url="{{ route('front.wallet.codeGenerate') }}"
+                                                                                        data-href="{{ route('front.installments.paymentStatus.edit', ['id1' => $key->id, 'id2' => $value->id]) }}"
                                                                                         class="btn btn-info btn-sm"
-                                                                                        style="">پرداخت</a>
+                                                                                        style=""value="پرداخت"
+                                                                                        id="insta_pay_button" />
                                                                                 </div>
                                                                             </div>
 
@@ -418,7 +386,7 @@
 @include('back.partials.plugins', ['plugins' => ['jquery.validate']])
 @push('scripts')
     <!-- show Modal -->
-    <div class="modal fade" id="my-modal">
+    <div class="modal fade" id="rechargeForm1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
@@ -432,7 +400,7 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form id="payment_form" action="{{ route('front.wallet.recharge') }}" method="POST"
+                    <form id="payment_form1" action="{{ route('front.wallet.rechargeVarify') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <input id="user_id" type="hidden" value="{{ Auth::user()->id }}" name="user_id">
@@ -445,13 +413,13 @@
                             </div>
                         </div>
                         <div class="row d-flex justify-center my-1">
-                            <div id="validation-messages"></div>
+                            <div id="validation-messages1"></div>
 
                             <span class="text-danger" style="display: none">لطفا فورم را دقیق پر کرده بعد کلید
                                 تأیید را بزنید.</span>
                         </div>
                         <div class="modal-footer d-flex justify-content-between">
-                            <input type="submit" id="submit_form_pay" class="btn btn-success" value="تأیید">
+                            <input type="submit" id="submit_form_pay1" class="btn btn-success" value="تأیید">
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="انصراف">
                         </div>
                     </form>
@@ -467,8 +435,64 @@
             </div>
         </div>
     </div>
+    <!-- show Modal -->
+    <div class="modal fade" id="smsVarifyModal1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <span id="code_error1" class="alert alert-danger d-none m-2" role="alert">
+                </span>
 
 
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">درخواست تسویه حساب به مبلغ:<span class="text-success"
+                            id="deposit_amount_show1"></span>ریال
+                    </h4>
+                </div>
+                <hr />
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="message-light">
+                        {{ trans('front::messages.auth.for-mobile-number') }} {{ $user->username }}
+                        {{ trans('front::messages.auth.confirmation-code-sent') }}
+                    </div>
+
+                    <form id="code_varification1" action="{{ route('front.wallet.sentCode') }}" method="post">
+                        @csrf
+
+                        <input name="mobile" type="hidden" value="{{ $user->username }}">
+                        <div class="form-row">
+                            <div class="numbers-verify form-content form-content1">
+                                <input name="verify_code" class="activation-code-input" id='activation-code-input1'
+                                    placeholder="{{ trans('front::messages.auth.enter-auth-code') }}">
+                            </div>
+                        </div>
+                        <div class="form-row mt-2">
+                            <span
+                                class="text-primary">{{ trans('front::messages.auth.retrieve-verification-code') }}</span>
+                            (<p data-action="#" id="countdown-verify-end1"></p>)
+                        </div>
+                        <div class="form-row mt-3">
+                            <button data-url="{{ route('front.wallet.sentCode') }}" type="button" id="sendCode1"
+                                class="btn-primary-cm btn-with-icon mx-auto w-100">
+                                <i class="mdi mdi-check"></i>
+                                {{ trans('front::messages.auth.confirm-mobile-number') }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+
+                <div class="modal-footer">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
     <script>
         $('refuse_button').on('click', function() {
             $('#history-show-modal').modal('show');
