@@ -37,4 +37,7 @@ $(document).ready(function () {
         }
         return x1 + x2;
     }
+    $('.activation-code-input').activationCodeInput({
+        number: 5
+    });
 });
