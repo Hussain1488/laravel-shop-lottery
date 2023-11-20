@@ -65,7 +65,7 @@ class InstallmentsController extends Controller
             // dd('ehy');
             $bank_id = $bank->id;
         } else {
-            return redirect()->back()->with('warning', 'درخواست شماب با مشکل مواجه شده است،‌لطفا با مرکز تماس بگیرید!');
+            return response()->json('data', 'درخواست شماب با مشکل مواجه شده است،‌لطفا با مرکز تماس بگیرید!');
         }
 
         // dd($user->inventory, $installments->prepaidamount, $user->purchasecredit, $installments->prepaidamount);
