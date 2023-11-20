@@ -11,28 +11,33 @@ class MelipayamakSms extends SmsService implements SmsContract, SmsNotificationC
 {
     public function send()
     {
+
+        // dd(option()->all());
         $method = $this->method();
         $data   = $this->$method();
 
         $input_data   = $data['input_data'];
         $mobile       = $this->mobile();
-        $bodyId       = $data['bodyId'];
+
 
         try {
-            $username  = option('MELIPAYAMAK_PANEL_USERNAME');
-            $password  = option('MELIPAYAMAK_PANEL_PASSWORD');
-            $api       = new MelipayamakApi($username, $password);
-            $sms       = $api->sms('soap');
-            $to        = $mobile;
-            $text      = implode(';', $input_data);
-            $response  = $sms->sendByBaseNumber($text, $to, $bodyId);
-
-            $message = json_encode($response);
+            $username = option('MELIPAYAMAK_PANEL_USERNAME');
+            $password = option('MELIPAYAMAK_PANEL_PASSWORD');
+            $api = new MelipayamakApi($username, $password);
+            $sms = $api->sms();
+            $to = $mobile;
+            $from = '50004001000143';
+            $text = $this->type['string'] . ' :' . implode(', ', $input_data);
+            $response = $sms->send($to, $from, $text);
+            $json = json_decode($response);
+            echo $json->Value; //RecId or Error Number
         } catch (Exception $e) {
-            $message = $e->getMessage();
+            echo $e->getMessage();
+            // dd($e->getMessage());
         }
 
-        return $message;
+
+        return;
     }
 
     public function verifyCode()
