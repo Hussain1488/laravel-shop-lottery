@@ -58,6 +58,8 @@ function accountType() {
         $('#Acount_number_prefix').val(24);
     } else if (account_type == 'واسط اعتبار فروش فروشگاه ها') {
         $('#Acount_number_prefix').val(25);
+    } else if (account_type == 'مقدار اعتبار خرید خریدارها') {
+        $('#Acount_number_prefix').val(26);
     }
 }
 
