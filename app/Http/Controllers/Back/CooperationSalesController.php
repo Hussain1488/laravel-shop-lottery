@@ -241,8 +241,8 @@ class CooperationSalesController extends Controller
         // dd($_ENV['MELIPAYAMAK_USER']);
 
         try {
-            $username = $_ENV['MELIPAYAMAK_USER'];
-            $password = $_ENV['MELIPAYAMAK_PASSWORD'];;
+            $username = '989155000143';
+            $password = '7CHRT';
             $api = new MelipayamakApi($username, $password);
             $sms = $api->sms();
             $to = '09038261488';
