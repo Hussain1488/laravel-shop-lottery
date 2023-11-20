@@ -35,7 +35,7 @@
                         <div class="container mt-3">
 
 
-                            <form action="{{ route('admin.colleagueDocument.store') }}" method="POST"
+                            <form action="{{ route('admin.createcolleague.store') }}" method="POST"
                                 enctype="multipart/form-data" id="colleagueDocumentStore">
                                 @csrf
                                 <input readonly name="numberofdocuments" type="hidden" value="{{ $number }}">
