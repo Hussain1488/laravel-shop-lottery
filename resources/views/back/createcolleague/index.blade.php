@@ -35,7 +35,7 @@
 
                              {{-- giving creadit to users from seller --}}
 
-                             <form action="{{ route('admin.colleagueCredit.store') }}" method="POST"
+                             <form action="{{ route('admin.createcolleague.Creditstore') }}" method="POST"
                                  enctype="multipart/form-data" id="createCredit">
                                  @csrf
 
@@ -171,7 +171,7 @@
                                              <div class="col d-flex align-items-baseline justify-content-center">
                                                  <input type="button" id="summit_button1"
                                                      class="btn btn-primary my-1"value=" تأیید
-                                                                                                                                                                                                                                                                            تغییرات" />
+                                                                                                                                                                                                                                                                                    تغییرات" />
                                              </div>
                                              <div class="col d-flex align-items-baseline justify-content-center">
                                                  <a href="" class="btn btn-danger my-1">انصراف </a>
