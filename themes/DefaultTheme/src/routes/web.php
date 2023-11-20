@@ -96,7 +96,9 @@ Route::group(['as' => 'front.'], function () {
 
         // ------------------ wallet
         Route::resource('wallet', WalletController::class)->only(['index', 'show', 'create', 'store']);
-        Route::post('wallet/recharge', [WalletController::class, 'recharge'])->name('wallet.recharge');
+        Route::post('wallet/rechargeVarify', [WalletController::class, 'rechargeVarify'])->name('wallet.rechargeVarify');
+        Route::get('wallets/codeGenerate', [WalletController::class, 'codeGenerate'])->name('wallet.codeGenerate');
+        Route::post('wallet/sendCode', [WalletController::class, 'sendCode'])->name('wallet.sentCode');
 
         // installmentsController
         Route::resource('installments', InstallmentsController::class)->only(['index', 'show', 'create', 'store']);
