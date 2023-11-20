@@ -4,6 +4,7 @@
 
 use App\Models\Cart;
 use App\Models\Gateway;
+use App\Models\OneTimeCode;
 use App\Models\Option;
 use App\Models\Order;
 use App\Models\Specification;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Melipayamak\MelipayamakApi;
 use Milon\Barcode\DNS1D;
 
 /* add active class to li */
@@ -85,6 +87,41 @@ function option($option_name, $default_value = '')
     }
 
     return  $value;
+}
+
+function oneTimeCode($user, $type)
+{
+    OneTimeCode::where('user_id', $user->id)->delete();
+
+    $code = OneTimeCode::create([
+        'user_id' => $user->id,
+        'code'    => rand(11111, 99999),
+
+    ]);
+    $code->text =  $type['string'];
+
+    return  $code;
+}
+
+function varifySms($type, $user)
+{
+    // dd($type);
+    try {
+        $username = option('MELIPAYAMAK_PANEL_USERNAME');
+        $password = option('MELIPAYAMAK_PANEL_PASSWORD');
+        $api = new MelipayamakApi($username, $password);
+        $sms = $api->sms();
+        $to = $user->username;
+        $from = '50004001000143';
+        $text = $type->text . ' :' .  $type->code;
+        $response = $sms->send($to, $from, $text);
+        $json = json_decode($response);
+        echo $json->Value; //RecId or Error Number
+    } catch (Exception $e) {
+        echo $e->getMessage();
+        // dd($e->getMessage());
+    }
+    return;
 }
 
 function user_option_update($option_name, $option_value, $user_id = null)
