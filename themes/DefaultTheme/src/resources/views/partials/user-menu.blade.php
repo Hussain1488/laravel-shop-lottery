@@ -46,7 +46,7 @@
                 <i class="mdi mdi-account-circle-outline"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
-                <a class="dropdown-item" href="{{ route('login') }}">
+                <a class="dropdown-item" href="{{ route('login-with-code.request') }}">
                     <i class="mdi mdi-account-card-details-outline"></i>
                     {{ trans('front::messages.header.sign-in-to-site') }}
                 </a>
