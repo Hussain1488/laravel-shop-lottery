@@ -135,6 +135,7 @@ class CooperationSalesController extends Controller
             toastr()->error('شما هیچ بانکی با ماهیت واسط اقساط ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
             return redirect()->back();
         }
+        // dd($account);
         // dd($request->all());
         $store = createstore::find($request->store);
         $depositamount = str_replace(',', '', $request->depositamount);
@@ -192,7 +193,6 @@ class CooperationSalesController extends Controller
             'price' => $depositamount,
             'finalprice' => $final_price1,
             'documentnumber' => $number1,
-            // 'bank_id' => $request->;
         ]);
 
 
@@ -216,9 +216,17 @@ class CooperationSalesController extends Controller
     public function PayRequest($id, $id2)
     {
 
+        $account =   BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'واسط قسط ها');
+        })->first();
 
-        // $transaction = new createstoretransaction();
-        // dd($id);
+        if ($account) {
+            $bank_id = $account->id;
+        } else {
+            toastr()->error('شما هیچ بانکی با ماهیت واسط اقساط ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
+            return redirect()->back();
+        }
+
         $store = createstore::find($id);
         // dd($store);
         $fee = $store->feepercentage;
@@ -242,6 +250,8 @@ class CooperationSalesController extends Controller
         $transaction = createstoretransaction::storeTransaction($store, $installment->Creditamount, true, 1, 1);
 
         $bank_trans = banktransaction::transaction($store->account_id, $result, true, $transaction, 'store');
+
+        $bank_trans = banktransaction::transaction($bank_id, $installment->Creditamount, false, $transaction, 'store');
 
         $installment->save();
         $store->save();
