@@ -45,15 +45,12 @@ class CooperationSalesController extends Controller
     public function create()
     {
         $shopkeeper = Auth::user();
-        // dd($shopkeeper->id);
         $shop = createstore::where('selectperson', $shopkeeper->id)->first();
         $jalaliEndDate = Jalalian::fromFormat('Y-m-d', $shop->enddate);
         $carbonEndDate = Carbon::createFromFormat('Y-m-d H:i:s', $jalaliEndDate->toCarbon()->toDateTimeString());
         $shop->enddate = $carbonEndDate;
-        // dd($shop->enddate);
-        // dd($shop);
+
         $users = User::where('level', 'user')->get();
-        // dd($users);
 
         return view('back.cooperationsales.create', compact('users', 'shop'));
     }
@@ -67,8 +64,20 @@ class CooperationSalesController extends Controller
         $prepaidamount = intval(str_replace(',', '', $request->prepaidamount));
         $amounteachinstallment = intval(str_replace(',', '', $request->amounteachinstallment));
 
+        $bank_id = BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
+        })->first();
+        if ($bank_id) {
+            $bank_id = BankAccount::whereHas('account_type', function ($query) {
+                $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
+            })->first();
+        } else {
+            toastr()->error('شما هیچ بانکی با ماهیت واسط اعتبار فروشگاه ها ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
+            return redirect()->back();
+        }
+
         $user = User::find($request->userselected);
-        $user->purchasecredit -= $Creditamount;
+
         $store->storecredit -= $Creditamount;
 
         Makeinstallmentsm::create([
@@ -88,8 +97,11 @@ class CooperationSalesController extends Controller
 
         $store_trans = createstoretransaction::storeTransaction($store, $Creditamount, false, 0, 0);
 
+        $bankt_tras = banktransaction::transaction($bank_id->id, $Creditamount, false, $store_trans, 'store');
+
+
         $store->save();
-        $user->save();
+
 
         toastr()->success('قسط کاربر با موفقیت ایجاد شد.');
 

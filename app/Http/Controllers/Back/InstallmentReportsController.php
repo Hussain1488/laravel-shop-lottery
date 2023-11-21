@@ -62,26 +62,7 @@ class InstallmentReportsController extends Controller
 
         $bankt_trans = banktransaction::transaction($bank_id, $payList->depositamount, true, $trans_id, 'store');
 
-        // if ($number1 > 0 && $number1 != 0) {
-        //     // $number1 = banktransaction::latest()->first()->documentnumber  + 1;
-        //     $final_price1 = banktransaction::latest()->first()->bankbalance  +  $payList->depositamount;
-        // } else {
-        //     // $number1 = 10000;
-        //     $final_price1 = +$payList->depositamount;
-        // }
-        // // dd($final_price1);
-        // $transaction->create([
-        //     'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-        //     'transactionprice' => $payList->depositamount,
-        //     'bankbalance' => $final_price1,
-        //     'bank_id' => $bank_id,
-        //     // 'pay_request_list_id' => $id,
-        // ]);
-
-        // $transaction = PaymentListModel::with('store')->latest()->get();
-        // $total[1] = $transaction->where('status', 1)->sum('depositamount');
-        // $total[0] = $transaction->where('status', 0)->sum('depositamount');
-
+ 
 
         $payList->save();
         // dd($transaction);

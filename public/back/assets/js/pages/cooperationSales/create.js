@@ -141,8 +141,9 @@ $(document).ready(function () {
         // console.log(creadit);
         $('#purchase_creadite').val();
         var main_price = $('#main_price').val().replace(/,/g, '');
-        var store_creadit = $('#store_creadit').val();
+        var store_creadit = parseFloat($('#store_creadit').val());
         let toDay = new Date();
+        console.log(store_creadit, main_price, store_creadit >= main_price);
         if (toDay <= end_date) {
             if (main_price == '' || isNaN(main_price) || main_price <= 0) {
                 // console.log('this is NaN');

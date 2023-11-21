@@ -67,6 +67,16 @@ class InstallmentsController extends Controller
         } else {
             return response()->json('data', 'درخواست شماب با مشکل مواجه شده است،‌لطفا با مرکز تماس بگیرید!');
         }
+        $bank1 = BankAccount::whereHas('account_type', function ($query) {
+            $query->where('name', 'مقدار اعتبار خرید خریدارها');
+        })->first();
+        // dd($bank);
+        if ($bank) {
+            // dd('ehy');
+            $bank_id1 = $bank->id;
+        } else {
+            return response()->json('data', 'درخواست شماب با مشکل مواجه شده است،‌لطفا با مرکز تماس بگیرید!');
+        }
 
         // dd($user->inventory, $installments->prepaidamount, $user->purchasecredit, $installments->prepaidamount);
 
@@ -101,6 +111,8 @@ class InstallmentsController extends Controller
             $buyer_trans = buyertransaction::transaction(Auth::user(), $installments->Creditamount, false, 0, 1);
 
             $bank = banktransaction::transaction($bank_id, $installments->prepaidamount, true, $buyer_trans1->id, 'user');
+
+            $bank1 = banktransaction::transaction($bank_id1, $installments->Creditamount, true, $buyer_trans->id, 'user');
 
             $user->save();
             $installments->statususer = 1;

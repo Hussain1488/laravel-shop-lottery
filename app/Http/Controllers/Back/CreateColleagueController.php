@@ -183,8 +183,6 @@ class CreateColleagueController extends Controller
         // $person->level = 'seller';
         $person->save();
 
-        // dd(json_decode($docPath, true));
-
         $store = createstore::create([
             'storecredit' => $storecredit,
             'selectperson' => $request->selectperson,
@@ -197,31 +195,9 @@ class CreateColleagueController extends Controller
             'account_id' => $request->account_id
         ]);
 
-
-
-        // $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
-        // if ($trans->count()  > 0) {
-        //     $exBalance = $trans->first()->bankbalance - $storecredit;
-        // } else {
-        //     $exBalance = -$storecredit;
-        // }
-
-        // ($store, $CreditAmount, $status, $type, $flag)
         $trans_id = createstoretransaction::storeTransaction($store, $storecredit, true, 1, 0);
-        // $bank_id = createbankaccounts::where();
-        // $banktransaction = banktransaction::create([
-        //     'bank_id' => $bank_id->id,
-        //     'transactionprice' => $storecredit,
-        //     'bankbalance' => $exBalance,
-        //     'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-        //     'store_trans_id' => $trans_id
 
-        // ]);
-        // transaction($bank_id, $creditAmount, $status, $trans_id, $user)
-        $bankt_tras = banktransaction::transaction($bank_id->id, $storecredit, false, $trans_id, 'store');
-
-
-        // $users = User::where('level', 'user')->get();
+        $bankt_tras = banktransaction::transaction($bank_id->id, $storecredit, true, $trans_id, 'store');
 
         toastr()->success('  فروشگاه با موفقیت ایجاد شد.');
 
@@ -321,6 +297,8 @@ class CreateColleagueController extends Controller
 
     public function reaccreditationStore(ColleagueReAccreditionRequest $request)
     {
+
+
         $store = createstore::find($request->select_store);
         // dd($store);
         $ex_credit = $store->storecredit;
@@ -340,25 +318,8 @@ class CreateColleagueController extends Controller
 
         $trans_id = createstoretransaction::storeTransaction($store, $request->storecredit, true, 1, 0);
 
-        // $trans = banktransaction::where('bank_id', $bank_id->id)->latest()->get();
-        // if ($trans->count()  > 0) {
-        //     $exBalance = $trans->first()->bankbalance - $request->storecredit;
-        // } else {
-        //     $exBalance = -$request->storecredit;
-        // }
 
-        // dd($trans_id);
-
-        // $bank_id = createbankaccounts::where();
-        // $banktransaction = banktransaction::create([
-        //     'bank_id' => $bank_id->id,
-        //     'transactionprice' => $request->storecredit,
-        //     'bankbalance' => $exBalance,
-        //     'transactionsdate' => Jalalian::now()->format('Y-m-d'),
-        //     'store_trans_id' => $trans_id
-
-        // ]);
-        $bank_trans = banktransaction::transaction($store->account_id, $request->storecredit, false, $trans_id, 'store');
+        $bank_trans = banktransaction::transaction($bank_id->id, $request->storecredit, false, $trans_id, 'store');
 
         $store->save();
         toastr()->success('افزایش اعتبار فروشگاه با موفقیت انجام شد.');
