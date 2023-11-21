@@ -16,9 +16,9 @@ class LoginWithCodeController extends Controller
     {
         $view = config('front.pages.login-with-code');
 
-        if (!$view || option('login_with_code', 'off') == 'off') {
-            abort(404);
-        }
+        // if (!$view || option('login_with_code', 'off') == 'off') {
+        //     abort(404);
+        // }
 
         return view($view);
     }
