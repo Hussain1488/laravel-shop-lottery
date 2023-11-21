@@ -162,7 +162,7 @@
                                 <label for="">مقدار واریز:</label>
                             </div>
                             <div class="col">
-                                <input required type="number" class="form-control moneyInput" name="recharge_amount">
+                                <input type="text" class="form-control moneyInput" name="recharge_amount">
                             </div>
                         </div>
                         <div class="row d-flex justify-center my-1">
@@ -199,8 +199,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">درخواست تسویه حساب به مبلغ:<span class="text-success"
-                            id="deposit_amount_show"></span>ریال
+                    <h4 class="modal-title"><span class="text-info" id="operation_title1"></span>
                     </h4>
                 </div>
                 <hr />

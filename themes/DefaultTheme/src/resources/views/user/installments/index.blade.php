@@ -30,6 +30,8 @@
                                         <div class="card-content">
                                             <div class="container mt-3">
 
+                                                {{-- <input type="button" class="btn btn-primary" value="Click Me"
+                                                    id="myButton"> --}}
                                                 @if (session('warning'))
                                                     <div class="alert alert-danger" role="alert">
                                                         {{ session('warning') }}
@@ -409,7 +411,7 @@
                                 <label for="">مقدار واریز:</label>
                             </div>
                             <div class="col">
-                                <input required type="number" class="form-control moneyInput" name="recharge_amount">
+                                <input class="form-control moneyInput" name="recharge_amount">
                             </div>
                         </div>
                         <div class="row d-flex justify-center my-1">
@@ -446,8 +448,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">درخواست تسویه حساب به مبلغ:<span class="text-success"
-                            id="deposit_amount_show1"></span>ریال
+                    <h4 class="modal-title"><span class="text-info" id="operation_title"></span>
                     </h4>
                 </div>
                 <hr />
@@ -472,7 +473,7 @@
                         <div class="form-row mt-2">
                             <span
                                 class="text-primary">{{ trans('front::messages.auth.retrieve-verification-code') }}</span>
-                            (<p data-action="#" id="countdown-verify-end1"></p>)
+                            (<p data-action="{{ route('front.wallet.codeGenerate') }}" id="countdown-verify-end1"></p>)
                         </div>
                         <div class="form-row mt-3">
                             <button data-url="{{ route('front.wallet.sentCode') }}" type="button" id="sendCode1"
@@ -500,7 +501,7 @@
         });
     </script>
 
-
+    <script src="{{ theme_asset('js/vendor/countdown.min.js') }}"></script>
     <script src="{{ theme_asset('js/pages/installments/index.js') }}"></script>
     <script src='{{ asset('front/script.js') }}'></script>
 @endpush
