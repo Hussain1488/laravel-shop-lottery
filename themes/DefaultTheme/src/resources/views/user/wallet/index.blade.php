@@ -22,6 +22,11 @@
                                     {{ session('success') }}
                                 </div>
                             @endif
+                            @if (session('warning'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ session('warning') }}
+                                </div>
+                            @endif
 
                             <div class="row mt-1 ml-2 mb-2 mr-1">
                                 <h6>

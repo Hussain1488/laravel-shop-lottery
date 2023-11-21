@@ -27,7 +27,90 @@
                     <div class="card-header">
                         <h4 class="card-title">اسم کاربر</h4>
                     </div>
-                 لیست اپراتور ها 
+
+                    <div class="card-content">
+                        <div class="container mt-3">
+
+
+                            <!-- Tab panes -->
+                            <div class="">
+                                <div id="home" class="container tab-pane "><br>
+
+
+
+                                    <div class="row mt-1 ml-2 mb-2">
+                                        <h3>
+                                            لیست اپراتور ها
+                                        </h3>
+                                    </div>
+
+
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    #
+                                                </th>
+                                                <th>
+                                                    تاریخ فروشگاه
+                                                </th>
+                                                <th>
+                                                    تاریخ پرداخت
+                                                </th>
+                                                <th>
+                                                    نوع تراکنش
+                                                </th>
+                                                <th>
+                                                    شماره ره گیری
+                                                </th>
+                                                <th class="">
+                                                    مجموع تراکنش با کسر کارمزد
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        @php
+                                            $counter = 1;
+                                        @endphp
+                                        <tbody>
+                                            {{-- @foreach ($paidList as $key)
+                                                <tr>
+                                                    <td>
+                                                        {{ $counter++ }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $key->payments->store->nameofstore }}
+                                                    </td>
+                                                    <td>
+                                                        <span class="transaction_datetime">
+                                                            {{ \Carbon\Carbon::parse($key->date)->format('Y-m-d') }}
+                                                            <br>
+                                                            {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        موفقت باشید
+                                                    </td>
+                                                    <td>
+                                                        <span class="">{{ $key->Issuetracking }}</span>
+                                                    </td>
+                                                    <td class="">
+                                                        <a href="{{ public_path($key->documentpayment) }}">
+                                                            <span class="text-success">دانلود سند</span>
+                                                        </a>
+                                                    </td>
+
+
+                                                </tr>
+                                            @endforeach --}}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </section>
 
 
