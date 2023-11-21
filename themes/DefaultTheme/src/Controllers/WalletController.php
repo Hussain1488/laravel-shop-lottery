@@ -197,16 +197,18 @@ class WalletController extends Controller
         if (!$bank_id) {
             return redirect()->back()->with('warning', 'خطای سرور. لطفا به مرکز اطلاع بدهید.');
         }
+        $RecharAmount = intval(str_replace(',', '', $request->recharge_amount));
 
 
 
-        $user = User::find($request->user_id);
-        $user_trans = buyertransaction::transaction($user, $request->recharge_amount, false, 1, 1);
-
-        banktransaction::transaction($bank_id->id, $request->recharge_amount, false, $user_trans->id, 'user');
 
         $user = User::find($request->user_id);
-        $user->inventory += $request->recharge_amount;
+        $user_trans = buyertransaction::transaction($user, $RecharAmount, false, 1, 1);
+
+        banktransaction::transaction($bank_id->id, $RecharAmount, false, $user_trans->id, 'user');
+
+        $user = User::find($request->user_id);
+        $user->inventory += $RecharAmount;
         $user->save();
         return redirect()->back()->with('success', 'شارژ کیف پول برای شما با موفقیت انجام شد!');
     }
