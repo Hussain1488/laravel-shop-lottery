@@ -73,7 +73,7 @@ class InstallmentsController extends Controller
         // dd($bank);
         if ($bank) {
             // dd('ehy');
-            $bank_id1 = $bank->id;
+            $bank_id1 = $bank1->id;
         } else {
             return response()->json('data', 'درخواست شماب با مشکل مواجه شده است،‌لطفا با مرکز تماس بگیرید!');
         }
