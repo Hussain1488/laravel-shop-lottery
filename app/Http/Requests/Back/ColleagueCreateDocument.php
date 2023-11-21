@@ -29,7 +29,7 @@ class ColleagueCreateDocument extends FormRequest
             "namecreditor" => "required",
             "ReCredintAmount" => "required",
             "documents" => "required",
-            "description" => "string|max:700",
+            "description" => "max:700",
         ];
     }
     public function attributes()
