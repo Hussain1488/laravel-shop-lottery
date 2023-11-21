@@ -1,3 +1,19 @@
+var loading = {
+    message:
+        '<div class="loadingio-spinner-eclipse-mbdtacxsn3d"> ' +
+        '<div class="ldio-ffthf4779sc">' +
+        '<div></div>' +
+        '</div>' +
+        '</div>',
+    css: {
+        width: 'auto' /* Auto width for the blockUI container */,
+        top: '40%' /* Position from the top */,
+        left: '40%' /* Position from the left */,
+        backgroundColor: 'transparent' /* No background color */,
+        border: 'none' /* No border */,
+        color: '#333' /* Text color */
+    }
+};
 $('.show-history').on('click', function () {
     var btn = $(this);
 
@@ -19,7 +35,7 @@ $('.show-history').on('click', function () {
 });
 
 $('#wallet_recharg_button').on('click', function () {
-    console.log($(this).data('url'));
+    $.blockUI(loading);
     $.ajax({
         url: $(this).data('url'),
         type: 'GET',
@@ -27,14 +43,17 @@ $('#wallet_recharg_button').on('click', function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function () {
-            console.log('hey');
+            $.unblockUI();
+            $('#operation_title1').text(
+                'جهت تأیید شارژ کیف پول کد ارسال شده را وارد کرده و کلید تأیید را بزنید!'
+            );
             $('#smsVarifyModal').modal();
             $('#code_error').addClass('d-none');
         }
     });
 });
 $('#sendCode').on('click', function () {
-    console.log('Button clicked');
+    $.blockUI(loading);
 
     let form = $('#code_varification');
     var formData = new FormData(form[0]);
@@ -49,10 +68,12 @@ $('#sendCode').on('click', function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function () {
+            $.unblockUI();
             $('#smsVarifyModal').modal('hide');
             $('#rechargeForm').modal();
         },
         error: function (xhr) {
+            $.unblockUI();
             $('#code_error').removeClass('d-none');
             if (xhr.responseJSON.error) {
                 // Display the error message in #code_error
