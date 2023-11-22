@@ -46,7 +46,7 @@ Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
     ->name('password.send');
 
 Route::get('/login-with-code', [LoginWithCodeController::class, 'create'])
-    ->middleware('guest')
+    ->middleware('guest', 'CheckUserExists')
     ->name('login-with-code.request');
 
 Route::post('/login-with-code', [LoginWithCodeController::class, 'store'])
