@@ -147,6 +147,28 @@
                                     </div>
                                 @endcan
                             </div>
+                            <div class="row match-height">
+                                @can('cooperationsales.paidSales')
+                                    <div class="col-lg-3 col-sm-6 col-12">
+                                        <a href="{{ route('admin.cooperationsales.creditTrans', [Auth::user()->store->id]) }}">
+                                            <div class="card">
+                                                <div class="card-header d-flex flex-column align-items-center pb-0">
+                                                    <div class="avatar bg-rgba-success p-50 m-0">
+                                                        <div class="avatar-content">
+                                                            <i class="feather icon-dollar-sign text-success font-medium-5"></i>
+                                                        </div>
+                                                    </div>
+                                                    <p class="mb-0 mt-1">تراکنش های اعتبار فروشگاه</p>
+                                                </div>
+                                                <div class="card-content">
+                                                    <div></div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endcan
+                            </div>
+
                         </section>
                     @endcan
                 @endif

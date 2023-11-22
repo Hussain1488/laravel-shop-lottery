@@ -24,12 +24,8 @@ class ShopShopUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'selectperson' => 'required',
-            'uploaddocument' => 'required',
             'nameofstore' => 'required|string',
             'addressofstore' => 'required|string',
-            'storecredit' => 'numeric',
-            'enddate' => 'date',
             'feepercentage' => 'required|numeric',
             'settlementtime' => 'required',
         ];

@@ -97,6 +97,13 @@
                                             شده</span></a>
                                 </li>
                             @endcan
+                            @can('cooperationsales.paidSales')
+                                <li class="{{ active_class('admin.cooperationsales.creditTrans') }}">
+                                    <a href="{{ route('admin.cooperationsales.creditTrans', [Auth::user()->store->id]) }}"><i
+                                            class="feather icon-circle"></i><span class="menu-item">تراکنش های اعتبار فروشگاه
+                                        </span></a>
+                                </li>
+                            @endcan
 
 
                         </ul>

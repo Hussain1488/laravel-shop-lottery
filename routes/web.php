@@ -97,7 +97,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::post('backups/create', [BackupController::class, 'create'])->name('backups.create');
     Route::get('backups/{backup}/download', [BackupController::class, 'download'])->name('backups.download');
     Route::delete('backups/{backup}', [BackupController::class, 'destroy'])->name('backups.destroy');
-    
+
 
     // ------------------ cooperation Sales
     Route::get('cooperationsales/index', [CooperationSalesController::class, 'index'])->name('cooperationsales.index');
@@ -111,6 +111,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('cooperationsales/mainWallet/{store_id}', [CooperationSalesController::class, 'mainWallet'])->name('cooperationsales.mainWallet');
     Route::get('cooperationsales/payRequestWallet/{store_id}', [CooperationSalesController::class, 'payRequestWallet'])->name('cooperationsales.payRequestWallet');
     Route::get('cooperationsales/paidSales/{store_id}', [CooperationSalesController::class, 'paidSales'])->name('cooperationsales.paidSales');
+    Route::get('cooperationsales/creditTrans/{store_id}', [CooperationSalesController::class, 'creditTrans'])->name('cooperationsales.creditTrans');
 
     // ------------------ OperatorActivity
     Route::get('operatoractivity/index', [OperatorActivityController::class, 'index'])->name('operatoractivity.index');

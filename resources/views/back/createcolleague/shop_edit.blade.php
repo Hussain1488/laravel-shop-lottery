@@ -51,9 +51,22 @@
                                                         مسئول فروشگاه
                                                     </h6>
 
-                                                    <div class="d-flex">
-                                                        <input readonly type="selectperson" class="form-control"
-                                                            value="{{ $store->user->username }}">
+                                                    <div class="m-1">
+                                                        {{-- <input readonly type="selectperson" class="form-control"
+                                                            value="{{ $store->user->username }}"> --}}
+
+                                                        <div class="text-success"><label for="username">
+                                                                اسم کاربر:
+                                                            </label>
+                                                            {{ $store->user->first_name . ' ' . $store->user->last_name }}
+                                                        </div>
+                                                        <div class="text-success"><label for="username">
+                                                                شماره تماس:
+                                                            </label> {{ $store->user->username }}
+                                                        </div>
+
+
+
                                                     </div>
 
 
@@ -128,7 +141,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="col-md-6 col-12 pt-2">
                                                 <h5>
                                                     اعتبار فروشگاه
@@ -151,7 +164,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="row">
                                             <div class="col-md-6 col-12 pt-2">
                                                 <h5>
@@ -193,12 +206,18 @@
                                                 <h5>
                                                     تاریخ پایان قرارداد
                                                 </h5>
+
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
+                                                    تاریخ فعلا ختم قرار داد:
+                                                    <span class="text-danger">
+                                                        {{ \Carbon\Carbon::parse($store->enddate)->format('Y-m-d') }}
+                                                    </span>
+                                                    است در صورت تمایل میتوانید تغییر بدهید.
                                                     <input type="text" placeholder="تاریخ پایان قرار داد را مشخص کنید."
-                                                        class="form-control persian-date-picker-value" name="enddate"
-                                                        value="{{ $store->enddate }}" data-timestamps="false">
+                                                        class="form-control persian-date-picker" name="enddate"
+                                                        value="" data-timestamps="false" id="enddate_persian">
                                                     <span class="text-danger">
                                                         @error('enddate')
                                                             {{ $message }}
@@ -209,7 +228,7 @@
                                         </div>
                                         <div class="row p-1 d-flex justify-content-between">
                                             <div class="col p-1">
-                                                <input type="button" id="summit_button" value="تأیید"
+                                                <input type="submit" id="" value="تأیید"
                                                     class="btn btn-info btn-lg"
                                                     style="background-color: none; text-color:black">
                                             </div>
