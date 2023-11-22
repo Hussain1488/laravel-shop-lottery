@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\back;
-
+use App\Models\user;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -14,7 +14,14 @@ class OperatorActivityController extends Controller
      */
     public function index()
     {
-        return view('back.operatoractivity.index');
+        $operatorusers = user::where('level' , 'user')->with('slug', 'فروشنده')->get();
+        // $bank_id = user::whereHas('users', function ($query) {
+        //     $query->where('slug', 'فروشنده');
+        // })->first();
+        $users = User::whereHas('roles', function ($query)  {
+            $query->where('slug', 'فروشنده');
+        })->get();
+        return view('back.operatoractivity.index' , compact('users'));
     }
 
     /**
