@@ -62,8 +62,8 @@ class CreateColleagueController extends Controller
 
         $store = createstore::with('user')->find($id);
         $jalaliEndDate = Jalalian::fromFormat('Y-m-d', $store->enddate);
-        $carbonEndDate = Carbon::createFromFormat('Y-m-d H:i:s', $jalaliEndDate->toCarbon()->toDateTimeString());
-        $store->enddate = $carbonEndDate;
+        // $carbonEndDate = Carbon::createFromFormat('Y-m-d H:i:s', $jalaliEndDate->toCarbon()->toDateTimeString());
+        // $store->enddate = $carbonEndDate;
         $user = User::get();
         // dd($store);
 
@@ -73,11 +73,9 @@ class CreateColleagueController extends Controller
     public function shopUpdate(ShopShopUpdateRequest $request, $id)
     {
 
+        // dd($request->all());
         $store = createstore::find($id);
 
-        $storecredit = intval(str_replace(',', '', $request->storecredit));
-
-        $newCredit = $store->storecredit + $storecredit;
 
         $paths = json_decode($store->uploaddocument);
         $docPath = '';
@@ -94,7 +92,6 @@ class CreateColleagueController extends Controller
 
         // dd($request);
         $store->update([
-            'storecredit' => $newCredit,
             'nameofstore' => $request->nameofstore,
             'addressofstore' => $request->addressofstore,
             'feepercentage' => $request->feepercentage,

@@ -1,26 +1,45 @@
 // const {last} = require('lodash');
 
 $(document).ready(function () {
-    // console.log($('.persian-date-picker-value').val().pDatepicker());
-    $('.persian-date-picker-value').pDatepicker({
-        altFormat: 'YYYY-mm-dd',
-        time: {
-            enabled: false
-        },
-        minute: {
-            enabled: false
-        }
-    });
-    // $('.persian-date-picker-value').customPersianDate();
+    // // console.log($('.persian-date-picker-value').val().pDatepicker());
+    // $('.persian-date-picker-value').pDatepicker({
+    //     altFormat: 'YYYY-mm-dd',
+    //     time: {
+    //         enabled: false
+    //     },
+    //     minute: {
+    //         enabled: false
+    //     }
+    // });
+    // // $('.persian-date-picker-value').customPersianDate();
+    // $('#summit_button').on('click', function (e) {
+    //     e.preventDefault(); // Prevent the default form submission
+    //     var persianDate = $('#enddate_persian').val();
+
+    //     // Use moment.js to parse and format the date
+    //     var formattedDate = moment(persianDate, 'YYYY-M-D').format('YY-M-D');
+
+    //     // Update the value of the date input with the formatted date
+    //     $('#enddate_persian').val(formattedDate);
+
+    //     $('#store_create_form').submit();
+    // });
+  
     $('#summit_button').on('click', function (e) {
         e.preventDefault(); // Prevent the default form submission
 
-        let moneyInput = $('#moneyInput');
-        let money = moneyInput.val();
-        let money_changed = money.replace(/,/g, '');
-        moneyInput.val(money_changed);
+        // Get the Persian date value from the datepicker input
+        var persianDate = $('#enddate_persian').val();
 
-        $('#store_create_form').submit();
+        // Use moment.js to parse and format the date
+        var formattedDate = moment(persianDate, 'jYYYY/jM/jD').format('YY-M-D');
+
+        // Update the value of the date input with the formatted date
+        $('#enddate_persian').val(formattedDate);
+        console.log(formattedDate);
+
+        // Now, submit the form
+        // $('#store_create_form').submit();
     });
     $('#summit_button1').on('click', function (e) {
         e.preventDefault(); // Prevent the default form submission

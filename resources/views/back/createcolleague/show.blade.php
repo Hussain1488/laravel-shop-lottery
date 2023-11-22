@@ -55,7 +55,7 @@
                                 <a href="{{ route('admin.cooperationsales.paidSales', [$store->id]) }}"
                                     class="btn btn-success">فروش های تسویه شده</a>
                                 <a href="{{ route('admin.cooperationsales.creditTrans', [$store->id]) }}"
-                                    class="btn btn-success">فروش های تسویه شده</a>
+                                    class="btn btn-success">تراکنش های اعتبار فروشگاه</a>
                                 {{-- <a href="" class="btn btn-success">مقدار فروش اقساط ماهانه</a> --}}
                             </div>
 
