@@ -37,6 +37,26 @@
                                 <div id="home" class="container tab-pane "><br>
 
 
+                                    <div class="">
+
+                                        <form action="{{ route('admin.operatoractivity.search') }}" method="post">
+                                            @csrf
+                                            <div class="row ">
+                                                <div class="col-md-6 col-12 d-flex justify-content-around">
+                                                    <h4>
+                                                        جستوجو بر اساس شماره تماس
+                                                    </h4>
+                                                    <div class="d-flex">
+                                                        <input type="text" name="filter"
+                                                            class="form-control w-auto mr-1" placeholder="جستجو">
+                                                        <input type="submit" class="btn btn-info" value="جستجو">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
 
                                     <div class="row mt-1 ml-2 mb-2">
                                         <h3>
@@ -48,19 +68,17 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
+                                                <th>#</th>
 
                                                 <th>
                                                     نام اپراتور
                                                 </th>
                                                 <th>
-                                                    تاریخ عملیات
-                                                </th>
+                                                    شماره تماس </th>
                                                 <th>
-                                                    نوع عمل
+                                                    مقام ها:
                                                 </th>
-                                                <th>
-                                                    گیرنده عمل
-                                                </th>
+
 
                                             </tr>
                                         </thead>
@@ -70,9 +88,26 @@
 
                                         <tbody>
 
-                                            @foreach ($users as $user)
+                                            @foreach ($users as $key)
                                                 <tr>
-                                                    {{ $user->first_name }}
+                                                    <td>
+                                                        {{ $counter++ }}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ route('admin.operatoractivity.show', [$key->id]) }}">
+                                                            {{ $key->first_name . ' ' . $key->last_name }}
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        {{ $key->username }}
+                                                    </td>
+                                                    <td>
+                                                        @foreach ($key->roles as $value)
+                                                            {{ $value->title . ', ' }}
+                                                        @endforeach
+                                                    </td>
+
+
                                                 </tr>
                                             @endforeach
 
