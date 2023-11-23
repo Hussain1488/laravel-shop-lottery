@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use PhpParser\Node\NullableType;
 
 class CreateOperatorActivitiesTable extends Migration
 {
@@ -15,9 +16,10 @@ class CreateOperatorActivitiesTable extends Migration
     {
         Schema::create('operator_activities', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('operator_id');
+            $table->foreign('operator_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('operatorname');
             $table->string('workdescription');
             $table->timestamps();
         });
