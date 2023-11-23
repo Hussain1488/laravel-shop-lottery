@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Back\CornjobController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Back\SmsController;
 use App\Http\Controllers\Back\CityController;
@@ -158,6 +159,11 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
 
 
 
+    // cornjob routs:
+
+    Route::get('index', [CornjobController::class, 'index'])->name('cornjob.index');
+    Route::get('setting', [CornjobController::class, 'create'])->name('cornjob.setting');
+    Route::post('store', [CornjobController::class, 'store'])->name('cornjob.store');
 
     // ------------------ users
     Route::resource('users', UserController::class);
