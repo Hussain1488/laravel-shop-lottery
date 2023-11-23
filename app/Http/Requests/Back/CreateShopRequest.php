@@ -28,7 +28,7 @@ class CreateShopRequest extends FormRequest
             'uploaddocument' => 'required',
             'nameofstore' => 'required|string',
             'addressofstore' => 'required|string',
-            'storecredit' => 'required|numeric',
+            'storecredit' => 'required',
             'enddate' => 'required|date',
             'feepercentage' => 'required|numeric',
             'settlementtime' => 'required',

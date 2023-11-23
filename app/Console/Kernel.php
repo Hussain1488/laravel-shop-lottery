@@ -2,10 +2,13 @@
 
 namespace App\Console;
 
+use App\Console\Commands\StoreCreditReset;
 use App\Jobs\CalculateViewers;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Database\Console\Migrations\InstallCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Session;
+use Morilog\Jalali\Jalalian;
 
 class Kernel extends ConsoleKernel
 {
@@ -16,12 +19,23 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         // InstallCommand::class
+        StoreCreditReset::class,
     ];
 
-    // define your queues here in order of priority
+    /**
+     * Define the queues used by the application.
+     *
+     * @var array
+     */
     protected $queues = [
         'default',
     ];
+
+    /**
+     * Create a new console kernel instance.
+     *
+     * @return void
+     */
 
     /**
      * Define the application's command schedule.
@@ -46,6 +60,13 @@ class Kernel extends ConsoleKernel
         })->everyMinute();
 
         $schedule->job(new CalculateViewers)->dailyAt('00:00');
+
+
+        $schedule->command('command:StoreCreditReset')->when(function () {
+            $day = Jalalian::now()->format('d');
+            $hour = Jalalian::now()->format('H:i');
+            return ($day == 1 && $hour == '00:00');
+        });
     }
 
     /**
@@ -60,9 +81,23 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
 
+    /**
+     * Configure the queues used by the application.
+     *
+     * @return void
+     */
+    protected function configureQueue()
+    {
+        // Additional queue configuration if needed
+    }
+
+    /**
+     * Get the full queue command.
+     *
+     * @return string
+     */
     protected function getQueueCommand()
     {
-        // build the queue command
         $params = implode(' ', [
             '--daemon',
             '--tries=3',
