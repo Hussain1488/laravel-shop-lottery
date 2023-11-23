@@ -40,7 +40,7 @@
 
                                     <div class="row mt-1 ml-2 mb-2">
                                         <h3>
-                                            لیست اپراتور ها
+                                            لیست اپراتور ها{{$users}}
                                         </h3>
                                     </div>
 
@@ -73,36 +73,7 @@
                                             $counter = 1;
                                         @endphp
                                         <tbody>
-                                            {{-- @foreach ($paidList as $key)
-                                                <tr>
-                                                    <td>
-                                                        {{ $counter++ }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $key->payments->store->nameofstore }}
-                                                    </td>
-                                                    <td>
-                                                        <span class="transaction_datetime">
-                                                            {{ \Carbon\Carbon::parse($key->date)->format('Y-m-d') }}
-                                                            <br>
-                                                            {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        موفقت باشید
-                                                    </td>
-                                                    <td>
-                                                        <span class="">{{ $key->Issuetracking }}</span>
-                                                    </td>
-                                                    <td class="">
-                                                        <a href="{{ public_path($key->documentpayment) }}">
-                                                            <span class="text-success">دانلود سند</span>
-                                                        </a>
-                                                    </td>
 
-
-                                                </tr>
-                                            @endforeach --}}
                                         </tbody>
                                     </table>
 
