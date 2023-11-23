@@ -116,7 +116,8 @@
                             class="feather icon-users"></i><span class="menu-title"> فعالیت های اپراتورها</span></a>
                     <ul class="menu-content">
                         @can('operatoractivity.index')
-                            <li class="{{ active_class('admin.operatoractivity.index') }}">
+                            <li
+                                class="{{ active_class('admin.operatoractivity.index') }}{{ active_class('admin.operatoractivity.search') }}">
                                 <a href="{{ route('admin.operatoractivity.index') }}"><i class="feather icon-circle"></i><span
                                         class="menu-item">لیست اپراتور </span></a>
                             </li>
