@@ -10,8 +10,12 @@ class OperatorActivity extends Model
     protected $table = "operator_activities";
     protected $fillable = [];
     use HasFactory;
-    public function store()
+    public function operator()
     {
-        return $this->belongsTo(users::class, 'user_id'); 
+        return $this->belongsTo(User::class, 'operator_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
