@@ -65,7 +65,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('command:StoreCreditReset')->when(function () {
             $day = Jalalian::now()->format('d');
             $hour = Jalalian::now()->format('H:i');
-            return ($day == 1 && $hour == '00:00');
+            $cornjobDay = option('cornjob_call_day') != null ? option('cornjob_call_day') : 1;
+            $status = option('store_reccredition_status') == 'on' ? true : false;
+            return ($day == $cornjobDay && $hour == '00:00' && $status);
         });
     }
 
