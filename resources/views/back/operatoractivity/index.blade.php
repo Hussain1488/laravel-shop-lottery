@@ -40,7 +40,7 @@
 
                                     <div class="row mt-1 ml-2 mb-2">
                                         <h3>
-                                            لیست اپراتور ها{{$users}}
+                                            لیست اپراتور ها
                                         </h3>
                                     </div>
 
@@ -48,23 +48,18 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
+
                                                 <th>
-                                                    #
+                                                    نام اپراتور
                                                 </th>
                                                 <th>
-                                                    تاریخ فروشگاه
+                                                    تاریخ عملیات
                                                 </th>
                                                 <th>
-                                                    تاریخ پرداخت
+                                                    نوع عمل
                                                 </th>
                                                 <th>
-                                                    نوع تراکنش
-                                                </th>
-                                                <th>
-                                                    شماره ره گیری
-                                                </th>
-                                                <th class="">
-                                                    مجموع تراکنش با کسر کارمزد
+                                                    گیرنده عمل
                                                 </th>
 
                                             </tr>
@@ -72,7 +67,14 @@
                                         @php
                                             $counter = 1;
                                         @endphp
+
                                         <tbody>
+
+                                            @foreach ($users as $user)
+                                                <tr>
+                                                    {{ $user->first_name }}
+                                                </tr>
+                                            @endforeach
 
                                         </tbody>
                                     </table>
