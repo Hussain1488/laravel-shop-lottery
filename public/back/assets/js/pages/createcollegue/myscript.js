@@ -24,22 +24,13 @@ $(document).ready(function () {
 
     //     $('#store_create_form').submit();
     // });
-  
+
     $('#summit_button').on('click', function (e) {
         e.preventDefault(); // Prevent the default form submission
 
-        // Get the Persian date value from the datepicker input
         var persianDate = $('#enddate_persian').val();
 
-        // Use moment.js to parse and format the date
-        var formattedDate = moment(persianDate, 'jYYYY/jM/jD').format('YY-M-D');
-
-        // Update the value of the date input with the formatted date
-        $('#enddate_persian').val(formattedDate);
-        console.log(formattedDate);
-
-        // Now, submit the form
-        // $('#store_create_form').submit();
+        $('#store_create_form').submit();
     });
     $('#summit_button1').on('click', function (e) {
         e.preventDefault(); // Prevent the default form submission
