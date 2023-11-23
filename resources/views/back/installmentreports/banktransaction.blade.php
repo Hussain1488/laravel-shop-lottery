@@ -103,7 +103,7 @@
                                                     <td>
                                                         {{ $counter++ }}
                                                     </td>
-
+                                                    
                                                     <td>
                                                         @if ($key->log)
                                                             {{ $key->storeTransaction->store->nameofstore }}
