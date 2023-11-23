@@ -189,7 +189,8 @@ class CreateColleagueController extends Controller
             'settlementtime' => $request->settlementtime,
             'enddate' => $request->enddate,
             'uploaddocument' => $docPath,
-            'account_id' => $request->account_id
+            'account_id' => $request->account_id,
+            'conrn_job_reccredite' => $storecredit,
         ]);
 
         $trans_id = createstoretransaction::storeTransaction($store, $storecredit, true, 1, 0);
