@@ -60,6 +60,9 @@ Route::post('/login-with-code/confirm', [LoginWithCodeController::class, 'confir
 Route::get('/one-time-login', [OneTimeLoginController::class, 'create'])
     ->middleware(['guest'])
     ->name('one-time-login');
+Route::post('/register-with-code', [OneTimeLoginController::class, 'codeRegister'])
+    ->middleware(['guest'])
+    ->name('register-with-code');
 
 Route::post('/one-time-login', [OneTimeLoginController::class, 'store'])
     ->middleware(['guest']);
