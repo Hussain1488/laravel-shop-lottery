@@ -5,7 +5,8 @@
             <li class="nav-item mr-auto">
                 <a class="navbar-brand" href="{{ Route::has('front.index') ? route('front.index') : url('/') }}"
                     target="_blank">
-                    <h2 class="brand-text mb-0">{{ option('info_site_title', 'لاراول شاپ') }}</h2>
+                    <h2 class="brand-text mb-0">{{ option('info_site_title', 'خانه اقساط') }}</h2>
+                    
                 </a>
             </li>
         </ul>

@@ -20,7 +20,7 @@
             {{ $title }} |
         @endisset
 
-        {{ option('info_site_title', 'لاراول شاپ') }}
+        {{ option('info_site_title', 'خانه اقساط') }}
     </title>
 
     <!-- Font Icon -->
@@ -79,7 +79,7 @@
                         <div class="col-lg-2 col-md-3 col-4">
                             <div class="logo-area float-right">
                                 <a href="{{ route('front.index') }}">
-                                    <img data-src="{{ option('info_logo', theme_asset('img/logo.png')) }}" alt="{{ option('info_site_title', 'لاراول شاپ') }}">
+                                    <img data-src="{{ option('info_logo', theme_asset('img/logo.png')) }}" alt="{{ option('info_site_title', 'خانه اقساط') }}">
                                 </a>
                             </div>
                         </div>

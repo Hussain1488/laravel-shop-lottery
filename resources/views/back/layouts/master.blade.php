@@ -8,7 +8,7 @@
         @isset($title)
             {{ $title }}
         @else
-            {{ option('info_site_title', 'لاراول شاپ') }}
+            {{ option('info_site_title', 'خانه اقساط') }}
         @endisset
     </title>
 

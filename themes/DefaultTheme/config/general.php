@@ -147,7 +147,7 @@ return [
     'demo' => [
         'image' => 'demo/preview.jpg',
         'name'  => 'قالب پیش فرض',
-        'description' => 'قالب پیش فرض اسکریپت فروشگاهی لاراول شاپ'
+        'description' => 'قالب پیش فرض اسکریپت فروشگاهی خانه اقساط'
     ],
 
     'socials' => [

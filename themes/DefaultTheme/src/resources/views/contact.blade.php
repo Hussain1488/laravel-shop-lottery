@@ -47,12 +47,12 @@
                                                     <input type="text" class="input-ui pl-2"  name="subject">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-lg-12 mt-4">
                                                 <div class="form-row-title">
                                                     <h4>
                                                       {{ trans('front::messages.contact-us.message-text') }}
-                                                    
+
                                                     </h4>
                                                 </div>
                                                 <div class="form-row form-group">
@@ -150,7 +150,7 @@
         var info_map_type = "{{ option('info_map_type', 'google') }}"
         var info_latitude = "{{ option('info_latitude', '38.07709880960678') }}";
         var info_Longitude = "{{ option('info_Longitude', '46.28582686185837') }}";
-        var info_site_title = "{{ option('info_site_title', 'لاراول شاپ') }}";
+        var info_site_title = "{{ option('info_site_title', 'خانه اقساط') }}";
 
         var mapIrApiKey = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjYwMTBjYWE1OWU4ZDAyYzM0YWI2MGFhZDE5MTBhNjM5ZTZkYTI0MzA1ZmMwNzQzY2NmMjRkZmQ2Y2FlMzFjOThmODg4MjExYWY4ZDkwMGE1In0.eyJhdWQiOiIxMjcxOSIsImp0aSI6IjYwMTBjYWE1OWU4ZDAyYzM0YWI2MGFhZDE5MTBhNjM5ZTZkYTI0MzA1ZmMwNzQzY2NmMjRkZmQ2Y2FlMzFjOThmODg4MjExYWY4ZDkwMGE1IiwiaWF0IjoxNjEyODY3Mjc2LCJuYmYiOjE2MTI4NjcyNzYsImV4cCI6MTYxNTM3Mjg3Niwic3ViIjoiIiwic2NvcGVzIjpbImJhc2ljIl19.QNujb2BIyM8mIMy2AhivkMTpVCRyanpUIifJguxoEe4hXB1MESD2CWnO0WPq854Bi6yQyfD2w-oqjOi5N1aZmX4prggmrYelHy_mC1JEwAhWien_6QviFAvkhGDC-aPW4zjFKG2REUkQzXaeL2em543P6-hWdjFaUVSibm1XL4_CUnjJiafQsMQ67ZJ5E7Cpk92L89nJ0LMaBocex56tRqz7_7wZQUAtDYjfal90h2XaGh3QZ2rMwl69ZfMTrOEeTM9O6YCynT3IoTpDnNSXExJeMDuGv4zCD37UYG1gpVtNfipwgvc2J_LzLMXS4rnVAV2ednLKEYu7-jUXr68psg';
     </script>
