@@ -40,26 +40,27 @@ $('#myButton').on('click', function () {
 // }
 
 $('#wallet_recharg_button1').on('click', function () {
-    flag = 1;
-    console.log($(this).data('url'));
-    $.blockUI(loading);
-    $.ajax({
-        url: $(this).data('url'),
-        type: 'GET',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function () {
-            $.unblockUI();
+    $('#rechargeForm1').modal();
+    // flag = 1;
+    // console.log($(this).data('url'));
+    // $.blockUI(loading);
+    // $.ajax({
+    //     url: $(this).data('url'),
+    //     type: 'GET',
+    //     headers: {
+    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //     },
+    //     success: function () {
+    //         $.unblockUI();
 
-            $('#operation_title').text(
-                'جهت تأیید شارژ کیف پول کد ارسال شده را وارد کرده و کلید تأیید را بزنید!'
-            );
-            $('#smsVarifyModal1').modal();
-            // TimeCount();
-            $('#code_error1').addClass('d-none');
-        }
-    });
+    //         $('#operation_title').text(
+    //             'جهت تأیید شارژ کیف پول کد ارسال شده را وارد کرده و کلید تأیید را بزنید!'
+    //         );
+    //         $('#smsVarifyModal1').modal();
+    //         // TimeCount();
+    //         $('#code_error1').addClass('d-none');
+    //     }
+    // });
 });
 
 $('#sendCode1').on('click', function () {});

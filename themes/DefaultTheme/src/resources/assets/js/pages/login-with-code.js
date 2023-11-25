@@ -7,6 +7,12 @@ jQuery('#login-with-code-form').validate({
 });
 
 $(document).ready(function () {
+    $('.activation-code-input').activationCodeInput({
+        number: 5
+    });
+});
+
+$(document).ready(function () {
     $('#login-with-code-form').submit(function (e) {
         e.preventDefault();
 
@@ -19,10 +25,14 @@ $(document).ready(function () {
                 type: 'POST',
                 data: formData,
                 success: function (data) {
-                    var url = new URL(form.data('redirect'));
-
-                    url.searchParams.set('mobile', $('#mobile').val());
-                    window.location.href = url;
+                    if (data.data == 'login') {
+                        var url = new URL(form.data('redirect'));
+                        url.searchParams.set('mobile', $('#mobile').val());
+                        window.location.href = url;
+                    } else {
+                        $('#registerWithCode').modal();
+                        unblock();
+                    }
                 },
 
                 beforeSend: function (xhr) {
