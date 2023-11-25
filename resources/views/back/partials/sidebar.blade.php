@@ -117,7 +117,8 @@
                             class="feather icon-users"></i><span class="menu-title"> فعالیت های اپراتورها</span></a>
                     <ul class="menu-content">
                         @can('operatoractivity.index')
-                            <li class="{{ active_class('admin.operatoractivity.index') }}">
+                            <li
+                                class="{{ active_class('admin.operatoractivity.index') }}{{ active_class('admin.operatoractivity.search') }}">
                                 <a href="{{ route('admin.operatoractivity.index') }}"><i class="feather icon-circle"></i><span
                                         class="menu-item">لیست اپراتور </span></a>
                             </li>
@@ -234,6 +235,27 @@
                         @endcan
 
 
+
+                    </ul>
+                </li>
+            @endcan
+            @can('cornjob')
+                <li class="nav-item has-sub {{ open_class(['cornjob.*']) }}"><a href="#"><i
+                            class="feather icon-calendar"></i><span class="menu-title"> کرن جاب</span></a>
+                    <ul class="menu-content">
+                        @can('posts.index')
+                            <li class="{{ active_class('admin.cornjob.index') }}">
+                                <a href="{{ route('admin.cornjob.index') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item">گزارش کرن جاب</span></a>
+                            </li>
+                        @endcan
+
+                        @can('posts.create')
+                            <li class="{{ active_class('admin.cornjob.setting') }}">
+                                <a href="{{ route('admin.cornjob.setting') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item">تنظیمات کرن جاب</span></a>
+                            </li>
+                        @endcan
 
                     </ul>
                 </li>

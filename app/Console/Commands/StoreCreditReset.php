@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\CornjobModel;
 use App\Models\createstore;
 use Illuminate\Support\Facades\Log;
 
@@ -50,6 +51,10 @@ class StoreCreditReset extends Command
             $key->save();
         }
 
+        CornjobModel::create([
+            'name' => 'اعتبار فروشگاه',
+            'description' => 'اعتبار دوره ای فروشگاه ها با موفقیت انجام شد',
+        ]);
         log::info('Cron job executed successfully at ' . now());
         // Session::push('storeCredit', true);
         return 0;

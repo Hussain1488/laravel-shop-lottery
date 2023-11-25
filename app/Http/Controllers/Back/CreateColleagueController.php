@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\createstore;
 use App\Models\createstoretransaction;
+use App\Models\OperatorActivity;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -32,7 +33,7 @@ class CreateColleagueController extends Controller
     // going to create colleague index view page
     public function index()
     {
-        $users = User::where('level', '!=', 'creator')->get();
+        $users = User::where('level', 'user')->get();
         return view('back.createcolleague.index', compact('users'));
     }
 
@@ -73,9 +74,7 @@ class CreateColleagueController extends Controller
     public function shopUpdate(ShopShopUpdateRequest $request, $id)
     {
 
-        // dd($request->all());
         $store = createstore::find($id);
-
 
         $paths = json_decode($store->uploaddocument);
         $docPath = '';
@@ -89,8 +88,6 @@ class CreateColleagueController extends Controller
             $docPath = json_encode($paths);
         }
 
-
-        // dd($request);
         $store->update([
             'nameofstore' => $request->nameofstore,
             'addressofstore' => $request->addressofstore,
@@ -99,6 +96,10 @@ class CreateColleagueController extends Controller
             'enddate' => $request->enddate != null ? $request->enddate : $store->enddate,
             'uploaddocument' => $docPath,
         ]);
+
+        // dd($store->selectperson);
+        OperatorActivity::createActivity($store->selectperson, 'EDIT_STORE');
+
 
         toastr()->success('فروشگاه با موفقیت اصلاح شد.');
 
@@ -121,7 +122,7 @@ class CreateColleagueController extends Controller
         $user =  User::where('level', '!=', 'creator')->get();
         $users = [];
         foreach ($user as $key) {
-            if ($key->level != 'user' || !createstore::where('selectperson', $key->id)->exists()) {
+            if (!createstore::where('selectperson', $key->id)->exists()) {
                 $users[] = $key;
             };
         }
@@ -197,6 +198,8 @@ class CreateColleagueController extends Controller
 
         $bankt_tras = banktransaction::transaction($bank_id->id, $storecredit, true, $trans_id, 'store');
 
+        OperatorActivity::createActivity($request->selectperson, 'CREATE_STORE');
+
         toastr()->success('  فروشگاه با موفقیت ایجاد شد.');
 
         // dd($users);
@@ -270,6 +273,8 @@ class CreateColleagueController extends Controller
         $userUpdate->purchasecredit += $request->purchasecredit;
         $userUpdate->enddate = $request->enddate;
         $userUpdate->documents = $docPath;
+
+        OperatorActivity::createActivity($userUpdate->id, 'BUYER_CREDIT');
         // public function transaction($user, $amount, $status, $flag, $type)
         $buyer_trans = buyertransaction::transaction($userUpdate, $request->purchasecredit, true, 0, 0);
         // transaction($bank_id, $creditAmount, $status, $trans_id)
@@ -297,7 +302,7 @@ class CreateColleagueController extends Controller
     {
 
 
-        $store = createstore::find($request->select_store);
+        $store = createstore::with('user')->find($request->select_store);
         // dd($store);
         $ex_credit = $store->storecredit;
         $store->storecredit = $request->storecredit + $ex_credit;
@@ -313,6 +318,8 @@ class CreateColleagueController extends Controller
             toastr()->error('شما هیچ بانکی با ماهیت واسط اعتبار فروشگاه ها ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
             return redirect()->back();
         }
+
+        OperatorActivity::createActivity($store->user->id, 'STORE_CREDIT');
 
         $trans_id = createstoretransaction::storeTransaction($store, $request->storecredit, true, 1, 0);
 
@@ -382,8 +389,12 @@ class CreateColleagueController extends Controller
 
 
 
+
+
         // dd($request->numberofdocuments);
         $user->save();
+        OperatorActivity::createActivity($user->id, 'CREATE_DOCUMNET');
+
 
         toastr()->success('ایجاد سند جدید با شماره ' . $request->numberofdocuments . ' با موفقیت ثبت گردید.');
 

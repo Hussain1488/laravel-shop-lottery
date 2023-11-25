@@ -30,9 +30,9 @@ class MelipayamakSms extends SmsService implements SmsContract, SmsNotificationC
             $text = $this->type['string'] . ' :' . implode(', ', $input_data);
             $response = $sms->send($to, $from, $text);
             $json = json_decode($response);
-            echo $json->Value; //RecId or Error Number
+            // echo $json->Value; //RecId or Error Number
         } catch (Exception $e) {
-            echo $e->getMessage();
+            // echo $e->getMessage();
             // dd($e->getMessage());
         }
 

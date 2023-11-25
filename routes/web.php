@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Back\CornjobController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Back\SmsController;
 use App\Http\Controllers\Back\CityController;
@@ -115,6 +116,9 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
 
     // ------------------ OperatorActivity
     Route::get('operatoractivity/index', [OperatorActivityController::class, 'index'])->name('operatoractivity.index');
+    Route::get('operatoractivity/show{id}', [OperatorActivityController::class, 'show'])->name('operatoractivity.show');
+    Route::post('operatoractivity/search', [OperatorActivityController::class, 'search'])->name('operatoractivity.search');
+    Route::post('operatoractivity/filter', [OperatorActivityController::class, 'filter'])->name('operatoractivity.filter');
 
     // ------------------ installmentpurchase
     Route::get('installmentpurchase/index', [installmentpurchaseController::class, 'index'])->name('installmentpurchase.index');
@@ -158,6 +162,11 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
 
 
 
+    // cornjob routs:
+
+    Route::get('index', [CornjobController::class, 'index'])->name('cornjob.index');
+    Route::get('setting', [CornjobController::class, 'create'])->name('cornjob.setting');
+    Route::post('store', [CornjobController::class, 'store'])->name('cornjob.store');
 
     // ------------------ users
     Route::resource('users', UserController::class);

@@ -169,7 +169,7 @@ class WalletController extends Controller
     public function codeGenerate()
     {
         $sms = oneTimeCode(Auth::user(), Sms::TYPES['VERIFY_CODE']);
-        varifySms($sms, Auth::user());
+        verifySms($sms, Auth::user());
         return response('success');
     }
     public function sendCode(Request $request)

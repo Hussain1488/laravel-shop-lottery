@@ -10,6 +10,7 @@ use App\Models\bankTypeModel;
 use App\Models\createstore;
 use App\Models\createstoretransaction;
 use App\Models\Makeinstallmentsm;
+use App\Models\OperatorActivity;
 use App\Models\paymentdetails;
 use App\Models\PaymentListModel;
 use App\Models\User;
@@ -62,7 +63,7 @@ class InstallmentReportsController extends Controller
 
         $bankt_trans = banktransaction::transaction($bank_id, $payList->depositamount, true, $trans_id, 'store');
 
- 
+
 
         $payList->save();
         // dd($transaction);
@@ -92,20 +93,10 @@ class InstallmentReportsController extends Controller
         $payList = PaymentListModel::find($request->pay_list_id);
 
         $store = createstore::find($payList->store_id);
+        OperatorActivity::createActivity($store->user->id, 'PAY_REQUEST_PAYMENT');
+
 
         $trans_id = createstoretransaction::storeTransaction($store, $payList->depositamount, true, 1, 2);
-        // creating new store transaction for mainWallet transaction.
-        // $transaction->create([
-        //     'store_id' => $payList->store_id,
-        //     'datetransaction' => Jalalian::now()->format('Y-m-d'),
-        //     // 1 is for main wallet
-        //     'flag' => 2,
-        //     // pay request
-        //     'typeoftransaction' => 1,
-        //     'price' => $payList->depositamount,
-        //     'finalprice' => $final_price1,
-        //     'documentnumber' => $number1,
-        // ]);
 
         $this->RequestPayment($request->pay_list_id, $request->nameofbank, $trans_id);
 
@@ -146,6 +137,8 @@ class InstallmentReportsController extends Controller
             'account_type_id' => $request->account_type_id,
             // 'accounttype' => $request->accounttype,
         ]);
+        OperatorActivity::createActivity(null, 'CREATE_INTERNAL_ACCOUNT');
+
 
         toastr()->success('حساب بانکی با موفقیت ایجاد شد.');
 

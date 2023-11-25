@@ -1,6 +1,8 @@
 @extends('back.layouts.master')
 
 @section('content')
+    @use \Morilog\Jalali\Jalalian;
+
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -39,14 +41,16 @@
 
                                     <div class="">
 
-                                        <form action="{{ route('admin.operatoractivity.search') }}" method="post">
+                                        <form action="{{ route('admin.operatoractivity.filter') }}" method="post">
                                             @csrf
                                             <div class="row ">
                                                 <div class="col-md-6 col-12 d-flex justify-content-around">
                                                     <h4>
-                                                        جستوجو بر اساس شماره تماس
+                                                        جستوجو کیرنده عملیات اساس شماره تماس
                                                     </h4>
                                                     <div class="d-flex">
+                                                        <input type="hidden" name="operator"
+                                                            class="form-control w-auto mr-1" value="{{ $operator->id }}">
                                                         <input type="text" name="filter"
                                                             class="form-control w-auto mr-1" placeholder="جستجو">
                                                         <input type="submit" class="btn btn-info" value="جستجو">
@@ -58,9 +62,11 @@
                                         </form>
                                     </div>
 
+
                                     <div class="row mt-1 ml-2 mb-2">
                                         <h3>
-                                            لیست اپراتور ها
+                                            لیست فعالیت های اپراتور:
+                                            {{ $operator->first_name . ' ' . $operator->last_name }}
                                         </h3>
                                     </div>
 
@@ -70,13 +76,14 @@
                                             <tr>
                                                 <th>#</th>
 
+                                                <td>
+                                                    عملیات
+                                                </td>
                                                 <th>
-                                                    نام اپراتور
+                                                    گیرنده فعالیت
                                                 </th>
                                                 <th>
-                                                    شماره تماس </th>
-                                                <th>
-                                                    مقام ها:
+                                                    تاریخ
                                                 </th>
 
 
@@ -88,26 +95,26 @@
 
                                         <tbody>
 
-                                            @foreach ($users as $key)
+                                            @foreach ($operations as $key)
                                                 <tr>
                                                     <td>
                                                         {{ $counter++ }}
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('admin.operatoractivity.show', [$key->id]) }}">
-                                                            {{ $key->first_name . ' ' . $key->last_name }}
-                                                        </a>
+                                                        {{ $key->workdescription }}
                                                     </td>
                                                     <td>
-                                                        {{ $key->username }}
+                                                        @if ($key->user_id != null)
+                                                            {{ $key->user->username }}
+                                                        @else
+                                                            <span class="text-danger">گیرنده ندارد!</span>
+                                                        @endif
                                                     </td>
                                                     <td>
-                                                        @foreach ($key->roles as $value)
-                                                            {{ $value->title . ', ' }}
-                                                        @endforeach
+                                                        {{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->created_at))->format('Y-m-d') }}
+                                                        <br>
+                                                        {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
                                                     </td>
-
-
                                                 </tr>
                                             @endforeach
 

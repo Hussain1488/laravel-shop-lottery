@@ -252,13 +252,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    {{-- <a data-toggle="modal" href="#myModal">Open Modal</a> --}}
-
-
-
-
                                 </div>
-
                             </div>
                         </div>
 

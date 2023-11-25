@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Exports\UsersExport;
 use App\Http\Resources\Datatable\User\UserCollection;
+use App\Models\OperatorActivity;
 use App\Models\Role;
 use App\Rules\NotSpecialChar;
 use Carbon\Carbon;
@@ -96,10 +97,11 @@ class UserController extends Controller
 
     public function update(User $user, Request $request)
     {
+        // dd($request->all());
         $this->validate($request, [
             'first_name' => ['required', 'string', 'max:255', new NotSpecialChar()],
             'last_name'  => ['required', 'string', 'max:255', new NotSpecialChar()],
-            'level'      => 'in:user,admin,seller,creator',
+            'level'      => 'in:user,admin,creator',
             'username'   => ['required', 'string', "unique:users,username,$user->id"],
             'email'      => ['string', 'email', 'max:255', "unique:users,email,$user->id", 'nullable'],
             'password'   => ['nullable', 'string', 'min:8', 'confirmed:confirmed'],
@@ -135,6 +137,9 @@ class UserController extends Controller
 
             $user->image = '/uploads/users/' . $name;
             $user->save();
+        }
+        if ($request->level == 'admin' && $request->roles) {
+            OperatorActivity::createActivity($user->id, 'GIVIN_ROLES');
         }
 
         $user->roles()->sync($request->roles);

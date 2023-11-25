@@ -35,56 +35,57 @@ $('.show-history').on('click', function () {
 });
 
 $('#wallet_recharg_button').on('click', function () {
-    $.blockUI(loading);
-    $.ajax({
-        url: $(this).data('url'),
-        type: 'GET',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function () {
-            $.unblockUI();
-            $('#operation_title1').text(
-                'جهت تأیید شارژ کیف پول کد ارسال شده را وارد کرده و کلید تأیید را بزنید!'
-            );
-            $('#smsVarifyModal').modal();
-            $('#code_error').addClass('d-none');
-        }
-    });
+    $('#rechargeForm').modal();
+    // $.blockUI(loading);
+    // $.ajax({
+    //     url: $(this).data('url'),
+    //     type: 'GET',
+    //     headers: {
+    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //     },
+    //     success: function () {
+    //         $.unblockUI();
+    //         $('#operation_title1').text(
+    //             'جهت تأیید شارژ کیف پول کد ارسال شده را وارد کرده و کلید تأیید را بزنید!'
+    //         );
+    //         $('#smsVarifyModal').modal();
+    //         $('#code_error').addClass('d-none');
+    //     }
+    // });
 });
-$('#sendCode').on('click', function () {
-    $.blockUI(loading);
+// $('#sendCode').on('click', function () {
+//     $.blockUI(loading);
 
-    let form = $('#code_varification');
-    var formData = new FormData(form[0]);
+//     let form = $('#code_varification');
+//     var formData = new FormData(form[0]);
 
-    $.ajax({
-        url: form.attr('action'),
-        method: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function () {
-            $.unblockUI();
-            $('#smsVarifyModal').modal('hide');
-            $('#rechargeForm').modal();
-        },
-        error: function (xhr) {
-            $.unblockUI();
-            $('#code_error').removeClass('d-none');
-            if (xhr.responseJSON.error) {
-                // Display the error message in #code_error
-                $('#code_error').text(xhr.responseJSON.error);
-            } else {
-                // Handle other errors if needed
-                $('#code_error').text(
-                    'کد وارده اشتباه است، لطفا کد درست را وارد کنید'
-                );
-                console.log('Unexpected error:', xhr);
-            }
-        }
-    });
-});
+//     $.ajax({
+//         url: form.attr('action'),
+//         method: 'POST',
+//         data: formData,
+//         contentType: false,
+//         processData: false,
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         },
+//         success: function () {
+//             $.unblockUI();
+//             $('#smsVarifyModal').modal('hide');
+//             $('#rechargeForm').modal();
+//         },
+//         error: function (xhr) {
+//             $.unblockUI();
+//             $('#code_error').removeClass('d-none');
+//             if (xhr.responseJSON.error) {
+//                 // Display the error message in #code_error
+//                 $('#code_error').text(xhr.responseJSON.error);
+//             } else {
+//                 // Handle other errors if needed
+//                 $('#code_error').text(
+//                     'کد وارده اشتباه است، لطفا کد درست را وارد کنید'
+//                 );
+//                 console.log('Unexpected error:', xhr);
+//             }
+//         }
+//     });
+// });
