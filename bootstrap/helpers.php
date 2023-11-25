@@ -89,6 +89,20 @@ function option($option_name, $default_value = '')
     return  $value;
 }
 
+
+
+// function smsRegister($type)
+// {
+//     // OneTimeCode::where('user_id', $user->id)->delete();
+
+//     $code = OneTimeCode::create([
+//         'code'    => rand(11111, 99999),
+
+//     ]);
+//     $code->text =  $type['string'];
+
+//     return  $code;
+// }
 function oneTimeCode($user, $type)
 {
     OneTimeCode::where('user_id', $user->id)->delete();
@@ -103,7 +117,7 @@ function oneTimeCode($user, $type)
     return  $code;
 }
 
-function varifySms($type, $user)
+function verifySms($type, $user)
 {
     // dd($type);
     try {
@@ -116,9 +130,9 @@ function varifySms($type, $user)
         $text = $type->text . ' :' .  $type->code;
         $response = $sms->send($to, $from, $text);
         $json = json_decode($response);
-        echo $json->Value; //RecId or Error Number
+        // echo $json->Value; //RecId or Error Number
     } catch (Exception $e) {
-        echo $e->getMessage();
+        // echo $e->getMessage();
         // dd($e->getMessage());
     }
     return;
