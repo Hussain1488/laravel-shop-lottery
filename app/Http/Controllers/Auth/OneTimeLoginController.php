@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\OneTimeCode;
+use App\Models\Referral;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -65,5 +67,20 @@ class OneTimeLoginController extends Controller
         OneTimeCode::where('user_id', $user->id)->delete();
 
         return response('success');
+    }
+    public function codeRegister(Request $request)
+    {
+        if (optional(Session::get('newUser'))['code'] == $request->verify_code) {
+            $user = User::create([
+                'first_name' => 'بی نام',
+                'last_name' => 'بی نام',
+                'password' => 'NoN',
+                'referral_code' => Referral::generateCode(),
+                'username' => optional(Session::get('newUser'))['number'],
+                'level' => 'user',
+            ]);
+            Auth::loginUsingId($user->id, true);
+            return redirect('/');
+        }
     }
 }
