@@ -394,6 +394,7 @@
                                                                     <label>تصاویر محصول ( <small>بهترین اندازه <span class="text-danger">{{ config('front.imageSizes.productGalleryImage') }}</span> پیکسل میباشد.</small> )</label>
 
                                                                     <div class="dropzone dropzone-area mb-2" id="product-images">
+
                                                                         <div class="dz-message">تصاویر را به اینجا بکشید</div>
                                                                     </div>
                                                                 </div>
