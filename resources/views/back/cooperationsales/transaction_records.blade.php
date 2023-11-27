@@ -75,7 +75,10 @@
                                                     مبلغ تراکنش
                                                 </th>
                                                 <th class="text-danger">
-                                                    مجموع    
+                                                    مجموع
+                                                </th>
+                                                <th class="text-danger">
+                                                    تاریخ پرداخت
                                                 </th>
                                                 <th>
                                                     شماره سند
@@ -108,6 +111,11 @@
                                                     <td class="text-danger">
                                                         <span class="monyInputSpan">{{ $key->finalprice }}</span>
 
+                                                    </td>
+                                                    <td>
+                                                        {{ $key->pre_paid_time != null ? \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->pre_paid_time))->format('Y-m-d') : 'تاریخ ثبت نشده' }}
+                                                        <br>
+                                                        {{ $key->pre_paid_time != null ? \Carbon\Carbon::parse($key->created_at)->format('H:i:s') : '' }}
                                                     </td>
                                                     <td>
 
