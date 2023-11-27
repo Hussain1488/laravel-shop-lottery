@@ -79,7 +79,7 @@
 
                                         </div>
                                     </div>
-                                    @empty($installmentsm)
+                                    @if (!$installmentsm->where('statususer', 0)->count() > 0)
                                         <section id="main-card" class="card">
                                             <div class="card-header m-3 ">
                                                 <h3 class="text-danger">لیست فروشی برای نمایش به شما وجود ندارد</h3>
@@ -124,172 +124,173 @@
                                     @endempty
 
 
-                                </div>
+                            </div>
 
-                                {{-- tab prepayment paid and validated installments --}}
-                                <div id="menu1" class="container tab-pane fade"><br>
+                            {{-- tab prepayment paid and validated installments --}}
+                            <div id="menu1" class="container tab-pane fade"><br>
 
-                                    <div class="row">
+                                <div class="row">
 
-                                        <div class="col-md-6 col-12">
-                                            @isset($store)
-                                                <div class="form-group d-flex align-items-center">
-                                                    <label for="first_name" class="mr-2">
-                                                        مقدار اعتبار فروش اقساطی
-                                                    </label>
-                                                    <div class="d-flex align-items-center">
-                                                        <input readonly type="text" placeholder="100,000"
-                                                            class="form-control moneyInput" id="first_name" name="first_name"
-                                                            style="margin-left: 4px"
-                                                            value="{{ $store->storecredit != null ? $store->storecredit : 0 }}">
-                                                        ریال
-                                                    </div>
-
-                                                </div>
-                                            @endisset
-                                        </div>
-                                        <div class="col-md-6 col-12">
-
-
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-
-                                        <div class="col-md-6 col-12">
+                                    <div class="col-md-6 col-12">
+                                        @isset($store)
                                             <div class="form-group d-flex align-items-center">
-                                                <h3>
-                                                    لیست اقساط تأیید شده
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-
-                                        </div>
-                                    </div>
-                                    @empty($installmentsm)
-                                        <section id="main-card" class="card">
-                                            <div class="card-header m-3 ">
-                                                <h3 class="text-danger">لیست فروشی برای نمایش به شما وجود ندارد</h3>
-                                            </div>
-                                        </section>
-                                    @else
-                                        @foreach ($installmentsm as $index)
-                                            @if ($index->statususer == 1 && $index->status == 0)
-                                                @php
-                                                    $updated_date = \Carbon\Carbon::parse($index->datepayment);
-                                                @endphp
-                                                <div class="border rounded p-2 my-1">
-                                                    <div class="row">
-                                                        <h5>آقای:
-                                                            {{ $index->user->first_name . ' ' . $index->user->last_name }}
-                                                        </h5>
-                                                    </div>
-
-
-                                                    <div class="row">
-                                                        مبلغ کل فروش: <span
-                                                            class="monyInputSpan">{{ $index->Creditamount }}</span> ریال
-                                                    </div>
-                                                    <div class="row">
-                                                        تعداد {{ $key->numberofinstallments }} قسط به سر رسید تاریخ
-                                                        ({{ \Carbon\Carbon::parse($index->datepayment)->format('d') }})
-                                                        هر ماه
-                                                        به مبلغ قسط
-                                                        <span
-                                                            class="monyInputSpan">{{ $key->amounteachinstallment }}</span>ریال
-                                                    </div>
-
-                                                    <div class="row ">
-
-                                                        مقدار پیش پرداخت <span
-                                                            class="monyInputSpan">{{ $index->prepaidamount }}</span> ریال
-
-                                                    </div>
-                                                    <div class="row d-flex justify-content-between p-1">
-                                                        <div class="col d-flex justify-content-end">
-                                                            <button
-                                                                data_date='{{ \Carbon\Carbon::parse($index->CarbonDate)->format('Y-m-d') }}'
-                                                                data_day='{{ $index->store->settlementtime }}'
-                                                                class="btn btn-primary settlementtime_button"
-                                                                id="settlementtime_button"
-                                                                data-store-id ="{{ $index->id }}"
-                                                                data-route="{{ route('admin.installments.payrequest', ['store_id' => $index->store->id, 'installments_id' => $index->id]) }}">
-                                                                درخواست تسویه حساب
-                                                            </button>
-                                                        </div>
-
-
-
-                                                    </div>
+                                                <label for="first_name" class="mr-2">
+                                                    مقدار اعتبار فروش اقساطی
+                                                </label>
+                                                <div class="d-flex align-items-center">
+                                                    <input readonly type="text" placeholder="100,000"
+                                                        class="form-control moneyInput" id="first_name" name="first_name"
+                                                        style="margin-left: 4px"
+                                                        value="{{ $store->storecredit != null ? $store->storecredit : 0 }}">
+                                                    ریال
                                                 </div>
-                                            @endif
-                                        @endforeach
-                                    @endempty
 
+                                            </div>
+                                        @endisset
+                                    </div>
+                                    <div class="col-md-6 col-12">
+
+
+                                    </div>
                                 </div>
 
-                            </div>
-                        </div>
+                                <div class="row">
 
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group d-flex align-items-center">
+                                            <h3>
+                                                لیست اقساط تأیید شده
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+
+                                    </div>
+                                </div>
+                                @if (!$installmentsm->where('statususer', 1)->where('status', 0)->count() > 0)
+                                    <section id="main-card" class="card">
+                                        <div class="card-header m-3 ">
+                                            <h3 class="text-danger">لیست فروشی برای نمایش به شما وجود ندارد</h3>
+                                        </div>
+                                    </section>
+                                @else
+                                    @foreach ($installmentsm as $index)
+                                        @if ($index->status == 0)
+                                            @php
+                                                $updated_date = \Carbon\Carbon::parse($index->datepayment);
+                                            @endphp
+                                            <div class="border rounded p-2 my-1">
+                                                <div class="row">
+                                                    <h5>آقای:
+                                                        {{ $index->user->first_name . ' ' . $index->user->last_name }}
+                                                    </h5>
+                                                </div>
+
+
+                                                <div class="row">
+                                                    مبلغ کل فروش: <span
+                                                        class="monyInputSpan">{{ $index->Creditamount }}</span>
+                                                    ریال
+                                                </div>
+                                                <div class="row">
+                                                    تعداد {{ $index->numberofinstallments }} قسط به سر رسید تاریخ
+                                                    ({{ \Carbon\Carbon::parse($index->datepayment)->format('d') }})
+                                                    هر ماه
+                                                    به مبلغ قسط
+                                                    <span
+                                                        class="monyInputSpan">{{ $index->amounteachinstallment }}</span>ریال
+                                                </div>
+
+                                                <div class="row ">
+
+                                                    مقدار پیش پرداخت <span
+                                                        class="monyInputSpan">{{ $index->prepaidamount }}</span> ریال
+
+                                                </div>
+                                                <div class="row d-flex justify-content-between p-1">
+                                                    <div class="col d-flex justify-content-end">
+                                                        <button
+                                                            data_date='{{ \Carbon\Carbon::parse($index->CarbonDate)->format('Y-m-d') }}'
+                                                            data_day='{{ $index->store->settlementtime }}'
+                                                            class="btn btn-primary settlementtime_button"
+                                                            id="settlementtime_button"
+                                                            data-store-id ="{{ $index->id }}"
+                                                            data-route="{{ route('admin.installments.payrequest', ['store_id' => $index->store->id, 'installments_id' => $index->id]) }}">
+                                                            درخواست تسویه حساب
+                                                        </button>
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                @endif
+
+                            </div>
+
+                        </div>
                     </div>
 
-            </div>
-            </section>
-            <div class="container" dir="rtl">
-                <div class="modal fade" id="myModal" role="dialog">
-                    <div class="modal-dialog">
-
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title text-danger">هشدار!</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>
-                                    برای فعلا شما اجازه درخواست تسویه را ندارید.
-                                </p>
-                                <p>برای این کاربر <span id="user_day_time" class="text-success"></span> روز دیگر از وقت
-                                    درخواست تسویه مانده است .</p>
-                            </div>
-                            <div class="modal-footer d-flex justify-content-center">
-                                <button type="button" class="btn btn-default text-danger"
-                                    data-dismiss="modal">بستن</button>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
 
+        </div>
+        </section>
+        <div class="container" dir="rtl">
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title text-danger">هشدار!</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                برای فعلا شما اجازه درخواست تسویه را ندارید.
+                            </p>
+                            <p>برای این کاربر <span id="user_day_time" class="text-success"></span> روز دیگر از وقت
+                                درخواست تسویه مانده است .</p>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button type="button" class="btn btn-default text-danger"
+                                data-dismiss="modal">بستن</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
         </div>
+
     </div>
-    <style>
-        .modal a.close-modal[class*="icon-"] {
-            direction: rtl;
-            top: -10px;
-            right: -10px;
-            width: 20px;
-            height: 20px;
-            color: #fff;
-            line-height: 1.25;
-            text-align: center;
-            text-decoration: none;
-            text-indent: 0;
-            background: #900;
-            border: 2px solid #fff;
-            -webkit-border-radius: 26px;
-            -moz-border-radius: 26px;
-            -o-border-radius: 26px;
-            -ms-border-radius: 26px;
-            -moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-            -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
-        }
-    </style>
+</div>
+<style>
+    .modal a.close-modal[class*="icon-"] {
+        direction: rtl;
+        top: -10px;
+        right: -10px;
+        width: 20px;
+        height: 20px;
+        color: #fff;
+        line-height: 1.25;
+        text-align: center;
+        text-decoration: none;
+        text-indent: 0;
+        background: #900;
+        border: 2px solid #fff;
+        -webkit-border-radius: 26px;
+        -moz-border-radius: 26px;
+        -o-border-radius: 26px;
+        -ms-border-radius: 26px;
+        -moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    }
+</style>
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
+<script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
 @endpush
