@@ -80,7 +80,11 @@ class OneTimeLoginController extends Controller
                 'level' => 'user',
             ]);
             Auth::loginUsingId($user->id, true);
-            return redirect('/');
+
+            return response()->json(['status' => 'success', 'data' => 'true']);
+        } else {
+
+            return response()->json(['status' => 'success', 'data' => 'false']);
         }
     }
 }
