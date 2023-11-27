@@ -53,3 +53,36 @@ $(document).ready(function () {
         }
     });
 });
+
+$('#sendCodeRegister').on('click', function () {
+    $('#registerWithCode').modal('hide');
+
+    let form = $('#code_varification2');
+    var address = form.attr('action');
+    unblock();
+    if ($(this).valid()) {
+        var formData = new FormData(form[0]);
+        $.ajax({
+            url: address,
+            type: 'POST',
+            data: formData,
+            processData: false, // Important: prevent jQuery from processing the data
+            contentType: false, // Important: prevent jQuery from setting the content type
+            success: function (data) {
+                if (data.data == 'true') {
+                    window.location.href = '/';
+                } else {
+                    unblock();
+
+                    $('#code_error3')
+                        .text('کد وارد شده اشتباه است')
+                        .removeClass('d-none');
+                    $('#registerWithCode').modal();
+                }
+            },
+            beforeSend: function () {
+                block('.form-ui');
+            }
+        });
+    }
+});
