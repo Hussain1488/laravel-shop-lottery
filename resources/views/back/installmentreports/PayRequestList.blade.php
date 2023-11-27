@@ -312,9 +312,10 @@
                                             <label for="">ارسال سند:</label>
                                         </div>
                                         <div class="col">
-                                            <input required id="issue_doc" type="file" class="form-control"
-                                                name="documentpayment">
+                                            <input multiple required id="issue_doc" type="file"
+                                                class="form-control imageInput" name="documentpayment">
                                         </div>
+                                        <div class="imgContainer"></div>
                                     </div>
                                     <div class="row d-flex justify-center my-1">
                                         <div id="validation-messages"></div>

@@ -12,32 +12,18 @@ var loading = {
         '</div>',
     css: {
         width: 'auto' /* Auto width for the blockUI container */,
-        top: '40%' /* Position from the top */,
-        left: '40%' /* Position from the left */,
+        top: '50%' /* Center vertically */,
+        left: '50%' /* Center horizontally */,
+        transform: 'translate(-50%, -50%)' /* Center the element itself */,
         backgroundColor: 'transparent' /* No background color */,
         border: 'none' /* No border */,
         color: '#333' /* Text color */
     }
 };
+// $('#myButton').on('click', function () {
+//     $.blockUI(loading);
+// });
 
-$('#myButton').on('click', function () {
-    $('#rechargeForm1').modal();
-});
-// function TimeCount() {
-//     var $countdownOptionEnd = $('#countdown-verify-end1');
-
-//     $countdownOptionEnd.countdown({
-//         date: new Date().getTime() / 1000 + 60, // 1 minute later
-//         text: '<span class="day">%s</span><span class="hour">%s</span><span>: %s</span><span>%s</span>',
-//         end: function () {
-//             $countdownOptionEnd.html(
-//                 "<a href='" +
-//                     data('action') +
-//                     "' class='btn-link-border'>ارسال مجدد</a>"
-//             );
-//         }
-//     });
-// }
 
 $('#wallet_recharg_button1').on('click', function () {
     $('#rechargeForm1').modal();
