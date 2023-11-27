@@ -8,6 +8,16 @@ jQuery('#login-form').validate({
         }
     }
 });
+$('#showPassword').on('click', function () {
+    // Get the password input element
+    var passwordInput = $('#passInput');
+
+    if (passwordInput.attr('type') === 'password') {
+        passwordInput.attr('type', 'text');
+    } else {
+        passwordInput.attr('type', 'password');
+    }
+});
 
 $(document).ready(function () {
     $('#login-form').submit(function (e) {

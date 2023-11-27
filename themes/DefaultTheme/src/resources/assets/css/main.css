@@ -3850,6 +3850,9 @@ input[type='radio']:checked+.ui-variant--check {
     outline: none;
 }
 
+#showPassword:hover{
+    cursor:pointer;
+}
 .form-ui .form-row .input-ui.placeholder-right::placeholder {
     text-align: right;
     padding-right: 0.5rem !important;
@@ -8364,3 +8367,6 @@ footer.mini-footer .copy-right-mini-footer {
     width: 60px;
     height: 60px;
 }
+#showPassword:hover {
+            cursor: pointer;
+        }
