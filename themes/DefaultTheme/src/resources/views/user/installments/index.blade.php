@@ -319,7 +319,7 @@
                                                             @endforeach
                                                         @else
                                                             <div class="alert alert-warning">
-                                                                11قسطی برای شما وجود ندارد
+                                                                قسطی برای شما وجود ندارد
                                                             </div>
                                                         @endif
 
