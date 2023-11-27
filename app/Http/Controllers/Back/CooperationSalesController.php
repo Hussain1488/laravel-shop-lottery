@@ -95,7 +95,7 @@ class CooperationSalesController extends Controller
             'store_id' => $store->id,
         ]);
 
-        $store_trans = createstoretransaction::storeTransaction($store, $Creditamount, false, 0, 0);
+        $store_trans = createstoretransaction::storeTransaction($store, $Creditamount, false, 0, 0, $request->userselected);
 
         $bankt_tras = banktransaction::transaction($bank_id->id, $Creditamount, false, $store_trans, 'store');
 
@@ -215,7 +215,7 @@ class CooperationSalesController extends Controller
     }
     public function PayRequest($id, $id2)
     {
-
+        
         $account =   BankAccount::whereHas('account_type', function ($query) {
             $query->where('name', 'واسط قسط ها');
         })->first();
@@ -247,7 +247,7 @@ class CooperationSalesController extends Controller
             // $final_price =
         }
 
-        $transaction = createstoretransaction::storeTransaction($store, $installment->Creditamount, true, 1, 1);
+        $transaction = createstoretransaction::storeTransaction($store, $installment->Creditamount, true, 1, 1, $installment->userselected, $installment->updated_at);
 
         $bank_trans = banktransaction::transaction($store->account_id, $result, true, $transaction, 'store');
 
