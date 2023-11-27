@@ -11,7 +11,7 @@ class createstoretransaction extends Model
     use HasFactory;
 
     protected $table = "createstoretransactions";
-    protected $fillable = ["store_id", "flag", "datetransaction", "typeoftransaction", "price", "finalprice", "documentnumber", "bank_id"];
+    protected $fillable = ["store_id", "flag", "datetransaction", "typeoftransaction", "price", "finalprice", "documentnumber", "bank_id", 'user_id', 'pre_paid_time'];
 
 
     public function store()
@@ -24,7 +24,7 @@ class createstoretransaction extends Model
     }
 
 
-    public function storeTransaction($store, $CreditAmount, $status, $type, $flag)
+    public function storeTransaction($store, $CreditAmount, $status, $type, $flag, $user = null, $timestamp = null)
     {
         $count = createstoretransaction::count();
         if ($count > 0) {
@@ -62,6 +62,8 @@ class createstoretransaction extends Model
             'price' => $CreditAmount,
             'finalprice' => $finalprice,
             'documentnumber' => $number,
+            'user_id' => $user,
+            'pre_paid_time' => $timestamp,
         ]);
         // dd($transaction);
         return $transaction->id;
