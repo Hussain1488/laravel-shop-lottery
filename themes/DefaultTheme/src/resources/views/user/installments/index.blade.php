@@ -249,7 +249,7 @@
                                                     <div id="menu2" class="container tab-pane fade my-2 py-3"><br>
                                                         @if ($installmentsm->where('statususer', 1)->count() > 0)
                                                             @foreach ($installmentsm as $value)
-                                                                @if ($value->paymentstatus == 1 && $value->installments->where('paymentstatus', 1)->count() > 0)
+                                                                @if ($value->statususer == 1 && $value->installments->where('paymentstatus', 1)->count() > 0)
                                                                     @foreach ($value->installments as $key)
                                                                         @if ($key->paymentstatus == 1)
                                                                             <div class="border rounded p-2 my-1">
@@ -313,13 +313,13 @@
                                                                     @endforeach
                                                                 @else
                                                                     <div class="alert alert-warning">
-                                                                        قسطی برای شما وجود ندارد
+                                                                        22قسطی برای شما وجود ندارد
                                                                     </div>
                                                                 @endif
                                                             @endforeach
                                                         @else
                                                             <div class="alert alert-warning">
-                                                                قسطی برای شما وجود ندارد
+                                                                11قسطی برای شما وجود ندارد
                                                             </div>
                                                         @endif
 

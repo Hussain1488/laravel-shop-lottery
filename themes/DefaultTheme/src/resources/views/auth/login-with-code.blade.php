@@ -71,7 +71,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
-                <span id="code_error1" class="alert alert-danger d-none m-2" role="alert">
+                <span id="code_error3" class="alert alert-danger d-none m-2" role="alert">
                 </span>
 
 
@@ -87,12 +87,12 @@
                 <div class="modal-body">
                     <div class="message-light">
                         {{ trans('front::messages.auth.for-mobile-number') }} <span
-                            id="userNumber">{{ optional(Session::get('newUser'))['number'] ?? '' }}
+                            id="userNumber">{{ optional(Session::get('newUser'))['number'] ?? 'شما' }}
                         </span>
                         {{ trans('front::messages.auth.confirmation-code-sent') }}
                     </div>
 
-                    <form id="code_varification1" action="{{ route('register-with-code') }}" method="post">
+                    <form id="code_varification2" action="{{ route('register-with-code') }}" method="post">
                         @csrf
 
                         <input id="user_phone_number" name="mobile" type="hidden" value="">
