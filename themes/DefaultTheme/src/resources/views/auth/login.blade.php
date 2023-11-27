@@ -5,6 +5,9 @@
 @endphp
 
 @section('content')
+    <style>
+        
+    </style>
     <!-- Start main-content -->
     <main class="main-content dt-sl mt-4 mb-3">
         <div class="container main-container">
@@ -29,9 +32,9 @@
                                 <h3>{{ trans('front::messages.auth.password') }}</h3>
                             </div>
                             <div class="form-row with-icon form-group">
-                                <input type="password" name="password" class="input-ui pr-2"
+                                <input id="passInput" type="password" name="password" class="input-ui pr-2"
                                     placeholder="{{ trans('front::messages.auth.enter-your-password') }}">
-                                <i class="mdi mdi-lock-open-variant-outline"></i>
+                                <i class="mdi mdi-eye" id="showPassword"></i>
                             </div>
                             <div class="form-row mt-2">
                                 <div class="custom-control custom-checkbox float-right mt-2">
