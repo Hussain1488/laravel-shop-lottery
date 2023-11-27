@@ -167,11 +167,10 @@
                                             <div class="col-md-3 col-6 pt-2">
                                                 <div class="d-flex align-items-center">
                                                     <input multiple type="file" onchange="showpic()"
-                                                        class="form-control mt-1 mr-1" name="documents[]" id="imageInput">
+                                                        class="form-control mt-1 mr-1 imageInput" name="documents[]"
+                                                        id="imageInput">
                                                 </div>
-                                                <div class="dropzone dropzone-area mb-2" id="product-images">
-                                                    <div class="dz-message">تصاویر را به اینجا بکشید</div>
-                                                </div>
+                                                <div class="imgContainer"></div>
 
 
                                                 @error('documents')
@@ -220,44 +219,10 @@
 @endsection
 
 @include('back.partials.plugins', [
-    'plugins' => ['persian-datepicker', 'jquery.validate' , 'dropzone'],
+    'plugins' => ['persian-datepicker', 'jquery.validate', 'dropzone'],
 ])
 
 
 @push('scripts')
     <script src="{{ asset('back/assets/js/pages/createcollegue/myscript.js') }}"></script>
-    <script>
-        function showpic() {
-            // var srccreatedocument = $('#myfile').val();
-            // console.log("uhhh", $('#myfile').val());
-            // $('#mydocimg').attr('src', srccreatedocument);
-            // var formData = new FormData($('#myfile').val());
-            //     console.log("formData" , formData);
-
-            // const fileInput = event.target;
-            // if (fileInput.files && fileInput.files[0]) {
-            //     const reader = new FileReader();
-
-            //     // Callback when file is read
-            //     reader.onload = function(e) {
-            //         const imageDataUrl = e.target.result;
-
-            //         // Set the background image of the container
-            //          const base64String = imageDataUrl.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
-            //          const decodedData = atob(base64String);
-            //          const blob = new Blob([decodedData], { type: 'image/png' });
-            //          const imageUrl = URL.createObjectURL(blob);
-
-
-            //           console.log("jjjjj" ,  imageUrl);
-
-            //         document.getElementById('image-container').style.backgroundImage = `url(${imageUrl})`;
-            //     };
-
-            //     // Read the image file as a data URL
-            //     reader.readAsDataURL(fileInput.files[0]);
-            // }
-
-        }
-    </script>
 @endpush

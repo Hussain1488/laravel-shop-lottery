@@ -136,14 +136,15 @@
                                              </div>
                                              <div class="col-md-3 col-6 pt-2">
                                                  <div class="d-flex align-items-center">
-                                                     <input multiple type="file" class="form-control mt-1 mr-1"
-                                                         name="documents[]">
+                                                     <input multiple type="file"
+                                                         class="form-control mt-1 mr-1 imageInput" name="documents[]">
                                                      @error('documents')
                                                          <span class="text-danger">
                                                              {{ $message }}
                                                          </span>
                                                      @enderror
                                                  </div>
+                                                 <div class="imgContainer"></div>
                                              </div>
                                          </div>
 
@@ -171,7 +172,7 @@
                                              <div class="col d-flex align-items-baseline justify-content-center">
                                                  <input type="button" id="summit_button1"
                                                      class="btn btn-primary my-1"value=" تأیید
-                                                                                                                                                                                                                                                                                    تغییرات" />
+                                                                                                                                                                                                                                                                                                            تغییرات" />
                                              </div>
                                              <div class="col d-flex align-items-baseline justify-content-center">
                                                  <a href="" class="btn btn-danger my-1">انصراف </a>

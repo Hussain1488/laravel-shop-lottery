@@ -97,7 +97,8 @@
                                                     <div class="row">
 
                                                         <div class="col-sm">
-                                                            <input multiple type="file" class="form-control mt-1 mr-1"
+                                                            <input multiple type="file"
+                                                                class="form-control mt-1 mr-1 imageInput"
                                                                 name="uploaddocument[]" value="{{ old('uploaddocument') }}">
                                                             <span class="text-danger">
                                                                 @error('uploaddocument')
@@ -108,6 +109,7 @@
 
 
                                                     </div>
+                                                    <div class="imgContainer"></div>
 
 
                                                 </div>
@@ -154,7 +156,7 @@
                                         <div class="row">
                                             <div class="col-md-6 col-12 pt-2">
                                                 <h5>
-                                                    اعتبار فروشگاه
+                                                    میزان فروش اقساطی ماهانه
                                                 </h5>
                                             </div>
                                             <div class="col-md-6 col-12">
