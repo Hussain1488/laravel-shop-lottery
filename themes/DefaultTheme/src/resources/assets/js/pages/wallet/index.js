@@ -7,8 +7,9 @@ var loading = {
         '</div>',
     css: {
         width: 'auto' /* Auto width for the blockUI container */,
-        top: '40%' /* Position from the top */,
-        left: '40%' /* Position from the left */,
+        top: '50%' /* Center vertically */,
+        left: '50%' /* Center horizontally */,
+        transform: 'translate(-50%, -50%)' /* Center the element itself */,
         backgroundColor: 'transparent' /* No background color */,
         border: 'none' /* No border */,
         color: '#333' /* Text color */
