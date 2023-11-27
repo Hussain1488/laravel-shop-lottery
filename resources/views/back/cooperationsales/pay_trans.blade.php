@@ -115,7 +115,6 @@
 
                                                     </td>
                                                     <td>
-
                                                         {{ $key->list_id }}
                                                     </td>
 
