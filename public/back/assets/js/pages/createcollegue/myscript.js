@@ -1,30 +1,6 @@
 // const {last} = require('lodash');
 
 $(document).ready(function () {
-    // // console.log($('.persian-date-picker-value').val().pDatepicker());
-    // $('.persian-date-picker-value').pDatepicker({
-    //     altFormat: 'YYYY-mm-dd',
-    //     time: {
-    //         enabled: false
-    //     },
-    //     minute: {
-    //         enabled: false
-    //     }
-    // });
-    // // $('.persian-date-picker-value').customPersianDate();
-    // $('#summit_button').on('click', function (e) {
-    //     e.preventDefault(); // Prevent the default form submission
-    //     var persianDate = $('#enddate_persian').val();
-
-    //     // Use moment.js to parse and format the date
-    //     var formattedDate = moment(persianDate, 'YYYY-M-D').format('YY-M-D');
-
-    //     // Update the value of the date input with the formatted date
-    //     $('#enddate_persian').val(formattedDate);
-
-    //     $('#store_create_form').submit();
-    // });
-
     $('#summit_button').on('click', function (e) {
         e.preventDefault(); // Prevent the default form submission
 
@@ -83,5 +59,40 @@ $(document).ready(function () {
         $('#user_title').text('کاربر:' + ' ');
         $('#user_name').text(name + ' ' + lastname);
         // console.log(name + ' ' + lastname);
+    });
+
+    $('.imageInput').on('change', function (e) {
+        // Get the selected files
+        var files = e.target.files;
+
+        if (files && files.length > 0) {
+            // Clear existing images
+            $('.imgContainer').empty();
+
+            // Loop through each selected file
+            for (var i = 0; i < files.length; i++) {
+                // Create a FileReader for each file
+                var reader = new FileReader();
+
+                // Set the callback function to display the image after reading
+                reader.onload = function (event) {
+                    // Create an image element
+                    var image = $('<img>')
+                        .attr('src', event.target.result)
+                        .css({
+                            'max-width': '100px',
+                            border: '2px solid #ccc',
+                            margin: '5px',
+                            'box-shadow': '0 0 5px rgba(0, 0, 0, 0.3)',
+                            display: 'inline'
+                        });
+
+                    // Append the image to the container
+                    $('.imgContainer').append(image);
+                };
+
+                reader.readAsDataURL(files[i]);
+            }
+        }
     });
 });
