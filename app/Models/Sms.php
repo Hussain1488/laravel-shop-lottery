@@ -11,7 +11,7 @@ class Sms extends Model
     const TYPES = [
         'VERIFY_CODE' => [
             'key'    => 'verify-code',
-            'string' => 'کد تایید',
+            'string' => 'کد تأیید خانه اقساط',
             'method' => 'verifyCode'
         ],
         'USER_CREATED' => [
