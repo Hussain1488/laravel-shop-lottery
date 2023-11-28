@@ -78,6 +78,7 @@ return [
         'have-you-registered-before'     => 'قبلا ثبت نام کرده اید؟',
         'for-mobile-number'              => 'برای شماره همراه',
         'confirmation-code-sent'         => 'کد تایید ارسال گردید',
+        'username'                       => 'شماره تماس'
     ],
 
     'partials' => [

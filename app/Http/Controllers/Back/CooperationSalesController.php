@@ -291,7 +291,7 @@ class CooperationSalesController extends Controller
         $store = createstore::find($id);
 
 
-        return view('back.cooperationsales.transaction_records', compact('trans', 'store', 'total'));
+        return view('back.cooperationsales.mainwallet', compact('trans', 'store', 'total'));
     }
     public function payRequestWallet($id)
     {
