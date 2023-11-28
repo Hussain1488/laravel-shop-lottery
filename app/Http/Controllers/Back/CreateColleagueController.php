@@ -18,7 +18,9 @@ use App\Models\createstore;
 use App\Models\createstoretransaction;
 use App\Models\OperatorActivity;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Morilog\Jalali\Jalalian;
 
@@ -148,21 +150,14 @@ class CreateColleagueController extends Controller
     // storing new store
     public function store(CreateShopRequest $request)
     {
-
-
         $bank_id = BankAccount::whereHas('account_type', function ($query) {
             $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
         })->first();
-        if ($bank_id) {
-            $bank_id = BankAccount::whereHas('account_type', function ($query) {
-                $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
-            })->first();
-        } else {
+
+        if (!$bank_id) {
             toastr()->error('شما هیچ بانکی با ماهیت واسط اعتبار فروشگاه ها ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
             return redirect()->back();
         }
-
-        // dd($request->all());
 
         $storecredit = intval(str_replace(',', '', $request->storecredit));
 
@@ -180,29 +175,40 @@ class CreateColleagueController extends Controller
         $person = User::find($request->selectperson);
         // $person->level = 'seller';
         $person->save();
+        try {
+            DB::beginTransaction();
 
-        $store = createstore::create([
-            'storecredit' => $storecredit,
-            'selectperson' => $request->selectperson,
-            'nameofstore' => $request->nameofstore,
-            'addressofstore' => $request->addressofstore,
-            'feepercentage' => $request->feepercentage,
-            'settlementtime' => $request->settlementtime,
-            'enddate' => $request->enddate,
-            'uploaddocument' => $docPath,
-            'account_id' => $request->account_id,
-            'conrn_job_reccredite' => $storecredit,
-        ]);
 
-        $trans_id = createstoretransaction::storeTransaction($store, $storecredit, true, 1, 0);
+            $store = createstore::create([
+                'storecredit' => $storecredit,
+                'selectperson' => $request->selectperson,
+                'nameofstore' => $request->nameofstore,
+                'addressofstore' => $request->addressofstore,
+                'feepercentage' => $request->feepercentage,
+                'settlementtime' => $request->settlementtime,
+                'enddate' => $request->enddate,
+                'uploaddocument' => $docPath,
+                'account_id' => $request->account_id,
+                'conrn_job_reccredite' => $storecredit,
+            ]);
+            $trans_id = createstoretransaction::storeTransaction($store, $storecredit, true, 1, 0);
 
-        $bankt_tras = banktransaction::transaction($bank_id->id, $storecredit, true, $trans_id, 'store');
+            $bankt_tras = banktransaction::transaction($bank_id->id, $storecredit, true, $trans_id, 'store');
 
-        OperatorActivity::createActivity($request->selectperson, 'CREATE_STORE');
+            OperatorActivity::createActivity($request->selectperson, 'CREATE_STORE');
 
-        toastr()->success('  فروشگاه با موفقیت ایجاد شد.');
+            DB::commit();
 
-        // dd($users);
+            toastr()->success('  فروشگاه با موفقیت ایجاد شد.');
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            Log::error($e);
+        }
+        toastr()->error($e);
         return redirect()->back();
     }
 
