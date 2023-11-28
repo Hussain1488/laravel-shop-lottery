@@ -70,6 +70,9 @@ Route::post('/one-time-login', [OneTimeLoginController::class, 'store'])
 Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
     ->middleware('auth')
     ->name('password.confirm');
+Route::get('/confirm-smscode', [ConfirmablePasswordController::class, 'sendSms'])
+    ->middleware('auth')
+    ->name('sms.confirm');
 
 Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
     ->middleware('auth');
