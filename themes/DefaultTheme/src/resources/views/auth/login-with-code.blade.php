@@ -96,11 +96,18 @@
                         @csrf
 
                         <input id="user_phone_number" name="mobile" type="hidden" value="">
-                        <div class="form-row">
-                            <div class="numbers-verify form-content form-content1">
-                                <input name="verify_code" class="activation-code-input" id='activation-code-input1'
-                                    placeholder="{{ trans('front::messages.auth.enter-auth-code') }}">
-                            </div>
+                        <div class="email-otp-container d-flex justify-center">
+                            <!-- Six input fields for OTP digits -->
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+
+                        </div>
+                        <div class="numbers-verify form-content form-content1">
+                            <input name="verify_code" type="hidden" id='emailverificationCode'
+                                placeholder="{{ trans('front::messages.auth.enter-auth-code') }}">
                         </div>
                         <div class="form-row mt-2">
                             <span
@@ -129,4 +136,5 @@
 
     <script src="{{ theme_asset('js/vendor/countdown.min.js') }}"></script>
     <script src="{{ theme_asset('js/pages/login-with-code.js') }}"></script>
+    <script src="{{ theme_asset('js/pages/otp.js') }}"></script>
 @endpush

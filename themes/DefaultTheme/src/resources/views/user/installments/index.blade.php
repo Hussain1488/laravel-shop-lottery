@@ -29,8 +29,8 @@
                                         </div>
                                         <div class="card-content">
                                             <div class="container mt-3">
-
-                                                {{-- <input type="button" class="btn btn-primary" value="Click Me"
+                                                {{--
+                                                <input type="button" class="btn btn-primary" value="Click Me"
                                                     id="myButton"> --}}
                                                 @if (session('warning'))
                                                     <div class="alert alert-danger" role="alert">
@@ -425,11 +425,18 @@
                         @csrf
 
                         <input name="mobile" type="hidden" value="{{ $user->username }}">
-                        <div class="form-row">
-                            <div class="numbers-verify form-content form-content1">
-                                <input name="verify_code" class="activation-code-input" id='activation-code-input1'
-                                    placeholder="{{ trans('front::messages.auth.enter-auth-code') }}">
-                            </div>
+                        <div class="email-otp-container d-flex justify-center">
+                            <!-- Six input fields for OTP digits -->
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+
+                        </div>
+                        <div class="numbers-verify form-content form-content1">
+                            <input name="verify_code" type="hidden" id='emailverificationCode'
+                                placeholder="{{ trans('front::messages.auth.enter-auth-code') }}">
                         </div>
                         <div class="form-row mt-2">
                             <span
@@ -455,6 +462,70 @@
             </div>
         </div>
     </div>
+    {{-- <div class="modal fade" id="otptext">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <span id="code_error1" class="alert alert-danger d-none m-2" role="alert">
+                </span>
+
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title"><span class="text-info" id="operation_title"></span>
+                    </h4>
+                </div>
+                <hr />
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="message-light">
+                        {{ trans('front::messages.auth.for-mobile-number') }} {{ $user->username }}
+                        {{ trans('front::messages.auth.confirmation-code-sent') }}
+                    </div>
+
+                    <form id="code_varification1" action="{{ route('front.wallet.sentCode') }}" method="post">
+                        @csrf
+
+
+                        <div class="email-otp-container d-flex justify-content-center">
+                            <!-- Six input fields for OTP digits -->
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+
+                        </div>
+                        <div class="numbers-verify form-content form-content1">
+                            <input name="verify_code" class="d-none" id='emailverificationCode'
+                                placeholder="{{ trans('front::messages.auth.enter-auth-code') }}">
+                        </div>
+                        <!-- Button to verify OTP -->
+                        <div class="form-row mt-2">
+                            <span
+                                class="text-primary">{{ trans('front::messages.auth.retrieve-verification-code') }}</span>
+                            (<p data-action="{{ route('front.wallet.codeGenerate') }}" id="countdown-verify-end1"></p>)
+                        </div>
+                        <div class="form-row mt-3">
+                            <button data-url="{{ route('front.wallet.sentCode') }}" type="button" id="sendCode1"
+                                class="btn-primary-cm btn-with-icon mx-auto w-100">
+                                <i class="mdi mdi-check"></i>
+                                {{ trans('front::messages.auth.confirm-mobile-number') }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+
+                <div class="modal-footer">
+
+                </div>
+
+            </div>
+        </div>
+    </div> --}}
     <script>
         $('refuse_button').on('click', function() {
             $('#history-show-modal').modal('show');
@@ -464,5 +535,6 @@
 
     <script src="{{ theme_asset('js/vendor/countdown.min.js') }}"></script>
     <script src="{{ theme_asset('js/pages/installments/index.js') }}"></script>
+    <script src="{{ theme_asset('js/pages/otp.js') }}"></script>
     <script src='{{ asset('front/script.js') }}'></script>
 @endpush
