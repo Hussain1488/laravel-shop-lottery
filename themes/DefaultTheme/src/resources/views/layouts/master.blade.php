@@ -46,15 +46,16 @@
         <link rel="stylesheet" href="{{ theme_asset('js/plugins/toastr/toastr.css') }}">
 
         <!-- Main CSS File -->
-        <link rel="stylesheet" href="{{ theme_asset('css/main.css') }}?v=22">
         <link rel="stylesheet" href="{{ theme_asset('css/styles.css') }}?v=29">
         <link rel="stylesheet" href="{{ theme_asset('css/custom.css') }}?v=1">
         <!-- endinject -->
 
-    @else
+        @else
         <!-- All Css Files -->
         <link rel="stylesheet" href="{{ mix('css/all.css', config('front.mainfest_path')) }}">
-    @endif
+        @endif
+        <link rel="stylesheet" href="{{ theme_asset('css/main.css') }}?v=22">
+        <link rel="stylesheet" href="{{ theme_asset('css/custom.css') }}?v=1">
 
     @if ($current_local['direction'] == 'ltr')
         <link rel="stylesheet" href="{{ theme_asset('css/ltr.css') }}?v=2">
