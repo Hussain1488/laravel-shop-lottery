@@ -127,18 +127,18 @@
                                                     <td>
                                                         @can('createcolleague.show')
                                                             <a href="{{ route('admin.createcolleague.show', [$key->id]) }}">
-                                                                {{ $key->nameofstore }}
+                                                                {{ $key->nameofstore ?? ''  }}
                                                             </a>
                                                         @else
-                                                            {{ $key->nameofstore }}
+                                                            {{ $key->nameofstore ?? '' }}
                                                         @endcan
                                                     </td>
                                                     <td>
-                                                        {{ $key->user->first_name . ' ' . $key->user->last_name }}
+                                                        {{ $key->user->first_name . ' ' . $key->user->last_name ?? ''  }}
 
                                                     </td>
                                                     <td>
-                                                        <span class="monyInputSpan">{{ $key->storecredit }}</span>
+                                                        <span class="monyInputSpan">{{ $key->storecredit ?? '' }}</span>
 
                                                     </td>
                                                     <td>
