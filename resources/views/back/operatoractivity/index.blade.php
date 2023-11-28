@@ -25,7 +25,7 @@
             <div class="content-body">
                 <section class="card">
                     <div class="card-header">
-                        <h4 class="card-title">اسم کاربر</h4>
+                        
                     </div>
 
                     <div class="card-content">
