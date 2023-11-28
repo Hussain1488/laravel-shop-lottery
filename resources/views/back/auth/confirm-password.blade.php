@@ -60,7 +60,7 @@
                                                         id="inter-button">ورود به
                                                         سیستم</button>
                                                     <button type="button" id="sms-verify"
-                                                        class="btn btn-light float-right btn-inline mt-1">
+                                                        class="btn btn-info float-right btn-inline mt-1">
                                                         ورود با پیامک</button>
                                                 </form>
                                             </div>
