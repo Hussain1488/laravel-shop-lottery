@@ -36,8 +36,30 @@
                             </h4>
                         @endisset
                     </div>
+                    <div class="row mt-3">
+
+                        <div class="col-md-6 col-12">
+                            @isset($store)
+                                <div class="form-group d-flex align-items-center">
+                                    <label for="first_name" class="mr-2">
+                                        مقدار اعتبار فروش اقساطی
+                                    </label>
+                                    <div class="d-flex align-items-center">
+                                        <input readonly type="text" placeholder="100,000" class="form-control moneyInput"
+                                            id="first_name" name="first_name" style="margin-left: 4px"
+                                            value="{{ $store->storecredit != null ? $store->storecredit : 0 }}">
+                                        ریال
+                                    </div>
+
+                                </div>
+                            @endisset
+                        </div>
+                        <div class="col-md-6 col-12">
+
+                        </div>
+                    </div>
                     <div class="card-content">
-                        <div class="container mt-3">
+                        <div class="container m1-3">
 
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs">
@@ -56,32 +78,10 @@
                             <!-- Tab not paid and not validated installments -->
                             <div class="tab-content">
                                 <div id="home" class="container tab-pane active"><br>
-                                    <div class="row">
 
-                                        <div class="col-md-6 col-12">
-                                            @isset($store)
-                                                <div class="form-group d-flex align-items-center">
-                                                    <label for="first_name" class="mr-2">
-                                                        مقدار اعتبار فروش اقساطی
-                                                    </label>
-                                                    <div class="d-flex align-items-center">
-                                                        <input readonly type="text" placeholder="100,000"
-                                                            class="form-control moneyInput" id="first_name" name="first_name"
-                                                            style="margin-left: 4px"
-                                                            value="{{ $store->storecredit != null ? $store->storecredit : 0 }}">
-                                                        ریال
-                                                    </div>
-
-                                                </div>
-                                            @endisset
-                                        </div>
-                                        <div class="col-md-6 col-12">
-
-                                        </div>
-                                    </div>
                                     @if (!$installmentsm->where('statususer', 0)->count() > 0)
                                         <section id="main-card" class="card">
-                                            <div class="card-header m-3 ">
+                                            <div class="card-header p-1 alert alert-warning ">
                                                 <h3 class="text-danger">لیست فروشی برای نمایش به شما وجود ندارد</h3>
                                             </div>
                                         </section>
@@ -129,47 +129,17 @@
                             {{-- tab prepayment paid and validated installments --}}
                             <div id="menu1" class="container tab-pane fade"><br>
 
-                                <div class="row">
-
-                                    <div class="col-md-6 col-12">
-                                        @isset($store)
-                                            <div class="form-group d-flex align-items-center">
-                                                <label for="first_name" class="mr-2">
-                                                    مقدار اعتبار فروش اقساطی
-                                                </label>
-                                                <div class="d-flex align-items-center">
-                                                    <input readonly type="text" placeholder="100,000"
-                                                        class="form-control moneyInput" id="first_name" name="first_name"
-                                                        style="margin-left: 4px"
-                                                        value="{{ $store->storecredit != null ? $store->storecredit : 0 }}">
-                                                    ریال
-                                                </div>
-
-                                            </div>
-                                        @endisset
-                                    </div>
-                                    <div class="col-md-6 col-12">
-
-
-                                    </div>
-                                </div>
 
                                 <div class="row">
 
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-group d-flex align-items-center">
-                                            <h3>
-                                                لیست اقساط تأیید شده
-                                            </h3>
-                                        </div>
-                                    </div>
+
                                     <div class="col-md-6 col-12">
 
                                     </div>
                                 </div>
                                 @if (!$installmentsm->where('statususer', 1)->where('status', 0)->count() > 0)
                                     <section id="main-card" class="card">
-                                        <div class="card-header m-3 ">
+                                        <div class="card-header p-1 alert alert-warning ">
                                             <h3 class="text-danger">لیست فروشی برای نمایش به شما وجود ندارد</h3>
                                         </div>
                                     </section>
