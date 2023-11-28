@@ -1,11 +1,10 @@
-@extends('front::auth.layouts.master', ['title' =>  trans('front::messages.auth.confirm-mobile-number') ])
+@extends('front::auth.layouts.master', ['title' => trans('front::messages.auth.confirm-mobile-number')])
 
 @php
     $redirect_url = Redirect::intended()->getTargetUrl();
 @endphp
 
 @section('content')
-
     <!-- Start main-content -->
     <main class="main-content dt-sl mt-4 mb-3">
         <div class="container main-container">
@@ -17,7 +16,8 @@
                             <h2 class="font-weight-bold">{{ trans('front::messages.auth.confirm-mobile-number') }}</h2>
                         </div>
                         <div class="message-light">
-                            {{ trans('front::messages.auth.for-mobile-number') }} {{ auth()->user()->username }} {{ trans('front::messages.auth.confirmation-code-sent') }}
+                            {{ trans('front::messages.auth.for-mobile-number') }} {{ auth()->user()->username }}
+                            {{ trans('front::messages.auth.confirmation-code-sent') }}
                             <a href="{{ route('front.verify.showChangeUsername') }}" class="btn-link-border">
                                 {{ trans('front::messages.auth.edit-number') }}
                             </a>
@@ -25,13 +25,23 @@
                         <form id="verify-username-form" action="{{ route('front.verify.verifyCode') }}">
                             @csrf
 
-                            <div class="form-row">
-                                <div class="numbers-verify form-content form-content1">
-                                    <input name="verify_code" class="activation-code-input" placeholder="{{ trans('front::messages.auth.enter-auth-code') }}">
-                                </div>
+                            <div class="email-otp-container d-flex justify-center">
+                                <!-- Six input fields for OTP digits -->
+                                <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
+                                <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+                                <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+                                <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+                                <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+
+                            </div>
+                            <div class="numbers-verify form-content form-content1">
+                                <input name="verify_code" type="hidden" id='emailverificationCode'
+                                    placeholder="{{ trans('front::messages.auth.enter-auth-code') }}">
                             </div>
                             <div class="form-row mt-2">
-                                <span class="text-primary">{{ trans('front::messages.auth.retrieve-verification-code') }}</span> (<p id="countdown-verify-end"></p>)
+                                <span
+                                    class="text-primary">{{ trans('front::messages.auth.retrieve-verification-code') }}</span>
+                                (<p id="countdown-verify-end"></p>)
                             </div>
                             <div class="form-row mt-3">
                                 <button type="submit" class="btn-primary-cm btn-with-icon mx-auto w-100">
@@ -46,7 +56,6 @@
         </div>
     </main>
     <!-- End main-content -->
-
 @endsection
 
 @push('scripts')
@@ -57,4 +66,5 @@
 
     <script src="{{ theme_asset('js/vendor/countdown.min.js') }}"></script>
     <script src="{{ theme_asset('js/pages/verify.js?v=3') }}"></script>
+    <script src="{{ theme_asset('js/pages/otp.js') }}"></script>
 @endpush
