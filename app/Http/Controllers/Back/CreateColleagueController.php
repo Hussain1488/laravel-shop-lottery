@@ -191,7 +191,7 @@ class CreateColleagueController extends Controller
                 'account_id' => $request->account_id,
                 'conrn_job_reccredite' => $storecredit,
             ]);
-            $trans_id = createstoretransaction::storeTransaction($store, $storecredit, true, 0, 1);
+            $trans_id = createstoretransaction::storeTransaction($store, $storecredit, true, 3, 0);
 
             $bankt_tras = banktransaction::transaction($bank_id->id, $storecredit, true, $trans_id, 'store');
 
@@ -327,7 +327,7 @@ class CreateColleagueController extends Controller
 
         OperatorActivity::createActivity($store->user->id, 'STORE_CREDIT');
 
-        $trans_id = createstoretransaction::storeTransaction($store, $request->storecredit, true, 1, 0);
+        $trans_id = createstoretransaction::storeTransaction($store, $request->storecredit, true, 3, 0);
 
 
         $bank_trans = banktransaction::transaction($bank_id->id, $request->storecredit, false, $trans_id, 'store');
