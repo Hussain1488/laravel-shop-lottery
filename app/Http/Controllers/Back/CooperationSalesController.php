@@ -95,7 +95,7 @@ class CooperationSalesController extends Controller
             'store_id' => $store->id,
         ]);
 
-        $store_trans = createstoretransaction::storeTransaction($store, $Creditamount, false, 0, 0, $request->userselected);
+        $store_trans = createstoretransaction::storeTransaction($store, $Creditamount, false, 3, 0, $request->userselected);
 
         $bankt_tras = banktransaction::transaction($bank_id->id, $Creditamount, false, $store_trans, 'store');
 
@@ -319,10 +319,10 @@ class CooperationSalesController extends Controller
     }
     public function creditTrans($id)
     {
-        $trans = createstoretransaction::where('flag', 0)->where('typeoftransaction', 1)->where('store_id', $id)->latest()->get();
+        $trans = createstoretransaction::where('flag', 0)->where('typeoftransaction', 3)->where('store_id', $id)->latest()->get();
         $store = createstore::find($id);
         if (count($trans) > 0) {
-            $total = createstoretransaction::where('flag', 0)->where('typeoftransaction', 1)->where('store_id', $id)->latest()->first()->finalprice;
+            $total = createstoretransaction::where('flag', 0)->where('typeoftransaction', 3)->where('store_id', $id)->latest()->first()->finalprice;
         } else {
             $total = 0;
         }
