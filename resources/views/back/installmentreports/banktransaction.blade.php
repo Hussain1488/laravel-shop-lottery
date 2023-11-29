@@ -77,7 +77,7 @@
                                                     @if ($log)
                                                         نام فروشگاه
                                                     @else
-                                                        خریدار
+                                                        کاربر
                                                     @endif
                                                 </th>
                                                 <th>
@@ -103,7 +103,7 @@
                                                     <td>
                                                         {{ $counter++ }}
                                                     </td>
-                                                    
+
                                                     <td>
                                                         @if ($key->log)
                                                             {{ $key->storeTransaction->store->nameofstore }}
