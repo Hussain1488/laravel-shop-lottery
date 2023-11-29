@@ -56,12 +56,16 @@
                                                         </div>
                                                         <label for="user-sms">کد پیامکی</label>
                                                     </fieldset>
-                                                    <button type="submit" class="btn btn-primary float-right btn-inline"
-                                                        id="inter-button">ورود به
-                                                        سیستم</button>
-                                                    <button type="button" id="sms-verify"
-                                                        class="btn btn-info float-right btn-inline mt-1">
-                                                        ورود با پیامک</button>
+                                                    <div class="d-flex justify-content-end">
+                                                        <button type="submit"
+                                                            class="btn btn-primary float-right btn-inline "
+                                                            id="inter-button">ورود به
+                                                            سیستم</button>
+                                                        <br>
+                                                        <button type="button" id="sms-verify"
+                                                            class="btn btn-info float-right btn-inline ml-1">
+                                                            ورود با پیامک</button>
+                                                    </div>
                                                 </form>
                                             </div>
                                             <a href="{{ route('logout') }}">خروج</a>
