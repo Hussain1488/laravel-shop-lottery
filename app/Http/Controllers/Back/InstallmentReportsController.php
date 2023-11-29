@@ -392,23 +392,22 @@ class InstallmentReportsController extends Controller
 
     public function transactionFilter($id)
     {
+        $title = BankAccount::find($id)->bankname;
         $transactions = BankTransaction::where('bank_id', $id)
             ->with('bank.account_type', 'buyerTransaction.user', 'storeTransaction.store.user')
             ->latest()
             ->get();
 
         $log = false;
-        $title = 'No transactions found';
-        $total = 0;
+
+        $total = $transactions->first()->bankbalance ?? 0;
 
         foreach ($transactions as $key) {
             if ($key->storeTransaction != null) {
                 $key->log = $key->storeTransaction !== null;
                 // Assuming you want to set the title based on the first transaction
-                $title = $transactions->first()->bank->account_type->name;
 
                 // Summing up bank balances from all transactions
-                $total = $transactions->first()->bankbalance;
             }
         }
         // dd($transactions);
