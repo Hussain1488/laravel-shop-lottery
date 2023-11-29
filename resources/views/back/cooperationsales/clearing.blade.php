@@ -95,11 +95,12 @@
 
                                     </div>
                                     <div class="row">
-                                        <input multiple type="file" accept=".pdf, .doc" accept-language="fa"
-                                            name="factor[]">
+                                        <input multiple class="imageInput" type="file" accept=".pdf, .doc"
+                                            accept-language="fa" name="factor[]">
                                         <label for="">افزودن عکس فاکتور فروش</label>
 
                                     </div>
+                                    <div class="imgContainer"></div>
                                     @error('factor')
                                         <span class="text-danger">
                                             {{ $message }}
