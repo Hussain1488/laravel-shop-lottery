@@ -54,7 +54,7 @@
         <!-- endinject -->
     @else
         <!-- All Css Files -->
-        <link rel="stylesheet" href="{{ mix('css/all.css', config('front.mainfest_path')) }}">
+        <link rel="stylesheet" href="{{ theme_asset('css/all.css', config('front.mainfest_path')) }}">
     @endif
 
     @if ($current_local['direction'] == 'ltr')
@@ -155,7 +155,7 @@
         <script src="{{ theme_asset('js/scripts.js') }}?v=13"></script>
     @else
         <!-- All JS Files -->
-        <script src="{{ mix('js/all.js', config('front.mainfest_path')) }}"></script>
+        <script src="{{ theme_asset('js/all.js', config('front.mainfest_path')) }}"></script>
     @endif
 
     @stack('scripts')
