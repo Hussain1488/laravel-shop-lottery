@@ -39,7 +39,9 @@
                             <!-- Tab panes -->
                             <div class="">
                                 <div id="home" class="container tab-pane "><br>
-
+                                    @php
+                                        $counter = 1;
+                                    @endphp
 
 
                                     <div class="row mt-1 ml-2 mb-2">
@@ -58,76 +60,142 @@
                                             ریال
                                         </div>
                                     </div>
-
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    #
-                                                </th>
-                                                <th>
-                                                    تاریخ تراکنش
-                                                </th>
-                                                <th>
-                                                    نوع تراکنش
-                                                </th>
-                                                <th>
-                                                    مبلغ تراکنش
-                                                </th>
-                                                <th class="text-danger">
-                                                    مجموع
-                                                </th>
-                                                <th class="text-danger">
-                                                    تاریخ پرداخت
-                                                </th>
-                                                <th>
-                                                    شماره سند
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        @php
-                                            $counter = 1;
-                                        @endphp
-                                        <tbody>
-                                            @foreach ($trans as $key)
+                                    <div class="pc-size">
+                                        <table class="table table-hover">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        {{ $counter++ }}
-                                                    </td>
-                                                    <td>
+                                                    <th>
+                                                        #
+                                                    </th>
+                                                    <th>
+                                                        تاریخ تراکنش
+                                                    </th>
+                                                    <th>
+                                                        نوع تراکنش
+                                                    </th>
+                                                    <th>
+                                                        مبلغ تراکنش
+                                                    </th>
+                                                    <th class="text-danger">
+                                                        مجموع
+                                                    </th>
 
-                                                        <span class="transaction_datetime">
-                                                            {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y-m-d') }}
+                                                    <th>
+                                                        شماره سند
+                                                    </th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                @foreach ($trans as $key)
+                                                    <tr>
+                                                        <td>
+                                                            {{ $counter++ }}
+                                                        </td>
+                                                        <td>
+
+                                                            <span class="transaction_datetime">
+                                                                {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y-m-d') }}
+                                                                <br>
+                                                                {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            {{ $key->flag == 1 ? 'درخواست برداشت از کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
+                                                        </td>
+                                                        <td>
+                                                            <span class="monyInputSpan">{{ $key->price }}</span>
+                                                        </td>
+                                                        <td class="text-danger">
+                                                            <span class="monyInputSpan">{{ $key->finalprice }}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            {{ $key->pre_paid_time != null ? \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->pre_paid_time))->format('Y-m-d') : 'تاریخ ثبت نشده' }}
                                                             <br>
+                                                            {{ $key->pre_paid_time != null ? \Carbon\Carbon::parse($key->created_at)->format('H:i:s') : '' }}
+                                                        </td>
+                                                        <td>
+
+                                                            {{ $key->documentnumber }}
+                                                        </td>
+
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mobile-size ">
+                                        @foreach ($trans as $key)
+                                            <div class=" border rounded mb-1">
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+                                                        <h5 class="text-light">
+                                                            تاریخ تراکنش:
+
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col"><span class="text-dark">
+                                                            {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y-m-d') }}
+
                                                             {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
                                                         </span>
-                                                    </td>
-                                                    <td>
-                                                        {{ $key->flag == 1 ? 'درخواست برداشت از کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
-                                                    </td>
-                                                    <td>
-                                                        <span class="monyInputSpan">{{ $key->price }}</span>
-                                                    </td>
-                                                    <td class="text-danger">
-                                                        <span class="monyInputSpan">{{ $key->finalprice }}</span>
+                                                    </div>
+                                                </div>
 
-                                                    </td>
-                                                    <td>
-                                                        {{ $key->pre_paid_time != null ? \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->pre_paid_time))->format('Y-m-d') : 'تاریخ ثبت نشده' }}
-                                                        <br>
-                                                        {{ $key->pre_paid_time != null ? \Carbon\Carbon::parse($key->created_at)->format('H:i:s') : '' }}
-                                                    </td>
-                                                    <td>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+                                                        <h5 class="text-light">نوع تراکنش:
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span class="text-dark">
+                                                            {{ $key->flag == 1 ? 'درخواست برداشت از کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
 
-                                                        {{ $key->documentnumber }}
-                                                    </td>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+                                                        <h5 class="text-light">مبلغ تراکنش:
 
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
 
+                                                        <span class="text-dark monyInputSpan">{{ $key->price }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+
+                                                        <h5 class="text-light">مجموع:
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
+
+                                                        <span class="text-dark monyInputSpan">{{ $key->finalprice }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+
+                                                        <h5 class="text-light"> شماره سند:
+                                                        </h5>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <span class="text-dark">
+                                                            {{ $key->documentnumber }}
+                                                        </span>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
+
                             </div>
 
                         </div>
@@ -137,9 +205,6 @@
         </div>
 
         </section>
-    </div>
-
-    </div>
     </div>
 @endsection
 

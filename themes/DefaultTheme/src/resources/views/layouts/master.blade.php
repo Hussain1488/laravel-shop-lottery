@@ -7,13 +7,14 @@
     <!-- viewport meta -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="robots" content="index, follow"/>
+    <meta name="robots" content="index, follow" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @stack('meta')
 
     <!-- Favicon Icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ option('info_icon', theme_asset('images/favicon-32x32.png')) }}">
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="{{ option('info_icon', theme_asset('images/favicon-32x32.png')) }}">
 
     <title>
         @isset($title)
@@ -29,7 +30,8 @@
     @stack('befor-styles')
 
     <!-- theme color file -->
-    <link rel="stylesheet" href="{{ theme_asset('css/colors/' . option('dt_theme_color', 'default') . '.css') }}?v={{ time() }}">
+    <link rel="stylesheet"
+        href="{{ theme_asset('css/colors/' . option('dt_theme_color', 'default') . '.css') }}?v={{ time() }}">
 
     @if ($current_local['direction'] == 'ltr')
         <link rel="stylesheet" href="{{ theme_asset('css/vendor/bootstrap.ltr.min.css') }}">
@@ -48,14 +50,12 @@
         <!-- Main CSS File -->
         <link rel="stylesheet" href="{{ theme_asset('css/styles.css') }}?v=29">
         <link rel="stylesheet" href="{{ theme_asset('css/custom.css') }}?v=1">
+        <link rel="stylesheet" href="{{ theme_asset('css/main.css') }}?v=22">
         <!-- endinject -->
-
-        @else
+    @else
         <!-- All Css Files -->
         <link rel="stylesheet" href="{{ mix('css/all.css', config('front.mainfest_path')) }}">
-        @endif
-        <link rel="stylesheet" href="{{ theme_asset('css/main.css') }}?v=22">
-        <link rel="stylesheet" href="{{ theme_asset('css/custom.css') }}?v=1">
+    @endif
 
     @if ($current_local['direction'] == 'ltr')
         <link rel="stylesheet" href="{{ theme_asset('css/ltr.css') }}?v=2">
@@ -80,16 +80,21 @@
                         <div class="col-lg-2 col-md-3 col-4">
                             <div class="logo-area float-right">
                                 <a href="{{ route('front.index') }}">
-                                    <img data-src="{{ option('info_logo', theme_asset('img/logo.png')) }}" alt="{{ option('info_site_title', 'خانه اقساط') }}">
+                                    <img data-src="{{ option('info_logo', theme_asset('img/logo.png')) }}"
+                                        alt="{{ option('info_site_title', 'خانه اقساط') }}">
                                 </a>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-5 hidden-sm">
                             <div class="search-area dt-sl">
                                 <form id="search-form" action="{{ route('front.products.search') }}" class="search">
-                                    <input type="text" name="q" value="{{ request('q') }}" id="search-input" autocomplete="off" placeholder="{{ trans('front::messages.header.Search-for-product') }}">
-                                    <button type="submit"><img data-src="{{ theme_asset('img/theme/search.png') }}" alt="search button"></button>
-                                    <button id="close-search-result" class="close-search-result" type="button"><i class="mdi mdi-close"></i></button>
+                                    <input type="text" name="q" value="{{ request('q') }}" id="search-input"
+                                        autocomplete="off"
+                                        placeholder="{{ trans('front::messages.header.Search-for-product') }}">
+                                    <button type="submit"><img data-src="{{ theme_asset('img/theme/search.png') }}"
+                                            alt="search button"></button>
+                                    <button id="close-search-result" class="close-search-result" type="button"><i
+                                            class="mdi mdi-close"></i></button>
                                     <div class="search-result p-0" id="search-result">
                                         <ul>
 
@@ -140,14 +145,14 @@
         <script src="{{ theme_asset('js/vendor/theia-sticky-sidebar.min.js') }}"></script>
         <script src="{{ theme_asset('js/vendor/jquery.lazyloadxt.min.js') }}"></script>
 
-        <script src="{{ theme_asset("js/plugins/jquery.blockUI.js") }}"></script>
-        <script src="{{ theme_asset("js/plugins/sweetalert2.all.min.js") }}"></script>
-        <script src="{{ theme_asset("js/plugins/toastr/toastr.min.js") }}"></script>
+        <script src="{{ theme_asset('js/plugins/jquery.blockUI.js') }}"></script>
+        <script src="{{ theme_asset('js/plugins/sweetalert2.all.min.js') }}"></script>
+        <script src="{{ theme_asset('js/plugins/toastr/toastr.min.js') }}"></script>
 
         <!-- Main JS File -->
         <script src="{{ theme_asset('js/main.js') }}?v=4"></script>
         <script src="{{ theme_asset('js/custom.js') }}"></script>
-        <script src="{{ theme_asset("js/scripts.js") }}?v=13"></script>
+        <script src="{{ theme_asset('js/scripts.js') }}?v=13"></script>
     @else
         <!-- All JS Files -->
         <script src="{{ mix('js/all.js', config('front.mainfest_path')) }}"></script>

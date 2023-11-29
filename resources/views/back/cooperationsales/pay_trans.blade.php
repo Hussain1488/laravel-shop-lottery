@@ -58,71 +58,139 @@
                                             ریال
                                         </div>
                                     </div>
+                                    <div class="pc-size">
 
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    #
-                                                </th>
-                                                <th>
-                                                    تاریخ تراکنش
-                                                </th>
-                                                <th>
-                                                    نوع تراکنش
-                                                </th>
-                                                <th>
-                                                    مبلغ تراکنش
-                                                </th>
-                                                <th>
-                                                    مجموع تراکنش
-                                                </th>
-                                                <th class="">
-                                                    شماره شبا
-                                                </th>
-                                                <th>
-                                                    شماره سند
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        @php
-                                            $counter = 1;
-                                        @endphp
-                                        <tbody>
-                                            @foreach ($trans as $key)
+                                        <table class="table table-hover">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        {{ $counter++ }}
-                                                    </td>
-                                                    <td>
-                                                        <span class="transaction_datetime">
+                                                    <th>
+                                                        #
+                                                    </th>
+                                                    <th>
+                                                        تاریخ تراکنش
+                                                    </th>
+                                                    <th>
+                                                        نوع تراکنش
+                                                    </th>
+                                                    <th>
+                                                        مبلغ تراکنش
+                                                    </th>
+                                                    <th>
+                                                        مجموع تراکنش
+                                                    </th>
+                                                    <th class="">
+                                                        شماره شبا
+                                                    </th>
+                                                    <th>
+                                                        شماره سند
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            @php
+                                                $counter = 1;
+                                            @endphp
+                                            <tbody>
+                                                @foreach ($trans as $key)
+                                                    <tr>
+                                                        <td>
+                                                            {{ $counter++ }}
+                                                        </td>
+                                                        <td>
+                                                            <span class="transaction_datetime">
+                                                                {{ \Carbon\Carbon::parse($key->depositdate)->format('Y-m-d') }}
+                                                                <br>
+                                                                {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            {{ 'درخواست واریز' }}
+                                                        </td>
+                                                        <td>
+                                                            <span class="monyInputSpan">{{ $key->depositamount }}</span>
+                                                        </td>
+                                                        <td>
+                                                            <span class="monyInputSpan">{{ $key->final_price }}</span>
+                                                        </td>
+                                                        <td class="text-danger">
+                                                            <span class="">{{ $key->shabanumber }}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            {{ $key->list_id }}
+                                                        </td>
+
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mobile-size ">
+                                        @foreach ($trans as $key)
+                                            <div class=" border rounded mb-1">
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+                                                        <h5 class="text-light">
+                                                            تاریخ تراکنش:
+
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col"><span class="text-dark">
                                                             {{ \Carbon\Carbon::parse($key->depositdate)->format('Y-m-d') }}
-                                                            <br>
                                                             {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
                                                         </span>
-                                                    </td>
-                                                    <td>
-                                                        {{ 'درخواست واریز' }}
-                                                    </td>
-                                                    <td>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+                                                        <h5 class="text-light">نوع تراکنش:
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span class="text-dark">
+                                                            {{ 'درخواست واریز' }}
+
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+                                                        <h5 class="text-light">مبلغ تراکنش:
+
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
+
                                                         <span class="monyInputSpan">{{ $key->depositamount }}</span>
-                                                    </td>
-                                                    <td>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+
+                                                        <h5 class="text-light">شماره شبا:
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
+
                                                         <span class="monyInputSpan">{{ $key->final_price }}</span>
-                                                    </td>
-                                                    <td class="text-danger">
-                                                        <span class="">{{ $key->shabanumber }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
 
-                                                    </td>
-                                                    <td>
-                                                        {{ $key->list_id }}
-                                                    </td>
+                                                        <h5 class="text-light"> شماره سند:
+                                                        </h5>
+                                                    </div>
 
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                    <div class="col">
+                                                        <span class="text-dark">
+                                                            {{ $key->list_id }} </span>
+                                                    </div>
 
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
 

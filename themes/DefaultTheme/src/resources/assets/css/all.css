@@ -11054,7 +11054,7 @@ a.text-dark:hover {
     }
 
     abbr[title]::after {
-        content: " (" attr(title) ")"
+        content: " ("attr(title) ")"
     }
 
     pre {
@@ -22344,4 +22344,29 @@ input {
 
 .email-otp {
     margin-top: 25px;
+}
+
+
+.topbar .logo-area {
+    width: 60px;
+}
+
+@media only screen and (max-width: 1000px) {
+    .pc-size {
+        display: none;
+    }
+
+    .mobile-size {
+        display: block;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    .pc-size {
+        display: block;
+    }
+
+    .mobile-size {
+        display: none;
+    }
 }

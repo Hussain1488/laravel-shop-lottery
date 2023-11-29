@@ -58,67 +58,138 @@
                                             ریال
                                         </div>
                                     </div>
-
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    #
-                                                </th>
-                                                <th>
-                                                    تاریخ فروشگاه
-                                                </th>
-                                                <th>
-                                                    تاریخ پرداخت
-                                                </th>
-                                                <th>
-                                                    نوع تراکنش
-                                                </th>
-                                                <th>
-                                                    شماره ره گیری
-                                                </th>
-                                                <th class="">
-                                                    مجموع تراکنش با کسر کارمزد
-                                                </th>
-
-                                            </tr>
-                                        </thead>
-                                        @php
-                                            $counter = 1;
-                                        @endphp
-                                        <tbody>
-                                            @foreach ($paidList as $key)
+                                    <div class="pc-size">
+                                        <table class="table table-hover">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        {{ $counter++ }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $key->payments->store->nameofstore }}
-                                                    </td>
-                                                    <td>
+                                                    <th>
+                                                        #
+                                                    </th>
+                                                    <th>
+                                                        تاریخ فروشگاه
+                                                    </th>
+                                                    <th>
+                                                        تاریخ پرداخت
+                                                    </th>
+                                                    {{-- <th>
+                                                        نوع تراکنش
+                                                    </th> --}}
+                                                    <th>
+                                                        شماره ره گیری
+                                                    </th>
+                                                    <th class="">
+                                                        اسناد:
+                                                    </th>
+
+                                                </tr>
+                                            </thead>
+                                            @php
+                                                $counter = 1;
+                                            @endphp
+                                            <tbody>
+                                                @foreach ($paidList as $key)
+                                                    <tr>
+                                                        <td>
+                                                            {{ $counter++ }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $key->payments->store->nameofstore }}
+                                                        </td>
+                                                        <td>
+                                                            <span class="transaction_datetime">
+                                                                {{ \Carbon\Carbon::parse($key->date)->format('Y-m-d') }}
+                                                                <br>
+                                                                {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                            </span>
+                                                        </td>
+                                                        {{-- <td>
+                                                            موفقت باشید
+                                                        </td> --}}
+                                                        <td>
+                                                            <span class="">{{ $key->Issuetracking }}</span>
+                                                        </td>
+                                                        <td class="">
+                                                            <a href="{{ public_path($key->documentpayment) }}">
+                                                                <span class="text-success">دانلود سند</span>
+                                                            </a>
+                                                        </td>
+
+
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mobile-size ">
+                                        @foreach ($paidList as $key)
+                                            <div class=" border rounded mb-1">
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+                                                        <h5 class="text-light">
+                                                            نام فروشگاه:
+
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col"><span class="text-dark">
+                                                            {{ $key->payments->store->nameofstore }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+                                                        <h5 class="text-light">
+                                                            تاریخ پرداخت </h5>
+                                                    </div>
+                                                    <div class="col">
                                                         <span class="transaction_datetime">
                                                             {{ \Carbon\Carbon::parse($key->date)->format('Y-m-d') }}
                                                             <br>
                                                             {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
                                                         </span>
-                                                    </td>
-                                                    <td>
-                                                        موفقت باشید
-                                                    </td>
-                                                    <td>
+                                                    </div>
+                                                </div>
+                                                {{-- <div class="row pt-1">
+                                                    <div class="col ml-1">
+                                                        <h5 class="text-light">
+                                                            نوع تراکنش
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
+
+                                                        <span class="">چیزی نیست</span>
+                                                    </div>
+                                                </div> --}}
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+
+                                                        <h5 class="text-light">
+                                                            شماره رهگیری:
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
                                                         <span class="">{{ $key->Issuetracking }}</span>
-                                                    </td>
-                                                    <td class="">
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+
+                                                        <h5 class="text-light">
+                                                            اسناد:
+                                                        </h5>
+                                                    </div>
+
+                                                    <div class="col">
                                                         <a href="{{ public_path($key->documentpayment) }}">
                                                             <span class="text-success">دانلود سند</span>
                                                         </a>
-                                                    </td>
+                                                    </div>
 
+                                                </div>
 
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                            </div>
+                                        @endforeach
+                                    </div>
 
                                 </div>
                             </div>

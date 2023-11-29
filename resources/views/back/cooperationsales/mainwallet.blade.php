@@ -58,68 +58,136 @@
                                             ریال
                                         </div>
                                     </div>
-
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    #
-                                                </th>
-                                                <th>
-                                                    تاریخ تراکنش
-                                                </th>
-                                                <th>
-                                                    توضیحات
-                                                </th>
-                                                <th>
-                                                    مبلغ تراکنش
-                                                </th>
-                                                <th class="text-danger">
-                                                    مجموع
-                                                </th>
-
-                                                <th>
-                                                    شماره سند
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        @php
-                                            $counter = 1;
-                                        @endphp
-                                        <tbody>
-                                            @foreach ($trans as $key)
+                                    <div class="pc-size">
+                                        <table class="table table-hover">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        {{ $counter++ }}
-                                                    </td>
-                                                    <td>
+                                                    <th>
+                                                        #
+                                                    </th>
+                                                    <th>
+                                                        تاریخ تراکنش
+                                                    </th>
+                                                    <th>
+                                                        توضیحات
+                                                    </th>
+                                                    <th>
+                                                        مبلغ تراکنش
+                                                    </th>
+                                                    <th class="text-danger">
+                                                        مجموع
+                                                    </th>
 
-                                                        <span class="transaction_datetime">
+                                                    <th>
+                                                        شماره سند
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            @php
+                                                $counter = 1;
+                                            @endphp
+                                            <tbody>
+                                                @foreach ($trans as $key)
+                                                    <tr>
+                                                        <td>
+                                                            {{ $counter++ }}
+                                                        </td>
+                                                        <td>
+
+                                                            <span class="transaction_datetime">
+                                                                {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y-m-d') }}
+                                                                <br>
+                                                                {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                            </span>
+                                                        </td>
+                                                        <td>
+                                                            {{ $key->user ? 'تسویه فاکتور آقای: ' . $key->user->username . ' تاریخ: ' . \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->pre_paid_time))->format('d-m-Y H:i:s') : 'درخواست تسویه' }}
+                                                        </td>
+                                                        <td>
+                                                            <span class="monyInputSpan">{{ $key->price }}</span>
+                                                        </td>
+                                                        <td class="text-danger">
+                                                            <span class="monyInputSpan">{{ $key->finalprice }}</span>
+
+                                                        </td>
+
+                                                        <td>
+
+                                                            {{ $key->documentnumber }}
+                                                        </td>
+
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mobile-size ">
+                                        @foreach ($trans as $key)
+                                            <div class=" border rounded mb-1">
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+                                                        <h5 class="text-light">
+                                                            تاریخ تراکنش:
+
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col"><span class="text-dark">
                                                             {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y-m-d') }}
-                                                            <br>
                                                             {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
                                                         </span>
-                                                    </td>
-                                                    <td>
-                                                        {{ $key->user ? 'تسویه فاکتور آقای: ' . $key->user->username . ' تاریخ: ' . \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->pre_paid_time))->format('d-m-Y H:i:s') : 'درخواست تسویه' }}
-                                                    </td>
-                                                    <td>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+                                                        <h5 class="text-light">توضیحات:
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span class="text-dark">
+                                                            {{ $key->user ? 'تسویه فاکتور آقای: ' . $key->user->username . ' تاریخ: ' . \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->pre_paid_time))->format('d-m-Y H:i:s') : 'درخواست تسویه' }}
+
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+                                                        <h5 class="text-light">مبلغ تراکنش:
+
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
+
                                                         <span class="monyInputSpan">{{ $key->price }}</span>
-                                                    </td>
-                                                    <td class="text-danger">
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+
+                                                        <h5 class="text-light">مجموع:
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
+
                                                         <span class="monyInputSpan">{{ $key->finalprice }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
 
-                                                    </td>
+                                                        <h5 class="text-light"> شماره سند:
+                                                        </h5>
+                                                    </div>
 
-                                                    <td>
+                                                    <div class="col">
+                                                        <span class="text-dark">
+                                                            {{ $key->documentnumber }} </span>
+                                                    </div>
 
-                                                        {{ $key->documentnumber }}
-                                                    </td>
-
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
 
                                 </div>
                             </div>

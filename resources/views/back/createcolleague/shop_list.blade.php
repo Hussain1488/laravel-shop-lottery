@@ -84,87 +84,194 @@
                                     <div class="row mb-2">
 
                                     </div>
-
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    #
-                                                </th>
-                                                <th>
-                                                    نام فروشگاه
-                                                </th>
-                                                <th>
-                                                    مالک فروشگاه
-                                                </th>
-                                                <th>
-                                                    اعتبار فروشگاه
-                                                </th>
-                                                <th>
-                                                    مقدار فروشات
-                                                </th>
-                                                <th>
-                                                    تاریخ ختم قرارداد
-                                                </th>
-                                                @can('createcolleague.shopedit')
-                                                    <th>
-                                                        عملیات
-                                                    </th>
-                                                @endcan
-                                            </tr>
-                                        </thead>
-                                        @php
-                                            $counter = 1;
-                                        @endphp
-                                        <tbody>
-                                            @foreach ($store as $key)
+                                    <div class="pc-size ">
+                                        <table class="table table-hover">
+                                            <thead>
                                                 <tr>
-                                                    <td>
-                                                        {{ $counter++ }}
-                                                    </td>
+                                                    <th>
+                                                        #
+                                                    </th>
+                                                    <th>
+                                                        نام فروشگاه
+                                                    </th>
+                                                    <th>
+                                                        مالک فروشگاه
+                                                    </th>
+                                                    <th>
+                                                        اعتبار فروشگاه
+                                                    </th>
+                                                    <th>
+                                                        مقدار فروشات
+                                                    </th>
+                                                    <th>
+                                                        تاریخ ختم قرارداد
+                                                    </th>
+                                                    @can('createcolleague.shopedit')
+                                                        <th>
+                                                            عملیات
+                                                        </th>
+                                                    @endcan
+                                                </tr>
+                                            </thead>
+                                            @php
+                                                $counter = 1;
+                                            @endphp
+                                            <tbody>
+                                                @foreach ($store as $key)
+                                                    <tr>
+                                                        <td>
+                                                            {{ $counter++ }}
+                                                        </td>
 
 
-                                                    <td>
-                                                        @can('createcolleague.show')
-                                                            <a href="{{ route('admin.createcolleague.show', [$key->id]) }}">
-                                                                {{ $key->nameofstore ?? ''  }}
-                                                            </a>
-                                                        @else
-                                                            {{ $key->nameofstore ?? '' }}
+                                                        <td>
+                                                            @can('createcolleague.show')
+                                                                <a href="{{ route('admin.createcolleague.show', [$key->id]) }}">
+                                                                    {{ $key->nameofstore ?? '' }}
+                                                                </a>
+                                                            @else
+                                                                {{ $key->nameofstore ?? '' }}
+                                                            @endcan
+                                                        </td>
+                                                        <td>
+                                                            {{ $key->user->first_name . ' ' . $key->user->last_name ?? '' }}
+
+                                                        </td>
+                                                        <td>
+                                                            <span class="monyInputSpan">{{ $key->storecredit ?? '' }}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            <span
+                                                                class="monyInputSpan">{{ $key->salesamount != null ? $key->salesamount : 0 }}</span>
+
+                                                        </td>
+                                                        <td>
+                                                            {{ \Carbon\Carbon::parse($key->enddate)->format('Y/m/d') }}
+
+                                                        </td>
+                                                        @can('createcolleague.shopedit')
+                                                            <td>
+                                                                <a href="{{ route('admin.createcolleague.shopedit', [$key->id]) }}"
+                                                                    class="text-success">
+                                                                    <i class="feather icon-edit"></i>
+                                                                </a>
+
+                                                            </td>
                                                         @endcan
-                                                    </td>
-                                                    <td>
-                                                        {{ $key->user->first_name . ' ' . $key->user->last_name ?? ''  }}
 
-                                                    </td>
-                                                    <td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="mobile-size ">
+                                        @foreach ($store as $key)
+                                            <div class=" border rounded mb-1">
+                                                @can('createcolleague.show')
+                                                    <a href="{{ route('admin.createcolleague.show', [$key->id]) }}">
+                                                        <div class="row pt-1">
+                                                            <div class="col ml-1">
+                                                                <h5 class="text-light">
+                                                                    نام فروشگاه:
+
+                                                                </h5>
+                                                            </div>
+                                                            <div class="col"><span class="text-dark">
+
+                                                                    {{ $key->nameofstore ?? '' }}
+
+
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                @else
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+                                                            <h5 class="text-light">
+                                                                نام فروشگاه:
+
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col"><span class="text-dark">
+
+                                                                {{ $key->nameofstore ?? '' }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                @endcan
+
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+                                                        <h5 class="text-light">مالک فروشگاه:
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span class="text-dark">
+                                                            {{ $key->user->first_name . ' ' . $key->user->last_name ?? '' }}
+
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+                                                        <h5 class="text-light">اعتبار فروشگاه:
+
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
+
                                                         <span class="monyInputSpan">{{ $key->storecredit ?? '' }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
 
-                                                    </td>
-                                                    <td>
+                                                        <h5 class="text-light">مقدار فروشات:
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col">
+
                                                         <span
                                                             class="monyInputSpan">{{ $key->salesamount != null ? $key->salesamount : 0 }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
 
-                                                    </td>
-                                                    <td>
-                                                        {{ \Carbon\Carbon::parse($key->enddate)->format('Y/m/d') }}
+                                                        <h5 class="text-light">تاریخ ختم قرارداد:
+                                                        </h5>
+                                                    </div>
 
-                                                    </td>
-                                                    @can('createcolleague.shopedit')
-                                                        <td>
+                                                    <div class="col">
+                                                        <span class="text-dark">
+                                                            {{ \Carbon\Carbon::parse($key->enddate)->format('Y/m/d') }}
+                                                    </div>
+
+                                                </div>
+                                                @can('createcolleague.shopedit')
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+
+                                                            <h5 class="text-light">عملیات:
+                                                            </h5>
+                                                        </div>
+
+                                                        <div class="col">
+
                                                             <a href="{{ route('admin.createcolleague.shopedit', [$key->id]) }}"
                                                                 class="text-success">
                                                                 <i class="feather icon-edit"></i>
                                                             </a>
 
-                                                        </td>
+                                                        </div>
                                                     @endcan
 
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
 
