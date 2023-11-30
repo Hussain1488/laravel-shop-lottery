@@ -86,12 +86,12 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <div class="message-light">
+                    <div class="message-light dir-rtl">
                         {{ trans('front::messages.auth.for-mobile-number') }} <span
                             id="userNumber">{{ optional(Session::get('newUser'))['number'] ?? 'شما' }}
                         </span>
                         {{ trans('front::messages.auth.confirmation-code-sent') }}
-                        <a href="{{ route('login-with-code.request') }}" class="btn-link-border">
+                        <a href="{{ route('login-with-code.request') }}" class="btn-link-border ">
                             {{ trans('front::messages.auth.edit-number') }}
                         </a>
                     </div>
@@ -113,7 +113,7 @@
                             <input name="verify_code" type="hidden" id='emailverificationCode'
                                 placeholder="{{ trans('front::messages.auth.enter-auth-code') }}">
                         </div>
-                        <div class="form-row mt-2 dir-rtl" id="resent-counter2">
+                        <div class="form-row mt-2 dir-rtl" id="resent-counter1">
                             <span
                                 class="text-primary">{{ trans('front::messages.auth.retrieve-verification-code') }}</span>
                             (<p data-action="" id="countdown-verify-end1"></p>)

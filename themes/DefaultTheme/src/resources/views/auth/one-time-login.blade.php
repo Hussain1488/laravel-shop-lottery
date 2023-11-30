@@ -75,7 +75,7 @@
 @push('scripts')
     <script>
         var redirect_url = '{{ $redirect_url }}';
-        var resend_time = {{ $resend_time }};
+        // var resend_time = {{ $resend_time }};
     </script>
 
     <script src="{{ theme_asset('js/vendor/countdown.min.js') }}"></script>
