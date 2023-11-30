@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\OneTimeLoginController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\ResendSmsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
@@ -73,6 +74,10 @@ Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
 Route::get('/confirm-smscode', [ConfirmablePasswordController::class, 'sendSms'])
     ->middleware('auth')
     ->name('sms.confirm');
+Route::post('/confirm-smscode', [ResendSmsController::class, 'resendSmsRegistred'])
+    ->middleware(['guest'])->name('resendSmsRegistred');
+Route::post('/confirm-smscode-register', [ResendSmsController::class, 'resendSmsRegistre'])
+    ->middleware(['guest'])->name('resendSmsRegistre');
 
 Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
     ->middleware('auth');
