@@ -40,7 +40,7 @@ class InstallmentsController extends Controller
         // $jalaliNow = Jalalian::now();
         // dd($jalaliNow->format('Y/m/d'));
         $installmentsm = Makeinstallmentsm::where('userselected', Auth::user()->id)->with('installments', 'store', 'user')->get();
-        $installmentsm1 = Makeinstallmentsm::where('userselected', Auth::user()->id)->where('paymentstatus', 0)->where('statususer', 1)->with('installments', 'store', 'user')->get();
+        $installmentsm1 = Makeinstallmentsm::where('userselected', Auth::user()->id)->where('statususer', 1)->with('installments', 'store', 'user')->get();
         $installmentsm2 = Makeinstallmentsm::where('userselected', Auth::user()->id)->where('paymentstatus', 1)->with('installments', 'store', 'user')->get();
         // $wait = ($installmentsm->statususer == 0)->count();
         // dd($installmentsm, $installmentsm1, $installmentsm2);
