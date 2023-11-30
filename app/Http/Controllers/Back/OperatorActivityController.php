@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\back;
+namespace App\Http\Controllers\Back;
 
 use App\Models\user;
 use App\Http\Controllers\Controller;
