@@ -1,20 +1,20 @@
-if ($("#countdown-verify-end").length) {
-    var $countdownOptionEnd = $("#countdown-verify-end");
+if ($('#countdown-verify-end').length) {
+    var $countdownOptionEnd = $('#countdown-verify-end');
 
     $countdownOptionEnd.countdown({
         date: resend_time * 1000, // 1 minute later
         text: '<span class="day">%s</span><span class="hour">%s</span><span>: %s</span><span>%s</span>',
-        end: function() {
-            $countdownOptionEnd.html("<a href='" + $('#countdown-verify-end').data('action') + "' class='btn-link-border'>ارسال مجدد</a>");
+        end: function () {
+            $('#resent-counter').addClass('d-none');
+            $('#sendAgain').removeClass('d-none');
         }
     });
 }
 
-$('#one-time-login-form').submit(function(e) {
+$('#one-time-login-form').submit(function (e) {
     e.preventDefault();
 
     if ($(this).valid()) {
-
         var formData = new FormData(this);
         var form = $(this);
 
@@ -22,15 +22,18 @@ $('#one-time-login-form').submit(function(e) {
             url: $(this).attr('action'),
             type: 'POST',
             data: formData,
-            success: function(data) {
+            success: function (data) {
                 window.location.href = redirect_url;
             },
 
-            beforeSend: function(xhr) {
+            beforeSend: function (xhr) {
                 block('.form-ui');
-                xhr.setRequestHeader("X-CSRF-TOKEN", $('meta[name="csrf-token"]').attr('content'));
+                xhr.setRequestHeader(
+                    'X-CSRF-TOKEN',
+                    $('meta[name="csrf-token"]').attr('content')
+                );
             },
-            complete: function() {
+            complete: function () {
                 unblock('.form-ui');
             },
 
@@ -41,8 +44,14 @@ $('#one-time-login-form').submit(function(e) {
     }
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('.activation-code-input').activationCodeInput({
         number: 5
-    })
-})
+    });
+});
+
+$('#sendAgain').on('click', function () {
+    $('#login-resend-sms-form').submit();
+});
+
+
