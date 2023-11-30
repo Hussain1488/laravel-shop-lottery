@@ -57,19 +57,8 @@ class LoginWithCodeController extends Controller
 
             Session::put('newUser', ['number' => $request->mobile, 'code' => $type->code]);
 
-            return response()->json(['status' => 'success', 'data' => 'register']);
+            return response()->json(['status' => 'success', 'data' => 'true']);
         }
-        // } else {
-        //     $user = new User();
-        //     $user->username = $request->mobile;
-        //     $type->code = rand(11111, 99999);
-        //     $type->text = 'کد ثبت نام:';
-        //     verifySms($type, $user);
-
-        //     Session::put('newUser', ['number' => $request->mobile, 'code' => $type->code]);
-
-        //     return response('success');
-        // }
     }
 
     public function confirm(Request $request)
