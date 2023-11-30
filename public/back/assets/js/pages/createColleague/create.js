@@ -48,15 +48,7 @@ $(document).ready(function () {
             }
         }
     });
-    $('#summit_button1').on('click', function (e) {
-        e.preventDefault();
 
-        let purchase_credit = $('#purchase_credit').val().replace(/,/g, '');
-
-        $('#purchase_credit').val(purchase_credit);
-
-        $('#createCredit').submit();
-    });
 
     $('#User_selected').change(function () {
         var selectedOption = $(this).find(':selected');
