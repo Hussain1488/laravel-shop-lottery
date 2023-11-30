@@ -107,6 +107,8 @@ Route::group(['as' => 'front.'], function () {
         Route::get('installments/refuse/{id}', [InstallmentsController::class, 'refuse'])->name('installments.usrestatus.refuse');
         Route::get('installments/pay/{id}', [InstallmentsController::class, 'pay'])->name('installments.usrestatus.pay');
 
+        Route::get('code-resent', [MainController::class, 'resentSms'])->name('resentSms');
+
         // installment LIst:
         Route::get('user/purchaselist', [installmentsListController::class, 'purchaseList'])->name('installments.list');
 
