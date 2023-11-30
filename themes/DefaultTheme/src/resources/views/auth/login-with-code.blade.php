@@ -81,6 +81,7 @@
                         که به شماره تلفن شما ارسال شده را وارد کنید</span>
 
                 </div>
+                <div class="alert alert-success d-none" id="success-alert1"></div>
                 <hr />
 
                 <!-- Modal body -->
@@ -90,6 +91,9 @@
                             id="userNumber">{{ optional(Session::get('newUser'))['number'] ?? 'شما' }}
                         </span>
                         {{ trans('front::messages.auth.confirmation-code-sent') }}
+                        <a href="{{ route('login-with-code.request') }}" class="btn-link-border">
+                            {{ trans('front::messages.auth.edit-number') }}
+                        </a>
                     </div>
 
                     <form id="code_varification2" action="{{ route('register-with-code') }}" method="post">
@@ -109,11 +113,12 @@
                             <input name="verify_code" type="hidden" id='emailverificationCode'
                                 placeholder="{{ trans('front::messages.auth.enter-auth-code') }}">
                         </div>
-                        <div class="form-row mt-2">
+                        <div class="form-row mt-2 dir-rtl" id="resent-counter2">
                             <span
                                 class="text-primary">{{ trans('front::messages.auth.retrieve-verification-code') }}</span>
-                            (<p data-action="{{ route('front.wallet.codeGenerate') }}" id="countdown-verify-end2"></p>)
+                            (<p data-action="" id="countdown-verify-end1"></p>)
                         </div>
+                        <input type="button" class="btn btn-info mb-1 d-none " id='sendAgain1' value="ارسال مجدد">
                         <div class="form-row mt-3">
                             <button data-url="{{ route('front.wallet.sentCode') }}" type="button" id="sendCodeRegister"
                                 class="btn-primary-cm btn-with-icon mx-auto w-100">
@@ -121,6 +126,12 @@
                                 {{ trans('front::messages.auth.confirm-mobile-number') }}
                             </button>
                         </div>
+                    </form>
+                    <form id="login-resend-sms-form1" method="post" action="{{ route('resendSmsRegistre') }}">
+                        @csrf
+                        <input class="user-value" type="hidden"
+                            value="{{ optional(Session::get('newUser'))['number'] }}" name="user">
+                        {{-- {{ optional(Session::get('newUser')) }} --}}
                     </form>
                 </div>
 
