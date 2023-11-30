@@ -13451,7 +13451,8 @@ header.main-header .side-menu .logo-nav-res {
 }
 
 header.main-header .side-menu .logo-nav-res img {
-    max-width: 100%
+    width: 100px;
+
 }
 
 header.main-header .side-menu>ul {
