@@ -34,7 +34,7 @@ class OneTimeLoginController extends Controller
             return redirect()->route('password.request');
         }
 
-        $resend_time = $verify_code->created_at->addSeconds(120)->timestamp;
+        $resend_time = $verify_code->created_at->addSeconds(60)->timestamp;
 
         return view($view, compact('resend_time', 'user'));
     }
