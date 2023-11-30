@@ -2,7 +2,6 @@
 @if (auth()->check())
     <ul class="nav float-left">
         @include('front::partials.language')
-
         <li class="nav-item account dropdown">
             <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="label-dropdown">{{ trans('front::messages.header.account') }}</span>
@@ -42,7 +41,7 @@
 
         <li class="nav-item account dropdown">
             <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="label-dropdown"> {{ trans('front::messages.header.account') }}</span>
+                <span class="label-dropdown"> {{ trans('front::messages.header.account') }} </span>
                 <i class="mdi mdi-account-circle-outline"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
@@ -50,10 +49,7 @@
                     <i class="mdi mdi-account-card-details-outline"></i>
                     {{ trans('front::messages.header.sign-in-to-site') }}
                 </a>
-                <a class="dropdown-item" href="{{ route('register') }}">
-                    <i class="mdi mdi-account-edit-outline"></i>
-                    {{ trans('front::messages.header.register') }}
-                </a>
+          
             </div>
         </li>
     </ul>

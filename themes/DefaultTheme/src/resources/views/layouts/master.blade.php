@@ -72,7 +72,6 @@
 
         <!-- Start header -->
         <header class="main-header dt-sl">
-
             <!-- Start topbar -->
             <div class="container main-container">
                 <div class="topbar dt-sl">
@@ -103,6 +102,7 @@
                                 </form>
                             </div>
                         </div>
+
                         <div class="col-md-4 col-8 topbar-left">
                             @include('front::partials.user-menu')
                         </div>
@@ -112,6 +112,7 @@
             <!-- End topbar -->
 
             <!-- Start bottom-header -->
+
             <div class="bottom-header dt-sl mb-sm-bottom-header">
                 <div class="container main-container">
                     <!-- Start Main-Menu -->

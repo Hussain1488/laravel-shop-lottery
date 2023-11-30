@@ -7,7 +7,7 @@ return [
         'profile'                => 'پروفایل',
         'my-orders'              => 'سفارشات من',
         'exit'                   => 'خروج',
-        'sign-in-to-site'        => 'ورود به سایت',
+        'sign-in-to-site'        => 'ورود و ثبت نام',
         'register'               => 'ثبت نام',
         'cart'                   => 'سبد خرید',
         'Search-for-product'     => 'نام کالای مورد نظر خود را جستجو کنید…',
