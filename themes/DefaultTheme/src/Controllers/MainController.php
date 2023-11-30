@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Carrier;
 use App\Models\Gateway;
 use App\Models\Province;
+use App\Models\Sms;
 use App\Models\Widget;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MainController extends Controller
 {
@@ -118,5 +120,12 @@ class MainController extends Controller
     public function captcha()
     {
         return response(['captcha' => captcha_src('flat')]);
+    }
+    public function resentSms()
+    {
+
+        $sms = oneTimeCode(Auth::user(), Sms::TYPES['VERIFY_CODE']);
+        verifySms($sms, Auth::user());
+        return response('success');
     }
 }
