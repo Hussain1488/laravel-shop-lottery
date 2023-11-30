@@ -6,7 +6,7 @@
 
 @section('content')
     <style>
-        
+
     </style>
     <!-- Start main-content -->
     <main class="main-content dt-sl mt-4 mb-3">
@@ -69,16 +69,7 @@
                                     </div>
                                 @endif
 
-                                <div class="col-12">
-                                    <span
-                                        class="d-block font-weight-bold mt-4">{{ trans('front::messages.auth.are-you-a-new-user') }}</span>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-footer text-right">
-                                        <a href="{{ route('register') . '?redirect=' . $redirect_url }}"
-                                            class="d-inline-block mr-3 mt-2">{{ trans('front::messages.auth.register-on-the-site') }}</a>
-                                    </div>
-                                </div>
+
                             </div>
                         </form>
                     </div>

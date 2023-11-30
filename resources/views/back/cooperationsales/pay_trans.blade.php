@@ -7,20 +7,7 @@
         <div class="content-wrapper">
             <div class="content-header row">
                 <div class="content-header-left col-md-9 col-12 mb-2">
-                    <div class="row breadcrumbs-top">
-                        <div class="col-12">
-                            <div class="breadcrumb-wrapper col-12">
-                                <ol class="breadcrumb no-border">
-                                    <li class="breadcrumb-item">مدیریت
-                                    </li>
-                                    <li class="breadcrumb-item">مدیریت کاربران
-                                    </li>
-                                    <li class="breadcrumb-item active">ایجاد کاربر
-                                    </li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
 
             </div>
@@ -43,8 +30,6 @@
 
 
                                     <div class="row mt-1 ml-2 mb-2">
-                                        <h3>
-                                            لیست تراکنش های بانکی </h3>
                                     </div>
                                     <div class="row mb-2">
                                         <div class="g-col-6 g-col-sm-12">
