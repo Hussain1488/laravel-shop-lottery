@@ -11,7 +11,7 @@ $(document).ready(function () {
         number: 5
     });
 });
-var resend_time = Math.floor(Date.now() / 1000) + 15; // Initial value, 2 minutes from now
+var resend_time = Math.floor(Date.now() / 1000) + 60; // Initial value, 2 minutes from now
 
 $(document).ready(function () {
     $('#login-with-code-form').submit(function (e) {
@@ -26,15 +26,15 @@ $(document).ready(function () {
                 type: 'POST',
                 data: formData,
                 success: function (data) {
+                    unblock();
                     if (data.data == 'login') {
                         var url = new URL(form.data('redirect'));
                         url.searchParams.set('mobile', $('#mobile').val());
                         window.location.href = url;
                     } else {
-                        updateCounter();
+                        counterTime();
                         $('#registerWithCode').modal();
-                        resend_time = Math.floor(Date.now() / 1000) + 120;
-                        unblock();
+                        resend_time = Math.floor(Date.now() / 1000) + 60;
                     }
                 },
 
@@ -58,6 +58,7 @@ $(document).ready(function () {
 });
 $('#sendAgain1').on('click', function () {
     let form = $('#login-resend-sms-form1');
+    block('.form-ui');
     $.ajax({
         url: form.attr('action'),
         type: 'POST',
@@ -65,6 +66,7 @@ $('#sendAgain1').on('click', function () {
         processData: false, // Important: prevent jQuery from processing the data
         contentType: false, // Important: prevent jQuery from setting the content type
         success: function (data) {
+            counterTime();
             unblock('.form-ui');
             $('#success-alert1').text('کد مجدد برای شما ارسال شد!');
             $('#success-alert1').removeClass('d-none');
@@ -106,6 +108,13 @@ $('#sendCodeRegister').on('click', function () {
         });
     }
 });
+
+function counterTime() {
+    resend_time = Math.floor(Date.now() / 1000) + 60;
+    updateCounter();
+    $('#sendAgain1').addClass('d-none');
+    $('#resent-counter1').removeClass('d-none');
+}
 
 function updateCounter() {
     var currentTime = Math.floor(Date.now() / 1000);

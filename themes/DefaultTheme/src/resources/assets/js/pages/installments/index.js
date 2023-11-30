@@ -3,6 +3,7 @@
 var flag;
 var pay_url;
 var insta_pay_url;
+var resend_time = Math.floor(Date.now() / 1000) + 60;
 var loading = {
     message:
         '<div class="loadingio-spinner-eclipse-mbdtacxsn3d"> ' +
@@ -20,38 +21,26 @@ var loading = {
         color: '#333' /* Text color */
     }
 };
-// $('#myButton').on('click', function () {
-//     $.blockUI(loading);
-// });
-
 
 $('#wallet_recharg_button1').on('click', function () {
     $('#rechargeForm1').modal();
-    // flag = 1;
-    // console.log($(this).data('url'));
-    // $.blockUI(loading);
-    // $.ajax({
-    //     url: $(this).data('url'),
-    //     type: 'GET',
-    //     headers: {
-    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //     },
-    //     success: function () {
-    //         $.unblockUI();
-
-    //         $('#operation_title').text(
-    //             'جهت تأیید شارژ کیف پول کد ارسال شده را وارد کرده و کلید تأیید را بزنید!'
-    //         );
-    //         $('#smsVarifyModal1').modal();
-    //         // TimeCount();
-    //         $('#code_error1').addClass('d-none');
-    //     }
-    // });
 });
 
-$('#sendCode1').on('click', function () {});
+$('#sendAgain1').on('click', function () {
+    $.blockUI(loading);
+    $.ajax({
+        url: codeResentAddress,
+        type: 'GET',
+        success: function () {
+            $('#code_error1').addClass('d-none');
+            $('#success-alert2').text('کد مجدد برای شما ارسال شد!');
+            $('#success-alert2').removeClass('d-none');
+            $.unblockUI();
+            counterTime();
+        }
+    });
+});
 
-// prepayment methods
 $('.smsGeneratButton').on('click', function () {
     flag = 2;
     // console.log($(this).data('url'));
@@ -69,7 +58,7 @@ $('.smsGeneratButton').on('click', function () {
             );
 
             $.unblockUI();
-            console.log('hey');
+            counterTime();
             $('#smsVarifyModal1').modal();
             $('#code_error1').addClass('d-none');
         }
@@ -91,6 +80,7 @@ $('#insta_pay_button').on('click', function () {
             $('#operation_title').text(
                 'جهت تأیید پرداخت   کد ارسال شده را وارد کرده و کلید تأیید را بزنید!'
             );
+            counterTime();
             $('#smsVarifyModal1').modal();
             $('#code_error1').addClass('d-none');
         }
@@ -118,18 +108,10 @@ $('#sendCode1').on('click', function () {
             },
             error: function (xhr) {
                 $.unblockUI();
-
                 $('#code_error1').removeClass('d-none');
-                if (xhr.responseJSON.error) {
-                    // Display the error message in #code_error
-                    $('#code_error1').text(xhr.responseJSON.error);
-                } else {
-                    // Handle other errors if needed
-                    $('#code_error1').text(
-                        'کد وارده اشتباه است، لطفا کد درست را وارد کنید'
-                    );
-                    console.log('Unexpected error:', xhr);
-                }
+                $('#code_error1').text(
+                    'کد وارده اشتباه است، لطفا کد درست را وارد کنید'
+                );
             }
         });
     } else if (flag == 2) {
@@ -151,7 +133,11 @@ $('#sendCode1').on('click', function () {
                 // console.log('success');
             },
             error: function (xhr) {
-                $('#code_error1').text(xhr.responseJSON.data);
+                $.unblockUI();
+                $('#code_error1').removeClass('d-none');
+                $('#code_error1').text(
+                    'کد وارده اشتباه است، لطفا کد درست را وارد کنید'
+                );
             }
         });
     } else if (flag == 3) {
@@ -174,9 +160,41 @@ $('#sendCode1').on('click', function () {
             },
             error: function (xhr) {
                 $.unblockUI();
-
-                $('#code_error1').text(xhr.responseJSON.data);
+                $('#code_error1').removeClass('d-none');
+                $('#code_error1').text(
+                    'کد وارده اشتباه است، لطفا کد درست را وارد کنید'
+                );
             }
         });
     }
 });
+function counterTime() {
+    resend_time = Math.floor(Date.now() / 1000) + 60;
+    updateCounter();
+    $('#sendAgain1').addClass('d-none');
+    $('#resent-counter2').removeClass('d-none');
+}
+
+function updateCounter() {
+    var currentTime = Math.floor(Date.now() / 1000);
+    var timeRemaining = Math.max(0, resend_time - currentTime);
+
+    var minutes = Math.floor(timeRemaining / 60);
+    var seconds = timeRemaining % 60;
+
+    // Update the countdown element
+    $('#countdown-verify-end2').text(pad(minutes) + ':' + pad(seconds));
+
+    if (timeRemaining > 0) {
+        // If time is remaining, schedule the next update
+        setTimeout(updateCounter, 1000);
+    } else {
+        // If time is up, show the "Send Again" button
+        $('#sendAgain1').removeClass('d-none');
+        $('#resent-counter2').addClass('d-none');
+    }
+}
+
+function pad(value) {
+    return value < 10 ? '0' + value : value;
+}
