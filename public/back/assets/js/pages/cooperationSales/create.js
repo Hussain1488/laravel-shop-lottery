@@ -254,6 +254,16 @@ $('#clearing_button').on('click', function () {
     }
 });
 
+$('#summit_button1').on('click', function (e) {
+    e.preventDefault();
+
+    let purchase_credit = $('#purchase_credit').val().replace(/,/g, '');
+
+    $('#purchase_credit').val(purchase_credit);
+
+    $('#createCredit').submit();
+});
+
 $('.user_selection').change(function () {
     let selectedOption = $(this).find(':selected');
     let name = selectedOption.attr('data-name');

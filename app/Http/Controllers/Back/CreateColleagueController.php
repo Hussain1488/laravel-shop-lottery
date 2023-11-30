@@ -121,8 +121,10 @@ class CreateColleagueController extends Controller
     public function create()
     {
 
-        $user =  User::where('level', '!=', 'creator')->get();
+        $user = User::where('level', '!=', 'creator')->get();
+
         $users = [];
+
         foreach ($user as $key) {
             if (!createstore::where('selectperson', $key->id)->exists()) {
                 $users[] = $key;
@@ -133,10 +135,6 @@ class CreateColleagueController extends Controller
             $query->where('name', 'درآمد');
         })->get();
 
-
-        // dd($users);
-
-        // dd($users);
         return view('back.createcolleague.create', compact('users', 'accounts'));
     }
 
