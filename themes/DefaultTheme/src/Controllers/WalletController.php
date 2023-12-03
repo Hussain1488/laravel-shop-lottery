@@ -192,7 +192,7 @@ class WalletController extends Controller
     {
 
         $bank_id = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'بانک');
+            $query->where('code', 21);
         })->first();
         if (!$bank_id) {
             return redirect()->back()->with('warning', 'خطای سرور. لطفا به مرکز اطلاع بدهید.');

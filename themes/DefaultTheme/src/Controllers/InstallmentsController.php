@@ -62,7 +62,7 @@ class InstallmentsController extends Controller
         $user = User::find(Auth::user()->id);
 
         $bank = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'واسط قسط ها');
+            $query->where('code', 24);
         })->first();
         // dd($bank);
         if ($bank) {
@@ -72,7 +72,7 @@ class InstallmentsController extends Controller
             return response()->json('data', 'درخواست شماب با مشکل مواجه شده است،‌لطفا با مرکز تماس بگیرید!');
         }
         $bank1 = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'مقدار اعتبار خرید خریدارها');
+            $query->where('code', 26);
         })->first();
         // dd($bank);
         if ($bank) {
@@ -139,7 +139,7 @@ class InstallmentsController extends Controller
         $recordCount = banktransaction::count();
 
         $bank = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'واسط قسط ها');
+            $query->where('code', 24);
         })->first();
         if ($bank) {
             $bank_id = $bank->id;
