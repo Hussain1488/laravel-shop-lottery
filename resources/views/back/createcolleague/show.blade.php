@@ -167,24 +167,30 @@
                                             </h5>
                                         </div>
                                         <div class="col">
-                                            @php
-                                                use Illuminate\Support\Str;
-                                                $counter = 1;
-                                            @endphp
-                                            @isset($doc)
-                                                @foreach ($doc as $document)
-                                                    @if (Str::endsWith($document, ['.jpg', '.jpeg', '.png', '.gif', '.bmp']))
-                                                        <a href="{{ asset($document) }}"><img src="{{ asset($document) }}"
-                                                                alt="Image"></a>
-                                                    @else
-                                                        <div class="col">
+                                            <div class="row">
 
-                                                            <a href="{{ asset($document) }}">download file
-                                                                {{ $counter++ }}</a>
-                                                        </div>
-                                                    @endif
-                                                @endforeach
-                                            @endisset
+                                                @php
+                                                    use Illuminate\Support\Str;
+                                                    $counter = 1;
+                                                @endphp
+                                                @isset($doc)
+                                                    <div class="col-6">
+
+                                                        @foreach ($doc as $document)
+                                                            @if (Str::endsWith($document, ['.jpg', '.jpeg', '.png', '.gif', '.bmp']))
+                                                                <a href="{{ asset($document) }}"><img
+                                                                        src="{{ asset($document) }}" alt="Image"></a>
+                                                            @else
+                                                                <div class="col">
+
+                                                                    <a href="{{ asset($document) }}">download file
+                                                                        {{ $counter++ }}</a>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+                                                    </div>
+                                                @endisset
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
