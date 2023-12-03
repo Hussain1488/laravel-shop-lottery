@@ -65,13 +65,9 @@ class CooperationSalesController extends Controller
         $amounteachinstallment = intval(str_replace(',', '', $request->amounteachinstallment));
 
         $bank_id = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
+            $query->where('code', 25);
         })->first();
-        if ($bank_id) {
-            $bank_id = BankAccount::whereHas('account_type', function ($query) {
-                $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
-            })->first();
-        } else {
+        if (!$bank_id) {
             toastr()->error('شما هیچ بانکی با ماهیت واسط اعتبار فروشگاه ها ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
             return redirect()->back();
         }
@@ -126,12 +122,9 @@ class CooperationSalesController extends Controller
     {
 
         $account =   BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'واسط قسط ها');
+            $query->where('code', 24);
         })->first();
-
-        if ($account) {
-            $bank_id = $account->id;
-        } else {
+        if (!$account) {
             toastr()->error('شما هیچ بانکی با ماهیت واسط اقساط ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
             return redirect()->back();
         }
@@ -216,13 +209,11 @@ class CooperationSalesController extends Controller
     public function PayRequest($id, $id2)
     {
 
-        $account =   BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'واسط قسط ها');
+        $bank_id =   BankAccount::whereHas('account_type', function ($query) {
+            $query->where('code', 24);
         })->first();
 
-        if ($account) {
-            $bank_id = $account->id;
-        } else {
+        if (!$bank_id) {
             toastr()->error('شما هیچ بانکی با ماهیت واسط اقساط ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
             return redirect()->back();
         }

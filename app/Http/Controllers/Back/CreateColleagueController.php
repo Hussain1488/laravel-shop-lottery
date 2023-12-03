@@ -36,6 +36,7 @@ class CreateColleagueController extends Controller
     public function index()
     {
         $users = User::where('level', 'user')->get();
+
         return view('back.createcolleague.index', compact('users'));
     }
 
@@ -64,12 +65,9 @@ class CreateColleagueController extends Controller
     {
 
         $store = createstore::with('user')->find($id);
-        $jalaliEndDate = Jalalian::fromFormat('Y-m-d', $store->enddate);
-        // $carbonEndDate = Carbon::createFromFormat('Y-m-d H:i:s', $jalaliEndDate->toCarbon()->toDateTimeString());
-        // $store->enddate = $carbonEndDate;
+        // $jalaliEndDate = Jalalian::fromFormat('Y-m-d', $store->enddate);
         $user = User::get();
         // dd($store);
-
         return view('back.createcolleague.shop_edit', compact('store', 'user'));
     }
 
@@ -77,7 +75,10 @@ class CreateColleagueController extends Controller
     {
 
         $store = createstore::find($id);
-
+        $carbonDate = null;
+        if ($request->enddate != null) {
+            $carbonDate = Jalalian::fromFormat('Y-m-d', $request->enddate)->toCarbon()->format('Y-m-d');
+        }
         $paths = json_decode($store->uploaddocument);
         $docPath = '';
         if ($request->file('uploaddocument')) {
@@ -95,7 +96,7 @@ class CreateColleagueController extends Controller
             'addressofstore' => $request->addressofstore,
             'feepercentage' => $request->feepercentage,
             'settlementtime' => $request->settlementtime,
-            'enddate' => $request->enddate != null ? $request->enddate : $store->enddate,
+            'enddate' => $carbonDate != null ? $carbonDate : $store->enddate,
             'uploaddocument' => $docPath,
         ]);
 
@@ -132,7 +133,7 @@ class CreateColleagueController extends Controller
         }
         // $accounts = BankAccount::where('account_type.name', 'درامد')->get();
         $accounts = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'درآمد');
+            $query->where('code', 23);
         })->get();
 
         return view('back.createcolleague.create', compact('users', 'accounts'));
@@ -149,16 +150,14 @@ class CreateColleagueController extends Controller
     public function store(CreateShopRequest $request)
     {
         $bank_id = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
+            $query->where('code', 25);
         })->first();
-
         if (!$bank_id) {
             toastr()->error('شما هیچ بانکی با ماهیت واسط اعتبار فروشگاه ها ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
             return redirect()->back();
         }
-
         $storecredit = intval(str_replace(',', '', $request->storecredit));
-
+        $carbonDate = Jalalian::fromFormat('Y-m-d', $request->enddate)->toCarbon()->format('Y-m-d');
         $docPath = '';
         // dd($storecredit);
         if ($request->file('uploaddocument')) {
@@ -170,9 +169,7 @@ class CreateColleagueController extends Controller
             }
             $docPath = json_encode($paths);
         }
-        $person = User::find($request->selectperson);
-        // $person->level = 'seller';
-        $person->save();
+
         try {
             DB::beginTransaction();
 
@@ -184,7 +181,7 @@ class CreateColleagueController extends Controller
                 'addressofstore' => $request->addressofstore,
                 'feepercentage' => $request->feepercentage,
                 'settlementtime' => $request->settlementtime,
-                'enddate' => $request->enddate,
+                'enddate' => $carbonDate,
                 'uploaddocument' => $docPath,
                 'account_id' => $request->account_id,
                 'conrn_job_reccredite' => $storecredit,
@@ -250,8 +247,16 @@ class CreateColleagueController extends Controller
     public function colleagueCreditStore(CreateColleagueIndexRequest $request)
     {
 
+        // dd($request->all());
+        $carbonDate = Jalalian::fromFormat('Y-m-d', $request->enddate)->toCarbon()->format('Y-m-d');
+        $bank_id =   BankAccount::whereHas('account_type', function ($query) {
+            $query->where('code', 26);
+        })->first();
+        if (!$bank_id) {
+            toastr()->error('شما هیچ بانکی با ماهیت اعتبار خرید خریدارها ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
+            return redirect()->back();
+        }
         $docPath = '';
-
         if ($request->file('documents')) {
             $files = $request->file('documents');
             $paths = [];
@@ -262,27 +267,18 @@ class CreateColleagueController extends Controller
             $docPath = json_encode($paths);
         }
 
-        $account =   BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'مقدار اعتبار خرید خریدارها');
-        })->first();
 
-        if ($account) {
-            $bank_id = $account->id;
-        } else {
-            toastr()->error('شما هیچ بانکی با ماهیت اعتبار خرید خریدارها ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
-            return redirect()->back();
-        }
 
         $userUpdate = User::find($request->userselected);
         $userUpdate->purchasecredit += $request->purchasecredit;
-        $userUpdate->enddate = $request->enddate;
+        $userUpdate->enddate = $carbonDate;
         $userUpdate->documents = $docPath;
 
         OperatorActivity::createActivity($userUpdate->id, 'BUYER_CREDIT');
         // public function transaction($user, $amount, $status, $flag, $type)
         $buyer_trans = buyertransaction::transaction($userUpdate, $request->purchasecredit, true, 0, 0);
         // transaction($bank_id, $creditAmount, $status, $trans_id)
-        $bank_trans = banktransaction::transaction($bank_id, $request->purchasecredit, false, $buyer_trans->id, 'user');
+        $bank_trans = banktransaction::transaction($bank_id->id, $request->purchasecredit, false, $buyer_trans->id, 'user');
 
         $userUpdate->save();
 
@@ -312,13 +308,9 @@ class CreateColleagueController extends Controller
         $store->storecredit = $request->storecredit + $ex_credit;
 
         $bank_id = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
+            $query->where('code', 25);
         })->first();
-        if ($bank_id) {
-            $bank_id = BankAccount::whereHas('account_type', function ($query) {
-                $query->where('name', 'واسط اعتبار فروش فروشگاه ها');
-            })->first();
-        } else {
+        if (!$bank_id) {
             toastr()->error('شما هیچ بانکی با ماهیت واسط اعتبار فروشگاه ها ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
             return redirect()->back();
         }
@@ -341,7 +333,7 @@ class CreateColleagueController extends Controller
     {
 
         $bank = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'بانک');
+            $query->where('code', 21);
         })->get();
 
         $users = User::where('level', 'user')->get();
@@ -352,14 +344,13 @@ class CreateColleagueController extends Controller
             $number = 10000;
         }
 
-        // dd($number);
         return view('back.createcolleague.createdocument', compact('users', 'number', 'bank'));
     }
 
     // storing document store function
     public function createDocumentStore(ColleagueCreateDocument $request)
     {
-
+        // dd('hey');
         $user = User::find($request->namecreditor);
 
 
@@ -381,7 +372,6 @@ class CreateColleagueController extends Controller
 
         $user->inventory += $request->ReCredintAmount;
 
-        // dd($request->all());
         createdocument::create([
             'namedebtor' => $request->namedebtor,
             'namecreditor' => $user->first_name,
@@ -391,11 +381,6 @@ class CreateColleagueController extends Controller
             'numberofdocuments' => $request->numberofdocuments,
         ]);
 
-
-
-
-
-        // dd($request->numberofdocuments);
         $user->save();
         OperatorActivity::createActivity($user->id, 'CREATE_DOCUMNET');
 

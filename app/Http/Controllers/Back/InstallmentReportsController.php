@@ -45,10 +45,8 @@ class InstallmentReportsController extends Controller
         $total[1] = $transaction->where('status', 1)->sum('depositamount');
         $total[0] = $transaction->where('status', 0)->sum('depositamount');
         $bank =  BankAccount::whereHas('account_type', function ($query) {
-            $query->where('name', 'بانک');
+            $query->where('code', 21);
         })->get();
-
-        // dd($transaction);
 
         return view('back.installmentreports.PayRequestList', compact('transaction', 'total', 'bank'));
     }
@@ -59,15 +57,10 @@ class InstallmentReportsController extends Controller
         $payList = PaymentListModel::with('store')->find($id);
         $payList->status = 1;
 
-        //  ['bank_id', 'bankbalance', 'transactionprice', 'transactionsdate']
-
         $bankt_trans = banktransaction::transaction($bank_id, $payList->depositamount, true, $trans_id, 'store');
 
-
-
         $payList->save();
-        // dd($transaction);
-        // toastr()->success('پرداخت درخواست تسویه با موفقیت انجام شد.');
+
         return true;
     }
 
@@ -94,8 +87,6 @@ class InstallmentReportsController extends Controller
 
         $store = createstore::find($payList->store_id);
         OperatorActivity::createActivity($store->user->id, 'PAY_REQUEST_PAYMENT');
-
-
         $trans_id = createstoretransaction::storeTransaction($store, $payList->depositamount, true, 1, 2);
 
         $this->RequestPayment($request->pay_list_id, $request->nameofbank, $trans_id);
@@ -109,7 +100,6 @@ class InstallmentReportsController extends Controller
 
         $transaction = banktransaction::with('bank')->latest()->get();
         $total  = collect($transaction)->sum('transactionprice');
-        // dd($total);
 
         return view('back.installmentreports.banktransaction', compact('transaction', 'total'));
     }
@@ -135,13 +125,9 @@ class InstallmentReportsController extends Controller
             'bankname' => $request->bankname,
             'accountnumber' => $request->accountnumber,
             'account_type_id' => $request->account_type_id,
-            // 'accounttype' => $request->accounttype,
         ]);
         OperatorActivity::createActivity(null, 'CREATE_INTERNAL_ACCOUNT');
-
-
         toastr()->success('حساب بانکی با موفقیت ایجاد شد.');
-
         return redirect()->back();
         // return view('back.installmentreports.createinternalaccount');
     }
