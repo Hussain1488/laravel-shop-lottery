@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBankAcountsTable extends Migration
+class CreateTypeOfAccountTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateBankAcountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('createbankaccounts', function (Blueprint $table) {
+
+        Schema::create('type_of_account', function (Blueprint $table) {
             $table->id();
-            $table->string('bankname');
-            $table->bigInteger('accountnumber');
-            $table->unsignedBigInteger('account_type_id');
-            $table->foreign('account_type_id')->references('id')->on('type_of_account')->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('code');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateBankAcountsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('type_of_account');
     }
 }
