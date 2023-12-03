@@ -6,7 +6,7 @@
                 <a class="navbar-brand" href="{{ Route::has('front.index') ? route('front.index') : url('/') }}"
                     target="_blank">
                     <h2 class="brand-text mb-0">{{ option('info_site_title', 'خانه اقساط') }}</h2>
-                    
+
                 </a>
             </li>
         </ul>
@@ -198,7 +198,8 @@
                             class="feather icon-users"></i><span class="menu-title"> گزارش گیری اقساط </span></a>
                     <ul class="menu-content">
                         @can('installmentreports.index')
-                            <li class="{{ active_class('admin.installmentreports.index') }}">
+                            <li
+                                class="{{ active_class('admin.installmentreports.index') }}{{ active_class('admin.installments.filter*') }}">
                                 <a href="{{ route('admin.installmentreports.index') }}"><i
                                         class="feather icon-circle"></i><span class="menu-item"> لیست تمامی اقساط </span></a>
                             </li>
