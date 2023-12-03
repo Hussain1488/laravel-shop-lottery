@@ -43,7 +43,7 @@
             @endcan
             @if (optional(Auth::user()->store)->exists())
                 @can('cooperationsales')
-                    <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
+                    <li class="nav-item has-sub {{ open_class(['admin.cooperationsales.*']) }}"><a href="#"><i
                                 class="feather icon-users"></i><span class="menu-title"> همکاران</span></a>
                         <ul class="menu-content">
                             @can('cooperationsales.index')
@@ -113,7 +113,7 @@
             @endif
 
             @can('operatoractivity')
-                <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
+                <li class="nav-item has-sub {{ open_class(['admin.operatoractivity.*']) }}"><a href="#"><i
                             class="feather icon-users"></i><span class="menu-title"> فعالیت های اپراتورها</span></a>
                     <ul class="menu-content">
                         @can('operatoractivity.index')
@@ -129,7 +129,7 @@
             @endcan
 
             @can('installmentpurchase')
-                <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
+                <li class="nav-item has-sub {{ open_class(['admin.installmentpurchase.*']) }}"><a href="#"><i
                             class="feather icon-users"></i><span class="menu-title"> خریدار</span></a>
                     <ul class="menu-content">
                         @can('installmentpurchase.index')
@@ -146,7 +146,7 @@
             @endcan
 
             @can('createcolleague')
-                <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
+                <li class="nav-item has-sub {{ open_class(['admin.createcolleague.*']) }}"><a href="#"><i
                             class="feather icon-users"></i><span class="menu-title"> ایجاد همکار</span></a>
                     <ul class="menu-content">
                         @can('createcolleague.createcreditoperator')
@@ -194,7 +194,7 @@
             @endcan
 
             @can('installmentreports')
-                <li class="nav-item has-sub {{ open_class(['admin.users.*']) }}"><a href="#"><i
+                <li class="nav-item has-sub {{ open_class(['admin.installmentreports.*']) }}"><a href="#"><i
                             class="feather icon-users"></i><span class="menu-title"> گزارش گیری اقساط </span></a>
                     <ul class="menu-content">
                         @can('installmentreports.index')
@@ -241,7 +241,7 @@
                 </li>
             @endcan
             @can('cornjob')
-                <li class="nav-item has-sub {{ open_class(['cornjob.*']) }}"><a href="#"><i
+                <li class="nav-item has-sub {{ open_class(['admin.cornjob.*']) }}"><a href="#"><i
                             class="feather icon-calendar"></i><span class="menu-title"> کرن جاب</span></a>
                     <ul class="menu-content">
                         @can('posts.index')
