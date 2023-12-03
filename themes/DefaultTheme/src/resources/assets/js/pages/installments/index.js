@@ -43,7 +43,6 @@ $('#sendAgain1').on('click', function () {
 
 $('.smsGeneratButton').on('click', function () {
     flag = 2;
-    // console.log($(this).data('url'));
     pay_url = $(this).data('href');
     $.blockUI(loading);
     $.ajax({
@@ -66,7 +65,6 @@ $('.smsGeneratButton').on('click', function () {
 });
 $('#insta_pay_button').on('click', function () {
     flag = 3;
-    // console.log($(this).data('url'));
     insta_pay_url = $(this).data('href');
     $.blockUI(loading);
     $.ajax({
@@ -117,7 +115,6 @@ $('#sendCode1').on('click', function () {
     } else if (flag == 2) {
         let form = $('#code_varification1');
         var formData = new FormData(form[0]);
-
         $.ajax({
             url: form.attr('action'),
             method: 'POST',
@@ -130,7 +127,6 @@ $('#sendCode1').on('click', function () {
             success: function () {
                 $.unblockUI();
                 window.location.href = pay_url;
-                // console.log('success');
             },
             error: function (xhr) {
                 $.unblockUI();
