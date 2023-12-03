@@ -14,10 +14,14 @@ class BankTypeSeeder extends Seeder
      */
     public function run()
     {
-        $names = ['بانک', 'درآمد', 'هزینه', 'واسط قسط ها', 'واسط اعتبار فروش فروشگاه ها', 'مقدار اعتبار خرید خریدارها'];
+        $names = ['بانک',  'هزینه', 'درآمد', 'واسط قسط ها', 'واسط اعتبار فروش فروشگاه ها', 'مقدار اعتبار خرید خریدارها'];
+        // $codes = [21,22,23,24,25,26];
+        $code = 21;
         foreach ($names as $name) {
             bankTypeModel::create([
-                "name" => $name
+                "name" => $name,
+                "code" => $code++
+
             ]);
         }
     }
