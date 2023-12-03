@@ -179,7 +179,7 @@ class CooperationSalesController extends Controller
 
         $transaction = createstoretransaction::storeTransaction($store, $depositamount, false, 0, 1, $user = null, $timestamp = null);
 
-        $bank_trans = banktransaction::transaction($bank_id->id, $depositamount, false, $transaction->id, 'store');
+        $bank_trans = banktransaction::transaction($bank_id->id, $depositamount, false, $transaction, 'store');
 
         $store->save();
 
