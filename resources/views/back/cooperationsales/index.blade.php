@@ -14,9 +14,9 @@
                                 <ol class="breadcrumb no-border">
                                     <li class="breadcrumb-item">مدیریت
                                     </li>
-                                    <li class="breadcrumb-item">مدیریت کاربران
+                                    <li class="breadcrumb-item">همکاران
                                     </li>
-                                    <li class="breadcrumb-item active">ایجاد کاربر
+                                    <li class="breadcrumb-item active">لیست فروش
                                     </li>
                                 </ol>
                             </div>
@@ -145,7 +145,7 @@
                                     </section>
                                 @else
                                     @foreach ($installmentsm as $index)
-                                        @if ($index->status == 0)
+                                        @if ($index->statususer == 1)
                                             @php
                                                 $updated_date = \Carbon\Carbon::parse($index->datepayment);
                                             @endphp

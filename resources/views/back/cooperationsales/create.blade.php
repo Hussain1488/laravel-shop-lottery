@@ -13,13 +13,10 @@
                                 <ol class="breadcrumb no-border">
                                     <li class="breadcrumb-item">مدیریت
                                     </li>
-                                    <li class="breadcrumb-item">مدیریت کاربران
+                                    <li class="breadcrumb-item">همکاران
                                     </li>
-                                    <li class="breadcrumb-item active">ایجاد کاربر
-
-
+                                    <li class="breadcrumb-item active">ایجاد قسط
                                     </li>
-
                                 </ol>
                             </div>
                         </div>

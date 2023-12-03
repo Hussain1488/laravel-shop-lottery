@@ -15,7 +15,10 @@
                                 <ol class="breadcrumb no-border">
                                     <li class="breadcrumb-item">مدیریت
                                     </li>
-                                    <li class="breadcrumb-item active">ویرایش پروفایل
+                                    <li class="breadcrumb-item active">فعالیت اپراتور ها
+                                    </li>
+                                    <li class="breadcrumb-item active">اپراتور:
+                                        {{ $operator->first_name . ' ' . $operator->last_name }}
                                     </li>
                                 </ol>
                             </div>
@@ -27,7 +30,14 @@
             <div class="content-body">
                 <section class="card">
                     <div class="card-header">
-                        <h4 class="card-title">اسم کاربر</h4>
+                        <h4 class="card-title">
+                            <div class="row mt-1 ml-2 mb-2">
+
+                                لیست فعالیت های اپراتور:
+                                {{ $operator->first_name . ' ' . $operator->last_name }}
+
+                            </div>
+                        </h4>
                     </div>
 
                     <div class="card-content">
@@ -63,12 +73,12 @@
                                     </div>
 
 
-                                    <div class="row mt-1 ml-2 mb-2">
+                                    {{-- <div class="row mt-1 ml-2 mb-2">
                                         <h3>
                                             لیست فعالیت های اپراتور:
                                             {{ $operator->first_name . ' ' . $operator->last_name }}
                                         </h3>
-                                    </div>
+                                    </div> --}}
 
 
                                     <table class="table table-hover">

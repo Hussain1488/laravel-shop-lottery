@@ -11,12 +11,13 @@
                         <div class="col-12">
                             <div class="breadcrumb-wrapper col-12">
                                 <ol class="breadcrumb no-border">
-                                    <li class="breadcrumb-item">مدیریت lll
+                                    <li class="breadcrumb-item">مدیریت
                                     </li>
-                                    <li class="breadcrumb-item">مدیریت کاربران
+                                    <li class="breadcrumb-item">ایجاد همکار
                                     </li>
-                                    <li class="breadcrumb-item active">ایجاد کاربر
+                                    <li class="breadcrumb-item active">ایجاد سند مالی
                                     </li>
+
                                 </ol>
                             </div>
                         </div>

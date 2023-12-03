@@ -13,7 +13,9 @@
                                 <ol class="breadcrumb no-border">
                                     <li class="breadcrumb-item">مدیریت
                                     </li>
-                                    <li class="breadcrumb-item active">ویرایش پروفایل
+                                    <li class="breadcrumb-item active">فعالیت اپراتور ها
+                                    </li>
+                                    <li class="breadcrumb-item active">لیست اپراتور ها
                                     </li>
                                 </ol>
                             </div>
@@ -25,7 +27,7 @@
             <div class="content-body">
                 <section class="card">
                     <div class="card-header">
-                        
+
                     </div>
 
                     <div class="card-content">

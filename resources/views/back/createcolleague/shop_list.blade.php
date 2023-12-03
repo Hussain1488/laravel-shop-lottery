@@ -13,9 +13,9 @@
                                 <ol class="breadcrumb no-border">
                                     <li class="breadcrumb-item">مدیریت
                                     </li>
-                                    <li class="breadcrumb-item">مدیریت کاربران
+                                    <li class="breadcrumb-item">ایجاد همکار
                                     </li>
-                                    <li class="breadcrumb-item active">ایجاد کاربر
+                                    <li class="breadcrumb-item active">لیست فروشگاه ها
                                     </li>
                                 </ol>
                             </div>

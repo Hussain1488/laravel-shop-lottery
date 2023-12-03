@@ -11,9 +11,12 @@
                         <div class="col-12">
                             <div class="breadcrumb-wrapper col-12">
                                 <ol class="breadcrumb no-border">
-                                    <li class="breadcrumb-item"> لیست حساب های داخلی
+                                    <li class="breadcrumb-item">مدیریت
                                     </li>
-
+                                    <li class="breadcrumb-item">گزارش گیری اقساط
+                                    </li>
+                                    <li class="breadcrumb-item active">لیست حساب های داخلی
+                                    </li>
                                 </ol>
                             </div>
                         </div>
