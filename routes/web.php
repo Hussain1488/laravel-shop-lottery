@@ -81,7 +81,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
 });
 
 // ------------------ Admin Part Routes
-Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'middleware' => ['auth', 'Admin', 'verified', 'CheckPasswordChange', 'password.confirm']], function () {
+Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'middleware' => ['auth', 'Admin', 'verified', 'CheckPasswordChange']], function () {
 
     // ------------------ MainController
     Route::get('/', [MainController::class, 'index'])->name('dashboard');
