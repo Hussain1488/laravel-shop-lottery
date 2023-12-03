@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Morilog\Jalali\Jalalian;
@@ -39,7 +40,7 @@ class banktransaction extends Model
                 'bank_id' => $bank_id,
                 'bankbalance' => $status ? $lastRecord->bankbalance + $creditAmount : $lastRecord->bankbalance - $creditAmount,
                 'transactionprice' => $creditAmount,
-                'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+                'transactionsdate' => Carbon::now()->format('Y-m-d'),
                 'buyer_trans_id' => $user == 'user' ? $trans_id : null,
                 'store_trans_id' => $user == 'store' ? $trans_id : null
 
@@ -49,7 +50,7 @@ class banktransaction extends Model
                 'bank_id' => $bank_id,
                 'bankbalance' => $status ? $creditAmount : -$creditAmount,
                 'transactionprice' => $creditAmount,
-                'transactionsdate' => Jalalian::now()->format('Y-m-d'),
+                'transactionsdate' => Carbon::now()->format('Y-m-d'),
                 'buyer_trans_id' => $user == 'user' ? $trans_id : null,
                 'store_trans_id' => $user == 'store' ? $trans_id : null
             ]);

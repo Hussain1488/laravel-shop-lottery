@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Morilog\Jalali\Jalalian;
@@ -57,7 +58,7 @@ class buyertransaction extends Model
         $user_trans = buyertransaction::create([
             'user_id' => $user->id,
             'flag' => $flag,
-            'datetransaction' => Jalalian::now(),
+            'datetransaction' => Carbon::now(),
             'typeoftransaction' => $type,
             'price' => $amount,
             'finalprice' => $final_price,
