@@ -191,7 +191,8 @@
                                                 <div class="form-group">
                                                     تاریخ فعلا ختم قرار داد:
                                                     <span class="text-danger">
-                                                        {{ \Carbon\Carbon::parse($store->enddate)->format('Y-m-d') }}
+                                                        {{-- {{ \Carbon\Carbon::parse($store->enddate)->format('Y-m-d') }} --}}
+                                                        {{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($store->enddate))->format('d-m-Y') }}
                                                     </span>
                                                     است در صورت تمایل میتوانید تغییر بدهید.
                                                     <input type="text" placeholder="تاریخ پایان قرار داد را مشخص کنید."
