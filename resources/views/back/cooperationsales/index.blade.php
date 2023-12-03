@@ -82,7 +82,7 @@
                                     @if (!$installmentsm->where('statususer', 0)->count() > 0)
                                         <section id="main-card" class="card">
                                             <div class="card-header p-1 alert alert-warning ">
-                                                <h3 class="text-danger">لیست فروشی برای نمایش به شما وجود ندارد</h3>
+                                                <h3 class="text-danger">فروشی برای نمایش به شما وجود ندارد</h3>
                                             </div>
                                         </section>
                                     @else
@@ -140,7 +140,7 @@
                                 @if (!$installmentsm->where('statususer', 1)->where('status', 0)->count() > 0)
                                     <section id="main-card" class="card">
                                         <div class="card-header p-1 alert alert-warning ">
-                                            <h3 class="text-danger">لیست فروشی برای نمایش به شما وجود ندارد</h3>
+                                            <h3 class="text-danger">فروشی برای نمایش به شما وجود ندارد</h3>
                                         </div>
                                     </section>
                                 @else
