@@ -13,9 +13,9 @@
                                 <ol class="breadcrumb no-border">
                                     <li class="breadcrumb-item">مدیریت
                                     </li>
-                                    <li class="breadcrumb-item">مدیریت کاربران
+                                    <li class="breadcrumb-item">گزارش گیری اقساط
                                     </li>
-                                    <li class="breadcrumb-item active">ایجاد کاربر
+                                    <li class="breadcrumb-item active">لیست تمامی اقساط
                                     </li>
                                 </ol>
                             </div>
@@ -29,11 +29,7 @@
                     <div class="card-header">
                         {{-- @isset($store) --}}
                         <h4 class="card-title">لیست تمامی اقساط</h4>
-                        {{-- @else
-                            <h4 class="text-warning">
-                                شما فروشگاهی برای نمایش ندارید!
-                            </h4>
-                        @endisset --}}
+
                     </div>
 
 
@@ -98,62 +94,56 @@
                                     </div>
 
                                     @if (empty($installments))
-                                        <div class="row mt-3 ml-2">
-                                            <h4>
+                                        <div class="alert alert-warning p-2 my-1">
+                                            <span class="text-danger">
+
                                                 هیچ قسطی برای نمایش وجود ندارد!
-                                            </h4>
+                                            </span>
                                         </div>
                                     @else
                                         @foreach ($installments as $key)
-                                            @if ($key->statususer == 0)
-                                                <div class="border rounded p-2 my-1">
-                                                    <div class="row d-flex justify-content-around">
-                                                        <a
-                                                            href="{{ route('admin.installments.shop.installments', [$key->store->id, 'wait']) }}">
-                                                            <h5>
-                                                                قسط فروشگاه: {{ $key->store->nameofstore }}
+                                            <div class="border rounded p-2 my-1">
+                                                <div class="row d-flex justify-content-around">
+                                                    <a
+                                                        href="{{ route('admin.installments.shop.installments', [$key->store->id, 'wait']) }}">
+                                                        <h5>
+                                                            قسط فروشگاه: {{ $key->store->nameofstore }}
+                                                        </h5>
+                                                    </a>
+                                                    <form action="{{ route('admin.installments.filter') }}" method="get">
+                                                        @csrf
+                                                        <input type="hidden" value="{{ $key->user->username }}"
+                                                            name="filter" id="">
+                                                        <button class="btn" style="border:none; background-color:none"
+                                                            type="submit">
+                                                            <h5>قسط آقای: {{ $key->user->username }}
                                                             </h5>
-                                                        </a>
-                                                        <form action="{{ route('admin.installments.filter') }}"
-                                                            method="get">
-                                                            @csrf
-                                                            <input type="hidden" value="{{ $key->user->username }}"
-                                                                name="filter" id="">
-                                                            <button class="btn"
-                                                                style="border:none; background-color:none" type="submit">
-                                                                <h5>قسط آقای: {{ $key->user->username }}
-                                                                </h5>
-                                                            </button>
-                                                        </form>
-                                                    </div>
+                                                        </button>
+                                                    </form>
+                                                </div>
 
 
-                                                    <div class="row">
-                                                        مبلغ کل فروش: <span class="monyInputSpan">
-                                                            {{ $key->Creditamount }}
-                                                        </span>
-                                                    </div>
-                                                    <div class="row">
-                                                        {{ $key->numberofinstallments }} عدد قسط
-                                                        به مبلغ قسط
-                                                        <span class="monyInputSpan">
-                                                            {{ $key->amounteachinstallment }} </span> ریال
-                                                    </div>
+                                                <div class="row">
+                                                    مبلغ کل فروش: <span class="monyInputSpan">
+                                                        {{ $key->Creditamount }}
+                                                    </span>
+                                                </div>
+                                                <div class="row">
+                                                    {{ $key->numberofinstallments }} عدد قسط
+                                                    به مبلغ قسط
+                                                    <span class="monyInputSpan">
+                                                        {{ $key->amounteachinstallment }} </span> ریال
+                                                </div>
 
-                                                    <div class="row mt-2">
-                                                        <div class="col">
-                                                            مقدار پیش پرداخت <span class="monyInputSpan">
-                                                                {{ $key->prepaidamount }} </span> ریال
-                                                        </div>
+                                                <div class="row mt-2">
+                                                    <div class="col">
+                                                        مقدار پیش پرداخت <span class="monyInputSpan">
+                                                            {{ $key->prepaidamount }} </span> ریال
                                                     </div>
                                                 </div>
-                                            @endif
+                                            </div>
                                         @endforeach
                                     @endif
-                                    {{-- @endif --}}
-                                    {{-- @endforeach --}}
-                                    {{-- @endempty --}}
-
 
                                 </div>
                                 {{--  not payd installments which are paid prepayment of isntallments list --}}
@@ -190,10 +180,11 @@
                                     </div>
 
                                     @if (empty($installments1))
-                                        <div class="row mt-3 ml-2">
-                                            <h4>
-                                                .هیچ قسطی برای نمایش وجود ندارد!
-                                            </h4>
+                                        <div class="alert alert-warning p-2 my-1">
+                                            <span class="text-danger">
+
+                                                هیچ قسطی برای نمایش وجود ندارد!
+                                            </span>
                                         </div>
                                     @else
                                         @foreach ($installments1 as $value)
@@ -273,25 +264,20 @@
                                         </div>
                                     </form>
 
-                                    <div class="row">
-
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-group d-flex align-items-center">
-                                                <h3>
-                                                    لیست اقساط تأیید شده
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-
-                                        </div>
+                                    <div class="row mt-1 ml-2">
+                                        <h3>
+                                            لیست اقساط پرداخت شده
+                                        </h3>
                                     </div>
 
+
+
                                     @if (empty($installments2))
-                                        <div class="row mt-3 ml-2">
-                                            <h4>
+                                        <div class="alert alert-warning p-2 my-1">
+                                            <span class="text-danger">
+
                                                 هیچ قسطی برای نمایش وجود ندارد!
-                                            </h4>
+                                            </span>
                                         </div>
                                     @else
                                         @foreach ($installments2 as $value)
