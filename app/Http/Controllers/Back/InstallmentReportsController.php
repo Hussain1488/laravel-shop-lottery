@@ -34,10 +34,9 @@ class InstallmentReportsController extends Controller
         $payment_stat = 'wait';
         $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
         $installments1 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
-        $installments2 = $installments1;
         // dd($installments);
 
-        return view('back.installmentreports.index', compact('installments', 'installments1', 'installments2', 'payment_stat'));
+        return view('back.installmentreports.index', compact('installments', 'installments1',  'payment_stat'));
     }
     public function payRequestlist()
     {
