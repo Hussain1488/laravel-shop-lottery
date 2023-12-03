@@ -26,7 +26,7 @@ class MelipayamakSms extends SmsService implements SmsContract, SmsNotificationC
             $api = new MelipayamakApi($username, $password);
             $sms = $api->sms();
             $to = $mobile;
-            $from = '50004001000143';
+            $from = option('admin_mobile_number');
             $text = $this->type['string'] . ' :' . implode(', ', $input_data);
             $response = $sms->send($to, $from, $text);
             $json = json_decode($response);

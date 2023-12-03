@@ -126,7 +126,7 @@ function verifySms($type, $user)
         $api = new MelipayamakApi($username, $password);
         $sms = $api->sms();
         $to = $user->username;
-        $from = '50004001000143';
+        $from = option('admin_mobile_number');
         $text = $type->text . ' :' .  $type->code;
         $response = $sms->send($to, $from, $text);
         $json = json_decode($response);
