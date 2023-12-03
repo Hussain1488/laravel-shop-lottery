@@ -72,7 +72,6 @@ class InstallmentReportsController extends Controller
         if ($request->hasFile('documentpayment')) {
             $file = $request->file('documentpayment');
             $path = $file->store('document/payDetails', 'public');
-            // dd($path());
         } else {
             $path = '';
         }
