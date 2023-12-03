@@ -121,10 +121,10 @@ class CooperationSalesController extends Controller
     public function clearingStore(Request $request)
     {
 
-        $account =   BankAccount::whereHas('account_type', function ($query) {
+        $bank_id =   BankAccount::whereHas('account_type', function ($query) {
             $query->where('code', 24);
         })->first();
-        if (!$account) {
+        if (!$bank_id) {
             toastr()->error('شما هیچ بانکی با ماهیت واسط اقساط ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
             return redirect()->back();
         }
@@ -176,20 +176,10 @@ class CooperationSalesController extends Controller
             $final_price1 = -$depositamount;
         }
         // creating new store transaction for mainWallet transaction.
-        $transaction = createstoretransaction::create([
-            'store_id' => $request->store,
-            'datetransaction' => Jalalian::now()->format('Y-m-d'),
-            // 1 is for main wallet
-            'flag' => 1,
-            // pay request
-            'typeoftransaction' => 0,
-            'price' => $depositamount,
-            'finalprice' => $final_price1,
-            'documentnumber' => $number1,
-        ]);
 
+        $transaction = createstoretransaction::storeTransaction($store, $depositamount, false, 0, 1, $user = null, $timestamp = null);
 
-        $bank_trans = banktransaction::transaction($bank_id, $depositamount, false, $transaction->id, 'store');
+        $bank_trans = banktransaction::transaction($bank_id->id, $depositamount, false, $transaction->id, 'store');
 
         $store->save();
 
@@ -242,33 +232,33 @@ class CooperationSalesController extends Controller
 
         $bank_trans = banktransaction::transaction($store->account_id, $result, true, $transaction, 'store');
 
-        $bank_trans = banktransaction::transaction($bank_id, $installment->Creditamount, false, $transaction, 'store');
+        $bank_trans = banktransaction::transaction($bank_id->id, $installment->Creditamount, false, $transaction, 'store');
 
         $installment->save();
         $store->save();
         toastr()->success('درخواست تصفیه حساب موفقیت آمیز انجام شد.');
         return redirect()->back();
     }
-    public function smsTest()
-    {
-        // dd($_ENV['MELIPAYAMAK_USER']);
+    // public function smsTest()
+    // {
+    //     // dd($_ENV['MELIPAYAMAK_USER']);
 
-        try {
-            $username = '989155000143';
-            $password = '7CHRT';
-            $api = new MelipayamakApi($username, $password);
-            $sms = $api->sms();
-            $to = '09038261488';
-            $from = '50004001000143';
-            $text = 'سلام حسین چطوری این تست دوم است';
-            $response = $sms->send($to, $from, $text);
-            $json = json_decode($response);
-            echo $json->Value; //RecId or Error Number
-        } catch (Exception $e) {
-            echo $e->getMessage();
-            // dd($e->getMessage());
-        }
-    }
+    //     try {
+    //         $username = '989155000143';
+    //         $password = '7CHRT';
+    //         $api = new MelipayamakApi($username, $password);
+    //         $sms = $api->sms();
+    //         $to = '09038261488';
+    //         $from = '50004001000143';
+    //         $text = 'سلام حسین چطوری این تست دوم است';
+    //         $response = $sms->send($to, $from, $text);
+    //         $json = json_decode($response);
+    //         echo $json->Value; //RecId or Error Number
+    //     } catch (Exception $e) {
+    //         echo $e->getMessage();
+    //         // dd($e->getMessage());
+    //     }
+    // }
     public function mainWallet($id)
     {
 
@@ -306,7 +296,9 @@ class CooperationSalesController extends Controller
         } else {
             $total = 0;
         }
-        return view('back.cooperationsales.transaction_records', compact('trans', 'store', 'total'));
+        $flag = 'تراکنش های فروش های پرداخت شده';
+
+        return view('back.cooperationsales.transaction_records', compact('trans', 'store', 'total', 'flag'));
     }
     public function creditTrans($id)
     {
@@ -317,6 +309,8 @@ class CooperationSalesController extends Controller
         } else {
             $total = 0;
         }
-        return view('back.cooperationsales.transaction_records', compact('trans', 'store', 'total'));
+        $flag = 'تراکنش های اعتبار فروشگاه';
+
+        return view('back.cooperationsales.transaction_records', compact('trans', 'store', 'total', 'flag'));
     }
 }
