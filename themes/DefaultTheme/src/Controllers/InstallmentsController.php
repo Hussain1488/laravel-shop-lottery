@@ -61,30 +61,18 @@ class InstallmentsController extends Controller
         $installments = Makeinstallmentsm::find($id);
         $user = User::find(Auth::user()->id);
 
-        $bank = BankAccount::whereHas('account_type', function ($query) {
+        $bank_id = BankAccount::whereHas('account_type', function ($query) {
             $query->where('code', 24);
         })->first();
-        // dd($bank);
-        if ($bank) {
-            // dd('ehy');
-            $bank_id = $bank->id;
-        } else {
-            return response()->json('data', 'درخواست شماب با مشکل مواجه شده است،‌لطفا با مرکز تماس بگیرید!');
+        if (!$bank_id) {
+            return redirect()->back()->with('warning', 'درخواست شما با مشکل مواجه شده است، لطفا به مرکز گزارش بدهید!');
         }
-        $bank1 = BankAccount::whereHas('account_type', function ($query) {
+        $bank_id1 = BankAccount::whereHas('account_type', function ($query) {
             $query->where('code', 26);
         })->first();
-        // dd($bank);
-        if ($bank) {
-            // dd('ehy');
-            $bank_id1 = $bank1->id;
-        } else {
-            return response()->json('data', 'درخواست شماب با مشکل مواجه شده است،‌لطفا با مرکز تماس بگیرید!');
+        if (!$bank_id1) {
+            return redirect()->back()->with('warning', 'درخواست شما با مشکل مواجه شده است، لطفا به مرکز گزارش بدهید!');
         }
-
-        // dd($user->inventory, $installments->prepaidamount, $user->purchasecredit, $installments->prepaidamount);
-
-        // dd('this is ');
         if ($user->inventory >= $installments->prepaidamount && $user->purchasecredit >= $installments->prepaidamount) {
 
             $user->inventory -= $installments->prepaidamount;
@@ -107,6 +95,7 @@ class InstallmentsController extends Controller
                 }
                 $message = 'پیش پرداخت شما با موفقیت پرداخت شده و اقساط شما ایجاد شد.';
             } else {
+
                 $message = 'پرداخت شما با موفقیت انجام شد.';
             }
 
@@ -114,20 +103,18 @@ class InstallmentsController extends Controller
 
             $buyer_trans = buyertransaction::transaction(Auth::user(), $installments->Creditamount, false, 0, 1);
 
-            $bank = banktransaction::transaction($bank_id, $installments->prepaidamount, true, $buyer_trans1->id, 'user');
+            $bank = banktransaction::transaction($bank_id->id, $installments->prepaidamount, true, $buyer_trans1->id, 'user');
 
-            $bank1 = banktransaction::transaction($bank_id1, $installments->Creditamount, true, $buyer_trans->id, 'user');
+            $bank1 = banktransaction::transaction($bank_id1->id, $installments->Creditamount, true, $buyer_trans->id, 'user');
 
             $user->save();
             $installments->statususer = 1;
             $jalaliNow = Jalalian::now()->format('Y-m-d');
             $installments->datepayment = $jalaliNow;
             $installments->save();
-            // dd($user->inventory, $installments->prepaidamount);
 
             return redirect()->back()->with('success', $message);
         } else {
-            // dd('if');
             return redirect()->back()->with('warning', 'موجودی شما کمتر از مقدار پیش پرداخت است و یا اعتبار شما کمتر از مقدار خرید است، لطفا کیف پول خود را شارژ نموده دوباره تلاش کنید.');
         }
     }
