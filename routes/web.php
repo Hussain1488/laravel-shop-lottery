@@ -414,7 +414,7 @@ Route::get('manifest.json', function () {
         'gcm_sender_id' => config('webpush.gcm.sender_id')
     ];
 });
-Route::get('message/to/hussain', [CooperationSalesController::class, 'smsTest']);
+// Route::get('message/to/hussain', [CooperationSalesController::class, 'smsTest']);
 
 // refresh csrf token
 Route::get('refresh-csrf', function () {
