@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Themes\DefaultTheme\src\Controllers\installmentsListController;
 use Themes\DefaultTheme\src\Controllers\MainController;
@@ -25,6 +26,20 @@ use Themes\DefaultTheme\src\Controllers\InstallmentsController;
 
 Route::group(['as' => 'front.'], function () {
     // ------------------ MainController
+    Route::get('cache-optimize-clear', function () {
+        try {
+            Artisan::call('optimize:clear');
+            Artisan::call('cache:clear');
+            Artisan::call('config:clear');
+            Artisan::call('view:clear');
+            Artisan::call('route:clear');
+
+            return redirect('/');
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    });
+
     Route::get('/', [MainController::class, 'index'])->name('index');
     Route::get('/get-new-captcha', [MainController::class, 'captcha']);
 
