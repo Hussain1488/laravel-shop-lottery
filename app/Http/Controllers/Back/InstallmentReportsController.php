@@ -69,8 +69,10 @@ class InstallmentReportsController extends Controller
         // dd($request->all());
         $bank_name = $request->nameofbank;
         if ($request->hasFile('documentpayment')) {
-            $file = $request->file('documentpayment');
-            $path = $file->store('document/payDetails', 'public');
+
+            $imageName = time() . '_clearing.' . $request->file('documentpayment')->getClientOriginalExtension();
+            $request->file('documentpayment')->move(public_path('/document/payDetails/'), $imageName);
+            $path = '/document/payDetails/' . $imageName;
         } else {
             $path = '';
         }
