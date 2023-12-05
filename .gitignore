@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
+/public/document
 /public/uploads
 /storage/*.key
 /storage/debugbar
@@ -14,6 +15,5 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-
 .idea/
 .vscode/
