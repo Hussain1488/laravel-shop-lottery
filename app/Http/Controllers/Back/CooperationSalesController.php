@@ -138,7 +138,10 @@ class CooperationSalesController extends Controller
             $files = $request->file('factor');
             $paths = [];
             foreach ($files as $file) {
-                $path = $file->store('document/ClearingDoc', 'public');
+
+                $imageName = time() . '_clearing.' . $file->getClientOriginalExtension();
+                $file->move(public_path('/document/ClearingDoc/'), $imageName);
+                $path = '/document/ClearingDoc/' . $imageName;
                 $paths[] = $path;
             }
             $docPath = json_encode($paths);

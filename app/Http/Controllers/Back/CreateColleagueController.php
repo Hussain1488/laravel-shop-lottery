@@ -84,7 +84,9 @@ class CreateColleagueController extends Controller
         if ($request->file('uploaddocument')) {
             $files = $request->file('uploaddocument');
             foreach ($files as $file) {
-                $path = $file->store('document/createstore', 'public');
+                $imageName = time() . '_store.' . $file->getClientOriginalExtension();
+                $file->move(public_path('/document/createstore/'), $imageName);
+                $path = '/document/createstore/' . $imageName;
                 $paths[] = $path;
             }
             // dd($paths);
@@ -164,7 +166,9 @@ class CreateColleagueController extends Controller
             $files = $request->file('uploaddocument');
             $paths = [];
             foreach ($files as $file) {
-                $path = $file->store('document/createstore', 'public');
+                $imageName = time() . '_store.' . $file->getClientOriginalExtension();
+                $file->move(public_path('/document/createstore/'), $imageName);
+                $path = '/document/createstore/' . $imageName;
                 $paths[] = $path;
             }
             $docPath = json_encode($paths);
@@ -261,7 +265,10 @@ class CreateColleagueController extends Controller
             $files = $request->file('documents');
             $paths = [];
             foreach ($files as $file) {
-                $path = $file->store('document/usercredite', 'public');
+
+                $imageName = time() . '_usercredit.' . $file->getClientOriginalExtension();
+                $file->move(public_path('/document/usercredite/'), $imageName);
+                $path = '/document/usercredite/' . $imageName;
                 $paths[] = $path;
             }
             $docPath = json_encode($paths);
@@ -364,7 +371,10 @@ class CreateColleagueController extends Controller
             $files = $request->file('documents');
             $paths = [];
             foreach ($files as $file) {
-                $path = $file->store('document/DocCreate', 'public');
+
+                $imageName = time() . '_DocCreate.' . $file->getClientOriginalExtension();
+                $file->move(public_path('/document/DocCreate/'), $imageName);
+                $path = '/document/DocCreate/' . $imageName;
                 $paths[] = $path;
             }
             $docPath = json_encode($paths);
