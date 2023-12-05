@@ -42,17 +42,27 @@ class InstallmentsController extends Controller
         $installmentsm = Makeinstallmentsm::where('userselected', Auth::user()->id)->with('installments', 'store', 'user')->get();
         $installmentsm1 = Makeinstallmentsm::where('userselected', Auth::user()->id)->where('statususer', 1)->with('installments', 'store', 'user')->get();
         $installmentsm2 = Makeinstallmentsm::where('userselected', Auth::user()->id)->where('paymentstatus', 1)->with('installments', 'store', 'user')->get();
-        // $wait = ($installmentsm->statususer == 0)->count();
-        // dd($installmentsm, $installmentsm1, $installmentsm2);
+        $userstat = 0;
+        $paystatus = 0;
+        foreach ($installmentsm1 as $key) {
+            if ($key->installments->where('paymentstatus', 0)->count() > 0) {
+                $userstat++;
+            }
+        }
+        foreach ($installmentsm2 as $key) {
+            if ($key->installments->where('paymentstatus', 1)->count() > 0) {
+                $paystatus++;
+            }
+        }
+        // dd($userstat, $paystatus);
 
-        // dd($installmentsm);
         $user = Auth::user();
 
 
         // dd($installmentsm);
 
 
-        return view('front::user.installments.index', compact('installmentsm', 'installmentsm1', 'installmentsm2', 'user'));
+        return view('front::user.installments.index', compact('installmentsm', 'installmentsm1', 'installmentsm2', 'user', 'userstat', 'paystatus'));
     }
 
     // paying the prepayment and creating the installments according its number.

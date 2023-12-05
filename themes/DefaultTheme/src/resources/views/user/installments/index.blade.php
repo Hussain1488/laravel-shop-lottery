@@ -164,7 +164,7 @@
                                                     </div>
 
                                                     <div id="menu1" class="container tab-pane fade my-2 py-3"><br>
-                                                        @if ($installmentsm1->count() > 0)
+                                                        @if ($userstat > 0)
                                                             @foreach ($installmentsm1 as $value)
                                                                 @foreach ($value->installments as $key)
                                                                     @if ($key->paymentstatus == 0)
@@ -236,7 +236,7 @@
                                                     </div>
                                                     <div id="menu2" class="container tab-pane fade my-2 py-3"><br>
 
-                                                        @if ($installmentsm2->count() > 0)
+                                                        @if ($paystatus > 0)
                                                             @foreach ($installmentsm2 as $value)
                                                                 @foreach ($value->installments as $key)
                                                                     @if ($key->paymentstatus == 1)

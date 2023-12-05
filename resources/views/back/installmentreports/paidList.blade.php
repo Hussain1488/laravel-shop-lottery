@@ -109,7 +109,7 @@
                                                             <span class="">{{ $key->Issuetracking }}</span>
                                                         </td>
                                                         <td class="">
-                                                            <a href="{{ public_path($key->documentpayment) }}">
+                                                            <a href="{{ asset($key->documentpayment) }}">
                                                                 <span class="text-success">دانلود سند</span>
                                                             </a>
                                                         </td>
@@ -180,7 +180,7 @@
                                                     </div>
 
                                                     <div class="col">
-                                                        <a href="{{ public_path($key->documentpayment) }}">
+                                                        <a href="{{ asset($key->documentpayment) }}">
                                                             <span class="text-success">دانلود سند</span>
                                                         </a>
                                                     </div>

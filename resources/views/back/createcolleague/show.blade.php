@@ -183,7 +183,8 @@
                                                             @else
                                                                 <div class="col">
 
-                                                                    <a href="{{ asset($document) }}">download file
+                                                                    <a href="{{ asset($document) }}">download
+                                                                        file
                                                                         {{ $counter++ }}</a>
                                                                 </div>
                                                             @endif
