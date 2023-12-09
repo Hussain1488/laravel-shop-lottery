@@ -23,19 +23,23 @@
                                     placeholder="{{ trans('front::messages.auth.enter-mobile-number') }}" value="">
                                 <i class="mdi mdi-account-circle-outline"></i>
                             </div>
-
-                            <div class="form-row mt-4">
-                                <div class="col-md-8 col-6">
-                                    <div class="form-group">
-                                        <input type="text" class="input-ui pl-2 captcha" autocomplete="off"
-                                            name="captcha" placeholder="{{ trans('front::messages.auth.security-code') }}"
-                                            required>
+                            {{-- {{ dump(Session::get('capch')) }} --}}
+                            @if (Session::get('captcha'))
+                                <div class="form-row mt-4">
+                                    <div class="col-md-8 col-6">
+                                        <div class="form-group">
+                                            <input type="text" class="input-ui pl-2 captcha" autocomplete="off"
+                                                name="captcha"
+                                                placeholder="{{ trans('front::messages.auth.security-code') }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-6">
+                                        <img class="captcha w-100" src="{{ captcha_src('flat') }}" alt="captcha">
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-6">
-                                    <img class="captcha w-100" src="{{ captcha_src('flat') }}" alt="captcha">
-                                </div>
-                            </div>
+                            @else
+                                <br><br>
+                            @endif
 
                             <div class="form-row mt-3">
                                 <button type="submit" class="btn-primary-cm btn-with-icon mx-auto w-100">
@@ -60,6 +64,7 @@
                     </div>
                 </div>
             </div>
+
 
         </div>
     </main>
@@ -103,10 +108,10 @@
                         <div class="email-otp-container d-flex justify-center">
                             <!-- Six input fields for OTP digits -->
                             <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
-                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
-                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
-                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
-                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
 
                         </div>
                         <div class="numbers-verify form-content form-content1">
@@ -145,7 +150,7 @@
         </div>
     </div>
 
+    <script src="{{ theme_asset('js/pages/otp.js') }}"></script>
     <script src="{{ theme_asset('js/vendor/countdown.min.js') }}"></script>
     <script src="{{ theme_asset('js/pages/login-with-code.js') }}"></script>
-    <script src="{{ theme_asset('js/pages/otp.js') }}"></script>
 @endpush
