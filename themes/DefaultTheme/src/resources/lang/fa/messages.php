@@ -36,7 +36,7 @@ return [
     ],
 
     'auth' => [
-        'laravel-shop'                   => 'لاراول شاپ',
+        'laravel-shop'                   => 'خانه اقساط',
         'all-rights-reserved-to'         => 'کلیه حقوق این سایت متعلق به',
         'is'                              => 'می‌باشد',
         'change-password'                => 'تغییر رمز عبور',
@@ -84,7 +84,7 @@ return [
     'partials' => [
         'add-to-cart'                 => 'افزودن به سبد',
         'search'                      => 'جستجو کنید...',
-        'laravel-shop'                => 'لاراول شاپ',
+        'laravel-shop'                => 'خانه اقساط',
         'edit'                        => 'ویرایش',
         'all-items-thiscategory'      => 'همه موارد این دسته',
         'no-category'                 => 'بدون دسته بندی',
