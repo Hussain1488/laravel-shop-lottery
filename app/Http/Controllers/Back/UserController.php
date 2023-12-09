@@ -246,7 +246,7 @@ class UserController extends Controller
             ]);
 
             $imageName = time() . '_' . $user->id . '.' . $request->image->getClientOriginalExtension();
-            $request->image->move(public_path('uploads/users/'), $imageName);
+            $request->image->move('uploads/users/', $imageName);
 
             if ($user->image && file_exists(public_path($user->image))) {
                 unlink(public_path($user->image));

@@ -85,7 +85,7 @@ class CreateColleagueController extends Controller
             $files = $request->file('uploaddocument');
             foreach ($files as $file) {
                 $imageName = time() . '_store.' . $file->getClientOriginalExtension();
-                $file->move(public_path('/document/createstore/'), $imageName);
+                $file->move('document/createstore/', $imageName);
                 $path = '/document/createstore/' . $imageName;
                 $paths[] = $path;
             }
@@ -167,7 +167,7 @@ class CreateColleagueController extends Controller
             $paths = [];
             foreach ($files as $file) {
                 $imageName = time() . '_store.' . $file->getClientOriginalExtension();
-                $file->move(public_path('/document/createstore/'), $imageName);
+                $file->move('document/createstore/', $imageName);
                 $path = '/document/createstore/' . $imageName;
                 $paths[] = $path;
             }
@@ -267,7 +267,7 @@ class CreateColleagueController extends Controller
             foreach ($files as $file) {
 
                 $imageName = time() . '_usercredit.' . $file->getClientOriginalExtension();
-                $file->move(public_path('/document/usercredite/'), $imageName);
+                $file->move('document/usercredite/', $imageName);
                 $path = '/document/usercredite/' . $imageName;
                 $paths[] = $path;
             }
@@ -373,7 +373,7 @@ class CreateColleagueController extends Controller
             foreach ($files as $file) {
 
                 $imageName = time() . '_DocCreate.' . $file->getClientOriginalExtension();
-                $file->move(public_path('/document/DocCreate/'), $imageName);
+                $file->move('document/DocCreate/', $imageName);
                 $path = '/document/DocCreate/' . $imageName;
                 $paths[] = $path;
             }

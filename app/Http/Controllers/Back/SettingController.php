@@ -46,7 +46,7 @@ class SettingController extends Controller
         if ($request->hasFile('info_icon')) {
 
             $imageName = time() . '_icon.' . $request->info_icon->getClientOriginalExtension();
-            $request->info_icon->move(public_path('uploads/'), $imageName);
+            $request->info_icon->move('uploads/', $imageName);
 
             $old_icon = option('info_icon');
 
@@ -60,7 +60,7 @@ class SettingController extends Controller
         if ($request->hasFile('info_logo')) {
 
             $imageName = time() . '_logo.' . $request->info_logo->getClientOriginalExtension();
-            $request->info_logo->move(public_path('uploads/'), $imageName);
+            $request->info_logo->move('uploads/', $imageName);
 
             $old_logo = option('info_logo');
 

@@ -71,7 +71,7 @@ class InstallmentReportsController extends Controller
         if ($request->hasFile('documentpayment')) {
 
             $imageName = time() . '_clearing.' . $request->file('documentpayment')->getClientOriginalExtension();
-            $request->file('documentpayment')->move(public_path('/document/payDetails/'), $imageName);
+            $request->file('documentpayment')->move('document/payDetails/', $imageName);
             $path = '/document/payDetails/' . $imageName;
         } else {
             $path = '';

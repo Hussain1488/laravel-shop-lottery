@@ -140,7 +140,7 @@ class CooperationSalesController extends Controller
             foreach ($files as $file) {
 
                 $imageName = time() . '_clearing.' . $file->getClientOriginalExtension();
-                $file->move(public_path('/document/ClearingDoc/'), $imageName);
+                $file->move('document/ClearingDoc/', $imageName);
                 $path = '/document/ClearingDoc/' . $imageName;
                 $paths[] = $path;
             }
