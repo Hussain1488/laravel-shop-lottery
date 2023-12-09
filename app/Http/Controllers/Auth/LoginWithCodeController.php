@@ -82,6 +82,7 @@ class LoginWithCodeController extends Controller
             'verify_code.exists' => 'کد وارد شده اشتباه است'
         ]);
 
+        Auth::loginUsingId($user->id, true);
         OneTimeCode::where('user_id', $user->id)->delete();
 
         return response('success');
