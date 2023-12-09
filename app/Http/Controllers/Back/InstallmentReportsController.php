@@ -15,7 +15,7 @@ use App\Models\paymentdetails;
 use App\Models\PaymentListModel;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 use Morilog\Jalali\Jalalian;
 use function PHPUnit\Framework\isEmpty;
 
@@ -65,6 +65,17 @@ class InstallmentReportsController extends Controller
 
     public function RequestPaymentStore(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'Issuetracking' => 'required',
+            'nameofbank' => 'required',
+            'documentpayment' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            toastr()->warning('درخواست انجام نشد لطفاً فرم را به درستی پر کنید!');
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         // dd($request->all());
         $bank_name = $request->nameofbank;
