@@ -26,11 +26,15 @@ class LoginWithCodeController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'captcha' => ['required', 'captcha'],
-        ], [
-            'mobile.exists' => 'حساب کاربری با شماره موبایل ' . $request->mobile . ' وجود ندارد. لطفا ثبت نام کنید'
-        ]);
+        if (Session::get('captcha')) {
+            $request->validate([
+                'captcha' => ['required', 'captcha'],
+            ], [
+                'mobile.exists' => 'حساب کاربری با شماره موبایل ' . $request->mobile . ' وجود ندارد. لطفا ثبت نام کنید'
+            ]);
+        }
+        Session::put('captcha', true);
+
 
         $type = new class
         {
@@ -54,9 +58,7 @@ class LoginWithCodeController extends Controller
 
             // Assuming verifySms is a function that expects $type and $user as arguments
             verifySms($type, $user);
-
             Session::put('newUser', ['number' => $request->mobile, 'code' => $type->code]);
-
             return response()->json(['status' => 'success', 'data' => 'true']);
         }
     }
@@ -69,7 +71,6 @@ class LoginWithCodeController extends Controller
 
         $user = User::where('username', $request->mobile)->first();
         $time = Carbon::now()->subMinutes(15);
-
         $request->validate([
             'verify_code'     => [
                 'required',
@@ -81,7 +82,6 @@ class LoginWithCodeController extends Controller
             'verify_code.exists' => 'کد وارد شده اشتباه است'
         ]);
 
-        Auth::loginUsingId($user->id, true);
         OneTimeCode::where('user_id', $user->id)->delete();
 
         return response('success');
