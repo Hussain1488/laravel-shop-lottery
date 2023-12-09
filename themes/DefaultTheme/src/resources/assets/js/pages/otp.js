@@ -97,3 +97,18 @@ document.addEventListener('DOMContentLoaded', function () {
         updateOTPValue(emailOtpInputs);
     });
 });
+
+$('.email-otp-container, .email-otp-input').on('click', function () {
+    focusFirstEmptyInput();
+});
+
+function focusFirstEmptyInput() {
+    const inputs = document.querySelectorAll('.email-otp-input');
+
+    for (let i = 0; i < inputs.length; i++) {
+        if (!inputs[i].value || inputs[i].disabled) {
+            inputs[i].focus();
+            break;
+        }
+    }
+}
