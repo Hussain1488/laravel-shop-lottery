@@ -124,9 +124,17 @@
 
                                                                     <div class="row my-1">
                                                                         <div class="col">
-                                                                            {{ $key->numberofinstallments }} عدد به
-                                                                            مبلغ قسط <span class="moneyInputSpan">
-                                                                                {{ $key->Creditamount }} </span> ریال
+                                                                            مبلغ خرید: <span
+                                                                                class="moneyInputSpan">{{ $key->Creditamount }}</span>
+                                                                            ریال
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="row px-3">
+                                                                        <div class="">
+
+                                                                            مقدار پیش پرداخت: <span class="moneyInputSpan">
+                                                                                {{ $key->prepaidamount }} </span> ریال
                                                                         </div>
 
                                                                     </div>
@@ -134,9 +142,10 @@
                                                                     <div class="row px-3">
 
                                                                         <div class="">
-
-                                                                            مقدار پیش پرداخت: <span class="moneyInputSpan">
-                                                                                {{ $key->prepaidamount }} </span> ریال
+                                                                            {{ $key->numberofinstallments }} قسط به مبلغ:
+                                                                            <span
+                                                                                class="moneyInputSpan">{{ $key->amounteachinstallment }}</span>
+                                                                            ریال
                                                                         </div>
                                                                         <div class="col d-flex justify-content-end">
 
@@ -191,7 +200,7 @@
                                                                             </div>
                                                                             <div class="row mr-2">
 
-                                                                                مبلغ هر قسط: <span class="moneyInputSpan">
+                                                                                مبلغ قسط: <span class="moneyInputSpan">
                                                                                     {{ $key->installmentprice }}
                                                                                 </span>
                                                                                 ریال
@@ -270,7 +279,7 @@
                                                                             </div>
                                                                             <div class="row mr-2">
 
-                                                                                مبلغ هر قسط: <span class="moneyInputSpan">
+                                                                                مبلغ قسط: <span class="moneyInputSpan">
                                                                                     {{ $key->installmentprice }}
                                                                                 </span>
                                                                                 ریال
@@ -412,10 +421,10 @@
                         <div class="email-otp-container d-flex justify-center">
                             <!-- Six input fields for OTP digits -->
                             <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
-                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
-                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
-                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
-                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1" disabled>
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
+                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
 
                         </div>
                         <div class="numbers-verify form-content form-content1">
