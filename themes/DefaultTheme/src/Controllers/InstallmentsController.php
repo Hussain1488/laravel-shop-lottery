@@ -54,6 +54,7 @@ class InstallmentsController extends Controller
                 $paystatus++;
             }
         }
+        $gateways = Gateway::active()->get();
         // dd($userstat, $paystatus);
 
         $user = Auth::user();
@@ -62,7 +63,7 @@ class InstallmentsController extends Controller
         // dd($installmentsm);
 
 
-        return view('front::user.installments.index', compact('installmentsm', 'installmentsm1', 'installmentsm2', 'user', 'userstat', 'paystatus'));
+        return view('front::user.installments.index', compact('installmentsm', 'installmentsm1', 'installmentsm2', 'user', 'userstat', 'paystatus', 'gateways'));
     }
 
     // paying the prepayment and creating the installments according its number.

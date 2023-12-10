@@ -346,15 +346,14 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">درخواست تسویه حساب به مبلغ:<span class="text-success"
-                            id="deposit_amount_show"></span>ریال
+                    <h4 class="modal-title">شارژ کیف پول:<span class="text-success" id="deposit_amount_show"></span>
                     </h4>
                 </div>
                 <hr />
 
                 <!-- Modal body -->
-                <div class="modal-body">
-                    <form id="payment_form1" action="{{ route('front.wallet.rechargeVarify') }}" method="POST"
+                <div class="modal-body p-2">
+                    {{-- <form id="payment_form1" action="{{ route('front.wallet.rechargeVarify') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <input id="user_id" type="hidden" value="{{ Auth::user()->id }}" name="user_id">
@@ -375,6 +374,48 @@
                         <div class="modal-footer d-flex justify-content-between">
                             <input type="submit" id="submit_form_pay1" class="btn btn-success" value="تأیید">
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="انصراف">
+                        </div>
+                    </form> --}}
+                    <form id="wallet-create-form" action="{{ route('front.wallet.store') }}" class="setting_form"
+                        method="POST">
+                        @csrf
+
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="form-row-title">
+                                    <h6>{{ trans('front::messages.wallet.amount') }}
+                                        ({{ trans('front::messages.currency.prefix') }}{{ trans('front::messages.currency.suffix') }})
+                                    </h6>
+                                </div>
+                                <div class="form-row form-group">
+                                    <input type="number" class="form-control input-ui pr-2 amount-input" name="amount">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="form-row-title">
+                                    <h6>{{ trans('front::messages.wallet.select-payment-gateway') }}</h6>
+                                </div>
+                                <div class="form-row form-group">
+                                    <select class="form-control py-0" name="gateway" required>
+                                        <option class="" value="">
+                                            {{ trans('front::messages.wallet.select') }}</option>
+                                        @foreach ($gateways as $gateway)
+                                            <option class="" value="{{ $gateway->key }}">
+                                                {{ $gateway->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-row mt-3 justify-content-center">
+                            <button id="submit-btn" type="submit" class="btn-primary-cm btn-with-icon ml-2">
+                                <i class="mdi mdi-arrow-left"></i>
+                                {{ trans('front::messages.wallet.increase-inventory') }}
+                            </button>
                         </div>
                     </form>
 
@@ -469,5 +510,7 @@
     <script src="{{ theme_asset('js/vendor/countdown.min.js') }}"></script>
     <script src="{{ theme_asset('js/pages/installments/index.js') }}"></script>
     <script src="{{ theme_asset('js/pages/otp.js') }}"></script>
+    <script src="{{ theme_asset('js/pages/wallet/create.js') }}"></script>
+
     <script src='{{ asset('front/script.js') }}'></script>
 @endpush

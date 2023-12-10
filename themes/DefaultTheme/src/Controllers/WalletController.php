@@ -30,8 +30,9 @@ class WalletController extends Controller
     {
         $trans = buyertransaction::where('flag', 1)->where('user_id', Auth::user()->id)->latest()->get();
         $user = User::find(Auth::user()->id);
+        $gateways = Gateway::active()->get();
 
-        return view('front::user.wallet.index', compact('trans', 'user'));
+        return view('front::user.wallet.index', compact('trans', 'user', 'gateways'));
     }
 
     public function show(WalletHistory $wallet)

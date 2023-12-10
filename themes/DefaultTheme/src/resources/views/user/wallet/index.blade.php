@@ -231,7 +231,7 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form id="payment_form" action="{{ route('front.wallet.rechargeVarify') }}" method="POST"
+                    {{-- <form id="payment_form" action="{{ route('front.wallet.rechargeVarify') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <input id="user_id" type="hidden" value="{{ Auth::user()->id }}" name="user_id">
@@ -252,6 +252,45 @@
                         <div class="modal-footer d-flex justify-content-between">
                             <input type="submit" id="submit_form_pay" class="btn btn-success" value="تأیید">
                             <input type="button" class="btn btn-danger" data-dismiss="modal" value="انصراف">
+                        </div>
+                    </form> --}}
+                    <form id="wallet-create-form" action="{{ route('front.wallet.store') }}" class="setting_form"
+                        method="POST">
+                        @csrf
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-row-title">
+                                    <h3>{{ trans('front::messages.wallet.amount') }}
+                                        ({{ trans('front::messages.currency.prefix') }}{{ trans('front::messages.currency.suffix') }})
+                                    </h3>
+                                </div>
+                                <div class="form-row form-group">
+                                    <input type="number" class="input-ui pr-2 amount-input" name="amount">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-row-title">
+                                    <h3>{{ trans('front::messages.wallet.select-payment-gateway') }}</h3>
+                                </div>
+                                <div class="form-row form-group">
+                                    <select class="form-control py-0" name="gateway" required>
+                                        <option value="">{{ trans('front::messages.wallet.select') }}</option>
+                                        @foreach ($gateways as $gateway)
+                                            <option value="{{ $gateway->key }}">{{ $gateway->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="form-row mt-3 justify-content-center">
+                            <button id="submit-btn" type="submit" class="btn-primary-cm btn-with-icon ml-2">
+                                <i class="mdi mdi-arrow-left"></i>
+                                {{ trans('front::messages.wallet.increase-inventory') }}
+                            </button>
                         </div>
                     </form>
 
@@ -323,6 +362,8 @@
         </div>
     </div>
     <script src="{{ theme_asset('js/pages/wallet/index.js') }}"></script>
+    <script src="{{ theme_asset('js/pages/wallet/create.js') }}"></script>
+
     <script src="{{ theme_asset('js/pages/wallet/recharg.js') }}"></script>
     <script src='{{ asset('front/script.js') }}'></script>
 @endpush
