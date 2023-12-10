@@ -50,6 +50,15 @@ class WalletController extends Controller
 
     public function store(Request $request)
     {
+
+        session()->put('bank_id', BankAccount::whereHas('account_type', function ($query) {
+            $query->where('code', 21);
+        })->first());
+
+        if (!session()->get('bank_id')) {
+            return redirect()->back()->with('warning', 'خطای سرور. لطفا به مرکز اطلاع بدهید.');
+        }
+
         $gateways = Gateway::active()->pluck('key')->toArray();
 
         $request->validate([
@@ -92,6 +101,7 @@ class WalletController extends Controller
                         "updated_at"           => Carbon::now(),
                     ]);
 
+
                     session()->put('transactionId', $transactionId);
                     session()->put('amount', $amount);
                 }
@@ -103,6 +113,7 @@ class WalletController extends Controller
 
     public function verify($gateway)
     {
+
         $transactionId = session()->get('transactionId');
         $amount        = session()->get('amount');
 
@@ -128,11 +139,17 @@ class WalletController extends Controller
                 'updated_at'           => Carbon::now(),
             ]);
 
+
             $history->update([
                 'status' => 'success',
             ]);
 
             event(new WalletAmountIncreased($history->wallet));
+
+            $user = User::find(Auth::user()->id);
+            $user_trans = buyertransaction::transaction($user, $amount, false, 1, 1);
+
+            banktransaction::transaction(session()->get('bank_id')->id, $amount, false, $user_trans->id, 'user');
 
             $history->wallet->refereshBalance();
 
