@@ -32,3 +32,4 @@ $('#wallet-create-form').validate({
     }
 });
 
+$('.gateway-select').select2();

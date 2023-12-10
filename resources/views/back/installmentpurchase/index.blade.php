@@ -82,7 +82,7 @@
                                                 <div class="d-flex align-items-baseline ">
                                                     <input readonly type="text" placeholder="100,000"
                                                         class="form-control moneyInput" id="first_name" name="first_name"
-                                                        value="{{ $user->inventory }}" style="margin-left: 4px">ریال
+                                                        value="{{ $user->wallet->balance }}" style="margin-left: 4px">ریال
                                                 </div>
 
                                             </div>

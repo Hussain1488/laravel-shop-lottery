@@ -13,6 +13,7 @@ use App\Models\OneTimeCode;
 use App\Models\Sms;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Http\Request;
 use App\Models\WalletHistory;
 use Carbon\Carbon;
@@ -29,7 +30,7 @@ class WalletController extends Controller
     public function index()
     {
         $trans = buyertransaction::where('flag', 1)->where('user_id', Auth::user()->id)->latest()->get();
-        $user = User::find(Auth::user()->id);
+        $user = User::with('wallet')->find(Auth::user()->id);
         $gateways = Gateway::active()->get();
 
         return view('front::user.wallet.index', compact('trans', 'user', 'gateways'));
@@ -209,7 +210,18 @@ class WalletController extends Controller
         banktransaction::transaction($bank_id->id, $RecharAmount, false, $user_trans->id, 'user');
 
         $user = User::find($request->user_id);
-        $user->inventory += $RecharAmount;
+        $wallet = Wallet::where('user_id', $user->id)->first();
+
+        if ($wallet) {
+
+            $wallet->balance += $RecharAmount;
+            $wallet->save(); // Save the changes to the database
+        } else {
+            $wallet = new Wallet();
+            $wallet->user_id = $user->id;
+            $wallet->balance = $RecharAmount;
+            $wallet->save();
+        };
         $user->save();
         return redirect()->back()->with('success', 'شارژ کیف پول برای شما با موفقیت انجام شد!');
     }

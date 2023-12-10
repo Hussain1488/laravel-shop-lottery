@@ -16,6 +16,7 @@ use App\Models\createstore;
 use App\Models\Gateway;
 use App\Models\Transaction;
 use App\Models\User as ModelsUser;
+use App\Models\Wallet;
 use App\Models\WalletHistory;
 use Carbon\Carbon;
 use Exception;
@@ -57,7 +58,7 @@ class InstallmentsController extends Controller
         $gateways = Gateway::active()->get();
         // dd($userstat, $paystatus);
 
-        $user = Auth::user();
+        $user = User::with('wallet')->find(Auth::user()->id);
 
 
         // dd($installmentsm);
@@ -70,7 +71,7 @@ class InstallmentsController extends Controller
     public function userStatus($id)
     {
         $installments = Makeinstallmentsm::find($id);
-        $user = User::find(Auth::user()->id);
+        $user = User::find(Auth::user()->id)->with('wallet');
 
         $bank_id = BankAccount::whereHas('account_type', function ($query) {
             $query->where('code', 24);
@@ -84,9 +85,22 @@ class InstallmentsController extends Controller
         if (!$bank_id1) {
             return redirect()->back()->with('warning', 'درخواست شما با مشکل مواجه شده است، لطفا به مرکز گزارش بدهید!');
         }
-        if ($user->inventory >= $installments->prepaidamount && $user->purchasecredit >= $installments->prepaidamount) {
+        if ($user->wallet->balance >= $installments->prepaidamount && $user->purchasecredit >= $installments->prepaidamount) {
 
-            $user->inventory -= $installments->prepaidamount;
+            $user = User::find($installments->userselected);
+            $wallet = Wallet::where('user_id', $user->id)->first();
+
+            if ($wallet) {
+
+                $wallet->balance += $installments->prepaidamount;
+                $wallet->save(); // Save the changes to the database
+            } else {
+                $wallet = new Wallet();
+                $wallet->user_id = $user->id;
+                $wallet->balance = $installments->prepaidamount;
+                $wallet->save();
+            };
+
             $user->purchasecredit -= $installments->Creditamount;
 
             $Insta_dateils = new installmentdetails();
@@ -151,9 +165,18 @@ class InstallmentsController extends Controller
         $installments->paymentstatus = 1;
 
         $user = User::find($installments->userselected);
-        $user->inventory -= $insta_dateils->installmentprice;
+        $wallet = Wallet::where('user_id', $user->id)->first();
 
-
+        if ($wallet) {
+            // The wallet exists, update the balance
+            $wallet->balance +=  $insta_dateils->installmentprice;
+            $wallet->save(); // Save the changes to the database
+        } else {
+            $wallet = new Wallet();
+            $wallet->user_id = $user->id;
+            $wallet->balance = $insta_dateils->installmentprice;
+            $wallet->save();
+        };
         // transaction($user, $amount, $status, $flag)
         $buyer_trans = buyertransaction::transaction(Auth::user(), $insta_dateils->installmentprice, false, 1, 0);
 

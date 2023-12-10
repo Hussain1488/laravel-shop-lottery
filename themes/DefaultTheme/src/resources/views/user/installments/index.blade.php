@@ -53,7 +53,7 @@
                                                                 <input readonly type="text"
                                                                     class="form-control moneyInput" id="first_name"
                                                                     name="first_name"
-                                                                    value="{{ $user->purchasecredit != null ? $user->purchasecredit : 0 }}">
+                                                                    value="{{ $user->purchasecredit ?? 0 }}">
                                                             </div>
 
                                                         </div>
@@ -71,7 +71,7 @@
                                                                 <input readonly type="text"
                                                                     class="form-control moneyInput" id="first_name"
                                                                     name="first_name"
-                                                                    value="{{ $user->inventory != null ? $user->inventory : 0 }}"
+                                                                    value="{{ $user->wallet->balance ?? 0 }}"
                                                                     style="margin-left: 4px"><span> ریال</span>
                                                             </div>
                                                         </div>
@@ -398,7 +398,7 @@
                                     <h6>{{ trans('front::messages.wallet.select-payment-gateway') }}</h6>
                                 </div>
                                 <div class="form-row form-group">
-                                    <select class="form-control py-0" name="gateway" required>
+                                    <select class="form-control py-0 gateway-select" name="gateway" required>
                                         <option class="" value="">
                                             {{ trans('front::messages.wallet.select') }}</option>
                                         @foreach ($gateways as $gateway)

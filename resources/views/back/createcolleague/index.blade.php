@@ -11,13 +11,13 @@
                          <div class="col-12">
                              <div class="breadcrumb-wrapper col-12">
                                  <ol class="breadcrumb no-border">
-                                    <li class="breadcrumb-item">مدیریت
-                                    </li>
-                                    <li class="breadcrumb-item">ایجاد همکار
-                                    </li>
-                                    <li class="breadcrumb-item active">اعتبار دهی به خریدار
-                                    </li>
-                                </ol>
+                                     <li class="breadcrumb-item">مدیریت
+                                     </li>
+                                     <li class="breadcrumb-item">ایجاد همکار
+                                     </li>
+                                     <li class="breadcrumb-item active">اعتبار دهی به خریدار
+                                     </li>
+                                 </ol>
                              </div>
                          </div>
                      </div>
@@ -59,7 +59,7 @@
                                                          @foreach ($users as $item)
                                                              <option data-name="{{ $item->first_name }}"
                                                                  data-lastname="{{ $item->last_name }}"
-                                                                 credit_attr_value="{{ $item->inventory }}"
+                                                                 credit_attr_value="{{ $item->wallet->balance }}"
                                                                  value="{{ $item->id }}">{{ $item->username }}
                                                              </option>
                                                          @endforeach
@@ -73,6 +73,7 @@
                                                          <span class="user_title" id="user_title"></span>
                                                          <span class="text-success user_name" id="user_name"></span>
                                                      </div>
+
 
                                                  </div>
                                              </div>
@@ -172,7 +173,7 @@
                                              <div class="col d-flex align-items-baseline justify-content-center">
                                                  <input type="button" id="summit_button1"
                                                      class="btn btn-primary my-1"value=" تأیید
-                                                                                                                                                                                                                                                                                                                            تغییرات" />
+                                                                                                                                                                                                                                                                                                                                                تغییرات" />
                                              </div>
                                              <div class="col d-flex align-items-baseline justify-content-center">
                                                  <a href="" class="btn btn-danger my-1">انصراف </a>

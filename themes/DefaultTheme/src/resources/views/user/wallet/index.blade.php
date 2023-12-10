@@ -39,8 +39,7 @@
                                             موجودی نقدی کیف پول </label>
                                         <div class="d-flex ">
                                             <input readonly type="text" class="form-control moneyInput" id="first_name"
-                                                name="first_name"
-                                                value="{{ $user->inventory != null ? $user->inventory : 0 }}"
+                                                name="first_name" value="{{ $user->wallet->balance ?? 0 }}"
                                                 style="margin-left: 4px"><span> ریال</span>
                                         </div>
                                     </div>
@@ -258,33 +257,36 @@
                         method="POST">
                         @csrf
 
-                        <div class="row">
-                            <div class="col-lg-6">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-lg-8">
                                 <div class="form-row-title">
-                                    <h3>{{ trans('front::messages.wallet.amount') }}
+                                    <h6>{{ trans('front::messages.wallet.amount') }}
                                         ({{ trans('front::messages.currency.prefix') }}{{ trans('front::messages.currency.suffix') }})
-                                    </h3>
+                                    </h6>
                                 </div>
                                 <div class="form-row form-group">
-                                    <input type="number" class="input-ui pr-2 amount-input" name="amount">
+                                    <input type="number" class="form-control input-ui pr-2 amount-input" name="amount">
                                 </div>
                             </div>
-
-                            <div class="col-lg-6">
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-lg-8">
                                 <div class="form-row-title">
-                                    <h3>{{ trans('front::messages.wallet.select-payment-gateway') }}</h3>
+                                    <h6>{{ trans('front::messages.wallet.select-payment-gateway') }}</h6>
                                 </div>
                                 <div class="form-row form-group">
-                                    <select class="form-control py-0" name="gateway" required>
-                                        <option value="">{{ trans('front::messages.wallet.select') }}</option>
+                                    <select class="form-control py-0 gateway-select" name="gateway" required>
+                                        <option class="" value="">
+                                            {{ trans('front::messages.wallet.select') }}</option>
                                         @foreach ($gateways as $gateway)
-                                            <option value="{{ $gateway->key }}">{{ $gateway->name }}</option>
+                                            <option class="" value="{{ $gateway->key }}">
+                                                {{ $gateway->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                         </div>
-
                         <hr>
                         <div class="form-row mt-3 justify-content-center">
                             <button id="submit-btn" type="submit" class="btn-primary-cm btn-with-icon ml-2">

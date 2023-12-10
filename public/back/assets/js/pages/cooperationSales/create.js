@@ -179,6 +179,19 @@ $(document).ready(function () {
             $('#myModal').modal();
         }
     });
+    $('#User_selected').change(function () {
+        var selectedOption = $(this).find(':selected');
+        var creditAttrValue = selectedOption.attr('credit_attr_value');
+        // console.log(creditAttrValue);
+        // var orginal_value = selectedOption.attr('creadit_attr');
+
+        if (creditAttrValue == '') {
+            creditAttrValue = 0;
+        }
+        var formattedNumber = addCommas(creditAttrValue);
+        $('#inventory').val(formattedNumber);
+        $('#Creadit_hidden').val(creditAttrValue);
+    });
 
     $('.user_select2').select2();
 

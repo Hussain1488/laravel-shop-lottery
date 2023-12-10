@@ -17,6 +17,7 @@ use App\Models\User;
 use App\Models\createstore;
 use App\Models\createstoretransaction;
 use App\Models\OperatorActivity;
+use App\Models\Wallet;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -35,7 +36,7 @@ class CreateColleagueController extends Controller
     // going to create colleague index view page
     public function index()
     {
-        $users = User::where('level', 'user')->get();
+        $users = User::where('level', 'user', 'wallet')->get();
 
         return view('back.createcolleague.index', compact('users'));
     }
@@ -379,8 +380,9 @@ class CreateColleagueController extends Controller
             }
             $docPath = json_encode($paths);
         }
+        $wallet = Wallet::where('user_id', $user->id)->first();
+        $wallet->balance += $request->ReCredintAmount;
 
-        $user->inventory += $request->ReCredintAmount;
 
         createdocument::create([
             'namedebtor' => $request->namedebtor,
@@ -392,6 +394,7 @@ class CreateColleagueController extends Controller
         ]);
 
         $user->save();
+        $wallet->save();
         OperatorActivity::createActivity($user->id, 'CREATE_DOCUMNET');
 
 
