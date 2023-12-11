@@ -60,10 +60,6 @@ class InstallmentsController extends Controller
 
         $user = User::with('wallet')->find(Auth::user()->id);
 
-
-        // dd($installmentsm);
-
-
         return view('front::user.installments.index', compact('installmentsm', 'installmentsm1', 'installmentsm2', 'user', 'userstat', 'paystatus', 'gateways'));
     }
 
@@ -71,7 +67,8 @@ class InstallmentsController extends Controller
     public function userStatus($id)
     {
         $installments = Makeinstallmentsm::find($id);
-        $user = User::find(Auth::user()->id)->with('wallet');
+        $user = User::with('wallet')->find(Auth::user()->id);
+        // dd($user);
 
         $bank_id = BankAccount::whereHas('account_type', function ($query) {
             $query->where('code', 24);
@@ -85,22 +82,17 @@ class InstallmentsController extends Controller
         if (!$bank_id1) {
             return redirect()->back()->with('warning', 'درخواست شما با مشکل مواجه شده است، لطفا به مرکز گزارش بدهید!');
         }
+        if (!$user->wallet) {
+            $wallet = new Wallet();
+            $wallet->user_id = $user->id;
+            $wallet->balance = $installments->prepaidamount;
+            $wallet->save();
+            return redirect()->back()->with('warning', 'موجودی شما کمتر از مقدار پیش پرداخت است و یا اعتبار شما کمتر از مقدار خرید است، لطفا کیف پول خود را شارژ نموده دوباره تلاش کنید.');
+        }
         if ($user->wallet->balance >= $installments->prepaidamount && $user->purchasecredit >= $installments->prepaidamount) {
 
-            $user = User::find($installments->userselected);
-            $wallet = Wallet::where('user_id', $user->id)->first();
 
-            if ($wallet) {
-
-                $wallet->balance += $installments->prepaidamount;
-                $wallet->save(); // Save the changes to the database
-            } else {
-                $wallet = new Wallet();
-                $wallet->user_id = $user->id;
-                $wallet->balance = $installments->prepaidamount;
-                $wallet->save();
-            };
-
+            $user->wallet->balance -= $installments->prepaidamount;
             $user->purchasecredit -= $installments->Creditamount;
 
             $Insta_dateils = new installmentdetails();
@@ -124,6 +116,7 @@ class InstallmentsController extends Controller
                 $message = 'پرداخت شما با موفقیت انجام شد.';
             }
 
+
             $buyer_trans1 = buyertransaction::transaction(Auth::user(), $installments->prepaidamount, false, 1, 1);
 
             $buyer_trans = buyertransaction::transaction(Auth::user(), $installments->Creditamount, false, 0, 1);
@@ -132,9 +125,10 @@ class InstallmentsController extends Controller
 
             $bank1 = banktransaction::transaction($bank_id1->id, $installments->Creditamount, true, $buyer_trans->id, 'user');
 
+            $user->wallet->save(); // Save the changes to the database
             $user->save();
             $installments->statususer = 1;
-            $jalaliNow = Jalalian::now()->format('Y-m-d');
+            $jalaliNow = carbon::now()->format('Y-m-d');
             $installments->datepayment = $jalaliNow;
             $installments->save();
 
@@ -164,19 +158,12 @@ class InstallmentsController extends Controller
         $insta_dateils->paymentstatus = 1;
         $installments->paymentstatus = 1;
 
-        $user = User::find($installments->userselected);
-        $wallet = Wallet::where('user_id', $user->id)->first();
-
-        if ($wallet) {
-            // The wallet exists, update the balance
-            $wallet->balance +=  $insta_dateils->installmentprice;
-            $wallet->save(); // Save the changes to the database
+        $user = User::with('wallet')->find($installments->userselected);
+        if ($user->wallet->balance >= $insta_dateils->installmentprice) {
+            $user->wallet->balance -= $insta_dateils->installmentprice;
         } else {
-            $wallet = new Wallet();
-            $wallet->user_id = $user->id;
-            $wallet->balance = $insta_dateils->installmentprice;
-            $wallet->save();
-        };
+            return redirect()->back()->with('warning', 'موجودی کیف پول کافی نیست!');
+        }
         // transaction($user, $amount, $status, $flag)
         $buyer_trans = buyertransaction::transaction(Auth::user(), $insta_dateils->installmentprice, false, 1, 0);
 
@@ -184,6 +171,7 @@ class InstallmentsController extends Controller
 
 
         $user->save();
+        $user->wallet->save(); // Save the changes to the database
         $insta_dateils->save();
         $installments->save();
 
