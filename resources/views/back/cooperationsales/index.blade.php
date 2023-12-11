@@ -180,7 +180,7 @@
                                                 <div class="row d-flex justify-content-between p-1">
                                                     <div class="col d-flex justify-content-end">
                                                         <button
-                                                            data_date='{{ \Carbon\Carbon::parse($index->CarbonDate)->format('Y-m-d') }}'
+                                                            data_date='{{ \Carbon\Carbon::parse($index->datepayment)->format('Y-m-d') }}'
                                                             data_day='{{ $index->store->settlementtime }}'
                                                             class="btn btn-primary settlementtime_button"
                                                             id="settlementtime_button"
@@ -220,7 +220,7 @@
                             <p>
                                 برای فعلا شما اجازه درخواست تسویه را ندارید.
                             </p>
-                            <p>برای این کاربر <span id="user_day_time" class="text-success"></span> روز دیگر از وقت
+                            <p>برای این فروش <span id="user_day_time" class="text-success"></span> روز دیگر از وقت
                                 درخواست تسویه مانده است .</p>
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
