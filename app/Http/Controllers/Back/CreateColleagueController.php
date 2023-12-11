@@ -380,6 +380,7 @@ class CreateColleagueController extends Controller
             }
             $docPath = json_encode($paths);
         }
+
         $wallet = Wallet::where('user_id', $user->id)->first();
         $wallet->balance += $request->ReCredintAmount;
 

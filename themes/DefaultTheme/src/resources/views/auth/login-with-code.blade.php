@@ -38,7 +38,7 @@
                                     </div>
                                 </div>
                             @else
-                                <br><br>
+                                <br>
                             @endif
 
                             <div class="form-row mt-3">

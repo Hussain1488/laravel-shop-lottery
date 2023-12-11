@@ -101,10 +101,11 @@ class WalletController extends Controller
                         "updated_at"           => Carbon::now(),
                     ]);
 
-
+                    // dd($amount * 10);
                     session()->put('transactionId', $transactionId);
                     session()->put('amount', $amount);
                 }
+
             )->pay()->render();
         } catch (Exception $e) {
             return redirect()->route('front.wallet.index', ['history' => $history])->with('transaction-error', $e->getMessage());
@@ -115,7 +116,7 @@ class WalletController extends Controller
     {
 
         $transactionId = session()->get('transactionId');
-        $amount        = session()->get('amount');
+        $amount        = session()->get('amount') * 10;
 
         $transaction = Transaction::where('status', false)->where('transID', $transactionId)->firstOrFail();
 
@@ -138,7 +139,6 @@ class WalletController extends Controller
                 'message'              => $transaction->message . '<br>' . trans('front::messages.controller.successful-gateway') . $gateway,
                 'updated_at'           => Carbon::now(),
             ]);
-
 
             $history->update([
                 'status' => 'success',

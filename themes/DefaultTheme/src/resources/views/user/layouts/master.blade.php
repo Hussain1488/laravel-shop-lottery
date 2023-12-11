@@ -19,12 +19,12 @@
                                     <span class="d-block profile-username">{{ $user->fullname }}</span>
                                     <span class="d-block profile-phone">{{ $user->username }}</span>
                                 </div>
-                                <div title="{{ trans('front::messages.currency.prefix') . convert_number($user->wallet->balance) . trans('front::messages.currency.suffix') }}"
+                                <div title="{{ trans('front::messages.currency.prefix') . convert_number($user->wallet->balance ?? 0) . trans('front::messages.currency.suffix') }}"
                                     class="profile-point mt-3 mb-2 dt-sl">
                                     <span
                                         class="value-profile-point">{{ trans('front::messages.profile.wallet-balance') }}</span>
                                     <div class="float-left label-profile-point"><strong
-                                            class="">{{ trans('front::messages.currency.prefix') }}{{ number_format($user->Wallet->balance) }}</strong>
+                                            class="">{{ trans('front::messages.currency.prefix') }}{{ number_format($user->Wallet->balance ?? 0) }}</strong>
                                         {{ trans('front::messages.currency.suffix2') }}</div>
 
                                 </div>
