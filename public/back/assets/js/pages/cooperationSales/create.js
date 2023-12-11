@@ -198,14 +198,10 @@ $(document).ready(function () {
     $('.settlementtime_button').click(function () {
         let data_day = $(this).attr('data_day');
         let data_date = $(this).attr('data_date');
-        let new_date = $('#new_date').val();
-
         let dateA = new Date(data_date);
-        let dateNew = new Date(new_date);
-
+        let dateNew = new Date();
         let timeDifference = dateNew.getTime() - dateA.getTime();
         let daysDifference = timeDifference / (1000 * 60 * 60 * 24);
-
         var DaysDiff = parseInt(daysDifference);
         var data_date_update = parseInt(data_day);
 
