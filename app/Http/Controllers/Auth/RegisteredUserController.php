@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\Referral;
 use App\Models\User;
+use App\Models\Wallet;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,9 +40,9 @@ class RegisteredUserController extends Controller
      */
     public function store(RegisterRequest $request)
     {
-        $data             = $request->validated();
+        $data = $request->validated();
 
-        $data['password']      = Hash::make($data['password']);
+        $data['password'] = Hash::make($data['password']);
         $data['referral_code'] = Referral::generateCode();
 
         if ($request->referral_code && option('user_refrral_enable', 0) == 1) {
@@ -49,7 +50,10 @@ class RegisteredUserController extends Controller
         }
 
         $user = User::create($data);
-
+        $wallet = new Wallet();
+        $wallet->user_id = $user->id;
+        $wallet->balance = 0;
+        $wallet->save();
         event(new Registered($user));
 
         Auth::login($user);

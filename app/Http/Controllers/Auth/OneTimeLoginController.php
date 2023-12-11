@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\OneTimeCode;
 use App\Models\Referral;
 use App\Models\User;
+use App\Models\Wallet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -79,11 +81,14 @@ class OneTimeLoginController extends Controller
                 'username' => optional(Session::get('newUser'))['number'],
                 'level' => 'user',
             ]);
+            event(new Registered($user));
+            $wallet = new Wallet();
+            $wallet->user_id = $user->id;
+            $wallet->balance = 0;
+            $wallet->save();
             Auth::loginUsingId($user->id, true);
-
             return response()->json(['status' => 'success', 'data' => 'true']);
         } else {
-
             return response()->json(['status' => 'success', 'data' => 'false']);
         }
     }
