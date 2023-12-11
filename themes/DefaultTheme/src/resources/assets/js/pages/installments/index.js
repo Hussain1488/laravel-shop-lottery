@@ -63,7 +63,7 @@ $('.smsGeneratButton').on('click', function () {
         }
     });
 });
-$('#insta_pay_button').on('click', function () {
+$('.insta_pay_button').on('click', function () {
     flag = 3;
     insta_pay_url = $(this).data('href');
     $.blockUI(loading);
