@@ -114,54 +114,58 @@
 
                                                         @if ($installmentsm->where('statususer', 0)->where('paymentstatus', 0)->count() > 0)
                                                             @foreach ($installmentsm as $key)
-                                                                <div class="border rounded p-2 my-2">
-                                                                    <div class="row text-center"
-                                                                        style="flex-direction: column;">
-                                                                        <h5>
-                                                                            {{ $key->user->username }}
-                                                                        </h5>
-                                                                    </div>
-
-                                                                    <div class="row my-1">
-                                                                        <div class="col">
-                                                                            مبلغ خرید: <span
-                                                                                class="moneyInputSpan">{{ $key->Creditamount }}</span>
-                                                                            ریال
+                                                                @if ($key->statususer == 0)
+                                                                    <div class="border rounded p-2 my-2">
+                                                                        <div class="row text-center"
+                                                                            style="flex-direction: column;">
+                                                                            <h5>
+                                                                                {{ $key->user->username }}
+                                                                            </h5>
                                                                         </div>
 
-                                                                    </div>
-                                                                    <div class="row px-3">
-                                                                        <div class="">
+                                                                        <div class="row my-1">
+                                                                            <div class="col">
+                                                                                مبلغ خرید: <span
+                                                                                    class="moneyInputSpan">{{ $key->Creditamount }}</span>
+                                                                                ریال
+                                                                            </div>
 
-                                                                            مقدار پیش پرداخت: <span class="moneyInputSpan">
-                                                                                {{ $key->prepaidamount }} </span> ریال
+                                                                        </div>
+                                                                        <div class="row px-3">
+                                                                            <div class="">
+
+                                                                                مقدار پیش پرداخت: <span
+                                                                                    class="moneyInputSpan">
+                                                                                    {{ $key->prepaidamount }} </span> ریال
+                                                                            </div>
+
                                                                         </div>
 
-                                                                    </div>
+                                                                        <div class="row px-3">
 
-                                                                    <div class="row px-3">
+                                                                            <div class="">
+                                                                                {{ $key->numberofinstallments }} قسط به
+                                                                                مبلغ:
+                                                                                <span
+                                                                                    class="moneyInputSpan">{{ $key->amounteachinstallment }}</span>
+                                                                                ریال
+                                                                            </div>
+                                                                            <div class="col d-flex justify-content-end">
 
-                                                                        <div class="">
-                                                                            {{ $key->numberofinstallments }} قسط به مبلغ:
-                                                                            <span
-                                                                                class="moneyInputSpan">{{ $key->amounteachinstallment }}</span>
-                                                                            ریال
+                                                                                <a href="{{ route('front.installments.usrestatus.refuse', [$key->id]) }}"
+                                                                                    class="btn btn-warning ml-1"
+                                                                                    style="">انصراف</a>
+                                                                                <input type="button"
+                                                                                    data-url="{{ route('front.wallet.codeGenerate') }}"
+                                                                                    data-href="{{ route('front.installments.usrestatus.edit', [$key->id]) }}"
+                                                                                    class="btn btn-success smsGeneratButton pre_pay_button"
+                                                                                    id="pre_pay_button" style=""
+                                                                                    value="پرداخت">
+                                                                            </div>
+
                                                                         </div>
-                                                                        <div class="col d-flex justify-content-end">
-
-                                                                            <a href="{{ route('front.installments.usrestatus.refuse', [$key->id]) }}"
-                                                                                class="btn btn-warning ml-1"
-                                                                                style="">انصراف</a>
-                                                                            <input type="button"
-                                                                                data-url="{{ route('front.wallet.codeGenerate') }}"
-                                                                                data-href="{{ route('front.installments.usrestatus.edit', [$key->id]) }}"
-                                                                                class="btn btn-success smsGeneratButton"
-                                                                                id="pre_pay_button" style=""
-                                                                                value="پرداخت">
-                                                                        </div>
-
                                                                     </div>
-                                                                </div>
+                                                                @endif
                                                             @endforeach
                                                         @else
                                                             <div class="alert alert-warning">
@@ -226,7 +230,7 @@
                                                                                     <input type='button'
                                                                                         data-url="{{ route('front.wallet.codeGenerate') }}"
                                                                                         data-href="{{ route('front.installments.paymentStatus.edit', ['id1' => $key->id, 'id2' => $value->id]) }}"
-                                                                                        class="btn btn-info btn-sm"
+                                                                                        class="btn btn-info btn-sm insta_pay_button"
                                                                                         style=""value="پرداخت"
                                                                                         id="insta_pay_button" />
                                                                                 </div>
