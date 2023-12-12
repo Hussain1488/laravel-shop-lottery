@@ -25,7 +25,7 @@ class internalBankStoreRequest extends FormRequest
     {
         return [
             "bankname" => "required|string",
-            "accountnumber" => "required|numeric",
+            'accountnumber' => 'required|numeric|unique:createbankaccounts,accountnumber',
             "account_type_id" => "required ",
         ];
     }
