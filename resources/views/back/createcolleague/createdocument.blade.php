@@ -55,11 +55,15 @@
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group">
                                                     <label></label>
-                                                    <select type="text" class="form-control select2" name="namedebtor">
+                                                    <select type="text" class="form-control select2 account_selection"
+                                                        name="namedebtor">
                                                         @isset($bank)
-                                                            <option value="mellat bank">بده کار را انتخاب کنید</option>
+                                                            <option attr-name="" value="mellat bank">بده کار را انتخاب کنید
+                                                            </option>
                                                             @foreach ($bank as $key)
-                                                                <option value="{{ $key->id }}">{{ $key->accountnumber }}
+                                                                <option {{ old('namedebtor') == $key->id ? 'selected' : '' }}
+                                                                    attr-name="{{ $key->bankname }}"
+                                                                    value="{{ $key->id }}">{{ $key->accountnumber }}
                                                                 </option>
                                                             @endforeach
                                                         @else
@@ -67,6 +71,10 @@
                                                         @endisset
 
                                                     </select>
+                                                    <div class="m-1">
+                                                        <span class="account-title" id=""></span>
+                                                        <span class="text-success account-name" id=""></span>
+                                                    </div>
                                                     @error('namedebtor')
                                                         <span class="text-danger">
                                                             {{ $message }}
@@ -87,10 +95,11 @@
                                                     <select type="text" class="form-control select2" id="user_selection"
                                                         name="namecreditor">
                                                         @isset($users)
-                                                            <option value="">کاربر را انتخاب کنید
+                                                            <option value=" ">کاربر را انتخاب کنید
                                                             </option>
                                                             @foreach ($users as $item)
-                                                                <option data-name="{{ $item->first_name }}"
+                                                                <option {{ old('namecreditor') == $item->id ? 'selected' : '' }}
+                                                                    data-name="{{ $item->first_name }}"
                                                                     data-lastname="{{ $item->last_name }}"
                                                                     value="{{ $item->id }}">
                                                                     {{ $item->username }}</option>
@@ -116,7 +125,7 @@
                                             <div class="col-md-3 col-6 pt-2">
                                                 <div class="form-group d-flex align-items-center">
                                                     <h5 for="purchasecredit" class="mr-2">
-                                                        مقدار اعتبار
+                                                        مقدار شارژ
                                                     </h5>
                                                 </div>
                                             </div>
@@ -126,7 +135,8 @@
 
                                                     <input type="text" placeholder="100,000"
                                                         class="form-control moneyInput" id="ReCredintAmount"
-                                                        name="ReCredintAmount" style="margin-left: 4px;">
+                                                        name="ReCredintAmount" style="margin-left: 4px;"
+                                                        value="{{ old('ReCredintAmount') }}">
                                                     <span>ریال</span>
                                                 </div>
                                                 @error('ReCredintAmount')

@@ -79,9 +79,6 @@
                                                     </th>
 
                                                     <th>
-                                                        تاریخ
-                                                    </th>
-                                                    <th>
                                                         شماره سند
                                                     </th>
                                                 </tr>
@@ -96,7 +93,7 @@
                                                         <td>
 
                                                             <span class="transaction_datetime">
-                                                                {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y-m-d') }}
+                                                                {{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->created_at))->format('Y-m-d') ?? 'تاریخ ثبت نشده' }}
                                                                 <br>
                                                                 {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
                                                             </span>
@@ -111,11 +108,7 @@
                                                             <span class="monyInputSpan">{{ $key->finalprice }}</span>
 
                                                         </td>
-                                                        <td>
-                                                            {{ $key->pre_paid_time != null ? \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->pre_paid_time))->format('Y-m-d') : 'تاریخ ثبت نشده' }}
-                                                            <br>
-                                                            {{ $key->pre_paid_time != null ? \Carbon\Carbon::parse($key->created_at)->format('H:i:s') : '' }}
-                                                        </td>
+
                                                         <td>
 
                                                             {{ $key->documentnumber }}
@@ -137,8 +130,8 @@
                                                         </h5>
                                                     </div>
                                                     <div class="col"><span class="text-dark">
-                                                            {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y-m-d') }}
-
+                                                            {{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->created_at))->format('Y-m-d') ?? 'تاریخ ثبت نشده' }}
+                                                            <br>
                                                             {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
                                                         </span>
                                                     </div>

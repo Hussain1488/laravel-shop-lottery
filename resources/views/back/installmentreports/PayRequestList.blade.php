@@ -487,12 +487,13 @@
                                         </div>
                                         <div class="form-group col">
                                             <label></label>
-                                            <select id="bank_list" type="text" class="form-control"
+                                            <select id="bank_list" type="text" class="form-control account_selection"
                                                 name="nameofbank">
                                                 @isset($bank)
                                                     <option value="">انتخاب بانک</option>
                                                     @foreach ($bank as $key)
-                                                        <option value="{{ $key->id }}">{{ $key->accountnumber }}
+                                                        <option attr-name="{{ $key->bankname }}"
+                                                            value="{{ $key->id }}">{{ $key->accountnumber }}
                                                         </option>
                                                     @endforeach
                                                 @else
@@ -500,6 +501,10 @@
                                                 @endisset
 
                                             </select>
+                                            <div class="m-1">
+                                                <span class="account-title" id=""></span>
+                                                <span class="text-success account-name" id=""></span>
+                                            </div>
 
                                         </div>
 

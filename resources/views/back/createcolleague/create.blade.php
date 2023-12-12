@@ -224,13 +224,14 @@
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
                                                     <div class="d-flex">
-                                                        <select type="text" class="form-control select2"
+                                                        <select type="text"
+                                                            class="form-control select2 account_selection"
                                                             name="account_id">
                                                             @isset($accounts)
-                                                                <option value="">انتخاب حساب درآمد
+                                                                <option attr-name="" value="none">انتخاب حساب درآمد
                                                                 </option>
                                                                 @foreach ($accounts as $item)
-                                                                    <option
+                                                                    <option attr-name="{{ $item->bankname }}"
                                                                         {{ old('account_id') == $item->id ? 'selected' : '' }}
                                                                         value="{{ $item->id }}">
                                                                         {{ $item->accountnumber }}</option>
@@ -239,6 +240,10 @@
                                                                 <option value="">کاربری برای انتخاب وجود ندارد</option>
                                                             @endisset
                                                         </select>
+                                                    </div>
+                                                    <div class="m-1">
+                                                        <span class="account-title" id=""></span>
+                                                        <span class="text-success account-name" id=""></span>
                                                     </div>
                                                     <span class="text-danger">
                                                         @error('account_id')
