@@ -292,9 +292,8 @@ class UserController extends Controller
     {
         $query = $request->input('q');
 
-        $users = User::where('username', 'like', "%$query%")
-            ->orWhere('email', 'like', "%$query%")
-            ->pluck('username', 'id');
+        $users = User::where('username', 'like', "%$query%")->where('level', 'user')
+            ->with('wallet')->get(['id', 'first_name', 'last_name', 'username', 'purchasecredit']);
 
         return response()->json($users);
     }

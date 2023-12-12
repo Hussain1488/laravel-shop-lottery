@@ -55,14 +55,14 @@
                                                      <label>سرچ بر اساس شماره تلفن</label>
                                                      <select type="text" class="form-control user_select2 user_selection"
                                                          id="User_selected" id="" name="userselected">
-                                                         <option value="">کاربر را انتخاب کنید</option>
+                                                         {{-- <option value="">کاربر را انتخاب کنید</option>
                                                          @foreach ($users as $item)
                                                              <option data-name="{{ $item->first_name }}"
                                                                  data-lastname="{{ $item->last_name }}"
                                                                  credit_attr_value="{{ $item->wallet->balance }}"
                                                                  value="{{ $item->id }}">{{ $item->username }}
                                                              </option>
-                                                         @endforeach
+                                                         @endforeach --}}
                                                      </select>
                                                      @error('userselected')
                                                          <span class="text-danger">
@@ -173,7 +173,7 @@
                                              <div class="col d-flex align-items-baseline justify-content-center">
                                                  <input type="button" id="summit_button1"
                                                      class="btn btn-primary my-1"value=" تأیید
-                                                                                                                                                                                                                                                                                                                                                تغییرات" />
+                                                                                                                                                                                                                                                                                                                                                                                        تغییرات" />
                                              </div>
                                              <div class="col d-flex align-items-baseline justify-content-center">
                                                  <a href="" class="btn btn-danger my-1">انصراف </a>
@@ -196,9 +196,10 @@
  ])
 
  @push('scripts')
+     <script>
+         var url = '{{ route('admin.user.searchUser') }}'
+     </script>
      <script src="{{ asset('back/assets/js/scripts.js') }}?v=9"></script>
-
      <script src="{{ asset('back/assets/js/pages/users/all.js') }}"></script>
-     {{-- <script src="{{ asset('back/assets/js/pages/createColleague/create.js') }}"></script> --}}
      <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
  @endpush

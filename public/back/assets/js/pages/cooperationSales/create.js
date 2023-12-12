@@ -1,4 +1,84 @@
 $(document).ready(function () {
+    var userSelect = $('.user_select2');
+
+    userSelect.select2({
+        placeholder: 'شماره کاربر را وارد کنید',
+        tags: false,
+        ajax: {
+            url: url,
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term
+                };
+            },
+            processResults: function (data) {
+                console.log(data);
+                // Assuming data is an array of user objects with 'id', 'name', 'firstname', and 'lastname' properties
+                var results = $.map(data, function (user) {
+                    return {
+                        id: user.id,
+                        text: user.username,
+                        name: user.first_name,
+                        lastname: user.last_name,
+                        credit: user.purchasecredit,
+                        wallet: user.wallet.balance
+                    };
+                });
+
+                return {
+                    results: results
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 11,
+        maximumInputLength: 11,
+        headers: {
+            'X-CSRF-TOKEN': window.Laravel.csrfToken
+        },
+        language: {
+            inputTooShort: function (args) {
+                var remainingChars = args.minimum - args.input.length;
+                return 'حداقل ' + remainingChars + ' کاراکتر دیگر وارد کنید';
+            },
+            inputTooLong: function (args) {
+                var overChars = args.input.length - args.maximum;
+                return 'شما ' + overChars + ' کاراکتر وارد اضافه کرده‌اید';
+            },
+            noResults: function () {
+                return 'نتیجه‌ای یافت نشد، لطفا شماره درست وارد کنید!';
+            }
+        }
+    });
+
+    // Optional: Handle the selection event if needed
+    userSelect.on('select2:select', function (e) {
+        console.log('Selected:', e.params.data);
+    });
+
+    // Listen for the 'select2:selecting' event to dynamically update the options
+    userSelect.on('select2:selecting', function (e) {
+        console.log(e.params.args.data);
+        var option = new Option(
+            e.params.args.data.text,
+            e.params.args.data.id,
+            true,
+            true
+        );
+
+        $(option).attr({
+            'data-name': e.params.args.data.name,
+            'data-lastname': e.params.args.data.lastname,
+            creadit_attr: e.params.args.data.credit,
+            'inventory-attr': e.params.args.data.wallet
+            // Add more attributes as needed
+        });
+
+        userSelect.append(option).trigger('change');
+    });
+
     $('.monyInputSpan').each(function () {
         var input = $(this).text();
         var digits = input.replace(/\D/g, '');
@@ -181,10 +261,7 @@ $(document).ready(function () {
     });
     $('#User_selected').change(function () {
         var selectedOption = $(this).find(':selected');
-        var creditAttrValue = selectedOption.attr('credit_attr_value');
-        // console.log(creditAttrValue);
-        // var orginal_value = selectedOption.attr('creadit_attr');
-
+        var creditAttrValue = selectedOption.attr('inventory-attr');
         if (creditAttrValue == '') {
             creditAttrValue = 0;
         }
@@ -192,8 +269,6 @@ $(document).ready(function () {
         $('#inventory').val(formattedNumber);
         $('#Creadit_hidden').val(creditAttrValue);
     });
-
-    $('.user_select2').select2();
 
     $('.settlementtime_button').click(function () {
         let data_day = $(this).attr('data_day');
@@ -206,7 +281,6 @@ $(document).ready(function () {
         var data_date_update = parseInt(data_day);
 
         if (data_date_update >= DaysDiff) {
-            console.log('if');
             let time = data_date_update - DaysDiff + 1;
             $('#user_day_time').text(time);
             $('#myModal').modal();

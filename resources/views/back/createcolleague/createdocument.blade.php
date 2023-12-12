@@ -92,9 +92,9 @@
                                             <div class="col-md-3 col-6">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
-                                                    <select type="text" class="form-control select2" id="user_selection"
-                                                        name="namecreditor">
-                                                        @isset($users)
+                                                    <select type="text" class="form-control user_select2"
+                                                        id="user_selection" name="namecreditor">
+                                                        {{-- @isset($users)
                                                             <option value=" ">کاربر را انتخاب کنید
                                                             </option>
                                                             @foreach ($users as $item)
@@ -106,7 +106,7 @@
                                                             @endforeach
                                                         @else
                                                             <option value="">کاربری برای انتخاب وجود ندارد</option>
-                                                        @endisset
+                                                        @endisset --}}
                                                     </select>
                                                     @error('namecreditor')
                                                         <span class="text-danger">
@@ -235,5 +235,8 @@
 
 
 @push('scripts')
+    <script>
+        var url = '{{ route('admin.user.searchUser') }}'
+    </script>
     <script src="{{ asset('back/assets/js/pages/createcollegue/myscript.js') }}"></script>
 @endpush

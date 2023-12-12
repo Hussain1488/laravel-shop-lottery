@@ -55,8 +55,8 @@
 
                                                     <div class="d-flex">
                                                         <select type="text" id="user_selection"
-                                                            class="form-control select2" name="selectperson">
-                                                            @isset($users)
+                                                            class="form-control user_select2" name="selectperson">
+                                                            {{-- @isset($users)
                                                                 <option value="">کاربر را انتخاب کنید
                                                                 </option>
                                                                 @foreach ($users as $item)
@@ -68,7 +68,7 @@
                                                                 @endforeach
                                                             @else
                                                                 <option value="">کاربری برای انتخاب وجود ندارد</option>
-                                                            @endisset
+                                                            @endisset --}}
                                                         </select>
                                                     </div>
                                                     @error('selectperson')
@@ -303,5 +303,8 @@
 
 
 @push('scripts')
+    <script>
+        var url = '{{ route('admin.user.searchUser') }}'
+    </script>
     <script src="{{ asset('back/assets/js/pages/createcollegue/myscript.js') }}"></script>
 @endpush

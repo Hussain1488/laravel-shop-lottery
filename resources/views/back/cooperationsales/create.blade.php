@@ -86,15 +86,15 @@
 
                                                         <select class="form-control user_select2" id="user_select"
                                                             name="userselected">
-                                                            <option value="0">کاربر را انتخاب کنید</option>
-                                                            @foreach ($users as $item)
+                                                            {{-- <option value="0">کاربر را انتخاب کنید</option> --}}
+                                                            {{-- @foreach ($users as $item)
                                                                 <option data-name="{{ $item->first_name }}"
                                                                     data-lastname="{{ $item->last_name }}"
                                                                     creadit_attr="{{ $item->purchasecredit }}"
                                                                     value="{{ $item->id }}">
                                                                     {{ $item->username }}
                                                                 </option>
-                                                            @endforeach
+                                                            @endforeach --}}
                                                         </select>
 
                                                         @error('userselected')
@@ -393,6 +393,7 @@
 @push('scripts')
     <script>
         var user = @json($users);
+        var url = '{{ route('admin.user.searchUser') }}'
     </script>
     <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
 @endpush

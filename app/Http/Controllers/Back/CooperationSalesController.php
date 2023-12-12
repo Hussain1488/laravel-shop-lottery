@@ -58,7 +58,7 @@ class CooperationSalesController extends Controller
     // storing new installments function
     public function store(Request $request)
     {
-
+        // dd($request);
         $store = createstore::find($request->store_id);
         $Creditamount = intval(str_replace(',', '', $request->Creditamount));
         $prepaidamount = intval(str_replace(',', '', $request->prepaidamount));

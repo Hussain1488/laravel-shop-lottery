@@ -1,6 +1,86 @@
 // const {last} = require('lodash');
 
 $(document).ready(function () {
+    $('.select2').select2();
+
+    var userSelect2 = $('.user_select2');
+
+    userSelect2.select2({
+        placeholder: 'شماره کاربر را وارد کنید',
+        tags: false,
+        ajax: {
+            url: url,
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    q: params.term
+                };
+            },
+            processResults: function (data) {
+                console.log(data);
+                // Assuming data is an array of user objects with 'id', 'name', 'firstname', and 'lastname' properties
+                var results = $.map(data, function (user) {
+                    return {
+                        id: user.id,
+                        text: user.username,
+                        name: user.first_name,
+                        lastname: user.last_name,
+                        credit: user.purchasecredit
+                    };
+                });
+
+                return {
+                    results: results
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 11,
+        maximumInputLength: 11,
+        headers: {
+            'X-CSRF-TOKEN': window.Laravel.csrfToken
+        },
+        language: {
+            inputTooShort: function (args) {
+                var remainingChars = args.minimum - args.input.length;
+                return 'حداقل ' + remainingChars + ' کاراکتر دیگر وارد کنید';
+            },
+            inputTooLong: function (args) {
+                var overChars = args.input.length - args.maximum;
+                return 'شما ' + overChars + ' کاراکتر وارد اضافه کرده‌اید';
+            },
+            noResults: function () {
+                return 'نتیجه‌ای یافت نشد، لطفا شماره درست وارد کنید!';
+            }
+        }
+    });
+
+    // Optional: Handle the selection event if needed
+    userSelect2.on('select2:select', function (e) {
+        console.log('Selected:', e.params.data);
+    });
+
+    // Listen for the 'select2:selecting' event to dynamically update the options
+    userSelect2.on('select2:selecting', function (e) {
+        console.log(e.params.args.data);
+        var option = new Option(
+            e.params.args.data.text,
+            e.params.args.data.id,
+            true,
+            true
+        );
+
+        $(option).attr({
+            'data-name': e.params.args.data.name,
+            'data-lastname': e.params.args.data.lastname,
+            creadit_attr: e.params.args.data.credit
+            // Add more attributes as needed
+        });
+
+        userSelect2.append(option).trigger('change');
+    });
+
     $('#summit_button').on('click', function (e) {
         e.preventDefault(); // Prevent the default form submission
 
@@ -48,7 +128,7 @@ $(document).ready(function () {
         }
         return x1 + x2;
     }
-    $('.select2').select2();
+    //
 
     $('#enddate_field').ready(function () {});
 
