@@ -60,41 +60,13 @@ $(document).ready(function () {
         $('#user_name').text(name + ' ' + lastname);
         // console.log(name + ' ' + lastname);
     });
+    $('.account_selection').change(function () {
+        let selectedOption = $(this).find(':selected');
+        let name = selectedOption.attr('attr-name');
+        $('.account-title').text('حساب:' + ' ');
+        $('.account-name').text(name);
+    });
 
-    // $('.imageInput').on('change', function (e) {
-    //     // Get the selected files
-    //     var files = e.target.files;
-
-    //     if (files && files.length > 0) {
-    //         // Clear existing images
-    //         $('.imgContainer').empty();
-
-    //         // Loop through each selected file
-    //         for (var i = 0; i < files.length; i++) {
-    //             // Create a FileReader for each file
-    //             var reader = new FileReader();
-
-    //             // Set the callback function to display the image after reading
-    //             reader.onload = function (event) {
-    //                 // Create an image element
-    //                 var image = $('<img>')
-    //                     .attr('src', event.target.result)
-    //                     .css({
-    //                         'max-width': '100px',
-    //                         border: '2px solid #ccc',
-    //                         margin: '5px',
-    //                         'box-shadow': '0 0 5px rgba(0, 0, 0, 0.3)',
-    //                         display: 'inline'
-    //                     });
-
-    //                 // Append the image to the container
-    //                 $('.imgContainer').append(image);
-    //             };
-
-    //             reader.readAsDataURL(files[i]);
-    //         }
-    //     }
-    // });
     $('.imageInput').on('change', function (e) {
         // Get the selected files
         var files = e.target.files;

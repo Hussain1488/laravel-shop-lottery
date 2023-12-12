@@ -128,3 +128,9 @@ function addCommas(nStr) {
     }
     return x1 + x2;
 }
+$('.account_selection').change(function () {
+    let selectedOption = $(this).find(':selected');
+    let name = selectedOption.attr('attr-name');
+    $('.account-title').text('حساب:' + ' ');
+    $('.account-name').text(name);
+});
