@@ -164,9 +164,9 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
 
     // cornjob routs:
 
-    Route::get('index', [CornjobController::class, 'index'])->name('cornjob.index');
-    Route::get('setting', [CornjobController::class, 'create'])->name('cornjob.setting');
-    Route::post('store', [CornjobController::class, 'store'])->name('cornjob.store');
+    Route::get('cornjob/index', [CornjobController::class, 'index'])->name('cornjob.index');
+    Route::get('cornjob/setting', [CornjobController::class, 'create'])->name('cornjob.setting');
+    Route::post('cornjob/store', [CornjobController::class, 'store'])->name('cornjob.store');
 
     // ------------------ users
     Route::resource('users', UserController::class);
