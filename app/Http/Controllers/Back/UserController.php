@@ -288,4 +288,14 @@ class UserController extends Controller
     {
         //
     }
+    public function searchUser(Request $request)
+    {
+        $query = $request->input('q');
+
+        $users = User::where('username', 'like', "%$query%")
+            ->orWhere('email', 'like', "%$query%")
+            ->pluck('username', 'id');
+
+        return response()->json($users);
+    }
 }
