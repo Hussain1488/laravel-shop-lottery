@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Morilog\Jalali\Jalalian;
@@ -58,7 +59,7 @@ class createstoretransaction extends Model
         }
         $transaction = createstoretransaction::create([
             'store_id' => $store->id,
-            'datetransaction' => Jalalian::now()->format('Y-m-d'),
+            'datetransaction' => Carbon::now()->format('Y-m-d'),
             // 1 is for main wallet
             'flag' => $flag,
             // pay request
