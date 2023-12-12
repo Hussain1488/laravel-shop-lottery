@@ -169,7 +169,7 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->level == 'admin' || $this->level == 'creator' || $this->level == 'seller' || $this->level == 'createcreditoperator';
+        return $this->level == 'admin' || $this->level == 'creator';
     }
 
     public function isCreator()

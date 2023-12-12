@@ -176,6 +176,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('users/{user}/views', [UserController::class, 'views'])->name('users.views');
     Route::get('user/profile', [UserController::class, 'showProfile'])->name('user.profile.show');
     Route::put('user/profile', [UserController::class, 'updateProfile'])->name('user.profile.update');
+    Route::get('/searchUser', [UserController::class, 'searchUser'])->name('user.searchUser');
 
     // ------------------ wallets
     Route::resource('wallets', WalletController::class)->only(['show', 'index']);
