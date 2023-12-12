@@ -3,6 +3,8 @@
 var flag;
 var pay_url;
 var insta_pay_url;
+var wallet = parseFloat($('#wallet-value').val()); // Parse as float
+var credit = parseFloat($('#credit-value').val());
 var resend_time = Math.floor(Date.now() / 1000) + 60;
 var loading = {
     message:
@@ -41,48 +43,91 @@ $('#sendAgain1').on('click', function () {
     });
 });
 
-$('.smsGeneratButton').on('click', function () {
-    flag = 2;
-    pay_url = $(this).data('href');
-    $.blockUI(loading);
-    $.ajax({
-        url: $(this).data('url'),
-        type: 'GET',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function () {
-            $('#operation_title').text(
-                'جهت تأیید پرداخت پیش پرداخت کد ارسال شده را وارد کرده و کلید تأیید را بزنید!'
-            );
+$(document).on('click', '.smsGeneratButton', function () {
+    var clickedButton = $(this);
+    let prePay = parseFloat(clickedButton.attr('data-prepay'));
+    let amount = parseFloat(clickedButton.attr('data-amount'));
+    if (prePay > wallet || amount > credit) {
+        let alertContainer = $('.alert-message');
+        alertContainer.text(
+            'مقدار پیش پرداخت از موجودی کیف پول یا مقدار خرید از اعتبار شما بیشتر میباشد!'
+        );
+        alertContainer.fadeIn(1000, function () {
+            alertContainer.removeClass('d-none');
+        });
+        setTimeout(function () {
+            // Use jQuery to add the fade-out class
+            alertContainer.fadeOut(1000, function () {
+                // Reset visibility before fadeIn
+                alertContainer.css('display', 'block');
 
-            $.unblockUI();
-            counterTime();
-            $('#smsVarifyModal1').modal();
-            $('#code_error1').addClass('d-none');
-        }
-    });
+                // Add the d-none class after the fade-out effect completes
+                $(this).addClass('d-none');
+            });
+        }, 4000);
+    } else {
+        flag = 2;
+        pay_url = $(this).data('href');
+        $.blockUI(loading);
+        $.ajax({
+            url: $(this).data('url'),
+            type: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function () {
+                $('#operation_title').text(
+                    'جهت تأیید پرداخت پیش پرداخت کد ارسال شده را وارد کرده و کلید تأیید را بزنید!'
+                );
+
+                $.unblockUI();
+                counterTime();
+                $('#smsVarifyModal1').modal();
+                $('#code_error1').addClass('d-none');
+            }
+        });
+    }
 });
 $('.insta_pay_button').on('click', function () {
-    flag = 3;
-    insta_pay_url = $(this).data('href');
-    $.blockUI(loading);
-    $.ajax({
-        url: $(this).data('url'),
-        type: 'GET',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function () {
-            $.unblockUI();
-            $('#operation_title').text(
-                'جهت تأیید پرداخت   کد ارسال شده را وارد کرده و کلید تأیید را بزنید!'
-            );
-            counterTime();
-            $('#smsVarifyModal1').modal();
-            $('#code_error1').addClass('d-none');
-        }
-    });
+    var clickedButton = $(this);
+    let amount = parseFloat(clickedButton.attr('data-amount'));
+    if (amount > wallet) {
+        let alertContainer = $('.alert-message');
+        alertContainer.text('مقدار قسط از موجودی کیف پول شما بیشتر میباشد!');
+        alertContainer.fadeIn(1000, function () {
+            alertContainer.removeClass('d-none');
+        });
+
+        setTimeout(function () {
+            // Use jQuery to add the fade-out class
+            alertContainer.fadeOut(1000, function () {
+                // Reset visibility before fadeIn
+                alertContainer.css('display', 'block');
+                // Add the d-none class after the fade-out effect completes
+                $(this).addClass('d-none');
+            });
+        }, 4000);
+    } else {
+        flag = 3;
+        insta_pay_url = $(this).data('href');
+        $.blockUI(loading);
+        $.ajax({
+            url: $(this).data('url'),
+            type: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function () {
+                $.unblockUI();
+                $('#operation_title').text(
+                    'جهت تأیید پرداخت   کد ارسال شده را وارد کرده و کلید تأیید را بزنید!'
+                );
+                counterTime();
+                $('#smsVarifyModal1').modal();
+                $('#code_error1').addClass('d-none');
+            }
+        });
+    }
 });
 
 $('#sendCode1').on('click', function () {
