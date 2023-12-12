@@ -95,7 +95,7 @@
                                                         <td>
 
                                                             <span class="transaction_datetime">
-                                                                {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y-m-d') }}
+                                                                {{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->created_at))->format('d-m-Y H:i:s') }}
                                                                 <br>
                                                                 {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
                                                             </span>
