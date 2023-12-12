@@ -42,6 +42,9 @@
                                                         {{ session('success') }}
                                                     </div>
                                                 @endif
+                                                <div class="alert alert-danger d-none alert-message">
+
+                                                </div>
                                                 <div class="row">
 
                                                     <div class="col-md-6 col-12">
@@ -51,9 +54,12 @@
                                                             </label>
                                                             <div class="d-flex">
                                                                 <input readonly type="text"
-                                                                    class="form-control moneyInput" id="first_name"
+                                                                    class="form-control moneyInput" id="credit-value"
                                                                     name="first_name"
-                                                                    value="{{ $user->purchasecredit ?? 0 }}">
+                                                                    value="{{ $user->purchasecredit ?? 0 }}"
+                                                                    style="margin-left: 4px">
+                                                                <span> ریال</span>
+
                                                             </div>
 
                                                         </div>
@@ -69,8 +75,7 @@
                                                                 موجودی نقدی کیف پول </label>
                                                             <div class="d-flex ">
                                                                 <input readonly type="text"
-                                                                    class="form-control moneyInput" id="first_name"
-                                                                    name="first_name"
+                                                                    class="form-control moneyInput" id="wallet-value"
                                                                     value="{{ $user->wallet->balance ?? 0 }}"
                                                                     style="margin-left: 4px"><span> ریال</span>
                                                             </div>
@@ -156,6 +161,8 @@
                                                                                     class="btn btn-warning ml-1"
                                                                                     style="">انصراف</a>
                                                                                 <input type="button"
+                                                                                    data-amount="{{ $key->Creditamount }}"
+                                                                                    data-prepay="{{ $key->prepaidamount }}"
                                                                                     data-url="{{ route('front.wallet.codeGenerate') }}"
                                                                                     data-href="{{ route('front.installments.usrestatus.edit', [$key->id]) }}"
                                                                                     class="btn btn-success smsGeneratButton pre_pay_button"
@@ -228,6 +235,7 @@
 
 
                                                                                     <input type='button'
+                                                                                        data-amount="{{ $key->installmentprice }}"
                                                                                         data-url="{{ route('front.wallet.codeGenerate') }}"
                                                                                         data-href="{{ route('front.installments.paymentStatus.edit', ['id1' => $key->id, 'id2' => $value->id]) }}"
                                                                                         class="btn btn-info btn-sm insta_pay_button"
