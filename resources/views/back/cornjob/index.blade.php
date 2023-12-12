@@ -68,25 +68,31 @@
                                             $counter = 1;
                                         @endphp
                                         <tbody>
-                                            @foreach ($cornjobs as $key)
-                                                <tr>
-                                                    <td>
-                                                        {{ $counter++ }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $key->name }}
-                                                    </td>
-                                                    <td>
-                                                        {{ $key->description }}
-                                                    </td>
-                                                    <td>
-                                                        {{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->created_at))->format('Y-m-d') }}
-                                                        <br>
-                                                        {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                            @if (!$cornjobs->count() > 0)
+                                                <div class="m-2 alert alert-warning">
+                                                    چیزی برای نمایش وجود ندارد!
+                                                </div>
+                                            @else
+                                                @foreach ($cornjobs as $key)
+                                                    <tr>
+                                                        <td>
+                                                            {{ $counter++ }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $key->name }}
+                                                        </td>
+                                                        <td>
+                                                            {{ $key->description }}
+                                                        </td>
+                                                        <td>
+                                                            {{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->created_at))->format('Y-m-d') }}
+                                                            <br>
+                                                            {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
 
-                                                    </td>
-                                                </tr>
-                                            @endforeach
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
 

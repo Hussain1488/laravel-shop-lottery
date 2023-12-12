@@ -81,7 +81,7 @@
                                     @if (!$transaction->where('status', 0)->count() > 0)
                                         <div class="m-2">
                                             <div class="alert alert-warning">
-                                                درخواستی برای موجود نیست!
+                                                درخواستی موجود نیست!
                                             </div>
                                         </div>
                                     @else
