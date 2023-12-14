@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Back;
 
 use App\Models\user;
 use App\Http\Controllers\Controller;
+use App\Models\ActivityDetailsModel;
 use App\Models\OperatorActivity;
 use Illuminate\Http\Request;
 
@@ -98,5 +99,11 @@ class OperatorActivityController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function details($id)
+    {
+
+        // $activityDetails = OperatorActivity::find($id);
+        return response()->json(['status' => 'success', 'data' => 'data']);
     }
 }

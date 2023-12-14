@@ -117,6 +117,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     // ------------------ OperatorActivity
     Route::get('operatoractivity/index', [OperatorActivityController::class, 'index'])->name('operatoractivity.index');
     Route::get('operatoractivity/show{id}', [OperatorActivityController::class, 'show'])->name('operatoractivity.show');
+    Route::get('operatoractivity/details/{id}', [OperatorActivityController::class, 'details'])->name('operatoractivity.details');
     Route::post('operatoractivity/search', [OperatorActivityController::class, 'search'])->name('operatoractivity.search');
     Route::post('operatoractivity/filter', [OperatorActivityController::class, 'filter'])->name('operatoractivity.filter');
 

@@ -72,15 +72,6 @@
                                         </form>
                                     </div>
 
-
-                                    {{-- <div class="row mt-1 ml-2 mb-2">
-                                        <h3>
-                                            لیست فعالیت های اپراتور:
-                                            {{ $operator->first_name . ' ' . $operator->last_name }}
-                                        </h3>
-                                    </div> --}}
-
-
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
@@ -94,6 +85,9 @@
                                                 </th>
                                                 <th>
                                                     تاریخ
+                                                </th>
+                                                <th>
+                                                    جزئیات
                                                 </th>
 
 
@@ -125,6 +119,16 @@
                                                         <br>
                                                         {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
                                                     </td>
+                                                    <td>
+                                                        <button
+                                                            data-action="{{ route('admin.operatoractivity.details', [$key->id]) }}"
+                                                            class="btn details-show" data-id="{{ $key->id }}"
+                                                            value=""><i class="text-success feather icon-info"></i>
+                                                        </button>
+                                                        <a
+                                                            href="{{ route('admin.operatoractivity.details', [$key->id]) }}">click
+                                                            me</a>
+                                                    </td>
                                                 </tr>
                                             @endforeach
 
@@ -143,8 +147,9 @@
         </div>
     </div>
 @endsection
-
+@include('back.partials.plugins', [
+    'plugins' => ['persian-datepicker', 'jquery.validate'],
+])
 @push('scripts')
-    <script src="{{ asset('back/assets/js/pages/users/all.js') }}"></script>
-    <script src="{{ asset('back/assets/js/pages/installmentpurchse/create.js') }}"></script>
+    <script src="{{ asset('back/assets/js/pages/operatorActivity/index.js') }}"></script>
 @endpush
