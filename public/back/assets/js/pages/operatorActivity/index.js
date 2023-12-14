@@ -1,22 +1,53 @@
 $(document).ready(function () {
     $('.details-show').on('click', function () {
         console.log('AJAX URL: ' + $(this).data('action'));
+        let date = $(this).data('date');
+        let time = $(this).data('time');
 
         $.ajax({
             url: $(this).data('action'),
             type: 'GET',
             success: function (data) {
-                // Parse the JSON string into a JavaScript object
-                var responseData = JSON.parse(data);
+                console.log(data);
+                var activityData = data.data;
+                var detailsData = data.details.data;
 
-                // Now you can access properties of the object
-                console.log('ID: ' + responseData.id);
-                console.log(
-                    'Work Description: ' + responseData.workdescription
+                // Populate modal with data
+                // $('#activity_details').modal();
+
+                // Clear existing content in modal body
+                $('.modal-body').html('');
+
+                // Display work description in modal body
+                $('.modal-body').append(
+                    '<p><strong>عملیات:</strong> ' +
+                        activityData.workdescription +
+                        '</p>'
                 );
-            },
-            error: function (xhr, status, error) {
-                console.log('you have error');
+
+                // Iterate through detailsData and create a list in modal body
+                $('.modal-body').append('<ul>');
+                for (var key in detailsData) {
+                    if (detailsData.hasOwnProperty(key)) {
+                        $('.modal-body ul').append(
+                            '<li><strong>' +
+                                key +
+                                ':</strong> ' +
+                                detailsData[key] +
+                                '</li>'
+                        );
+                    }
+                }
+                $('.modal-body').append('</ul>');
+                $('.modal-body').append(
+                    '<p><strong>تاریخ:</strong> ' +
+                        date +
+                        '</p>' +
+                        '<p><strong>زمان:</strong> ' +
+                        time +
+                        '</p>'
+                );
+                $('#activity_details').modal();
             }
         });
     });

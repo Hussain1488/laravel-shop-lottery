@@ -111,7 +111,6 @@ class CreateColleagueController extends Controller
             'feepercentage' => 'مقدار کارمز',
             'addressofstore' => 'آدرس فروشگاه',
             'settlementtime' => 'زمان تسویه',
-            'updated_at' => 'زمان اصلاح',
             'enddate' => 'ختم قرارداد',
             // Add more field mappings as needed
         ];
@@ -128,12 +127,15 @@ class CreateColleagueController extends Controller
         // dd($store->selectperson);
         $operator_id = OperatorActivity::createActivity($store->selectperson, 'EDIT_STORE');
         $data = ['اسم فروشگاه' => $originalData['nameofstore']];
+
         foreach ($changes as $key => $change) {
             $fieldPersianName = $englishToPersian[$key] ?? $key;
-            $data[$fieldPersianName] = [
-                'قبلی' => $change['old'],
-                'جدید' => $change['new'],
-            ];
+
+            // Check if the field has a Persian translation
+            if ($fieldPersianName != $key) {
+                $data[$fieldPersianName . ' (قبلی)'] = $change['old'];
+                $data[$fieldPersianName . ' (جدید)'] = $change['new'];
+            }
         }
         ActivityDetailsModel::createActivityDetail($operator_id, $data);
 

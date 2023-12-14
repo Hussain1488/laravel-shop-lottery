@@ -121,6 +121,8 @@
                                                     </td>
                                                     <td>
                                                         <button
+                                                            data-date="{{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->created_at))->format('d-m-Y') }}"
+                                                            data-time="{{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}"
                                                             data-action="{{ route('admin.operatoractivity.details', [$key->id]) }}"
                                                             class="btn details-show" data-id="{{ $key->id }}"
                                                             value=""><i class="text-success feather icon-info"></i>
@@ -142,6 +144,32 @@
                     </div>
                 </section>
 
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="activity_details">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">جزئیات عملیات:<span class="text-success" id="deposit_amount_show"></span>
+                    </h4>
+                </div>
+                <hr />
+
+                <!-- Modal body -->
+                <div class="modal-body p-2">
+
+
+                </div>
+
+                <!-- Modal footer -->
+
+                <div class="modal-footer">
+
+                </div>
 
             </div>
         </div>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ActivityDetailsModel;
 use App\Models\OperatorActivity;
 use Illuminate\Http\Request;
+use Morilog\Jalali\Jalalian;
 
 class OperatorActivityController extends Controller
 {
@@ -103,7 +104,10 @@ class OperatorActivityController extends Controller
     public function details($id)
     {
 
-        // $activityDetails = OperatorActivity::find($id);
-        return response()->json(['status' => 'success', 'data' => 'data']);
+        $activity['data'] = OperatorActivity::find($id);
+        $activity['data']->created_at = Jalalian::fromCarbon($activity['data']->created_at)->format('Y-m-d');
+        $activity['details'] = ActivityDetailsModel::where('activity_id', $id)->first();
+
+        return response()->json($activity);
     }
 }
