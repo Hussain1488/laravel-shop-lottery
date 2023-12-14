@@ -60,7 +60,6 @@ class WalletController extends Controller
         }
 
         $gateways = Gateway::active()->pluck('key')->toArray();
-
         $request->validate([
             'amount'      => 'required|numeric|max:500000000|min:1000',
             'gateway'     => 'required|in:' . implode(',', $gateways),
@@ -70,13 +69,15 @@ class WalletController extends Controller
         $amount  = intval($request->amount);
         $wallet  = auth()->user()->getWallet();
 
+        // dd($gateway, $amount, $wallet);
         $history = $wallet->histories()->create([
             'type'        => 'deposit',
-            'amount'      => $amount,
+            'amount'      => $amount * 10,
             'description' =>  trans('front::messages.controller.wallet-recharge'),
             'source'      => 'user',
             'status'      => 'fail'
         ]);
+
 
         try {
 
@@ -87,7 +88,7 @@ class WalletController extends Controller
                 function ($driver, $transactionId) use ($history, $gateway, $amount) {
                     DB::table('transactions')->insert([
                         'status'               => false,
-                        'amount'               => $amount,
+                        'amount'               => $amount * 10,
                         'factorNumber'         => $history->id,
                         'mobile'               => auth()->user()->username,
                         'message'              => trans('front::messages.controller.created-for-gateway') . $gateway,
@@ -100,8 +101,6 @@ class WalletController extends Controller
                         "created_at"           => Carbon::now(),
                         "updated_at"           => Carbon::now(),
                     ]);
-
-                    // dd($amount * 10);
                     session()->put('transactionId', $transactionId);
                     session()->put('amount', $amount);
                 }
@@ -114,15 +113,18 @@ class WalletController extends Controller
 
     public function verify($gateway)
     {
-
         $transactionId = session()->get('transactionId');
-        $amount        = session()->get('amount') * 10;
-
+        $amount        = session()->get('amount');
         $transaction = Transaction::where('status', false)->where('transID', $transactionId)->firstOrFail();
 
         $history = $transaction->transactionable;
+        $wallet = Wallet::where('user_id', Auth::user()->id)->first();
+
+        $wallet->balance += intval($amount) * 10;
 
         $gateway_configs = get_gateway_configs($gateway);
+
+        $receipt = Payment::via($gateway)->config($gateway_configs);
 
         try {
             $receipt = Payment::via($gateway)->config($gateway_configs);
@@ -131,6 +133,7 @@ class WalletController extends Controller
                 $receipt = $receipt->amount(intval($amount));
             }
 
+            // dd($history->wallet);
             $receipt = $receipt->transactionId($transactionId)->verify();
 
             DB::table('transactions')->where('transID', $transactionId)->update([
@@ -144,14 +147,13 @@ class WalletController extends Controller
                 'status' => 'success',
             ]);
 
+            $wallet->save();
             event(new WalletAmountIncreased($history->wallet));
-
             $user = User::find(Auth::user()->id);
-            $user_trans = buyertransaction::transaction($user, $amount, false, 1, 1);
 
-            banktransaction::transaction(session()->get('bank_id')->id, $amount, false, $user_trans->id, 'user');
+            $user_trans = buyertransaction::transaction($user, ($amount * 10), true, 1, 1);
+            banktransaction::transaction(session()->get('bank_id')->id, ($amount * 10), false, $user_trans->id, 'user');
 
-            $history->wallet->refereshBalance();
 
             if ($history->order) {
                 $result = $history->order->payUsingWallet();
@@ -169,6 +171,7 @@ class WalletController extends Controller
 
             return redirect()->route('front.wallet.index', ['history' => $history])->with('message', 'ok');
         } catch (\Exception $exception) {
+            \Log::error('Exception: ' . $exception->getMessage());
 
             DB::table('transactions')->where('transID', $transactionId)->update([
                 'message'              => $transaction->message . '<br>' . $exception->getMessage(),
