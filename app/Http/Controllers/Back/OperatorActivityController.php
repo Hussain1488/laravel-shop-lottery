@@ -19,14 +19,12 @@ class OperatorActivityController extends Controller
 
         $users = User::where('level', '!=', 'user')->with('roles')->latest()->get();
 
-        // dd($users);
         return view('back.operatoractivity.index', compact('users'));
     }
 
     public function search(Request $request)
     {
-        // dd($request->all());
-        // $this->index($request->filter);
+
         $users = User::where('level', 'admin')->where('username', 'like', '%' . $request->filter . '%')->with('roles')->get();
         if ($users->count() == 0) {
             $users = User::where('level', 'admin')->with('roles')->get();

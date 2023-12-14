@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\internalBankStoreRequest;
+use App\Models\ActivityDetailsModel;
 use App\Models\BankAccount;
 use App\Models\banktransaction;
 use App\Models\bankTypeModel;
@@ -14,6 +15,7 @@ use App\Models\OperatorActivity;
 use App\Models\paymentdetails;
 use App\Models\PaymentListModel;
 use App\Models\User;
+use CreateTypeOfAccountTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Morilog\Jalali\Jalalian;
@@ -97,7 +99,16 @@ class InstallmentReportsController extends Controller
         $payList = PaymentListModel::find($request->pay_list_id);
 
         $store = createstore::find($payList->store_id);
-        OperatorActivity::createActivity($store->user->id, 'PAY_REQUEST_PAYMENT');
+
+        $data = [
+            'فروشگاه' => $store->nameofstore,
+            'مقدار پرداخت' => $payList->depositamount,
+            'شماره پیگیری بانک' => $request->Issuetracking,
+        ];
+
+        $operator_id = OperatorActivity::createActivity($store->user->id, 'PAY_REQUEST_PAYMENT');
+        ActivityDetailsModel::createActivityDetail($operator_id, $data);
+
         $trans_id = createstoretransaction::storeTransaction($store, $payList->depositamount, true, 1, 2);
 
         $this->RequestPayment($request->pay_list_id, $request->nameofbank, $trans_id);
@@ -137,7 +148,14 @@ class InstallmentReportsController extends Controller
             'accountnumber' => $request->accountnumber,
             'account_type_id' => $request->account_type_id,
         ]);
-        OperatorActivity::createActivity(null, 'CREATE_INTERNAL_ACCOUNT');
+        bankTypeModel::find($request->account_type_id)->name;
+        $data = [
+            'اسم بانک' => $request->bankname,
+            'شماره بانک' => $request->accountnumber,
+            'ماهیت حساب' => bankTypeModel::find($request->account_type_id)->name,
+        ];
+        $operator_id = OperatorActivity::createActivity(null, 'CREATE_INTERNAL_ACCOUNT');
+        ActivityDetailsModel::createActivityDetail($operator_id, $data);
         toastr()->success('حساب بانکی با موفقیت ایجاد شد.');
         return redirect()->back();
         // return view('back.installmentreports.createinternalaccount');

@@ -65,11 +65,13 @@ class OperatorActivity extends Model
     public static function createActivity($user, $activity)
     {
         $activityKey = self::ACTIVITY[$activity]['value'] ?? 'NoN';
+        // $data = self::ACTIVITY[$activity]['data'] ?? 'NoN';
 
         $newActivity = self::create([
             'operator_id' => Auth::user()->id,
             'user_id' => $user,
             'workdescription' => $activityKey,
         ]);
+        return $newActivity->id;
     }
 }

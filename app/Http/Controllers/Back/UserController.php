@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityDetailsModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +15,7 @@ use App\Models\Role;
 use App\Rules\NotSpecialChar;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -139,7 +141,13 @@ class UserController extends Controller
             $user->save();
         }
         if ($request->level == 'admin' && $request->roles) {
-            OperatorActivity::createActivity($user->id, 'GIVIN_ROLES');
+            $roles = Role::whereIn('id', $request->roles)->pluck('title')->toArray();
+
+            $operator_id = OperatorActivity::createActivity($user->id, 'GIVIN_ROLES');
+            $data = [
+                'مقامها' => implode(', ', $roles),
+            ];
+            ActivityDetailsModel::createActivityDetail($operator_id, $data);
         }
 
         $user->roles()->sync($request->roles);

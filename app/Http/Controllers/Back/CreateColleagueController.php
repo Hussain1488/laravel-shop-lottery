@@ -8,6 +8,7 @@ use App\Http\Requests\Back\ColleagueReAccreditionRequest;
 use App\Http\Requests\Back\CreateColleagueIndexRequest;
 use App\Http\Requests\Back\CreateShopRequest;
 use App\Http\Requests\Back\ShopShopUpdateRequest;
+use App\Models\ActivityDetailsModel;
 use App\Models\BankAccount;
 use App\Models\banktransaction;
 use App\Models\buyertransaction;
@@ -64,6 +65,8 @@ class CreateColleagueController extends Controller
 
     public function shopedit($id)
     {
+        // dd(ActivityDetailsModel::latest()->first()->data);
+        // dd(ActivityDetailsModel::latest()->get('data'));
 
         $store = createstore::with('user')->find($id);
         // $jalaliEndDate = Jalalian::fromFormat('Y-m-d', $store->enddate);
@@ -74,7 +77,7 @@ class CreateColleagueController extends Controller
 
     public function shopUpdate(ShopShopUpdateRequest $request, $id)
     {
-
+        // dd(ActivityDetailsModel::latest()->first()->data);
         $store = createstore::find($id);
         $carbonDate = null;
         if ($request->enddate != null) {
@@ -93,7 +96,8 @@ class CreateColleagueController extends Controller
             // dd($paths);
             $docPath = json_encode($paths);
         }
-
+        $originalData = $store->getOriginal();
+        // dd($originalData);
         $store->update([
             'nameofstore' => $request->nameofstore,
             'addressofstore' => $request->addressofstore,
@@ -102,10 +106,36 @@ class CreateColleagueController extends Controller
             'enddate' => $carbonDate != null ? $carbonDate : $store->enddate,
             'uploaddocument' => $docPath,
         ]);
+        $englishToPersian = [
+            'nameofstore' => 'اسم فروشگاه',
+            'feepercentage' => 'مقدار کارمز',
+            'addressofstore' => 'آدرس فروشگاه',
+            'settlementtime' => 'زمان تسویه',
+            'updated_at' => 'زمان اصلاح',
+            'enddate' => 'ختم قرارداد',
+            // Add more field mappings as needed
+        ];
+        $changes = [];
+        foreach ($originalData as $key => $value) {
+            if ($store->$key != $value) {
+                $changes[$key] = [
+                    'old' => $value,
+                    'new' => $store->$key,
+                ];
+            }
+        }
 
         // dd($store->selectperson);
-        OperatorActivity::createActivity($store->selectperson, 'EDIT_STORE');
-
+        $operator_id = OperatorActivity::createActivity($store->selectperson, 'EDIT_STORE');
+        $data = ['اسم فروشگاه' => $originalData['nameofstore']];
+        foreach ($changes as $key => $change) {
+            $fieldPersianName = $englishToPersian[$key] ?? $key;
+            $data[$fieldPersianName] = [
+                'قبلی' => $change['old'],
+                'جدید' => $change['new'],
+            ];
+        }
+        ActivityDetailsModel::createActivityDetail($operator_id, $data);
 
         toastr()->success('فروشگاه با موفقیت اصلاح شد.');
 
@@ -125,6 +155,7 @@ class CreateColleagueController extends Controller
     public function create()
     {
 
+        // dd(ActivityDetailsModel::first()->data);
         $user = User::where('level', '!=', 'creator')->get();
 
         $users = [];
@@ -195,7 +226,14 @@ class CreateColleagueController extends Controller
 
             $bankt_tras = banktransaction::transaction($bank_id->id, $storecredit, true, $trans_id, 'store');
 
-            OperatorActivity::createActivity($request->selectperson, 'CREATE_STORE');
+            $operator_id = OperatorActivity::createActivity($request->selectperson, 'CREATE_STORE');
+            $data = [
+                'اسم فروشگاه' => $request->nameofstore,
+                'مقدار اعتبار داده شده' => $storecredit . ' ریال',
+                'مقدار کارمز' => $request->feepercentage . ' درصد',
+                'شماره حساب درآمد' => BankAccount::find($request->account_id)->accountnumber,
+            ];
+            ActivityDetailsModel::createActivityDetail($operator_id, $data);
 
             DB::commit();
 
@@ -275,14 +313,19 @@ class CreateColleagueController extends Controller
             $docPath = json_encode($paths);
         }
 
-
-
         $userUpdate = User::find($request->userselected);
+
+        $data = [
+            'اعتبار قبلی' => $userUpdate->purchasecredit . ' ریال',
+            'مقدار افزایش اعتبار' => $request->purchasecredit . ' ریال',
+        ];
+
         $userUpdate->purchasecredit += $request->purchasecredit;
         $userUpdate->enddate = $carbonDate;
         $userUpdate->documents = $docPath;
 
-        OperatorActivity::createActivity($userUpdate->id, 'BUYER_CREDIT');
+        $operator_id = OperatorActivity::createActivity($userUpdate->id, 'BUYER_CREDIT');
+        ActivityDetailsModel::createActivityDetail($operator_id, $data);
         // public function transaction($user, $amount, $status, $flag, $type)
         $buyer_trans = buyertransaction::transaction($userUpdate, $request->purchasecredit, true, 0, 0);
         // transaction($bank_id, $creditAmount, $status, $trans_id)
@@ -322,9 +365,13 @@ class CreateColleagueController extends Controller
             toastr()->error('شما هیچ بانکی با ماهیت واسط اعتبار فروشگاه ها ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
             return redirect()->back();
         }
-
-        OperatorActivity::createActivity($store->user->id, 'STORE_CREDIT');
-
+        $data = [
+            'اسم فروشگاه' => $store->nameofstore,
+            'اعتبار قبلی' => $ex_credit . ' ریال',
+            'مقدار افزایش اعتبار' => $request->storecredit . ' ریال',
+        ];
+        $operator_id = OperatorActivity::createActivity($store->user->id, 'STORE_CREDIT');
+        ActivityDetailsModel::createActivityDetail($operator_id, $data);
         $trans_id = createstoretransaction::storeTransaction($store, $request->storecredit, true, 3, 0);
 
 
@@ -382,6 +429,10 @@ class CreateColleagueController extends Controller
         }
 
         $wallet = Wallet::where('user_id', $user->id)->first();
+        $data = [
+            'موجودی قبلی' => $wallet->balance,
+            'مقدار افزایش موجودی' => $request->ReCredintAmount . ' ریال',
+        ];
         $wallet->balance += $request->ReCredintAmount;
 
 
@@ -396,8 +447,8 @@ class CreateColleagueController extends Controller
 
         $user->save();
         $wallet->save();
-        OperatorActivity::createActivity($user->id, 'CREATE_DOCUMNET');
-
+        $operator_id = OperatorActivity::createActivity($user->id, 'CREATE_DOCUMNET');
+        ActivityDetailsModel::createActivityDetail($operator_id, $data);
 
         toastr()->success('ایجاد سند جدید با شماره ' . $request->numberofdocuments . ' با موفقیت ثبت گردید.');
 
