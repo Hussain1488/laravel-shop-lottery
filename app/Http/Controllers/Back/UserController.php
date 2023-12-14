@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Exports\UsersExport;
 use App\Http\Resources\Datatable\User\UserCollection;
+use App\Models\createstore;
 use App\Models\OperatorActivity;
 use App\Models\Role;
 use App\Rules\NotSpecialChar;
@@ -300,8 +301,15 @@ class UserController extends Controller
     {
         $query = $request->input('q');
 
-        $users = User::where('username', 'like', "%$query%")->where('level', 'user')
+        $user = User::where('username', 'like', "%$query%")
             ->with('wallet')->get(['id', 'first_name', 'last_name', 'username', 'purchasecredit']);
+        $users = [];
+
+        foreach ($user as $key) {
+            if (!createstore::where('selectperson', $key->id)->exists()) {
+                $users[] = $key;
+            };
+        }
 
         return response()->json($users);
     }

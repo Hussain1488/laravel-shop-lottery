@@ -410,7 +410,6 @@ class CreateColleagueController extends Controller
         // dd('hey');
         $user = User::find($request->namecreditor);
 
-
         $buyerTrans = buyertransaction::transaction($user, $request->ReCredintAmount, true, 1, 0);
 
         // transaction($bank_id, $creditAmount, $status, $trans_id)
@@ -430,7 +429,7 @@ class CreateColleagueController extends Controller
             $docPath = json_encode($paths);
         }
 
-        $wallet = Wallet::where('user_id', $user->id)->first();
+        $wallet = Wallet::where('user_id', $user->id)->with('histories')->first();
         $data = [
             'موجودی قبلی' => $wallet->balance,
             'مقدار افزایش موجودی' => $request->ReCredintAmount . ' ریال',
@@ -446,6 +445,13 @@ class CreateColleagueController extends Controller
             'documents' => $docPath,
             'numberofdocuments' => $request->numberofdocuments,
         ]);
+        // $history = $wallet->histories()->create([
+        //     'type'        => 'deposit',
+        //     'amount'      => $request->ReCredintAmount,,
+        //     'description' =>  'شارژ توسط اپراتور',
+        //     'source'      => 'user',
+        //     'status'      => 'success'
+        // ]);
 
         $user->save();
         $wallet->save();

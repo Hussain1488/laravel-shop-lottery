@@ -127,9 +127,7 @@
                                                             class="btn details-show" data-id="{{ $key->id }}"
                                                             value=""><i class="text-success feather icon-info"></i>
                                                         </button>
-                                                        <a
-                                                            href="{{ route('admin.operatoractivity.details', [$key->id]) }}">click
-                                                            me</a>
+
                                                     </td>
                                                 </tr>
                                             @endforeach

@@ -14,8 +14,8 @@ class AddPurchasecreditToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->bigInteger('purchasecredit')->nullable();
-            $table->bigInteger('inventory')->nullable();
+            $table->bigInteger('purchasecredit')->default(0);
+            $table->bigInteger('inventory')->default(0);
             $table->string('documents')->nullable();
             $table->string('enddate')->nullable();
         });
