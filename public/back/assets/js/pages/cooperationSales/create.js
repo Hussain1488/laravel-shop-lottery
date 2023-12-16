@@ -280,8 +280,8 @@ $(document).ready(function () {
         var DaysDiff = parseInt(daysDifference);
         var data_date_update = parseInt(data_day);
 
-        if (data_date_update >= DaysDiff) {
-            let time = data_date_update - DaysDiff + 1;
+        if (data_date_update > DaysDiff) {
+            let time = data_date_update - DaysDiff;
             $('#user_day_time').text(time);
             $('#myModal').modal();
         } else {
