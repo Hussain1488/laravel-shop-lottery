@@ -12,10 +12,14 @@ use App\Models\User;
 use App\Models\CooperationSales;
 use App\Models\createstoretransaction;
 use App\Models\PaymentListModel;
+use App\Models\StoreTransactionDetailsModel;
 use Carbon\Carbon;
+use CreateStoreTransactionDetailsTable;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Melipayamak\MelipayamakApi;
 use Morilog\Jalali\Jalalian;
 use ParagonIE\Sodium\Compat;
@@ -73,35 +77,51 @@ class CooperationSalesController extends Controller
         }
 
         $user = User::find($request->userselected);
+        $description = 'انجام فروش(ساخت قسط)';
+        $trans_data = [
+            'تراکنش:' => $description,
+            'توسط:' => Auth::user()->username,
+            'برای:' => User::find($request->userselected)->username,
+            'مقدار تراکنش:' => $Creditamount . 'ریال',
+            'نوع فروش:' => $request->typeofpayment == 'cash' ? 'نقدی' : 'اقساطی',
+            'تعداد قسط:' => $request->typeofpayment == 'cash' ? 0 : $request->numberofinstallments,
+            'تاریخ:' => Jalalian::now()->format('d-m-Y'),
+            'زمان:' => Jalalian::now()->format('H:i:s'),
+        ];
 
-        $store->storecredit -= $Creditamount;
+        try {
+            DB::beginTransaction();
+            $store->storecredit -= $Creditamount;
 
-        Makeinstallmentsm::create([
-            'status' => 0,
-            'seller_id' => Auth::user()->id,
-            'Creditamount' => $Creditamount,
-            'userselected' => $request->userselected,
-            'typeofpayment' => $request->typeofpayment,
-            'numberofinstallments' => $request->typeofpayment == 'cash' ? 0 : $request->numberofinstallments,
-            'prepaidamount' => $prepaidamount,
-            'amounteachinstallment' => $amounteachinstallment,
-            'buyerstatus' => 0,
-            'paymentstatus' => 0,
-            'statususer' => 0,
-            'store_id' => $store->id,
-        ]);
-
-        $store_trans = createstoretransaction::storeTransaction($store, $Creditamount, false, 3, 0, $request->userselected);
-
-        $bankt_tras = banktransaction::transaction($bank_id->id, $Creditamount, false, $store_trans, 'store');
-
-
-        $store->save();
+            Makeinstallmentsm::create([
+                'status' => 0,
+                'seller_id' => Auth::user()->id,
+                'Creditamount' => $Creditamount,
+                'userselected' => $request->userselected,
+                'typeofpayment' => $request->typeofpayment,
+                'numberofinstallments' => $request->typeofpayment == 'cash' ? 0 : $request->numberofinstallments,
+                'prepaidamount' => $prepaidamount,
+                'amounteachinstallment' => $amounteachinstallment,
+                'buyerstatus' => 0,
+                'paymentstatus' => 0,
+                'statususer' => 0,
+                'store_id' => $store->id,
+            ]);
+            $store_trans = createstoretransaction::storeTransaction($store, $Creditamount, false, 3, 0, $request->userselected, null, $description);
+            StoreTransactionDetailsModel::createDetail($store_trans, $trans_data);
+            $bankt_tras = banktransaction::transaction($bank_id->id, $Creditamount, false, $store_trans, 'store');
 
 
-        toastr()->success('قسط کاربر با موفقیت ایجاد شد.');
+            $store->save();
+            toastr()->success('قسط کاربر با موفقیت ایجاد شد.');
 
+            DB::commit();
+        } catch (\Exception $e) {
 
+            DB::rollBack();
+            Log::error($e);
+            toastr()->error('مشکلی در ایجاد قسط کاربر به وجود آمده است.' . $e);
+        }
         return redirect()->back();
     }
 
@@ -158,37 +178,43 @@ class CooperationSalesController extends Controller
         // dd($final_price);
         $store->salesamount -= $depositamount;
         $register_number = $number;
+        $description = 'درخواست تسویه';
+        $trans_data = [
+            'تراکنش:' => $description,
+            'توسط:' => Auth::user()->username,
+            'مقدار درخواست:' => $depositamount . 'ریال',
+            'تاریخ:' => Jalalian::now()->format('d-m-Y'),
+            'زمان:' => Jalalian::now()->format('H:i:s'),
+        ];
         // creating new payment request transaction.
-        PaymentListModel::create([
-            'list_id' => $number,
-            'store_id' => $request->store,
-            'depositamount' => $depositamount,
-            'final_price' => $final_price,
-            'shabanumber' => $request->shabanumber,
-            'factor' => $docPath,
-            'depositdate' => Jalalian::now()->format('Y-m-d'),
-        ]);
+        try {
+            DB::beginTransaction();
+            $transaction = createstoretransaction::storeTransaction($store, $depositamount, false, 0, 1, $user = null, $timestamp = null, $description);
+            
+            PaymentListModel::create([
+                'list_id' => $number,
+                'store_id' => $request->store,
+                'depositamount' => $depositamount,
+                'final_price' => $final_price,
+                'shabanumber' => $request->shabanumber,
+                'factor' => $docPath,
+                'depositdate' => Jalalian::now()->format('Y-m-d'),
+            ]);
 
-        $number1 = createstoretransaction::count();
+            // creating new store transaction for mainWallet transaction.
+            StoreTransactionDetailsModel::createDetail($transaction, $trans_data);
+            $bank_trans = banktransaction::transaction($bank_id->id, $depositamount, false, $transaction, 'store');
+            $store->save();
 
-        if ($number1 > 0 && $number1 != 0) {
-            $number1 = createstoretransaction::latest()->first()->documentnumber  + 1;
-            $final_price1 = createstoretransaction::latest()->first()->finalprice - $depositamount;
-        } else {
-            $number1 = 10000;
-            $final_price1 = -$depositamount;
+            DB::commit();
+            toastr()->success('درخواست تسویه حساب با موفقیت ارسال شد.');
+            return redirect()->back()->with('register_number', $register_number);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            toastr()->error('خطایی در ارسال درخواست رخ داده است!.' . $e);
         }
-        // creating new store transaction for mainWallet transaction.
-
-        $transaction = createstoretransaction::storeTransaction($store, $depositamount, false, 0, 1, $user = null, $timestamp = null);
-
-        $bank_trans = banktransaction::transaction($bank_id->id, $depositamount, false, $transaction, 'store');
-
-        $store->save();
-
-        toastr()->success('درخواست تسویه حساب با موفقیت ارسال شد.');
-
-        return redirect()->back()->with('register_number', $register_number);
+        return redirect()->back();
     }
 
     // changing the status of installments status to paid.
@@ -210,58 +236,54 @@ class CooperationSalesController extends Controller
             toastr()->error('شما هیچ بانکی با ماهیت واسط اقساط ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
             return redirect()->back();
         }
-
+        $description = 'درخواست واریز';
         $store = createstore::find($id);
         // dd($store);
         $fee = $store->feepercentage;
         $installment = Makeinstallmentsm::find($id2);
         $result = $installment->Creditamount * $fee / 100;
         $final = $installment->Creditamount - $result;
-        // dd($final, $result);
-        $store->salesamount += $final;
-        $installment->status = 1;
+        $trans_data = [
+            'تراکنش:' => $description,
+            'توسط:' => Auth::user()->username,
+            'مقدار درخواست با کسر کارمزد:' => $final . 'ریال',
+            'کارمزد:' => $result . 'ریال',
+            'تاریخ:' => Jalalian::now()->format('d-m-Y'),
+            'زمان:' => Jalalian::now()->format('H:i:s'),
+        ];
 
-        $number = createstoretransaction::count();
+        try {
+            DB::beginTransaction();
 
-        if ($number > 0 && $number != 0) {
-            $number = createstoretransaction::latest()->first()->documentnumber  + 1;
-            // $final_price = createstoretransaction::latest()->first()->finalprice;
-        } else {
-            $number = 10000;
-            // $final_price =
+            $store->salesamount += $final;
+            $installment->status = 1;
+
+            $number = createstoretransaction::count();
+
+            if ($number > 0 && $number != 0) {
+                $number = createstoretransaction::latest()->first()->documentnumber  + 1;
+                // $final_price = createstoretransaction::latest()->first()->finalprice;
+            } else {
+                $number = 10000;
+                // $final_price =
+            }
+            $transaction = createstoretransaction::storeTransaction($store, $installment->Creditamount, true, 1, 1, $installment->userselected, $installment->updated_at, $description);
+            StoreTransactionDetailsModel::createDetail($transaction, $trans_data);
+            $bank_trans = banktransaction::transaction($store->account_id, $result, true, $transaction, 'store');
+
+            $bank_trans = banktransaction::transaction($bank_id->id, $installment->Creditamount, false, $transaction, 'store');
+
+            $installment->save();
+            $store->save();
+            DB::commit();
+            toastr()->success('درخواست تسویه حساب موفقیت آمیز انجام شد.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            toastr()->error('مشکلی در درخواست تسویه حساب رخ داده است!!' . $e);
         }
-
-        $transaction = createstoretransaction::storeTransaction($store, $installment->Creditamount, true, 1, 1, $installment->userselected, $installment->updated_at);
-
-        $bank_trans = banktransaction::transaction($store->account_id, $result, true, $transaction, 'store');
-
-        $bank_trans = banktransaction::transaction($bank_id->id, $installment->Creditamount, false, $transaction, 'store');
-
-        $installment->save();
-        $store->save();
-        toastr()->success('درخواست تصفیه حساب موفقیت آمیز انجام شد.');
         return redirect()->back();
     }
-    // public function smsTest()
-    // {
-    //     // dd($_ENV['MELIPAYAMAK_USER']);
-
-    //     try {
-    //         $username = '989155000143';
-    //         $password = '7CHRT';
-    //         $api = new MelipayamakApi($username, $password);
-    //         $sms = $api->sms();
-    //         $to = '09038261488';
-    //         $from = '50004001000143';
-    //         $text = 'سلام حسین چطوری این تست دوم است';
-    //         $response = $sms->send($to, $from, $text);
-    //         $json = json_decode($response);
-    //         echo $json->Value; //RecId or Error Number
-    //     } catch (Exception $e) {
-    //         echo $e->getMessage();
-    //         // dd($e->getMessage());
-    //     }
-    // }
     public function mainWallet($id)
     {
 
@@ -315,5 +337,11 @@ class CooperationSalesController extends Controller
         $flag = 'تراکنش های اعتبار فروشگاه';
 
         return view('back.cooperationsales.transaction_records', compact('trans', 'store', 'total', 'flag'));
+    }
+    public function transactionDetails($id)
+    {
+        $details = StoreTransactionDetailsModel::where('transaction_id', $id)->first()->data;
+        // dd($details);
+        return response()->json($details);
     }
 }

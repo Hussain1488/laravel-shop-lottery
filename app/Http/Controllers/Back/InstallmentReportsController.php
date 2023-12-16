@@ -14,9 +14,13 @@ use App\Models\Makeinstallmentsm;
 use App\Models\OperatorActivity;
 use App\Models\paymentdetails;
 use App\Models\PaymentListModel;
+use App\Models\StoreTransactionDetailsModel;
 use App\Models\User;
 use CreateTypeOfAccountTable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Morilog\Jalali\Jalalian;
 use function PHPUnit\Framework\isEmpty;
@@ -90,30 +94,44 @@ class InstallmentReportsController extends Controller
             $path = '';
         }
 
-        paymentdetails::create([
-            'list_of_payment_id' => $request->pay_list_id,
-            'Issuetracking' => $request->Issuetracking,
-            'nameofbank'  => $bank_name,
-            'documentpayment'  => $path,
-        ]);
         $payList = PaymentListModel::find($request->pay_list_id);
 
         $store = createstore::find($payList->store_id);
-
+        $description = 'پرداخت درخواست واریز';
+        $trans_data = [
+            'تراکنش:' => $description,
+            'توسط:' => Auth::user()->username,
+            'مقدار تراکنش' => $payList->depositamount . ' ریال',
+            'تاریخ:' => Jalalian::now()->format('d-m-Y'),
+            'زمان:' => Jalalian::now()->format('H:i:s'),
+        ];
         $data = [
             'فروشگاه' => $store->nameofstore,
-            'مقدار پرداخت' => $payList->depositamount,
+            'مقدار پرداخت' => $payList->depositamount . ' ریال',
             'شماره پیگیری بانک' => $request->Issuetracking,
         ];
+        try {
+            DB::beginTransaction();
+            paymentdetails::create([
+                'list_of_payment_id' => $request->pay_list_id,
+                'Issuetracking' => $request->Issuetracking,
+                'nameofbank'  => $bank_name,
+                'documentpayment'  => $path,
+            ]);
 
-        $operator_id = OperatorActivity::createActivity($store->user->id, 'PAY_REQUEST_PAYMENT');
-        ActivityDetailsModel::createActivityDetail($operator_id, $data);
+            $operator_id = OperatorActivity::createActivity($store->user->id, 'PAY_REQUEST_PAYMENT');
+            ActivityDetailsModel::createActivityDetail($operator_id, $data);
+            $trans_id = createstoretransaction::storeTransaction($store, $payList->depositamount, true, 1, 2, null, null, $description);
+            StoreTransactionDetailsModel::createDetail($trans_id, $trans_data);
 
-        $trans_id = createstoretransaction::storeTransaction($store, $payList->depositamount, true, 1, 2);
-
-        $this->RequestPayment($request->pay_list_id, $request->nameofbank, $trans_id);
-
-        toastr()->success('اطلاعات پرداخت موفقیت آمیز ذخیره شد.');
+            $this->RequestPayment($request->pay_list_id, $request->nameofbank, $trans_id);
+            DB::commit();
+            toastr()->success('اطلاعات پرداخت موفقیت آمیز ذخیره شد.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            toastr()->error('مشکلی در ذخیره اطلاعات پرداخت رخ داده است.' . $e);
+        }
         return redirect()->back();
     }
     //  bank transaction list view page
@@ -400,8 +418,16 @@ class InstallmentReportsController extends Controller
     // destroying the specific installments.
     public function refuse($id)
     {
-        Makeinstallmentsm::refuse($id);
-        toastr()->success('قسط مورد نظر با موفقیت حذف شد.');
+        try {
+            DB::beginTransaction();
+            Makeinstallmentsm::refuse($id);
+            DB::commit();
+            toastr()->success('قسط مورد نظر با موفقیت حذف شد.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            toastr()->error('مشکلی در حذف فروش  رخ داده است.' . $e);
+        }
         return redirect()->back();
     }
 

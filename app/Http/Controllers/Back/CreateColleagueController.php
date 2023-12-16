@@ -13,6 +13,7 @@ use App\Models\BankAccount;
 use App\Models\banktransaction;
 use App\Models\buyertransaction;
 use App\Models\createdocument;
+use App\Models\StoreTransactionDetailsModel;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\createstore;
@@ -20,6 +21,7 @@ use App\Models\createstoretransaction;
 use App\Models\OperatorActivity;
 use App\Models\Wallet;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
@@ -207,11 +209,25 @@ class CreateColleagueController extends Controller
             }
             $docPath = json_encode($paths);
         }
-
+        // dd($docPath);
+        $description = 'اعتبار دهی اولیه فروشگاه';
+        $trans_data = [
+            'تراکنش:' => $description,
+            'اسم فروشگاه:' => $request->nameofstore,
+            'توسط:' => Auth::user()->username,
+            'مقدار اعتبار:' => $storecredit . 'ریال',
+            'تاریخ:' => Jalalian::now()->format('d-m-Y'),
+            'زمان:' => Jalalian::now()->format('H:i:s'),
+        ];
+        $data = [
+            'اسم فروشگاه' => $request->nameofstore,
+            'مقدار اعتبار داده شده' => $storecredit . ' ریال',
+            'مقدار کارمز' => $request->feepercentage . ' درصد',
+            'شماره حساب درآمد' => BankAccount::find($request->account_id)->accountnumber,
+        ];
         try {
+
             DB::beginTransaction();
-
-
             $store = createstore::create([
                 'storecredit' => $storecredit,
                 'selectperson' => $request->selectperson,
@@ -224,32 +240,23 @@ class CreateColleagueController extends Controller
                 'account_id' => $request->account_id,
                 'conrn_job_reccredite' => $storecredit,
             ]);
-            $trans_id = createstoretransaction::storeTransaction($store, $storecredit, true, 3, 0);
-
+            $trans_id = createstoretransaction::storeTransaction($store, $storecredit, true, 3, 0, null, null, $description);
+            StoreTransactionDetailsModel::createDetail($trans_id, $trans_data);
             $bankt_tras = banktransaction::transaction($bank_id->id, $storecredit, true, $trans_id, 'store');
 
             $operator_id = OperatorActivity::createActivity($request->selectperson, 'CREATE_STORE');
-            $data = [
-                'اسم فروشگاه' => $request->nameofstore,
-                'مقدار اعتبار داده شده' => $storecredit . ' ریال',
-                'مقدار کارمز' => $request->feepercentage . ' درصد',
-                'شماره حساب درآمد' => BankAccount::find($request->account_id)->accountnumber,
-            ];
             ActivityDetailsModel::createActivityDetail($operator_id, $data);
 
             DB::commit();
 
-            toastr()->success('  فروشگاه با موفقیت ایجاد شد.');
-
+            toastr()->success('!فروشگاه با موفقیت ایجاد شد.');
             return redirect()->back();
         } catch (\Exception $e) {
-
             DB::rollBack();
-
             Log::error($e);
+            toastr()->warning('مشکلی در ایجاد فروشگاه رخ داده است!' . $e);
+            return redirect()->back();
         }
-        toastr()->error($e);
-        return redirect()->back();
     }
 
 
@@ -354,9 +361,7 @@ class CreateColleagueController extends Controller
     public function reaccreditationStore(ColleagueReAccreditionRequest $request)
     {
 
-
         $store = createstore::with('user')->find($request->select_store);
-        // dd($store);
         $ex_credit = $store->storecredit;
         $store->storecredit = $request->storecredit + $ex_credit;
 
@@ -367,20 +372,38 @@ class CreateColleagueController extends Controller
             toastr()->error('شما هیچ بانکی با ماهیت واسط اعتبار فروشگاه ها ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
             return redirect()->back();
         }
+        $description = 'افزایش اعتبار فروشگاه';
+        $trans_data = [
+            'تراکنش:' => $description,
+            'توسط:' => Auth::user()->username,
+            'اعتبار قبلی' => $ex_credit . ' ریال',
+            'مقدار افزایش اعتبار' => $request->storecredit . ' ریال',
+            'تاریخ:' => Jalalian::now()->format('d-m-Y'),
+            'زمان:' => Jalalian::now()->format('H:i:s'),
+        ];
         $data = [
             'اسم فروشگاه' => $store->nameofstore,
             'اعتبار قبلی' => $ex_credit . ' ریال',
             'مقدار افزایش اعتبار' => $request->storecredit . ' ریال',
         ];
-        $operator_id = OperatorActivity::createActivity($store->user->id, 'STORE_CREDIT');
-        ActivityDetailsModel::createActivityDetail($operator_id, $data);
-        $trans_id = createstoretransaction::storeTransaction($store, $request->storecredit, true, 3, 0);
+        try {
+            DB::beginTransaction();
 
+            $operator_id = OperatorActivity::createActivity($store->user->id, 'STORE_CREDIT');
+            ActivityDetailsModel::createActivityDetail($operator_id, $data);
+            $trans_id = createstoretransaction::storeTransaction($store, $request->storecredit, true, 3, 0, null, null, $description);
+            StoreTransactionDetailsModel::createDetail($trans_id, $trans_data);
+            $bank_trans = banktransaction::transaction($bank_id->id, $request->storecredit, false, $trans_id, 'store');
+            $store->save();
 
-        $bank_trans = banktransaction::transaction($bank_id->id, $request->storecredit, false, $trans_id, 'store');
+            DB::commit();
+            toastr()->success('افزایش اعتبار فروشگاه با موفقیت انجام شد.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e);
 
-        $store->save();
-        toastr()->success('افزایش اعتبار فروشگاه با موفقیت انجام شد.');
+            toastr()->error('مشکلی در افزایش اعتبار فروشگاه رخ داده است!' . $e);
+        }
 
         return redirect()->back();
     }

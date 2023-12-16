@@ -12,7 +12,7 @@ class createstoretransaction extends Model
     use HasFactory;
 
     protected $table = "createstoretransactions";
-    protected $fillable = ["store_id", "flag", "datetransaction", "typeoftransaction", "price", "finalprice", "documentnumber", "bank_id", 'user_id', 'pre_paid_time'];
+    protected $fillable = ["store_id", "flag", "datetransaction", "typeoftransaction", "price", "finalprice", "documentnumber", "bank_id", 'user_id', 'pre_paid_time', 'description'];
 
 
     public function store()
@@ -34,7 +34,7 @@ class createstoretransaction extends Model
     }
 
 
-    public function storeTransaction($store, $CreditAmount, $status, $type, $flag, $user = null, $timestamp = null)
+    public function storeTransaction($store, $CreditAmount, $status, $type, $flag, $user = null, $timestamp = null, $description)
     {
         $count = createstoretransaction::count();
         if ($count > 0) {
@@ -70,6 +70,7 @@ class createstoretransaction extends Model
             // pay request
             'typeoftransaction' => $type,
             'price' => $CreditAmount,
+            'description' => $description,
             'finalprice' => $finalprice,
             'documentnumber' => $number,
             'user_id' => $user,

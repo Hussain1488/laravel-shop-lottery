@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Morilog\Jalali\Jalalian;
 
 class Makeinstallmentsm extends Model
 {
@@ -47,9 +49,16 @@ class Makeinstallmentsm extends Model
         $store->storecredit += $refuse->Creditamount;
         $user->purchasecredit += $refuse->Creditamount;
         // dd($refuse->Creditamount, $user->purchasecredit);
-        $store_trans = createstoretransaction::storeTransaction($store, $refuse->Creditamount, true, 0, 0);
-
-
+        $description = 'انصراف از فروش';
+        $trans_data = [
+            'تراکنش:' => $description,
+            'توسط:' => Auth::user()->username,
+            'مقدار فروش' =>  $refuse->Creditamount . ' ریال',
+            'تاریخ:' => Jalalian::now()->format('d-m-Y'),
+            'زمان:' => Jalalian::now()->format('H:i:s'),
+        ];
+        $store_trans = createstoretransaction::storeTransaction($store, $refuse->Creditamount, true, 3, 0, null, null, $description);
+        StoreTransactionDetailsModel::createDetail($store_trans, $trans_data);
         $user->save();
         $store->save();
         $refuse->delete();

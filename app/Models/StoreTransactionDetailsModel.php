@@ -11,6 +11,9 @@ class StoreTransactionDetailsModel extends Model
     protected $table = 'store_transaction_details';
     protected $fillable = ['transaction_id', 'data'];
 
+    protected $casts = [
+        'data' => 'json',
+    ];
     public function transaction()
     {
         return $this->belongsTo(createstoretransaction::class, 'transaction_id');
