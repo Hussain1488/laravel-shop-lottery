@@ -15,6 +15,8 @@ class AddToListOfPayment extends Migration
     {
         Schema::table('list_of_payment', function (Blueprint $table) {
             $table->bigInteger('final_price')->default(0);
+            $table->unsignedBigInteger('trans_id')->nullable();
+            $table->foreign('trans_id')->references('id')->on('createstoretransactions')->onDelete('cascade');;
         });
     }
 
