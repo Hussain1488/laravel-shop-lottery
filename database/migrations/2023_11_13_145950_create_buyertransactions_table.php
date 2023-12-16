@@ -20,6 +20,7 @@ class CreateBuyertransactionsTable extends Migration
             $table->integer('flag');
             $table->date('datetransaction');
             $table->string('typeoftransaction');
+            $table->string('description', 500)->default('بدون توضیح');
             $table->bigInteger('price');
             $table->bigInteger('finalprice');
             $table->bigInteger('documentnumber');
