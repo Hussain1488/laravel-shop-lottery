@@ -28,6 +28,11 @@ class createstoretransaction extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function details()
+    {
+        return $this->hasOne(StoreTransactionDetailsModel::class, 'transaction_id');
+    }
+
 
     public function storeTransaction($store, $CreditAmount, $status, $type, $flag, $user = null, $timestamp = null)
     {
