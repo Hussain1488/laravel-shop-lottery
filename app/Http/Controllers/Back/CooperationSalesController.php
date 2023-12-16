@@ -190,7 +190,7 @@ class CooperationSalesController extends Controller
         try {
             DB::beginTransaction();
             $transaction = createstoretransaction::storeTransaction($store, $depositamount, false, 0, 1, $user = null, $timestamp = null, $description);
-            
+
             PaymentListModel::create([
                 'list_id' => $number,
                 'store_id' => $request->store,
@@ -199,8 +199,8 @@ class CooperationSalesController extends Controller
                 'shabanumber' => $request->shabanumber,
                 'factor' => $docPath,
                 'depositdate' => Jalalian::now()->format('Y-m-d'),
+                'trans_id ' => $transaction,
             ]);
-
             // creating new store transaction for mainWallet transaction.
             StoreTransactionDetailsModel::createDetail($transaction, $trans_data);
             $bank_trans = banktransaction::transaction($bank_id->id, $depositamount, false, $transaction, 'store');
