@@ -127,5 +127,8 @@
 
 
 @push('scripts')
+    <script>
+        var url = '';
+    </script>
     <script src="{{ asset('back/assets/js/pages/createcollegue/myscript.js') }}"></script>
 @endpush

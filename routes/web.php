@@ -113,6 +113,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('cooperationsales/payRequestWallet/{store_id}', [CooperationSalesController::class, 'payRequestWallet'])->name('cooperationsales.payRequestWallet');
     Route::get('cooperationsales/paidSales/{store_id}', [CooperationSalesController::class, 'paidSales'])->name('cooperationsales.paidSales');
     Route::get('cooperationsales/creditTrans/{store_id}', [CooperationSalesController::class, 'creditTrans'])->name('cooperationsales.creditTrans');
+    Route::get('cooperationsales/transaction/details/{id}', [CooperationSalesController::class, 'transactionDetails'])->name('cooperationsales.transaction.details');
 
     // ------------------ OperatorActivity
     Route::get('operatoractivity/index', [OperatorActivityController::class, 'index'])->name('operatoractivity.index');

@@ -81,6 +81,9 @@
                                                     <th>
                                                         شماره سند
                                                     </th>
+                                                    <th>
+                                                        جزئیات
+                                                    </th>
                                                 </tr>
                                             </thead>
 
@@ -99,7 +102,7 @@
                                                             </span>
                                                         </td>
                                                         <td>
-                                                            {{ $key->flag == 1 ? 'درخواست برداشت از کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
+                                                            {{ $key->description }}
                                                         </td>
                                                         <td>
                                                             <span class="monyInputSpan">{{ $key->price }}</span>
@@ -110,8 +113,15 @@
                                                         </td>
 
                                                         <td>
-
                                                             {{ $key->documentnumber }}
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                data-action="{{ route('admin.cooperationsales.transaction.details', [$key->id]) }}"
+                                                                class="btn transaction_details"
+                                                                data-id="{{ $key->id }}" value=""><i
+                                                                    class="text-success feather icon-info"></i>
+                                                            </button>
                                                         </td>
 
                                                     </tr>
@@ -139,12 +149,12 @@
 
                                                 <div class="row pt-1">
                                                     <div class="col ml-1">
-                                                        <h5 class="text-light">نوع تراکنش:
+                                                        <h5 class="text-light">توضیحات:
                                                         </h5>
                                                     </div>
                                                     <div class="col">
                                                         <span class="text-dark">
-                                                            {{ $key->flag == 1 ? 'درخواست برداشت از کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
+                                                            {{ $key->description }}
 
                                                         </span>
                                                     </div>
@@ -185,6 +195,23 @@
                                                     </div>
 
                                                 </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+
+                                                        <h5 class="text-light">جزئیات:
+                                                        </h5>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <button
+                                                            data-action="{{ route('admin.cooperationsales.transaction.details', [$key->id]) }}"
+                                                            class="btn transaction_details" data-id="{{ $key->id }}"
+                                                            value=""><i
+                                                                class="text-success feather icon-info"></i>جزئیات
+                                                        </button>
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         @endforeach
                                     </div>
@@ -200,6 +227,32 @@
 
         </section>
     </div>
+    <div class="modal fade transaction_details_modal" id="transaction_details">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">جزئیات تراکنش:<span class="text-success" id="deposit_amount_show"></span>
+                    </h4>
+                </div>
+                <hr />
+
+                <!-- Modal body -->
+                <div class="modal-body p-2">
+
+
+                </div>
+
+                <!-- Modal footer -->
+
+                <div class="modal-footer">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 @endsection
 
 @include('back.partials.plugins', [
@@ -209,6 +262,5 @@
 
 @push('scripts')
     <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}"></script>
-
     <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
 @endpush

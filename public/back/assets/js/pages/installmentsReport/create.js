@@ -134,3 +134,30 @@ $('.account_selection').change(function () {
     $('.account-title').text('حساب:' + ' ');
     $('.account-name').text(name);
 });
+
+$('.transaction_details').on('click', function () {
+    $.ajax({
+        url: $(this).data('action'),
+        type: 'GET',
+        success: function (data) {
+            console.log(data);
+            var detailsData = data;
+            $('.modal-body').empty();
+
+            var $ul = $('<ul>'); // Create a ul element
+            for (var key in detailsData) {
+                if (detailsData.hasOwnProperty(key)) {
+                    $ul.append(
+                        '<li class="pb-1"><strong>' +
+                            key +
+                            '</strong> ' +
+                            detailsData[key] +
+                            '</li>'
+                    );
+                }
+            }
+            $('.modal-body').append($ul); // Append the ul element
+            $('.transaction_details_modal').modal();
+        }
+    });
+});
