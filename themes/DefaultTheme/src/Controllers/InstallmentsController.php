@@ -22,6 +22,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Morilog\Jalali\Jalalian;
 use Shetabit\Payment\Facade\Payment;
 use Shetabit\Multipay\Invoice;
@@ -182,10 +183,16 @@ class InstallmentsController extends Controller
     // Destroying specific installments
     public function refuse($id)
     {
-        $refuse1 = Makeinstallmentsm::refuse($id);
-
-
-        return redirect()->back()->with('success', 'خرید شما با موفقیت حذف گردید');
+        try {
+            DB::beginTransaction();
+            Makeinstallmentsm::refuse($id);
+            DB::commit();
+            return redirect()->back()->with('success', 'خرید شما با موفقیت حذف گردید');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e);
+            return redirect()->back()->with('warning', 'مشکلی در انصراف خرید شما رخ داده است!');
+        }
     }
     public function pay()
     {
