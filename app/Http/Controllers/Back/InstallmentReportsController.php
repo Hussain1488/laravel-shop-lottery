@@ -63,8 +63,8 @@ class InstallmentReportsController extends Controller
         $payList->status = 1;
 
         $bankt_trans = banktransaction::transaction($bank_id, $payList->depositamount, true, $trans_id, 'store');
-
         $payList->save();
+
 
         return true;
     }
@@ -172,11 +172,17 @@ class InstallmentReportsController extends Controller
             'شماره بانک' => $request->accountnumber,
             'ماهیت حساب' => bankTypeModel::find($request->account_type_id)->name,
         ];
-        $operator_id = OperatorActivity::createActivity(null, 'CREATE_INTERNAL_ACCOUNT');
-        ActivityDetailsModel::createActivityDetail($operator_id, $data);
-        toastr()->success('حساب بانکی با موفقیت ایجاد شد.');
+        try {
+            DB::beginTransaction();
+            $operator_id = OperatorActivity::createActivity(null, 'CREATE_INTERNAL_ACCOUNT');
+            ActivityDetailsModel::createActivityDetail($operator_id, $data);
+            DB::commit();
+            toastr()->success('حساب بانکی با موفقیت ایجاد شد.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            toastr()->warning('خطایی در ایجاد حساب بانکی جدید رخ داده است!' . $e);
+        }
         return redirect()->back();
-        // return view('back.installmentreports.createinternalaccount');
     }
 
 
@@ -446,12 +452,9 @@ class InstallmentReportsController extends Controller
         foreach ($transactions as $key) {
             if ($key->storeTransaction != null) {
                 $key->log = $key->storeTransaction !== null;
-                // Assuming you want to set the title based on the first transaction
-
-                // Summing up bank balances from all transactions
             }
         }
-        // dd($transactions);
+
 
         return view('back.installmentreports.banktransaction', compact('transactions', 'total', 'title', 'log'));
     }

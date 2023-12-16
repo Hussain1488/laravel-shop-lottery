@@ -8,9 +8,9 @@
 
         <div class="row">
 
-
-
-
+            @php
+                $final_price = 0;
+            @endphp
             <div class="col-12">
 
                 <div class="dt-sl">
@@ -45,7 +45,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12 d-flex justify-content-end">
-                                    <div class=""><input data-url="{{ route('front.wallet.codeGenerate') }}"
+                                    <div class="m-2"><input data-url="{{ route('front.wallet.codeGenerate') }}"
                                             type="button" value="شارژ کیف پول" class="btn btn-success"
                                             id="wallet_recharg_button"></div>
 
@@ -66,14 +66,15 @@
                                                 نوع تراکنش
                                             </th>
                                             <th>
-                                                مبلغ تراکنش
-                                            </th>
-                                            <th class="text-danger">
-                                                مجموع تراکنش ها
+                                                منبع
                                             </th>
                                             <th>
-                                                شماره سند
+                                                مبلغ تراکنش
                                             </th>
+                                            <th class="">
+                                                وضعیت
+                                            </th>
+
                                         </tr>
                                     </thead>
                                     @php
@@ -81,31 +82,36 @@
                                     @endphp
                                     <tbody>
                                         @foreach ($trans as $key)
+                                            @php
+                                                $key->type == 'deposit' ? ($final_price += $key->amount) : ($final_price -= $key->amount);
+                                            @endphp
                                             <tr>
                                                 <td>
                                                     {{ $counter++ }}
                                                 </td>
                                                 <td>
                                                     <span class="transaction_datetime">
-                                                        {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y-m-d') }}
+                                                        {{ jdate($key->created_at)->format('Y-m-d') }}
                                                         <br>
-                                                        {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                        {{ jdate($key->created_at)->format('H:i:s') }}
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    {{ $key->flag == 1 ? 'درخواست برداشت از کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
+                                                    {{ $key->type == 'deposit' ? 'شارژ کیف پول' : 'برداشت ازکیف پول' }}
                                                 </td>
                                                 <td>
-                                                    <span class="moneyInputSpan">{{ $key->price }}</span>
+                                                    {{ $key->source == 'user' ? 'کاربر' : 'اپراتور' }}
+                                                </td>
+                                                <td>
+                                                    <span
+                                                        class="moneyInputSpan {{ $key->type == 'deposit' ? 'text-success' : 'text-danger' }}">{{ $key->amount }}</span>
+                                                    ریال
                                                 </td>
                                                 <td class="text-danger">
-                                                    <span class="moneyInputSpan">{{ $key->finalprice }}</span>
-
+                                                    <span
+                                                        class="{{ $key->status == 'success' ? 'text-success' : 'text-danger' }}">{{ $key->status == 'success' ? 'موفق' : 'ناموفق' }}</span>
                                                 </td>
-                                                <td>
 
-                                                    {{ $key->documentnumber }}
-                                                </td>
 
                                             </tr>
                                         @endforeach
@@ -125,8 +131,9 @@
                                             </div>
                                             <div class="col">
                                                 <span class="transaction_datetime">
-                                                    {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y-m-d') }}
-                                                    {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                    {{ jdate($key->created_at)->format('Y-m-d') }}
+                                                    <br>
+                                                    {{ jdate($key->created_at)->format('H:i:s') }}
                                                 </span>
                                             </div>
                                         </div>
@@ -138,45 +145,43 @@
                                             </div>
                                             <div class="col">
                                                 <span class="text-dark">
-                                                    {{ $key->flag == 1 ? 'درخواست برداشت از کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
+                                                    {{ $key->type == 'deposit' ? 'شارژ کیف پول' : 'برداشت ازکیف پول' }}
                                                 </span>
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col mr-2">
                                                 <h6 class="">
-                                                    ها مبلغ تراکنش
+                                                    منبع
                                                 </h6>
                                             </div>
                                             <div class="col">
-
-                                                <span class="moneyInputSpan">{{ $key->price }}</span>
+                                                {{ $key->source == 'user' ? 'کاربر' : 'اپراتور' }}
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col mr-2">
 
                                                 <h6 class="">
-                                                    مجموع تراکنش ها </h6>
+                                                    مبلغ تراکنش </h6>
                                             </div>
                                             <div class="col">
 
-                                                <span class="transaction_datetime moneyInputSpan ">
-                                                    {{ $key->finalprice }}
-
-                                                </span>
+                                                <span
+                                                    class="moneyInputSpan {{ $key->type == 'deposit' ? 'text-success' : 'text-danger' }}">{{ $key->amount }}</span>
+                                                ریال
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col mr-2">
 
                                                 <h6 class="">
-                                                    شماره سند </h6>
+                                                    وضعیت </h6>
                                             </div>
 
                                             <div class="col">
-                                                <span class="text-dark">
-                                                    {{ $key->documentnumber }}</span>
+                                                <span
+                                                    class="{{ $key->status == 'success' ? 'text-success' : 'text-danger' }}">{{ $key->status == 'success' ? 'موفق' : 'ناموفق' }}</span>
                                             </div>
 
                                         </div>
@@ -185,6 +190,9 @@
                                 @endforeach
                             </div>
                         </div>
+                    </div>
+                    <div class="mt-3">
+                        {{ $trans->links('front::components.paginate') }}
                     </div>
                 </div>
             </div>
@@ -210,6 +218,7 @@
             </div>
         </div>
     @endif
+
 
 
     <!-- End Content -->

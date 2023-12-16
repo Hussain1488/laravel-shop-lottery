@@ -67,9 +67,6 @@ class CreateColleagueController extends Controller
 
     public function shopedit($id)
     {
-        // dd(ActivityDetailsModel::latest()->first()->data);
-        // dd(ActivityDetailsModel::latest()->get('data'));
-
         $store = createstore::with('user')->find($id);
         // $jalaliEndDate = Jalalian::fromFormat('Y-m-d', $store->enddate);
         $user = User::get();
@@ -100,14 +97,6 @@ class CreateColleagueController extends Controller
         }
         $originalData = $store->getOriginal();
         // dd($originalData);
-        $store->update([
-            'nameofstore' => $request->nameofstore,
-            'addressofstore' => $request->addressofstore,
-            'feepercentage' => $request->feepercentage,
-            'settlementtime' => $request->settlementtime,
-            'enddate' => $carbonDate != null ? $carbonDate : $store->enddate,
-            'uploaddocument' => $docPath,
-        ]);
         $englishToPersian = [
             'nameofstore' => 'اسم فروشگاه',
             'feepercentage' => 'مقدار کارمز',
@@ -125,9 +114,6 @@ class CreateColleagueController extends Controller
                 ];
             }
         }
-
-        // dd($store->selectperson);
-        $operator_id = OperatorActivity::createActivity($store->selectperson, 'EDIT_STORE');
         $data = ['اسم فروشگاه' => $originalData['nameofstore']];
 
         foreach ($changes as $key => $change) {
@@ -139,9 +125,26 @@ class CreateColleagueController extends Controller
                 $data[$fieldPersianName . ' (جدید)'] = $change['new'];
             }
         }
-        ActivityDetailsModel::createActivityDetail($operator_id, $data);
+        try {
+            DB::beginTransaction();
+            $store->update([
+                'nameofstore' => $request->nameofstore,
+                'addressofstore' => $request->addressofstore,
+                'feepercentage' => $request->feepercentage,
+                'settlementtime' => $request->settlementtime,
+                'enddate' => $carbonDate != null ? $carbonDate : $store->enddate,
+                'uploaddocument' => $docPath,
+            ]);
 
-        toastr()->success('فروشگاه با موفقیت اصلاح شد.');
+            // dd($store->selectperson);
+            $operator_id = OperatorActivity::createActivity($store->selectperson, 'EDIT_STORE');
+            ActivityDetailsModel::createActivityDetail($operator_id, $data);
+            DB::commit();
+            toastr()->success('فروشگاه با موفقیت اصلاح شد.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            toastr()->warning('عملیات اصلاح فروشگاه انجام نشد!' . $e);
+        }
 
         return redirect(route('admin.createcolleague.shopList'));
     }
@@ -265,8 +268,6 @@ class CreateColleagueController extends Controller
     public function createcreditoperator(Request $request)
     {
         $users = User::where('level', 'user')->get();
-
-
         return view('back.createcolleague.createcreditoperator', compact('users'));
     }
 
@@ -329,22 +330,26 @@ class CreateColleagueController extends Controller
             'مقدار افزایش اعتبار' => $request->purchasecredit . ' ریال',
         ];
 
-        $userUpdate->purchasecredit += $request->purchasecredit;
-        $userUpdate->enddate = $carbonDate;
-        $userUpdate->documents = $docPath;
+        try {
+            DB::beginTransaction();
+            $userUpdate->purchasecredit += $request->purchasecredit;
+            $userUpdate->enddate = $carbonDate;
+            $userUpdate->documents = $docPath;
 
-        $operator_id = OperatorActivity::createActivity($userUpdate->id, 'BUYER_CREDIT');
-        ActivityDetailsModel::createActivityDetail($operator_id, $data);
-        // public function transaction($user, $amount, $status, $flag, $type)
-        $buyer_trans = buyertransaction::transaction($userUpdate, $request->purchasecredit, true, 0, 0);
-        // transaction($bank_id, $creditAmount, $status, $trans_id)
-        $bank_trans = banktransaction::transaction($bank_id->id, $request->purchasecredit, false, $buyer_trans->id, 'user');
+            $operator_id = OperatorActivity::createActivity($userUpdate->id, 'BUYER_CREDIT');
+            ActivityDetailsModel::createActivityDetail($operator_id, $data);
+            // public function transaction($user, $amount, $status, $flag, $type)
+            $buyer_trans = buyertransaction::transaction($userUpdate, $request->purchasecredit, true, 0, 0);
+            // transaction($bank_id, $creditAmount, $status, $trans_id)
+            $bank_trans = banktransaction::transaction($bank_id->id, $request->purchasecredit, false, $buyer_trans->id, 'user');
 
-        $userUpdate->save();
-
-        toastr()->success('اعتبار دهی به کاربر با موفقیت انجام شد.');
-
-
+            $userUpdate->save();
+            DB::commit();
+            toastr()->success('اعتبار دهی به کاربر با موفقیت انجام شد.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            toastr()->warning('اعتبار دهی به کاربر با خطا روبرو شد!' . $e);
+        }
         return redirect()->back();
     }
 
@@ -452,38 +457,43 @@ class CreateColleagueController extends Controller
             $docPath = json_encode($paths);
         }
 
-        $wallet = Wallet::where('user_id', $user->id)->with('histories')->first();
-        $data = [
-            'موجودی قبلی' => $wallet->balance,
-            'مقدار افزایش موجودی' => $request->ReCredintAmount . ' ریال',
-        ];
-        $wallet->balance += $request->ReCredintAmount;
+        // Get the wallet for the user
+        $wallet = $user->getWallet();
 
+        try {
+            DB::beginTransaction();
 
-        createdocument::create([
-            'namedebtor' => $request->namedebtor,
-            'namecreditor' => $user->first_name,
-            'price' => $request->ReCredintAmount,
-            'description' => $request->description,
-            'documents' => $docPath,
-            'numberofdocuments' => $request->numberofdocuments,
-        ]);
-        // $history = $wallet->histories()->create([
-        //     'type'        => 'deposit',
-        //     'amount'      => $request->ReCredintAmount,,
-        //     'description' =>  'شارژ توسط اپراتور',
-        //     'source'      => 'user',
-        //     'status'      => 'success'
-        // ]);
-
-        $user->save();
-        $wallet->save();
-        $operator_id = OperatorActivity::createActivity($user->id, 'CREATE_DOCUMNET');
-        ActivityDetailsModel::createActivityDetail($operator_id, $data);
-
-        toastr()->success('ایجاد سند جدید با شماره ' . $request->numberofdocuments . ' با موفقیت ثبت گردید.');
-
-
-        return redirect()->back()->with('number', $request->numberofdocuments);
+            $history = $wallet->histories()->create([
+                'type'        => 'deposit',
+                'amount'      => $request->ReCredintAmount,
+                'description' => 'شارژ توسط اپراتور',
+                'source'      => 'admin',
+                'status'      => 'success'
+            ]);
+            $data = [
+                'موجودی قبلی' => $wallet->balance,
+                'مقدار افزایش موجودی' => $request->ReCredintAmount . ' ریال',
+            ];
+            $wallet->balance += $request->ReCredintAmount;
+            createdocument::create([
+                'namedebtor' => $request->namedebtor,
+                'namecreditor' => $user->first_name,
+                'price' => $request->ReCredintAmount,
+                'description' => $request->description,
+                'documents' => $docPath,
+                'numberofdocuments' => $request->numberofdocuments,
+            ]);
+            $user->save();
+            $wallet->save();
+            $operator_id = OperatorActivity::createActivity($user->id, 'CREATE_DOCUMNET');
+            ActivityDetailsModel::createActivityDetail($operator_id, $data);
+            DB::commit();
+            toastr()->success('ایجاد سند جدید با شماره ' . $request->numberofdocuments . ' با موفقیت ثبت گردید.');
+            return redirect()->back()->with('number', $request->numberofdocuments);
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+        toastr()->warning('متأسفانه عملیات انجام نشد!');
+        return redirect()->back();
     }
 }
