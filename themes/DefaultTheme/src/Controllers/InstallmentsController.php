@@ -39,8 +39,6 @@ class InstallmentsController extends Controller
     public function index()
     {
 
-        // $jalaliNow = Jalalian::now();
-        // dd($jalaliNow->format('Y/m/d'));
         $installmentsm = Makeinstallmentsm::where('userselected', Auth::user()->id)->with('installments', 'store', 'user')->get();
         $installmentsm1 = Makeinstallmentsm::where('userselected', Auth::user()->id)->where('statususer', 1)->with('installments', 'store', 'user')->get();
         $installmentsm2 = Makeinstallmentsm::where('userselected', Auth::user()->id)->where('paymentstatus', 1)->with('installments', 'store', 'user')->get();
@@ -93,7 +91,7 @@ class InstallmentsController extends Controller
 
                 $Insta_dateils = new installmentdetails();
 
-                $jalali_date_now = Jalalian::now();
+                $jalali_date_now = carbon::now();
                 // $new_date = $jalali_date_now->addMonths(1)->format('Y-m-d');
                 if ($installments->numberofinstallments > 0) {
                     for ($i = 0; $i < $installments->numberofinstallments; $i++) {
