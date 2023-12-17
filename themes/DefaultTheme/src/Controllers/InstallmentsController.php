@@ -119,9 +119,9 @@ class InstallmentsController extends Controller
                     'status'      => 'success'
                 ]);
 
-                $buyer_trans1 = buyertransaction::transaction(Auth::user(), $installments->prepaidamount, false, 1, 1);
+                $buyer_trans1 = buyertransaction::transaction(Auth::user(), $installments->prepaidamount, false, 1, 0, 'پرداخت پیش پرداخت');
 
-                $buyer_trans = buyertransaction::transaction(Auth::user(), $installments->Creditamount, false, 0, 1);
+                $buyer_trans = buyertransaction::transaction(Auth::user(), $installments->Creditamount, false, 0, 0, 'تأیید خرید');
 
                 $bank = banktransaction::transaction($bank_id->id, $installments->prepaidamount, true, $buyer_trans1->id, 'user');
 
@@ -177,7 +177,7 @@ class InstallmentsController extends Controller
                     'source'      => 'user',
                     'status'      => 'success'
                 ]);
-                $buyer_trans = buyertransaction::transaction(Auth::user(), $insta_dateils->installmentprice, false, 1, 0);
+                $buyer_trans = buyertransaction::transaction(Auth::user(), $insta_dateils->installmentprice, false, 1, 0, 'پرداخت قسط');
 
                 $bank = banktransaction::transaction($bank_id, $insta_dateils->installmentprice, true, $buyer_trans->id, 'user');
 

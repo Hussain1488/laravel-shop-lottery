@@ -62,12 +62,12 @@ class WalletController extends Controller
 
         $gateways = Gateway::active()->pluck('key')->toArray();
         $request->validate([
-            'amount'      => 'required|numeric|max:500000000|min:1000',
+            'amount'      => 'required|numeric|max:5000000000|min:10000',
             'gateway'     => 'required|in:' . implode(',', $gateways),
         ]);
 
         $gateway = $request->gateway;
-        $amount  = intval($request->amount);
+        $amount  = intval($request->amount / 10);
         $wallet  = auth()->user()->getWallet();
 
         // dd($gateway, $amount, $wallet);
@@ -152,7 +152,7 @@ class WalletController extends Controller
             event(new WalletAmountIncreased($history->wallet));
             $user = User::find(Auth::user()->id);
 
-            $user_trans = buyertransaction::transaction($user, ($amount * 10), true, 1, 1);
+            $user_trans = buyertransaction::transaction($user, ($amount * 10), true, 1, 1, 'شارژ کیف پول');
             banktransaction::transaction(session()->get('bank_id')->id, ($amount * 10), false, $user_trans->id, 'user');
 
 
@@ -226,7 +226,7 @@ class WalletController extends Controller
 
 
         $user = User::find($request->user_id);
-        $user_trans = buyertransaction::transaction($user, $RecharAmount, false, 1, 1);
+        $user_trans = buyertransaction::transaction($user, $RecharAmount, false, 1, 1, 'شارژ کیف پول');
 
         banktransaction::transaction($bank_id->id, $RecharAmount, false, $user_trans->id, 'user');
 

@@ -339,7 +339,7 @@ class CreateColleagueController extends Controller
             $operator_id = OperatorActivity::createActivity($userUpdate->id, 'BUYER_CREDIT');
             ActivityDetailsModel::createActivityDetail($operator_id, $data);
             // public function transaction($user, $amount, $status, $flag, $type)
-            $buyer_trans = buyertransaction::transaction($userUpdate, $request->purchasecredit, true, 0, 0);
+            $buyer_trans = buyertransaction::transaction($userUpdate, $request->purchasecredit, true, 0, 1, 'افزایش اعتبار توسط اپراتور');
             // transaction($bank_id, $creditAmount, $status, $trans_id)
             $bank_trans = banktransaction::transaction($bank_id->id, $request->purchasecredit, false, $buyer_trans->id, 'user');
 
@@ -438,7 +438,7 @@ class CreateColleagueController extends Controller
         // dd('hey');
         $user = User::find($request->namecreditor);
 
-        $buyerTrans = buyertransaction::transaction($user, $request->ReCredintAmount, true, 1, 0);
+        $buyerTrans = buyertransaction::transaction($user, $request->ReCredintAmount, true, 1, 0, 'ایجاد سند مالی');
 
         // transaction($bank_id, $creditAmount, $status, $trans_id)
         $bank = banktransaction::transaction($request->namedebtor, $request->ReCredintAmount, false, $buyerTrans->id, 'user');

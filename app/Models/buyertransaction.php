@@ -24,7 +24,7 @@ class buyertransaction extends Model
         return $this->hasOne(BankTransaction::class, 'buyer_trans_id');
     }
 
-    public function transaction($user, $amount, $status, $flag, $type)
+    public function transaction($user, $amount, $status, $flag, $type, $description)
     {
         $user_transaction_number = buyertransaction::count();
         if ($user_transaction_number > 0) {
@@ -62,7 +62,8 @@ class buyertransaction extends Model
             'typeoftransaction' => $type,
             'price' => $amount,
             'finalprice' => $final_price,
-            'documentnumber' => $doc_number
+            'documentnumber' => $doc_number,
+            'description' => $description,
         ]);
         return $user_trans;
     }
