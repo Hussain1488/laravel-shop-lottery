@@ -228,7 +228,7 @@
                                                                                         به
                                                                                         سر
                                                                                         رسید تاریخ:
-                                                                                        {{ \Carbon\Carbon::parse($key->duedate)->format('d-m-Y') }}
+                                                                                        {{ jdate($key->duedate)->format('d-m-Y') }}
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="">
