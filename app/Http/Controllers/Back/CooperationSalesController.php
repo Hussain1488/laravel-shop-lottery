@@ -198,7 +198,7 @@ class CooperationSalesController extends Controller
                 'final_price' => $final_price,
                 'shabanumber' => $request->shabanumber,
                 'factor' => $docPath,
-                'depositdate' => Jalalian::now()->format('Y-m-d'),
+                'depositdate' => carbon::now()->format('Y-m-d'),
                 'trans_id' => $transaction,
             ]);
             // creating new store transaction for mainWallet transaction.
@@ -287,7 +287,7 @@ class CooperationSalesController extends Controller
     public function mainWallet($id)
     {
 
-        $trans = createstoretransaction::where('flag', 1)->where('store_id', $id)->latest()->get();
+        $trans = createstoretransaction::where('flag', 1)->where('store_id', $id)->latest()->paginate(20);
         // dd(count($trans));
         if (count($trans) > 0) {
             $total = createstoretransaction::where('flag', 1)->where('store_id', $id)->latest()->first()->finalprice;
@@ -302,7 +302,7 @@ class CooperationSalesController extends Controller
     public function payRequestWallet($id)
     {
 
-        $trans = PaymentListModel::where('store_id', $id)->latest()->get();
+        $trans = PaymentListModel::where('store_id', $id)->latest()->paginate(20);
         $store = createstore::find($id);
         if (count($trans) > 0) {
             $total = PaymentListModel::where('store_id', $id)->latest()->first()->final_price;
@@ -314,7 +314,7 @@ class CooperationSalesController extends Controller
     public function paidSales($id)
     {
 
-        $trans = createstoretransaction::where('flag', 2)->where('store_id', $id)->latest()->get();
+        $trans = createstoretransaction::where('flag', 2)->where('store_id', $id)->latest()->paginate(20);
         $store = createstore::find($id);
         if (count($trans) > 0) {
             $total = createstoretransaction::where('flag', 2)->where('store_id', $id)->latest()->first()->finalprice;
@@ -327,7 +327,7 @@ class CooperationSalesController extends Controller
     }
     public function creditTrans($id)
     {
-        $trans = createstoretransaction::where('flag', 0)->where('typeoftransaction', 3)->where('store_id', $id)->latest()->get();
+        $trans = createstoretransaction::where('flag', 0)->where('typeoftransaction', 3)->where('store_id', $id)->latest()->paginate(20);
         $store = createstore::find($id);
         if (count($trans) > 0) {
             $total = createstoretransaction::where('flag', 0)->where('typeoftransaction', 3)->where('store_id', $id)->latest()->first()->finalprice;
@@ -341,7 +341,6 @@ class CooperationSalesController extends Controller
     public function transactionDetails($id)
     {
         $details = StoreTransactionDetailsModel::where('transaction_id', $id)->first()->data;
-        // dd($details);
         return response()->json($details);
     }
 }
