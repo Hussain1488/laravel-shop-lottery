@@ -50,13 +50,16 @@
                                                 نوع تراکنش
                                             </th>
                                             <th>
+                                                توضیحات
+                                            </th>
+                                            <th>
                                                 مبلغ تراکنش
                                             </th>
                                             <th class="text-danger">
                                                 مجموع تراکنش ها
                                             </th>
                                             <th>
-                                                شماره سند
+                                                شماره تراکنش
                                             </th>
                                         </tr>
                                     </thead>
@@ -71,19 +74,28 @@
                                                 </td>
                                                 <td>
                                                     <span class="transaction_datetime">
-                                                        {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y-m-d') }}
+                                                        {{ jdate($key->created_at)->format('Y-m-d') }}
                                                         <br>
-                                                        {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                        {{ jdate($key->created_at)->format('H:i:s') }}
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    {{ $key->flag == 1 ? 'درخواست برداشت از کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
+                                                    <span
+                                                        class="{{ $key->typeoftransaction == 1 ? 'text-success' : 'text-danger' }}">
+                                                        {{ $key->typeoftransaction == 1 ? 'افزایش اعتبار' : 'کاهش اعتبار' }}
+                                                    </span>
                                                 </td>
                                                 <td>
-                                                    <span class="moneyInputSpan">{{ $key->price }}</span>
+                                                    <span>
+                                                        {{ $key->description }}
+                                                    </span>
                                                 </td>
-                                                <td class="text-danger">
-                                                    <span class="moneyInputSpan">{{ $key->finalprice }}</span>
+                                                <td>
+                                                    <span class="moneyInputSpan">{{ $key->price }}</span> ریال
+                                                </td>
+                                                <td class="">
+                                                    <span class="moneyInputSpan text-danger">{{ $key->finalprice }}</span>
+                                                    ریال
 
                                                 </td>
                                                 <td>
@@ -108,10 +120,10 @@
                                                 </h6>
                                             </div>
                                             <div class="col">
-                                                <span class="transaction_datetime">
-                                                    {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y-m-d') }}
+                                                <span class="">
+                                                    {{ jdate($key->created_at)->format('Y-m-d') }}
                                                     <br>
-                                                    {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                    {{ jdate($key->created_at)->format('H:i:s') }}
                                                 </span>
                                             </div>
                                         </div>
@@ -122,8 +134,22 @@
                                                     نوع تراکنش: </h6>
                                             </div>
                                             <div class="col">
-                                                <span class="text-dark">
-                                                    {{ $key->flag == 1 ? 'درخواست برداشت از کیف پول اصلی' : ($key->flag == 0 ? 'درخواست واریز' : 'فروش پرداخت شده') }}
+                                                <span
+                                                    class="{{ $key->typeoftransaction == 1 ? 'text-success' : 'text-danger' }}">
+                                                    {{ $key->typeoftransaction == 1 ? 'افزایش اعتبار' : 'کاهش اعتبار' }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="row pt-1">
+                                            <div class="col mr-2">
+                                                <h6 class="">
+                                                    توضیحات
+                                                </h6>
+                                            </div>
+                                            <div class="col">
+
+                                                <span>
+                                                    {{ $key->description }}
                                                 </span>
                                             </div>
                                         </div>
@@ -135,7 +161,7 @@
                                             </div>
                                             <div class="col">
 
-                                                <span class="moneyInputSpan">{{ $key->price }}</span>
+                                                <span class="moneyInputSpan">{{ $key->price }}</span> ریال
                                             </div>
                                         </div>
                                         <div class="row pt-1">
@@ -147,7 +173,8 @@
                                             <div class="col">
 
                                                 <span class="transaction_datetime">
-                                                    <span class="moneyInputSpan">{{ $key->finalprice }}</span>
+                                                    <span class="moneyInputSpan text-danger">{{ $key->finalprice }}</span>
+                                                    ریال
 
                                                 </span>
                                             </div>
@@ -156,7 +183,7 @@
                                             <div class="col mr-2">
 
                                                 <h6 class="">
-                                                    شماره سند </h6>
+                                                    شماره تراکنش </h6>
                                             </div>
 
                                             <div class="col">
@@ -172,6 +199,9 @@
 
 
                         </div>
+                    </div>
+                    <div class="mt-3">
+                        {{ $trans->links('front::components.paginate') }}
                     </div>
                 </div>
             </div>
