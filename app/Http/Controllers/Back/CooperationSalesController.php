@@ -199,7 +199,7 @@ class CooperationSalesController extends Controller
                 'shabanumber' => $request->shabanumber,
                 'factor' => $docPath,
                 'depositdate' => Jalalian::now()->format('Y-m-d'),
-                'trans_id ' => $transaction,
+                'trans_id' => $transaction,
             ]);
             // creating new store transaction for mainWallet transaction.
             StoreTransactionDetailsModel::createDetail($transaction, $trans_data);
