@@ -8,9 +8,7 @@
 
         <div class="row">
 
-            @php
-                $final_price = 0;
-            @endphp
+
             <div class="col-12">
 
                 <div class="dt-sl">
@@ -78,13 +76,10 @@
                                         </tr>
                                     </thead>
                                     @php
-                                        $counter = 1;
+                                        $counter = ($trans->currentPage() - 1) * $trans->perPage() + 1;
                                     @endphp
                                     <tbody>
                                         @foreach ($trans as $key)
-                                            @php
-                                                $key->type == 'deposit' ? ($final_price += $key->amount) : ($final_price -= $key->amount);
-                                            @endphp
                                             <tr>
                                                 <td>
                                                     {{ $counter++ }}
@@ -239,29 +234,6 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    {{-- <form id="payment_form" action="{{ route('front.wallet.rechargeVarify') }}" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <input id="user_id" type="hidden" value="{{ Auth::user()->id }}" name="user_id">
-                        <div class="d-flex justify-content-around my-1">
-                            <div class="col">
-                                <label for="">مقدار واریز:</label>
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control moneyInput" name="recharge_amount">
-                            </div>
-                        </div>
-                        <div class="row d-flex justify-center my-1">
-                            <div id="validation-messages"></div>
-
-                            <span class="text-danger" style="display: none">لطفا فورم را دقیق پر کرده بعد کلید
-                                تأیید را بزنید.</span>
-                        </div>
-                        <div class="modal-footer d-flex justify-content-between">
-                            <input type="submit" id="submit_form_pay" class="btn btn-success" value="تأیید">
-                            <input type="button" class="btn btn-danger" data-dismiss="modal" value="انصراف">
-                        </div>
-                    </form> --}}
                     <form id="wallet-create-form" action="{{ route('front.wallet.store') }}" class="setting_form"
                         method="POST">
                         @csrf

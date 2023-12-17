@@ -37,23 +37,63 @@ class InstallmentReportsController extends Controller
     public function index()
     {
 
+        $currentPaginationPart = request()->query('tab');
+        // Define the default value for $payment_stat
         $payment_stat = 'wait';
-        $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
-        $installments1 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
-        // dd($installments);
+        if ($currentPaginationPart == 'insta1') {
+            $payment_stat = 'not_paid';
+        } elseif ($currentPaginationPart == 'insta2') {
+            $payment_stat = 'paid';
+        }
 
-        return view('back.installmentreports.index', compact('installments', 'installments1',  'payment_stat'));
+        $perPage = 15;
+
+        $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->latest()->paginate($perPage, ['*'], 'installments');
+        $installments1 =
+            Makeinstallmentsm::where('statususer', 1)
+            ->with(['store', 'user', 'installments' => function ($query) {
+                $query->where('paymentstatus', 0);
+            }])
+            ->whereHas('installments', function ($query) {
+                $query->where('paymentstatus', 0);
+            })
+            ->latest()
+            ->paginate($perPage, ['*'], 'installments2');
+
+        $installments2 = Makeinstallmentsm::where('statususer', 1)
+            ->with(['store', 'user', 'installments' => function ($query) {
+                $query->where('paymentstatus', 1);
+            }])
+            ->whereHas('installments', function ($query) {
+                $query->where('paymentstatus', 1);
+            })
+            ->latest()
+            ->paginate($perPage, ['*'], 'installments2');
+        // dd($installments1, $installments2);
+
+        return view('back.installmentreports.index', compact('installments', 'installments1', 'installments2', 'payment_stat'));
     }
     public function payRequestlist()
     {
-        $transaction = PaymentListModel::with('store')->latest()->get();
+        $perPage = 15;
+
+        $transaction = PaymentListModel::with('store')
+            ->where('status', 0)
+            ->latest()
+            ->paginate($perPage, ['*'], 'transaction_page');
+
+        $transaction1 = PaymentListModel::with('store')
+            ->where('status', 1)
+            ->latest()
+            ->paginate($perPage, ['*'], 'transaction1_page');
+
         $total[1] = $transaction->where('status', 1)->sum('depositamount');
         $total[0] = $transaction->where('status', 0)->sum('depositamount');
         $bank =  BankAccount::whereHas('account_type', function ($query) {
             $query->where('code', 21);
         })->get();
 
-        return view('back.installmentreports.PayRequestList', compact('transaction', 'total', 'bank'));
+        return view('back.installmentreports.PayRequestList', compact('transaction', 'transaction1', 'total', 'bank'));
     }
 
     public function RequestPayment($id, $bank_id, $trans_id)
@@ -146,8 +186,8 @@ class InstallmentReportsController extends Controller
 
     public function bankList()
     {
-        $listbank = BankAccount::with('account_type')->get();
-
+        $listbank = BankAccount::with('account_type')->latest()->paginate(10);
+        // dd($listbank);
         return view('back.installmentreports.bank_list', compact('listbank'));
     }
 
@@ -463,11 +503,11 @@ class InstallmentReportsController extends Controller
     {
         // dd('hey');
 
-        $paidList = paymentdetails::with('payments.store')->get();
-        $paidList = $paidList->map(function ($item) {
-            $item->date = Jalalian::fromCarbon($item->created_at)->format('Y-m-d');
-            return $item;
-        });
+        $paidList = paymentdetails::with('payments.store')->latest()->paginate(20);
+        // $paidList = $paidList->map(function ($item) {
+        //     $item->date = Jalalian::fromCarbon($item->created_at)->format('Y-m-d');
+        //     return $item;
+        // });
         // dd($paidList);
         return view('back.installmentreports.paidList', compact('paidList'));
     }

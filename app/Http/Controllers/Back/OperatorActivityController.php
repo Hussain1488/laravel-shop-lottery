@@ -19,17 +19,16 @@ class OperatorActivityController extends Controller
     public function index()
     {
 
-        $users = User::where('level', '!=', 'user')->with('roles')->latest()->get();
-
+        $users = User::where('level', '!=', 'user')->with('roles')->latest()->paginate(15);
         return view('back.operatoractivity.index', compact('users'));
     }
 
     public function search(Request $request)
     {
 
-        $users = User::where('level', 'admin')->where('username', 'like', '%' . $request->filter . '%')->with('roles')->get();
+        $users = User::where('level', 'admin')->where('username', 'like', '%' . $request->filter . '%')->with('roles')->latest()->paginate(15);;
         if ($users->count() == 0) {
-            $users = User::where('level', 'admin')->with('roles')->get();
+            $users = User::where('level', 'admin')->with('roles')->latest()->paginate(15);
             toastr()->warning('هیج اپراتوری با جستجوی شما یافت نشد');
         }
         return view('back.operatoractivity.index', compact('users'));
@@ -40,11 +39,11 @@ class OperatorActivityController extends Controller
         $operations = [];
         $users = User::where('username', 'like', '%' . $request->filter . '%')->get();
         foreach ($users as $user) {
-            $userOperations = OperatorActivity::where('operator_id', $request->operator)->where('user_id', $user->id)->with('user')->latest()->get();
+            $userOperations = OperatorActivity::where('operator_id', $request->operator)->where('user_id', $user->id)->with('user')->latest()->paginate(20);;
             $operations = array_merge($operations, $userOperations->all());
         }
         if ($users->count() == 0) {
-            $operations = OperatorActivity::where('operator_id', $request->operator)->with('user')->latest()->get();
+            $operations = OperatorActivity::where('operator_id', $request->operator)->with('user')->latest()->paginate(20);
             toastr()->warning('هیج فعالیتی برای کاربر یافت نشد');
         }
 
@@ -73,7 +72,7 @@ class OperatorActivityController extends Controller
      */
     public function show($id)
     {
-        $operations = OperatorActivity::where('operator_id', $id)->with('user')->latest()->get();
+        $operations = OperatorActivity::where('operator_id', $id)->with('user')->latest()->paginate(20);
         $operator = User::find($id);
         // dd($id);
         return view('back.operatoractivity.show', compact('operations', 'operator'));
@@ -103,7 +102,6 @@ class OperatorActivityController extends Controller
     }
     public function details($id)
     {
-
         $activity['data'] = OperatorActivity::find($id);
         $activity['data']->created_at = Jalalian::fromCarbon($activity['data']->created_at)->format('Y-m-d');
         $activity['details'] = ActivityDetailsModel::where('activity_id', $id)->first();

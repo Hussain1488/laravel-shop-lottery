@@ -94,7 +94,7 @@
                                             </tr>
                                         </thead>
                                         @php
-                                            $counter = 1;
+                                            $counter = ($operations->currentPage() - 1) * $operations->perPage() + 1;
                                         @endphp
 
                                         <tbody>
@@ -140,8 +140,10 @@
 
                         </div>
                     </div>
+                    <div class="m-3">
+                        {{ $operations->links() }}
+                    </div>
                 </section>
-
 
             </div>
         </div>

@@ -87,7 +87,7 @@
                                                 </tr>
                                             </thead>
                                             @php
-                                                $counter = 1;
+                                                $counter = ($trans->currentPage() - 1) * $trans->perPage() + 1;
                                             @endphp
                                             <tbody>
                                                 @foreach ($trans as $key)
@@ -98,9 +98,9 @@
                                                         <td>
 
                                                             <span class="transaction_datetime">
-                                                                {{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->created_at))->format('Y-m-d') }}
+                                                                {{ jdate($key->created_at)->format('Y-m-d') }}
                                                                 <br>
-                                                                {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                                {{ jdate($key->created_at)->format('H:i:s') }}
                                                             </span>
                                                         </td>
                                                         <td>
@@ -143,8 +143,8 @@
                                                         </h5>
                                                     </div>
                                                     <div class="col"><span class="text-dark">
-                                                            {{ \Carbon\Carbon::parse($key->datetransaction)->format('Y-m-d') }}
-                                                            {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                            {{ jdate($key->created_at)->format('Y-m-d') }}
+                                                            {{ jdate($key->created_at)->format('H:i:s') }}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -222,10 +222,12 @@
 
                         </div>
                     </div>
+                    <div class="m-3">
+                        {{ $trans->links() }}
+                    </div>
             </div>
 
         </div>
-
         </section>
     </div>
 

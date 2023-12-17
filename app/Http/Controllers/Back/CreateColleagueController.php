@@ -48,9 +48,7 @@ class CreateColleagueController extends Controller
     public function shopList()
     {
 
-        $store = createstore::with('user')->get();
-
-
+        $store = createstore::with('user')->latest()->paginate(15);
         return view('back.createcolleague.shop_list', compact('store'));
     }
     public function shopListFilter(Request $request)

@@ -70,6 +70,9 @@
                         </div>
 
                     </div>
+                    <div class="m-3">
+                        {{ $listbank->links() }}
+                    </div>
                 </section>
             </div>
 

@@ -31,28 +31,23 @@
                         <h4 class="card-title">لیست تمامی اقساط</h4>
 
                     </div>
-
-
-
-
                     <div class="card-content">
                         <div class="container mt-3">
 
-                            <!-- Nav tabs -->
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link {{ $payment_stat == 'wait' ? 'active' : '' }} "
+                                    <a class="nav-link {{ request('tab') == 'insta' ? 'active' : ($payment_stat == 'wait' ? 'active' : '') }} "
                                         style="font-size: 10px" data-toggle="tab" href="#home">در
                                         انتظار تأیید</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ $payment_stat == 'not_paid' ? 'active' : '' }}"
+                                    <a class="nav-link {{ request('tab') == 'insta1' ? 'active' : ($payment_stat == 'not_paid' ? 'active' : '') }}"
                                         style="font-size: 10px" data-toggle="tab" href="#menu1">اقساط
                                         پرداخت
                                         نشده</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ $payment_stat == 'paid' ? 'active' : '' }}"
+                                    <a class="nav-link {{ request('tab') == 'insta2' ? 'active' : ($payment_stat == 'paid' ? 'active' : '') }}"
                                         style="font-size: 10px" data-toggle="tab" href="#menu2">اقساط
                                         پرداخت
                                         شده</a>
@@ -64,7 +59,8 @@
 
                                 {{-- not validated and not paid prepayment of installments list --}}
                                 <div id="home"
-                                    class="container tab-pane {{ $payment_stat == 'wait' ? 'active' : 'fade' }}"><br>
+                                    class="container tab-pane {{ request('tab') == 'insta' ? 'active' : ($payment_stat == 'wait' ? 'active' : 'fade') }}">
+                                    <br>
 
                                     <form action="{{ route('admin.installments.filter') }}" method="get">
                                         @csrf
@@ -144,11 +140,15 @@
                                             </div>
                                         @endforeach
                                     @endif
+                                    <div class="m-3">
+                                        {{ $installments->appends(['tab' => 'insta', 'page' => $installments->currentPage()])->links() }}
+                                    </div>
 
                                 </div>
                                 {{--  not payd installments which are paid prepayment of isntallments list --}}
                                 <div id="menu1"
-                                    class="container tab-pane {{ $payment_stat == 'not_paid' ? 'active' : 'fade' }}"><br>
+                                    class="container tab-pane {{ request('tab') == 'insta1' ? 'active' : ($payment_stat == 'not_paid' ? 'active' : 'fade') }}">
+                                    <br>
 
                                     <form action="{{ route('admin.installments.filter1') }}" method="get">
                                         @csrf
@@ -188,7 +188,7 @@
                                         </div>
                                     @else
                                         @foreach ($installments1 as $value)
-                                            @if (!$value->installments->where('paymentstatus', 0)->count() > 0)
+                                            @if (!$value->installments->count() > 0)
                                                 <div class="alert alert-warning p-2 my-1">
                                                     <span class="text-danger">
 
@@ -197,58 +197,61 @@
                                                 </div>
                                             @else
                                                 @foreach ($value->installments as $key)
-                                                    @if ($key->paymentstatus == 0)
-                                                        <div class="border rounded p-2 my-1">
-                                                            <div class="row d-flex justify-content-around">
-                                                                <a
-                                                                    href="{{ route('admin.installments.shop.installments', [$value->store_id, 'not_paid']) }}">
-                                                                    <h5>
-                                                                        قسط فروشگاه: {{ $value->store->nameofstore }}
+                                                    {{-- @if ($key->paymentstatus == 0) --}}
+                                                    <div class="border rounded p-2 my-1">
+                                                        <div class="row d-flex justify-content-around">
+                                                            <a
+                                                                href="{{ route('admin.installments.shop.installments', [$value->store_id, 'not_paid']) }}">
+                                                                <h5>
+                                                                    قسط فروشگاه: {{ $value->store->nameofstore }}
+                                                                </h5>
+                                                            </a>
+                                                            <form action="{{ route('admin.installments.filter1') }}"
+                                                                method="get">
+                                                                @csrf
+                                                                <input type="hidden" value="{{ $value->user->username }}"
+                                                                    name="filter1" id="">
+                                                                <button class="btn"
+                                                                    style="border:none; background-color:none"
+                                                                    type="submit">
+                                                                    <h5>قسط آقای: {{ $value->user->username }}
                                                                     </h5>
-                                                                </a>
-                                                                <form action="{{ route('admin.installments.filter1') }}"
-                                                                    method="get">
-                                                                    @csrf
-                                                                    <input type="hidden"
-                                                                        value="{{ $value->user->username }}"
-                                                                        name="filter1" id="">
-                                                                    <button class="btn"
-                                                                        style="border:none; background-color:none"
-                                                                        type="submit">
-                                                                        <h5>قسط آقای: {{ $value->user->username }}
-                                                                        </h5>
-                                                                    </button>
-                                                                </form>
-                                                            </div>
+                                                                </button>
+                                                            </form>
+                                                        </div>
 
 
-                                                            <div class="row">
-                                                                مبلغ کل فروش: <span class="monyInputSpan">
-                                                                    {{ $value->Creditamount }} </span>
-                                                            </div>
-                                                            <div class="row">
-                                                                قسط شماره {{ $key->installmentnumber }}به سر رسید
-                                                                {{ \Carbon\Carbon::parse($key->duedate)->format('d') }}
-                                                                هر ماه به مبلغ قسط
-                                                                <span class="monyInputSpan">
-                                                                    {{ $key->installmentprice }} </span> ریال
-                                                            </div>
+                                                        <div class="row">
+                                                            مبلغ کل فروش: <span class="monyInputSpan">
+                                                                {{ $value->Creditamount }} </span>
+                                                        </div>
+                                                        <div class="row">
+                                                            قسط شماره {{ $key->installmentnumber }}به سر رسید
+                                                            {{ \Carbon\Carbon::parse($key->duedate)->format('d') }}
+                                                            هر ماه به مبلغ قسط
+                                                            <span class="monyInputSpan">
+                                                                {{ $key->installmentprice }} </span> ریال
+                                                        </div>
 
-                                                            <div class="row mt-2">
-                                                                <div class="col">
-                                                                    مقدار پیش پرداخت <span class="monyInputSpan">
-                                                                        {{ $value->prepaidamount }} </span> ریال
-                                                                </div>
+                                                        <div class="row mt-2">
+                                                            <div class="col">
+                                                                مقدار پیش پرداخت <span class="monyInputSpan">
+                                                                    {{ $value->prepaidamount }} </span> ریال
                                                             </div>
                                                         </div>
-                                                    @endif
+                                                    </div>
+                                                    {{-- @endif --}}
                                                 @endforeach
                                             @endif
                                         @endforeach
                                     @endif
+                                    <div class="m-3">
+                                        {{ $installments1->appends(['tab' => 'insta1', 'page' => $installments1->currentPage()])->links() }}
+                                    </div>
                                 </div>
                                 <div id="menu2" {{-- paid installments list --}}
-                                    class="container tab-pane {{ $payment_stat == 'paid' ? 'active' : 'fade' }}"><br>
+                                    class="container tab-pane {{ request('tab') == 'insta2' ? 'active' : ($payment_stat == 'paid' ? 'active' : 'fade') }}">
+                                    <br>
 
                                     <form action="{{ route('admin.installments.filter2') }}" method="get">
                                         @csrf
@@ -278,7 +281,7 @@
                                     </div>
 
 
-                                    @if (!$installments1->count() > 0)
+                                    @if (!$installments2->count() > 0)
                                         <div class="alert alert-warning p-2 my-1">
                                             <span class="text-danger">
 
@@ -286,8 +289,8 @@
                                             </span>
                                         </div>
                                     @else
-                                        @foreach ($installments1 as $value)
-                                            @if (!$value->installments->where('paymentstatus', 1)->count() > 0)
+                                        @foreach ($installments2 as $value)
+                                            @if (!$value->installments->count() > 0)
                                                 <div class="alert alert-warning p-2 my-1">
                                                     <span class="text-danger">
 
@@ -296,56 +299,58 @@
                                                 </div>
                                             @else
                                                 @foreach ($value->installments as $key)
-                                                    @if ($key->paymentstatus == 1)
-                                                        <div class="border rounded p-2 my-1">
-                                                            <div class="row d-flex justify-content-around">
-                                                                <a
-                                                                    href="{{ route('admin.installments.shop.installments', [$value->store_id, 'paid']) }}">
-                                                                    <h5>
-                                                                        قسط فروشگاه: {{ $value->store->nameofstore }}
+                                                    {{-- @if ($key->paymentstatus == 1) --}}
+                                                    <div class="border rounded p-2 my-1">
+                                                        <div class="row d-flex justify-content-around">
+                                                            <a
+                                                                href="{{ route('admin.installments.shop.installments', [$value->store_id, 'paid']) }}">
+                                                                <h5>
+                                                                    قسط فروشگاه: {{ $value->store->nameofstore }}
+                                                                </h5>
+                                                            </a>
+                                                            <form action="{{ route('admin.installments.filter2') }}"
+                                                                method="get">
+                                                                @csrf
+                                                                <input type="hidden"
+                                                                    value="{{ $value->user->username }}" name="filter1"
+                                                                    id="">
+                                                                <button class="btn"
+                                                                    style="border:none; background-color:none"
+                                                                    type="submit">
+                                                                    <h5>قسط آقای: {{ $value->user->username }}
                                                                     </h5>
-                                                                </a>
-                                                                <form action="{{ route('admin.installments.filter2') }}"
-                                                                    method="get">
-                                                                    @csrf
-                                                                    <input type="hidden"
-                                                                        value="{{ $value->user->username }}"
-                                                                        name="filter1" id="">
-                                                                    <button class="btn"
-                                                                        style="border:none; background-color:none"
-                                                                        type="submit">
-                                                                        <h5>قسط آقای: {{ $value->user->username }}
-                                                                        </h5>
-                                                                    </button>
-                                                                </form>
-                                                            </div>
+                                                                </button>
+                                                            </form>
+                                                        </div>
 
 
-                                                            <div class="row">
-                                                                مبلغ کل فروش: <span class="monyInputSpan">
-                                                                    {{ $value->Creditamount }} </span> ریال
-                                                            </div>
-                                                            <div class="row">
-                                                                قسط شماره {{ $key->installmentnumber }}به سر رسید
-                                                                {{ \Carbon\Carbon::parse($key->duedate)->format('d') }}
-                                                                هر ماه به مبلغ قسط
-                                                                <span class="monyInputSpan">
-                                                                    {{ $key->installmentprice }} </span> ریال
-                                                            </div>
+                                                        <div class="row">
+                                                            مبلغ کل فروش: <span class="monyInputSpan">
+                                                                {{ $value->Creditamount }} </span> ریال
+                                                        </div>
+                                                        <div class="row">
+                                                            قسط شماره {{ $key->installmentnumber }}به سر رسید
+                                                            {{ \Carbon\Carbon::parse($key->duedate)->format('d') }}
+                                                            هر ماه به مبلغ قسط
+                                                            <span class="monyInputSpan">
+                                                                {{ $key->installmentprice }} </span> ریال
+                                                        </div>
 
-                                                            <div class="row mt-2">
-                                                                <div class="col">
-                                                                    مقدار پیش پرداخت <span class="monyInputSpan">
-                                                                        {{ $value->prepaidamount }} </span> ریال
-                                                                </div>
+                                                        <div class="row mt-2">
+                                                            <div class="col">
+                                                                مقدار پیش پرداخت <span class="monyInputSpan">
+                                                                    {{ $value->prepaidamount }} </span> ریال
                                                             </div>
                                                         </div>
-                                                    @endif
+                                                    </div>
+                                                    {{-- @endif --}}
                                                 @endforeach
                                             @endif
                                         @endforeach
                                     @endif
-
+                                    <div class="m-3">
+                                        {{ $installments2->appends(['tab' => 'insta2', 'page' => $installments2->currentPage()])->links() }}
+                                    </div>
 
                                 </div>
                             </div>

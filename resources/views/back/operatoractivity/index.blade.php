@@ -85,7 +85,7 @@
                                             </tr>
                                         </thead>
                                         @php
-                                            $counter = 1;
+                                            $counter = $counter = ($users->currentPage() - 1) * $users->perPage() + 1;
                                         @endphp
 
                                         <tbody>
@@ -120,6 +120,9 @@
                             </div>
 
                         </div>
+                    </div>
+                    <div class="m-3">
+                        {{ $users->links() }}
                     </div>
                 </section>
 

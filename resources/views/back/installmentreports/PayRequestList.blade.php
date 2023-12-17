@@ -40,11 +40,13 @@
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link  active" style="font-size: 10px" data-toggle="tab" href="#home">
+                                    <a class="nav-link  {{ request('tab') != 'transaction1' ? 'active' : '' }}"
+                                        style="font-size: 10px" data-toggle="tab" href="#home">
                                         درخواست های پرداخت نشده </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link " style="font-size: 10px" data-toggle="tab" href="#menu1">درخواست
+                                    <a class="nav-link {{ request('tab') == 'transaction1' ? 'active' : '' }}"
+                                        style="font-size: 10px" data-toggle="tab" href="#menu1">درخواست
                                         های
                                         پرداخت
                                         شده</a>
@@ -56,8 +58,9 @@
                             <div class="tab-content">
 
                                 {{-- not validated and not paid prepayment of installments list --}}
-                                <div id="home" class="container tab-pane active"><br>
-
+                                <div id="home"
+                                    class="container tab-pane {{ request('tab') != 'transaction1' ? 'active' : 'fade' }}">
+                                    <br>
 
 
 
@@ -65,6 +68,7 @@
                                         <div class="g-col-6 g-col-sm-12 d-flex align-items-center">
                                             <h4>
                                                 مجموعه درخواست ها:
+
                                             </h4>
                                         </div>
                                         <div class="g-col-6 d-col-sm-12 d-flex align-items-center">
@@ -78,7 +82,7 @@
                                             درخواست های تسویه نشده:
                                         </h3>
                                     </div>
-                                    @if (!$transaction->where('status', 0)->count() > 0)
+                                    @if (!$transaction->count() > 0)
                                         <div class="m-2">
                                             <div class="alert alert-warning">
                                                 درخواستی موجود نیست!
@@ -115,7 +119,7 @@
                                                     </tr>
                                                 </thead>
                                                 @php
-                                                    $counter = 1;
+                                                    $counter = ($transaction->currentPage() - 1) * $transaction->perPage() + 1;
                                                 @endphp
                                                 <tbody>
                                                     @foreach ($transaction as $key)
@@ -143,9 +147,9 @@
                                                                 </td>
                                                                 <td>
                                                                     <span class="transaction_datetime">
-                                                                        {{ \Carbon\Carbon::parse($key->depositdate)->format('Y-m-d') }}
+                                                                        {{ jdate($key->depositdate)->format('Y-m-d') }}
                                                                         <br>
-                                                                        {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                                        {{ jdate($key->created_at)->format('H:i:s') }}
                                                                     </span>
 
                                                                 </td>
@@ -168,110 +172,108 @@
                                         </div>
                                         <div class="mobile-size ">
                                             @foreach ($transaction as $key)
-                                                @if ($key->status == 0)
-                                                    <div class=" border rounded mb-1">
-                                                        <div class="row pt-1">
-                                                            <div class="col ml-1">
-                                                                <h5 class="text-light">
-                                                                    نام فروشگاه:
+                                                <div class=" border rounded mb-1">
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+                                                            <h5 class="text-light">
+                                                                نام فروشگاه:
 
-                                                                </h5>
-                                                            </div>
-                                                            <div class="col"><span class="text-dark">
-                                                                    <a
-                                                                        href="{{ route('admin.createcolleague.show', [$key->store->id]) }}">
-                                                                        {{ $key->store->nameofstore }}
-                                                                    </a>
-                                                                </span>
-                                                            </div>
+                                                            </h5>
                                                         </div>
-
-                                                        <div class="row pt-1">
-                                                            <div class="col ml-1">
-                                                                <h5 class="text-light">
-                                                                    مبلغ درخواست(ریال):
-                                                                </h5>
-                                                            </div>
-                                                            <div class="col">
-                                                                <span class="text-dark">
-                                                                    <span
-                                                                        class="monyInputSpan">{{ $key->depositamount }}</span>
-                                                                </span>
-                                                            </div>
+                                                        <div class="col"><span class="text-dark">
+                                                                <a
+                                                                    href="{{ route('admin.createcolleague.show', [$key->store->id]) }}">
+                                                                    {{ $key->store->nameofstore }}
+                                                                </a>
+                                                            </span>
                                                         </div>
-                                                        <div class="row pt-1">
-                                                            <div class="col ml-1">
-                                                                <h5 class="text-light">
-                                                                    مجموع درخواست ها (ریال):
-
-                                                                </h5>
-                                                            </div>
-                                                            <div class="col">
-
-                                                                +<span class="monyInputSpan">{{ $key->final_price }}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row pt-1">
-                                                            <div class="col ml-1">
-
-                                                                <h5 class="text-light">
-                                                                    تاریخ درخواست:
-                                                                </h5>
-                                                            </div>
-                                                            <div class="col">
-
-                                                                <span class="transaction_datetime">
-                                                                    {{ \Carbon\Carbon::parse($key->depositdate)->format('Y-m-d') }}
-
-                                                                    {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row pt-1">
-                                                            <div class="col ml-1">
-
-                                                                <h5 class="text-light">
-                                                                    شماره درخواست
-                                                                </h5>
-                                                            </div>
-
-                                                            <div class="col">
-                                                                <span class="text-dark">
-                                                                    {{ $key->list_id }}
-                                                            </div>
-
-                                                        </div>
-                                                        @can('installmentreports.RequestPaymentStore')
-                                                            <div class="row pt-1">
-                                                                <div class="col ml-1">
-
-                                                                    <h5 class="text-light">
-                                                                        عملیات
-                                                                    </h5>
-                                                                </div>
-
-                                                                <div class="col">
-                                                                    <span class="text-dark">
-                                                                        <button data-id="{{ $key->id }}"
-                                                                            data-amount="{{ $key->depositamount }}"
-                                                                            class="btn btn-success pay_button">پرداخت</button>
-                                                                </div>
-
-                                                            </div>
-                                                        @endcan
                                                     </div>
-                                                @endif
+
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+                                                            <h5 class="text-light">
+                                                                مبلغ درخواست(ریال):
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col">
+                                                            <span class="text-dark">
+                                                                <span
+                                                                    class="monyInputSpan">{{ $key->depositamount }}</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+                                                            <h5 class="text-light">
+                                                                مجموع درخواست ها (ریال):
+
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col">
+
+                                                            +<span class="monyInputSpan">{{ $key->final_price }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+
+                                                            <h5 class="text-light">
+                                                                تاریخ درخواست:
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col">
+
+                                                            <span class="transaction_datetime">
+                                                                {{ jdate($key->created_at)->format('Y-m-d') }}
+
+                                                                {{ jdate($key->created_at)->format('H:i:s') }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+
+                                                            <h5 class="text-light">
+                                                                شماره درخواست
+                                                            </h5>
+                                                        </div>
+
+                                                        <div class="col">
+                                                            <span class="text-dark">
+                                                                {{ $key->list_id }}
+                                                        </div>
+
+                                                    </div>
+                                                    @can('installmentreports.RequestPaymentStore')
+                                                        <div class="row pt-1">
+                                                            <div class="col ml-1">
+
+                                                                <h5 class="text-light">
+                                                                    عملیات
+                                                                </h5>
+                                                            </div>
+
+                                                            <div class="col">
+                                                                <span class="text-dark">
+                                                                    <button data-id="{{ $key->id }}"
+                                                                        data-amount="{{ $key->depositamount }}"
+                                                                        class="btn btn-success pay_button">پرداخت</button>
+                                                            </div>
+
+                                                        </div>
+                                                    @endcan
+                                                </div>
                                             @endforeach
                                         </div>
                                     @endif
+                                    <div class="m-3">
+                                        {{ $transaction->appends(['tab' => 'transaction', 'page' => $transaction->currentPage()])->links() }}
+                                    </div>
                                 </div>
                                 {{--  not payd installments which are paid prepayment of isntallments list --}}
-                                <div id="menu1" class="container tab-pane fade"><br>
-
-
-
-
-
+                                <div id="menu1"
+                                    class="container tab-pane {{ request('tab') == 'transaction1' ? 'active' : 'fade' }}">
+                                    <br>
                                     <div class="row mb-2">
                                         <div class="g-col-6 g-col-sm-12 d-flex align-items-center">
                                             <h4>
@@ -289,7 +291,7 @@
                                             درخواست های تسویه شده:
                                         </h3>
                                     </div>
-                                    @if (!$transaction->where('status', 1)->count() > 0)
+                                    @if (!$transaction1->count() > 0)
                                         <div class="m-2">
                                             <div class="alert alert-warning">
                                                 درخواستی موجود نیست
@@ -322,44 +324,43 @@
                                                     </tr>
                                                 </thead>
                                                 @php
-                                                    $counter = 1;
+                                                    $counter1 = ($transaction1->currentPage() - 1) * $transaction1->perPage() + 1;
                                                 @endphp
                                                 <tbody>
-                                                    @foreach ($transaction as $key)
-                                                        @if ($key->status == 1)
-                                                            <tr>
-                                                                <td>
-                                                                    {{ $counter++ }}
-                                                                </td>
-                                                                <td>
-                                                                    <a
-                                                                        href="{{ route('admin.createcolleague.show', [$key->store->id]) }}">
-                                                                        {{ $key->store->nameofstore }}
-                                                                    </a>
-                                                                </td>
-                                                                <td>
-                                                                    <span
-                                                                        class="monyInputSpan">{{ $key->depositamount }}</span>
+                                                    @foreach ($transaction1 as $key)
+                                                        <tr>
+                                                            <td>
+                                                                {{ $counter1++ }}
+                                                            </td>
+                                                            <td>
+                                                                <a
+                                                                    href="{{ route('admin.createcolleague.show', [$key->store->id]) }}">
+                                                                    {{ $key->store->nameofstore }}
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <span
+                                                                    class="monyInputSpan">{{ $key->depositamount }}</span>
 
-                                                                </td>
-                                                                <td class="text-success">
-                                                                    +<span
-                                                                        class="monyInputSpan">{{ $key->final_price }}</span>
+                                                            </td>
+                                                            <td class="text-success">
+                                                                +<span
+                                                                    class="monyInputSpan">{{ $key->final_price }}</span>
 
-                                                                </td>
-                                                                <td>
-                                                                    {{ \Carbon\Carbon::parse($key->depositdate)->format('Y/m/d') }}
-
-                                                                </td>
-                                                                <td>
-                                                                    {{ $key->list_id }}
-                                                                </td>
-                                                                {{-- <td>
+                                                            </td>
+                                                            <td>
+                                                                {{ jdate($key->depositdate)->format('Y-m-d') }}
+                                                                <br>
+                                                                {{ jdate($key->created_at)->format('H:i:s') }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $key->list_id }}
+                                                            </td>
+                                                            {{-- <td>
                                                             <a href="#"><i class="feather icon-pay"></i></a>
                                                         </td> --}}
 
-                                                            </tr>
-                                                        @endif
+                                                        </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -420,9 +421,9 @@
                                                             <div class="col">
 
                                                                 <span class="transaction_datetime">
-                                                                    {{ \Carbon\Carbon::parse($key->depositdate)->format('Y-m-d') }}
+                                                                    {{ jdate($key->depositdate)->format('Y-m-d') }}
 
-                                                                    {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                                    {{ jdate($key->created_at)->format('H:i:s') }}
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -445,6 +446,9 @@
                                                     </div>
                                                 @endif
                                             @endforeach
+                                        </div>
+                                        <div class="m-3">
+                                            {{ $transaction1->appends(['tab' => 'transaction1', 'page' => $transaction1->currentPage()])->links() }}
                                         </div>
                                     @endif
 

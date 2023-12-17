@@ -114,7 +114,7 @@
                                                 </tr>
                                             </thead>
                                             @php
-                                                $counter = 1;
+                                                $counter = ($store->currentPage() - 1) * $store->perPage() + 1;
                                             @endphp
                                             <tbody>
                                                 @foreach ($store as $key)
@@ -277,14 +277,16 @@
 
                         </div>
                     </div>
+
+                    <div class="m-3">
+                        {{ $store->links() }}
+                    </div>
+
+
+                </section>
             </div>
 
         </div>
-
-        </section>
-    </div>
-
-    </div>
     </div>
 @endsection
 

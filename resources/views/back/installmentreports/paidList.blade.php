@@ -66,14 +66,12 @@
                                                         #
                                                     </th>
                                                     <th>
-                                                        تاریخ فروشگاه
+                                                        نام فروشگاه
                                                     </th>
                                                     <th>
                                                         تاریخ پرداخت
                                                     </th>
-                                                    {{-- <th>
-                                                        نوع تراکنش
-                                                    </th> --}}
+
                                                     <th>
                                                         شماره ره گیری
                                                     </th>
@@ -84,7 +82,7 @@
                                                 </tr>
                                             </thead>
                                             @php
-                                                $counter = 1;
+                                                $counter = ($paidList->currentPage() - 1) * $paidList->perPage() + 1;
                                             @endphp
                                             <tbody>
                                                 @foreach ($paidList as $key)
@@ -97,14 +95,12 @@
                                                         </td>
                                                         <td>
                                                             <span class="transaction_datetime">
-                                                                {{ \Carbon\Carbon::parse($key->date)->format('Y-m-d') }}
+                                                                {{ jdate($key->created_at)->format('Y-m-d') }}
                                                                 <br>
-                                                                {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                                {{ jdate($key->created_at)->format('H:i:s') }}
                                                             </span>
                                                         </td>
-                                                        {{-- <td>
-                                                            موفقت باشید
-                                                        </td> --}}
+
                                                         <td>
                                                             <span class="">{{ $key->Issuetracking }}</span>
                                                         </td>
@@ -143,23 +139,13 @@
                                                     </div>
                                                     <div class="col">
                                                         <span class="transaction_datetime">
-                                                            {{ \Carbon\Carbon::parse($key->date)->format('Y-m-d') }}
+                                                            {{ jdate($key->created_at)->format('Y-m-d') }}
                                                             <br>
-                                                            {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                            {{ jdate($key->created_at)->format('H:i:s') }}
                                                         </span>
                                                     </div>
                                                 </div>
-                                                {{-- <div class="row pt-1">
-                                                    <div class="col ml-1">
-                                                        <h5 class="text-light">
-                                                            نوع تراکنش
-                                                        </h5>
-                                                    </div>
-                                                    <div class="col">
 
-                                                        <span class="">چیزی نیست</span>
-                                                    </div>
-                                                </div> --}}
                                                 <div class="row pt-1">
                                                     <div class="col ml-1">
 
@@ -195,6 +181,9 @@
                             </div>
 
                         </div>
+                    </div>
+                    <div class="m-3">
+                        {{ $paidList->links() }}
                     </div>
             </div>
 

@@ -88,7 +88,7 @@
                                                 </tr>
                                             </thead>
                                             @php
-                                                $counter = 1;
+                                                $counter = ($trans->currentPage() - 1) * $trans->perPage() + 1;
                                             @endphp
                                             <tbody>
                                                 @foreach ($trans as $key)
@@ -221,6 +221,9 @@
                             </div>
 
                         </div>
+                    </div>
+                    <div class="m-3">
+                        {{ $trans->links() }}
                     </div>
             </div>
 
