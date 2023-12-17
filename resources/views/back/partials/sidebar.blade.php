@@ -114,11 +114,10 @@
 
             @can('operatoractivity')
                 <li class="nav-item has-sub {{ open_class(['admin.operatoractivity.*']) }}"><a href="#"><i
-                            class="feather icon-users"></i><span class="menu-title"> فعالیت های اپراتورها</span></a>
+                            class="feather icon-users"></i><span class="menu-title">اپراتورها</span></a>
                     <ul class="menu-content">
                         @can('operatoractivity.index')
-                            <li
-                                class="{{ active_class('admin.operatoractivity.index') }}{{ active_class('admin.operatoractivity.search') }}">
+                            <li class="{{ active_class('admin.operatoractivity.*') }}">
                                 <a href="{{ route('admin.operatoractivity.index') }}"><i class="feather icon-circle"></i><span
                                         class="menu-item">لیست اپراتور </span></a>
                             </li>
@@ -244,14 +243,14 @@
                 <li class="nav-item has-sub {{ open_class(['admin.cornjob.*']) }}"><a href="#"><i
                             class="feather icon-calendar"></i><span class="menu-title"> کرن جاب</span></a>
                     <ul class="menu-content">
-                        @can('posts.index')
+                        @can('cornjob.index')
                             <li class="{{ active_class('admin.cornjob.index') }}">
                                 <a href="{{ route('admin.cornjob.index') }}"><i class="feather icon-circle"></i><span
                                         class="menu-item">گزارش کرن جاب</span></a>
                             </li>
                         @endcan
 
-                        @can('posts.create')
+                        @can('cornjob.setting')
                             <li class="{{ active_class('admin.cornjob.setting') }}">
                                 <a href="{{ route('admin.cornjob.setting') }}"><i class="feather icon-circle"></i><span
                                         class="menu-item">تنظیمات کرن جاب</span></a>
