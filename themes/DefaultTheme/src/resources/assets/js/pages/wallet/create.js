@@ -12,7 +12,7 @@ $(document).on('keyup', '.amount-input', function () {
         );
     }
 
-    var text = number_format($(this).val()) + ' تومان';
+    var text = number_format($(this).val()) + ' ریال';
 
     $(this).next('.form-text').text(text);
 });
@@ -23,8 +23,8 @@ $('#wallet-create-form').validate({
     rules: {
         amount: {
             required: true,
-            max: 500000000,
-            min: 1000
+            max: 5000000000,
+            min: 10000
         },
         gateway: {
             required: true

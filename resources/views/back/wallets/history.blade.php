@@ -8,7 +8,7 @@
 
             <tr>
                 <th scope="row">مبلغ</th>
-                <td>{{ number_format($history->amount) }} تومان</td>
+                <td>{{ number_format($history->amount) }} ریال</td>
             </tr>
             <tr>
                 <th scope="row">نوع تراکنش</th>

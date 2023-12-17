@@ -220,16 +220,16 @@
                                                 @if ($order->hasPhysicalProduct())
                                                     <tr>
                                                         <td class="font-weight-bold">هزینه ارسال:</td>
-                                                        <td>{{ number_format($order->shipping_cost) }} تومان</td>
+                                                        <td>{{ number_format($order->shipping_cost) }} ریال</td>
                                                     </tr>
                                                 @endif
                                                 <tr>
                                                     <td class="font-weight-bold">تخفیف:</td>
-                                                    <td>{{ number_format($order->totalDiscount()) }} تومان</td>
+                                                    <td>{{ number_format($order->totalDiscount()) }} ریال</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="font-weight-bold">جمع قیمت</td>
-                                                    <td>{{ number_format($order->price) }} تومان</td>
+                                                    <td>{{ number_format($order->price) }} ریال</td>
                                                 </tr>
                                                 <tr>
                                                     <td class="font-weight-bold">توضیحات سفارش :</td>
@@ -288,10 +288,10 @@
 
                                                         </td>
                                                         <td>{{ $item->quantity }}</td>
-                                                        <td>{{ number_format($item->realPrice()) }} تومان</td>
-                                                        <td>{{ number_format($item->quantity * $item->realPrice()) }} تومان</td>
+                                                        <td>{{ number_format($item->realPrice()) }} ریال</td>
+                                                        <td>{{ number_format($item->quantity * $item->realPrice()) }} ریال</td>
                                                         <td>{{ $item->discount ? $item->discount . '%' : 0 }}</td>
-                                                        <td>{{ number_format($item->price * $item->quantity) }} تومان</td>
+                                                        <td>{{ number_format($item->price * $item->quantity) }} ریال</td>
                                                     </tr>
                                                 @endforeach
 

@@ -221,8 +221,8 @@
                                                                     <div class="form-group">
                                                                         <label>انتخاب ارز</label>
                                                                         <select name="currency_id" class="form-control">
-                                                                            <option data-amount="1" data-title="تومان"
-                                                                                value="">تومان (پیش فرض)</option>
+                                                                            <option data-amount="1" data-title="ریال"
+                                                                                value="">ریال (پیش فرض)</option>
                                                                             @foreach ($currencies as $currency)
                                                                                 <option
                                                                                     data-amount="{{ $currency->amount }}"
@@ -247,18 +247,18 @@
                                                                             <option data-value="no" value="no"
                                                                                 {{ $product->rounding_amount == 'no' ? 'selected' : '' }}>
                                                                                 خیر</option>
-                                                                            <option data-value="100" value="100"
-                                                                                {{ $product->rounding_amount == '100' ? 'selected' : '' }}>
-                                                                                100 تومان</option>
                                                                             <option data-value="1000" value="1000"
                                                                                 {{ $product->rounding_amount == '1000' ? 'selected' : '' }}>
-                                                                                1000 تومان</option>
+                                                                                1000 ریال</option>
                                                                             <option data-value="10000" value="10000"
                                                                                 {{ $product->rounding_amount == '10000' ? 'selected' : '' }}>
-                                                                                10000 تومان</option>
+                                                                                10000 ریال</option>
                                                                             <option data-value="100000" value="100000"
                                                                                 {{ $product->rounding_amount == '100000' ? 'selected' : '' }}>
-                                                                                100000 تومان</option>
+                                                                                100000 ریال</option>
+                                                                            <option data-value="1000000" value="1000000"
+                                                                                {{ $product->rounding_amount == '1000000' ? 'selected' : '' }}>
+                                                                                1000000 ریال</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>

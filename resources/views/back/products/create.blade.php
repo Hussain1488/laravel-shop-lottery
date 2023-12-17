@@ -183,7 +183,7 @@
                                                                     <div class="form-group">
                                                                         <label>انتخاب ارز</label>
                                                                         <select name="currency_id" class="form-control">
-                                                                            <option data-amount="1" data-title="تومان" value="">تومان (پیش فرض)</option>
+                                                                            <option data-amount="1" data-title="ریال" value="">ریال (پیش فرض)</option>
                                                                             @foreach ($currencies as $currency)
                                                                                 <option data-amount="{{ $currency->amount }}" data-title="{{ $currency->title }}" value="{{ $currency->id }}" {{ $copy_product  ? ($copy_product->currency && $copy_product->currency->id == $currency->id ? 'selected' : '') : (option('default_currency_id') == $currency->id ? 'selected' : '') }}>{{ $currency->title }}</option>
                                                                             @endforeach
@@ -196,10 +196,10 @@
                                                                         <select name="rounding_amount" class="form-control">
                                                                             <option data-value="{{ option('default_rounding_amount', 'no') }}" value="default" {{ $copy_product && $copy_product->rounding_amount == "default" ? 'selected' : '' }}>پیشفرض</option>
                                                                             <option data-value="no" value="no" {{ $copy_product && $copy_product->rounding_amount == "no" ? 'selected' : '' }}>خیر</option>
-                                                                            <option data-value="100" value="100" {{ $copy_product && $copy_product->rounding_amount == "100" ? 'selected' : '' }}>100 تومان</option>
-                                                                            <option data-value="1000" value="1000" {{ $copy_product && $copy_product->rounding_amount == "1000" ? 'selected' : '' }}>1000 تومان</option>
-                                                                            <option data-value="10000" value="10000" {{ $copy_product && $copy_product->rounding_amount == "10000" ? 'selected' : '' }}>10000 تومان</option>
-                                                                            <option data-value="100000" value="100000" {{ $copy_product && $copy_product->rounding_amount == "100000" ? 'selected' : '' }}>100000 تومان</option>
+                                                                            <option data-value="1000" value="1000" {{ $copy_product && $copy_product->rounding_amount == "1000" ? 'selected' : '' }}>1000 ریال</option>
+                                                                            <option data-value="10000" value="10000" {{ $copy_product && $copy_product->rounding_amount == "10000" ? 'selected' : '' }}>10000 ریال</option>
+                                                                            <option data-value="100000" value="100000" {{ $copy_product && $copy_product->rounding_amount == "100000" ? 'selected' : '' }}>100000 ریال</option>
+                                                                            <option data-value="1000000" value="1000000" {{ $copy_product && $copy_product->rounding_amount == "1000000" ? 'selected' : '' }}>1000000 ریال</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>

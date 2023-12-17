@@ -25,7 +25,7 @@ return [
 
     'currency' => [
         'prefix'    => '',
-        'suffix'    => ' تومان',
+        'suffix'    => ' ریال',
         'suffix2'    => ' ریال',
     ],
 

@@ -22,7 +22,7 @@
         <div class="col-md-3 col-12">
             <div class="form-group">
                 <label>قیمت</label>
-                <input type="number" data-unit="تومان" class="form-control amount-input price" name="price" required>
+                <input type="number" data-unit="ریال" class="form-control amount-input price" name="price" required>
             </div>
         </div>
 

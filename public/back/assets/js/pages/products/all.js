@@ -533,7 +533,7 @@ $(document).on(
 
         finalPrice = +finalPrice.toFixed(2);
 
-        let finalPriceText = number_format(finalPrice) + ' تومان';
+        let finalPriceText = number_format(finalPrice) + ' ریال';
 
         $(this)
             .closest('.single-price')

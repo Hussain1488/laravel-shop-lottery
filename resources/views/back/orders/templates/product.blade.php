@@ -25,9 +25,9 @@
                     </select>
                 </div>
             <% } %>
-            <strong class="text-success"><span class="sale-price"><%= number_format(product.price) %></span> تومان</strong>
+            <strong class="text-success"><span class="sale-price"><%= number_format(product.price) %></span> ریال</strong>
 
-            <del class="text-danger regular-price-container <% if (!product.regular_price) { %> d-none <% } %>"><span class="regular-price"><%= number_format(product.regular_price) %></span> تومان</del>
+            <del class="text-danger regular-price-container <% if (!product.regular_price) { %> d-none <% } %>"><span class="regular-price"><%= number_format(product.regular_price) %></span> ریال</del>
 
             <input class="selected-price" name="products[<%= productsCount %>][price_id]" type="hidden" value="<%= product.prices[0].id %>">
             <input name="products[<%= productsCount %>][id]" type="hidden" value="<%= product.id %>">

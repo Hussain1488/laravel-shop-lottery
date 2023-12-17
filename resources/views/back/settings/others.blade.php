@@ -1,7 +1,6 @@
 @extends('back.layouts.master')
 
 @section('content')
-
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -38,9 +37,11 @@
                                                 <div class="form-group">
                                                     <label>انتخاب ارز پیش فرض</label>
                                                     <select name="default_currency_id" class="form-control">
-                                                        <option value="">تومان (پیش فرض)</option>
+                                                        <option value="">ریال (پیش فرض)</option>
                                                         @foreach ($currencies as $currency)
-                                                            <option value="{{ $currency->id }}" {{ option('default_currency_id') == $currency->id ? 'selected' : '' }}>{{ $currency->title }}</option>
+                                                            <option value="{{ $currency->id }}"
+                                                                {{ option('default_currency_id') == $currency->id ? 'selected' : '' }}>
+                                                                {{ $currency->title }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -49,11 +50,21 @@
                                                 <div class="form-group">
                                                     <label>گرد کردن</label>
                                                     <select name="default_rounding_amount" class="form-control">
-                                                        <option value="no" {{ option('default_rounding_amount', 'no') == 'no' ? 'selected' : '' }}>خیر</option>
-                                                        <option value="100" {{ option('default_rounding_amount') == 100 ? 'selected' : '' }}>100 تومان</option>
-                                                        <option value="1000" {{ option('default_rounding_amount') == 1000 ? 'selected' : '' }}>1000 تومان</option>
-                                                        <option value="10000" {{ option('default_rounding_amount') == 10000 ? 'selected' : '' }}>10000 تومان</option>
-                                                        <option value="100000" {{ option('default_rounding_amount') == 100000 ? 'selected' : '' }}>100000 تومان</option>
+                                                        <option value="no"
+                                                            {{ option('default_rounding_amount', 'no') == 'no' ? 'selected' : '' }}>
+                                                            خیر</option>
+                                                        <option value="1000"
+                                                            {{ option('default_rounding_amount') == 1000 ? 'selected' : '' }}>
+                                                            1000 ریال</option>
+                                                        <option value="10000"
+                                                            {{ option('default_rounding_amount') == 10000 ? 'selected' : '' }}>
+                                                            10000 ریال</option>
+                                                        <option value="100000"
+                                                            {{ option('default_rounding_amount') == 100000 ? 'selected' : '' }}>
+                                                            100000 ریال</option>
+                                                        <option value="1000000"
+                                                            {{ option('default_rounding_amount') == 1000000 ? 'selected' : '' }}>
+                                                            1000000 ریال</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -61,9 +72,15 @@
                                                 <div class="form-group">
                                                     <label>نحوه گرد کردن</label>
                                                     <select name="default_rounding_type" class="form-control">
-                                                        <option value="close" {{ option('default_rounding_type', 'close') == 'close' ? 'selected' : '' }}>نزدیک</option>
-                                                        <option value="up" {{ option('default_rounding_type') == 'up' ? 'selected' : '' }}>رو به بالا</option>
-                                                        <option value="down" {{ option('default_rounding_type') == 'down' ? 'selected' : '' }}>رو به پایین</option>
+                                                        <option value="close"
+                                                            {{ option('default_rounding_type', 'close') == 'close' ? 'selected' : '' }}>
+                                                            نزدیک</option>
+                                                        <option value="up"
+                                                            {{ option('default_rounding_type') == 'up' ? 'selected' : '' }}>
+                                                            رو به بالا</option>
+                                                        <option value="down"
+                                                            {{ option('default_rounding_type') == 'down' ? 'selected' : '' }}>
+                                                            رو به پایین</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -76,39 +93,48 @@
                                                 <fieldset class="form-group">
                                                     <label for="">لوگو</label>
                                                     <div class="custom-file">
-                                                        <input type="file" accept="image/*" name="factor_logo" class="custom-file-input">
-                                                        <label class="custom-file-label" for="">{{ option('factor_logo') }}</label>
+                                                        <input type="file" accept="image/*" name="factor_logo"
+                                                            class="custom-file-input">
+                                                        <label class="custom-file-label"
+                                                            for="">{{ option('factor_logo') }}</label>
                                                     </div>
                                                 </fieldset>
                                             </div>
                                             <div class="col-md-3">
                                                 <label>عنوان فاکتور</label>
                                                 <div class="input-group mb-75">
-                                                    <input type="text" name="factor_title" class="form-control" value="{{ option('factor_title', option('info_site_title')) }}">
+                                                    <input type="text" name="factor_title" class="form-control"
+                                                        value="{{ option('factor_title', option('info_site_title')) }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <label>فروشنده</label>
                                                 <div class="input-group mb-75">
-                                                    <input type="text" name="factor_seller_name" class="form-control" value="{{ option('factor_seller_name') }}">
+                                                    <input type="text" name="factor_seller_name" class="form-control"
+                                                        value="{{ option('factor_seller_name') }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <label>شناسه ملی</label>
                                                 <div class="input-group mb-75">
-                                                    <input type="text" name="factor_national_code" class="form-control" value="{{ option('factor_national_code') }}">
+                                                    <input type="text" name="factor_national_code" class="form-control"
+                                                        value="{{ option('factor_national_code') }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <label>شناسه ثبت</label>
                                                 <div class="input-group mb-75">
-                                                    <input type="text" name="factor_registeration_id" class="form-control" value="{{ option('factor_registeration_id') }}">
+                                                    <input type="text" name="factor_registeration_id"
+                                                        class="form-control"
+                                                        value="{{ option('factor_registeration_id') }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <label>شماره اقتصادی</label>
                                                 <div class="input-group mb-75">
-                                                    <input type="text" name="factor_economical_number" class="form-control" value="{{ option('factor_economical_number') }}">
+                                                    <input type="text" name="factor_economical_number"
+                                                        class="form-control"
+                                                        value="{{ option('factor_economical_number') }}">
                                                 </div>
                                             </div>
 
@@ -119,7 +145,9 @@
                                             <div class="col-md-3">
                                                 <label>اعتبار هدیه ثبت نام کاربر</label>
                                                 <div class="input-group mb-75">
-                                                    <input type="number" name="user_register_gift_credit" class="form-control" min="0" value="{{ option('user_register_gift_credit', 0) }}">
+                                                    <input type="number" name="user_register_gift_credit"
+                                                        class="form-control" min="0"
+                                                        value="{{ option('user_register_gift_credit', 0) }}">
                                                 </div>
                                             </div>
 
@@ -127,8 +155,12 @@
                                                 <label>فعال کردن امکان معرفی افراد</label>
                                                 <div class="input-group mb-75">
                                                     <select name="user_refrral_enable" class="form-control">
-                                                        <option value="0" {{ option('user_refrral_enable', 0) == 0 ? 'selected' : '' }}>خیر</option>
-                                                        <option value="1" {{ option('user_refrral_enable', 1) == 1 ? 'selected' : '' }}>بله</option>
+                                                        <option value="0"
+                                                            {{ option('user_refrral_enable', 0) == 0 ? 'selected' : '' }}>
+                                                            خیر</option>
+                                                        <option value="1"
+                                                            {{ option('user_refrral_enable', 1) == 1 ? 'selected' : '' }}>
+                                                            بله</option>
                                                     </select>
                                                 </div>
 
@@ -138,7 +170,9 @@
                                             <div class="col-md-3">
                                                 <label> مقدار تخفیف معرفی کننده به درصد</label>
                                                 <div class="input-group mb-75">
-                                                    <input type="number" name="owner_refrral_amount" class="form-control" min="0" value="{{ option('owner_refrral_amount', 0) }}">
+                                                    <input type="number" name="owner_refrral_amount"
+                                                        class="form-control" min="0"
+                                                        value="{{ option('owner_refrral_amount', 0) }}">
                                                 </div>
 
                                             </div>
@@ -146,7 +180,8 @@
 
                                                 <label> مقدار تخفیف معرفی شونده به درصد</label>
                                                 <div class="input-group mb-75">
-                                                    <input type="number" name="user_refrral_amount" class="form-control" min="0" value="{{ option('user_refrral_amount', 0) }}">
+                                                    <input type="number" name="user_refrral_amount" class="form-control"
+                                                        min="0" value="{{ option('user_refrral_amount', 0) }}">
                                                 </div>
 
                                             </div>
@@ -157,25 +192,31 @@
                                             <div class="col-md-4">
                                                 <label>PUSHER_APP_ID</label>
                                                 <div class="input-group mb-75">
-                                                    <input type="text" name="PUSHER_APP_ID" class="form-control ltr" value="{{ config('broadcasting.connections.pusher.app_id') }}">
+                                                    <input type="text" name="PUSHER_APP_ID" class="form-control ltr"
+                                                        value="{{ config('broadcasting.connections.pusher.app_id') }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <label>PUSHER_APP_KEY</label>
                                                 <div class="input-group mb-75">
-                                                    <input type="text" name="PUSHER_APP_KEY" class="form-control ltr" value="{{ config('broadcasting.connections.pusher.key') }}">
+                                                    <input type="text" name="PUSHER_APP_KEY" class="form-control ltr"
+                                                        value="{{ config('broadcasting.connections.pusher.key') }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <label>PUSHER_APP_SECRET</label>
                                                 <div class="input-group mb-75">
-                                                    <input type="text" name="PUSHER_APP_SECRET" class="form-control ltr" value="{{ config('broadcasting.connections.pusher.secret') }}">
+                                                    <input type="text" name="PUSHER_APP_SECRET"
+                                                        class="form-control ltr"
+                                                        value="{{ config('broadcasting.connections.pusher.secret') }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <label>PUSHER_APP_CLUSTER</label>
                                                 <div class="input-group mb-75">
-                                                    <input type="text" name="PUSHER_APP_CLUSTER" class="form-control ltr" value="{{ config('broadcasting.connections.pusher.options.cluster') }}">
+                                                    <input type="text" name="PUSHER_APP_CLUSTER"
+                                                        class="form-control ltr"
+                                                        value="{{ config('broadcasting.connections.pusher.options.cluster') }}">
                                                 </div>
                                             </div>
 
@@ -197,7 +238,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @include('back.partials.plugins', ['plugins' => ['jquery.validate']])

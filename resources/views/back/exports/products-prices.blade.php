@@ -33,7 +33,7 @@
                     <td>{{ $price->cart_min }}</td>
                     <td>{{ $price->stock }}</td>
                     <td>{{ $price->tomanPrice() }}</td>
-                    <td>{{ $price->product->currency->title ?? 'تومان' }}</td>
+                    <td>{{ $price->product->currency->title ?? 'ریال' }}</td>
                 </tr>
             @endforeach
 

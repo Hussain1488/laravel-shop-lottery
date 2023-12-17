@@ -122,7 +122,7 @@
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label>تخفیف (تومان)</label>
+                                                            <label>تخفیف (ریال)</label>
                                                             <input type="number" class="form-control amount-input" name="discount_amount">
                                                         </div>
                                                     </div>
@@ -139,7 +139,7 @@
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label>هزینه ارسال (تومان)</label>
+                                                            <label>هزینه ارسال (ریال)</label>
                                                             <input type="number" class="form-control amount-input" name="shipping_cost">
                                                         </div>
                                                     </div>

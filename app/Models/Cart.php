@@ -204,7 +204,7 @@ class Cart extends Model
         if ($discount->least_price !== null && $this->price < $discount->least_price) {
             return [
                 'status'  => false,
-                'message' => "حداقل قیمت سفارش برای این کد تخفیف " . number_format($discount->least_price) . " تومان می باشد."
+                'message' => "حداقل قیمت سفارش برای این کد تخفیف " . number_format($discount->least_price) . " ریال می باشد."
             ];
         }
 

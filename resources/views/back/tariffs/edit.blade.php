@@ -59,7 +59,7 @@
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <label>هزینه ارسال (تومان)</label>
+                                                    <label>هزینه ارسال (ریال)</label>
                                                     <input type="number" class="form-control amount-input" name="shipping_cost" value="{{ $tariff->shipping_cost }}">
                                                 </div>
                                             </div>

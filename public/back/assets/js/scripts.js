@@ -180,7 +180,7 @@ $(document).on('keyup', '.amount-input', function () {
     var text =
         number_format($(this).val()) +
         ' ' +
-        ($(this).data('unit') ? $(this).data('unit') : 'تومان');
+        ($(this).data('unit') ? $(this).data('unit') : 'ریال');
 
     $(this).next('.form-text').text(text);
 });

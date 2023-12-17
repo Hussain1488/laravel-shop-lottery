@@ -3,6 +3,6 @@
 return [
     'currency' => [
         'prefix'    => '',
-        'suffix'    => ' تومان',
+        'suffix'    => ' ریال',
     ],
 ];

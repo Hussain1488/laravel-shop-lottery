@@ -259,7 +259,7 @@
 
                         <tr class="factor-table-color">
                             <th class="p-0">مجموع فاکتور:</th>
-                            <td class="p-0">{{ number_format($order->price) }} تومان</td>
+                            <td class="p-0">{{ number_format($order->price) }} ریال</td>
                         </tr>
                         </tbody>
                     </table>
