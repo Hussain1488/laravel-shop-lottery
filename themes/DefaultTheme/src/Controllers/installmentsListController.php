@@ -36,7 +36,7 @@ class installmentsListController extends Controller
     public function purchaseList()
     {
 
-        $trans = buyertransaction::where('user_id', Auth::user()->id)->where('flag', 0)->latest()->get();
+        $trans = buyertransaction::where('user_id', Auth::user()->id)->where('flag', 0)->latest()->paginate(20);
         $credit = user::find(Auth::user()->id)->purchasecredit;
         return view('front::user.installments.installment_list', compact('trans', 'credit'));
     }
