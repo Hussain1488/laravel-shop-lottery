@@ -82,6 +82,9 @@
                                                     <th>
                                                         شماره سند
                                                     </th>
+                                                    <th>
+                                                        جزئیات
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             @php
@@ -115,6 +118,14 @@
                                                         </td>
                                                         <td>
                                                             {{ $key->list_id }}
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                data-action="{{ route('admin.cooperationsales.transaction.details', [$key->trans_id]) }}"
+                                                                class="btn transaction_details"
+                                                                data-id="{{ $key->trans_id }}" value=""><i
+                                                                    class="text-success feather icon-info"></i>
+                                                            </button>
                                                         </td>
 
                                                     </tr>
@@ -186,6 +197,23 @@
                                                     </div>
 
                                                 </div>
+                                                <div class="row pt-1">
+                                                    <div class="col ml-1">
+
+                                                        <h5 class="text-light">جزئیات:
+                                                        </h5>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <button
+                                                            data-action="{{ route('admin.cooperationsales.transaction.details', [$key->trans_id]) }}"
+                                                            class="btn transaction_details" data-id="{{ $key->trans_id }}"
+                                                            value=""><i
+                                                                class="text-success feather icon-info"></i>جزئیات
+                                                        </button>
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         @endforeach
                                     </div>
@@ -203,15 +231,40 @@
 
     </div>
     </div>
-@endsection
+    <div class="modal fade transaction_details_modal" id="transaction_details">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
 
-@include('back.partials.plugins', [
-    'plugins' => ['persian-datepicker', 'jquery.validate'],
-])
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">جزئیات تراکنش:<span class="text-success" id="deposit_amount_show"></span>
+                    </h4>
+                </div>
+                <hr />
+
+                <!-- Modal body -->
+                <div class="modal-body p-2">
 
 
-@push('scripts')
-    <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}"></script>
+                </div>
 
-    <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
-@endpush
+                <!-- Modal footer -->
+
+                <div class="modal-footer">
+
+                </div>
+
+            </div>
+        </div>
+    @endsection
+
+    @include('back.partials.plugins', [
+        'plugins' => ['persian-datepicker', 'jquery.validate'],
+    ])
+
+
+    @push('scripts')
+        <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}"></script>
+
+        <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
+    @endpush

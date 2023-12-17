@@ -140,7 +140,6 @@ $('.transaction_details').on('click', function () {
         url: $(this).data('action'),
         type: 'GET',
         success: function (data) {
-            console.log(data);
             var detailsData = data;
             $('.modal-body').empty();
 
