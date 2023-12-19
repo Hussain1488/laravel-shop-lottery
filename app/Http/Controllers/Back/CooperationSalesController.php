@@ -29,7 +29,9 @@ class CooperationSalesController extends Controller
     //Cooperation Sales index page
     public function index()
     {
-        $installmentsm = Makeinstallmentsm::where('seller_id', Auth::user()->id)->with('store', 'user')->get();
+        $perPage = 10;
+        $installmentsm = Makeinstallmentsm::where('seller_id', Auth::user()->id)->where('statususer', 0)->with('store', 'user')->latest()->paginate($perPage, ['*'], 'insta');
+        $installmentsm1 = Makeinstallmentsm::where('seller_id', Auth::user()->id)->where('statususer', 1)->where('status', 0)->with('store', 'user')->latest()->paginate($perPage, ['*'], 'insta1');
         $store = createstore::where('selectperson', Auth::user()->id)->first();
 
         $today = Carbon::now();
@@ -42,7 +44,7 @@ class CooperationSalesController extends Controller
             }
         }
 
-        return view('back.cooperationsales.index', compact('installmentsm', 'store', 'today'));
+        return view('back.cooperationsales.index', compact('installmentsm', 'installmentsm1', 'store', 'today'));
     }
 
     //Creating new installments page
@@ -64,10 +66,30 @@ class CooperationSalesController extends Controller
     {
         // dd($request);
         $store = createstore::find($request->store_id);
+        $user = User::find($request->userselected);
         $Creditamount = intval(str_replace(',', '', $request->Creditamount));
-        $prepaidamount = intval(str_replace(',', '', $request->prepaidamount));
-        $amounteachinstallment = intval(str_replace(',', '', $request->amounteachinstallment));
 
+        if (!$store->storecredit >= $Creditamount) {
+            toastr()->error('اعتبار فروشگاه برای این فروش کافی نیست');
+            return redirect()->back();
+        }
+        if (!$user->purchasecredit >= $Creditamount) {
+            toastr()->error('اعتبار کاربر برای این فروش کافی نیست!');
+            return redirect()->back();
+        }
+
+        $prepaidamount = 0;
+        $amounteachinstallment = 0;
+
+        if ($request->typeofpayment == 'cash') {
+            $prepaidamount = $Creditamount;
+            $amounteachinstallment = 0;
+        } else {
+            $total_pay = $Creditamount + $Creditamount * (30 / 100);
+            $prepaidamount = $total_pay * 0.3;
+            $rest_pay = $total_pay - $prepaidamount;
+            $amounteachinstallment = intval($rest_pay / $request->numberofinstallments);
+        }
         $bank_id = BankAccount::whereHas('account_type', function ($query) {
             $query->where('code', 25);
         })->first();
@@ -76,7 +98,6 @@ class CooperationSalesController extends Controller
             return redirect()->back();
         }
 
-        $user = User::find($request->userselected);
         $description = 'انجام فروش(ساخت قسط)';
         $trans_data = [
             'تراکنش:' => $description,
@@ -241,6 +262,10 @@ class CooperationSalesController extends Controller
         // dd($store);
         $fee = $store->feepercentage;
         $installment = Makeinstallmentsm::find($id2);
+        if ($installment->status == 1) {
+            toastr()->warning('شما نمیتوانید برای این فروش درخواست تسویه کنید! قبلا درخواست شده است.');
+            return redirect()->back();
+        }
         $result = $installment->Creditamount * $fee / 100;
         $final = $installment->Creditamount - $result;
         $trans_data = [
