@@ -44,7 +44,7 @@
             @if (optional(Auth::user()->store)->exists())
                 @can('cooperationsales')
                     <li class="nav-item has-sub {{ open_class(['admin.cooperationsales.*']) }}"><a href="#"><i
-                                class="feather icon-users"></i><span class="menu-title"> همکاران</span></a>
+                                class="feather icon-shopping-cart"></i><span class="menu-title"> فروشگاه</span></a>
                         <ul class="menu-content">
                             @can('cooperationsales.index')
                                 <li class="{{ active_class('admin.cooperationsales.index') }}">
@@ -146,7 +146,7 @@
 
             @can('createcolleague')
                 <li class="nav-item has-sub {{ open_class(['admin.createcolleague.*']) }}"><a href="#"><i
-                            class="feather icon-users"></i><span class="menu-title"> ایجاد همکار</span></a>
+                            class="feather icon-user-plus"></i><span class="menu-title"> ایجاد همکار</span></a>
                     <ul class="menu-content">
                         @can('createcolleague.createcreditoperator')
                             <li class="{{ active_class('admin.createcolleague.createcreditoperator') }}">
@@ -194,7 +194,7 @@
 
             @can('installmentreports')
                 <li class="nav-item has-sub {{ open_class(['admin.installmentreports.*']) }}"><a href="#"><i
-                            class="feather icon-users"></i><span class="menu-title"> گزارش گیری اقساط </span></a>
+                            class="feather icon-pie-chart"></i><span class="menu-title"> گزارش گیری اقساط </span></a>
                     <ul class="menu-content">
                         @can('installmentreports.index')
                             <li
