@@ -44,7 +44,7 @@
                                     @method('PUT')
                                     @csrf
 
-                                    <div id="home" class="container tab-pane active"><br>
+                                    <div id="home" class="container tab-pane "><br>
                                         <div class="row">
 
                                             <div class="col-md-6 col-12">
@@ -185,16 +185,36 @@
                                         <div class="row">
                                             <div class="col-md-6 col-12 pt-2">
                                                 <h5>
+                                                    اعتبار ماهانه فروشگاه
+                                                </h5>
+                                            </div>
+                                            <div class="col-md-6 col-12">
+                                                <div class="form-group">
+
+                                                    <div class="d-flex align-items-center">
+                                                        <input value="{{ $store->conrn_job_reccredite }}" type="text"
+                                                            class="form-control moneyInput moneyInputReady" id=""
+                                                            name="conrn_job_reccredite" style="margin-left: 4px"
+                                                            value="{{ old('conrn_job_reccredite') }}">
+                                                        ریال
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-12 pt-2">
+                                                <h5>
                                                     تاریخ پایان قرارداد
                                                 </h5>
 
                                             </div>
                                             <div class="col-md-6 col-12">
                                                 <div class="form-group">
-                                                    تاریخ فعلا ختم قرار داد:
+                                                    تاریخ فعلی ختم قرار داد:
                                                     <span class="text-danger">
-                                                        {{-- {{ \Carbon\Carbon::parse($store->enddate)->format('Y-m-d') }} --}}
-                                                        {{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($store->enddate))->format('d-m-Y') }}
+                                                        {{ jdate(\Carbon\Carbon::parse($store->enddate))->format('d-m-Y') }}
                                                     </span>
                                                     است در صورت تمایل میتوانید تغییر بدهید.
                                                     <input type="text" placeholder="تاریخ پایان قرار داد را مشخص کنید."
@@ -221,14 +241,11 @@
                                                 </a>
                                             </div>
                                         </div>
-
                                     </div>
                                 </form>
                             </div>
-
                         </div>
                 </section>
-
             </div>
         </div>
     </div>
@@ -236,8 +253,9 @@
 @include('back.partials.plugins', [
     'plugins' => ['persian-datepicker', 'jquery.validate'],
 ])
-
-
 @push('scripts')
+    <script>
+        var url = '/';
+    </script>
     <script src="{{ asset('back/assets/js/pages/createcollegue/myscript.js') }}"></script>
 @endpush
