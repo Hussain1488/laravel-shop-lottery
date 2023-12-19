@@ -77,6 +77,8 @@ class CreateColleagueController extends Controller
         // dd(ActivityDetailsModel::latest()->first()->data);
         $store = createstore::find($id);
         $carbonDate = null;
+        $conrn_job_reccredite = intval(str_replace(',', '', $request->conrn_job_reccredite));
+
         if ($request->enddate != null) {
             $carbonDate = Jalalian::fromFormat('Y-m-d', $request->enddate)->toCarbon()->format('Y-m-d');
         }
@@ -101,6 +103,7 @@ class CreateColleagueController extends Controller
             'addressofstore' => 'آدرس فروشگاه',
             'settlementtime' => 'زمان تسویه',
             'enddate' => 'ختم قرارداد',
+            'conrn_job_reccredite' => 'اعتبار ماهانه فروشگاه',
             // Add more field mappings as needed
         ];
         $changes = [];
@@ -132,6 +135,7 @@ class CreateColleagueController extends Controller
                 'settlementtime' => $request->settlementtime,
                 'enddate' => $carbonDate != null ? $carbonDate : $store->enddate,
                 'uploaddocument' => $docPath,
+                'conrn_job_reccredite' => $conrn_job_reccredite,
             ]);
 
             // dd($store->selectperson);
