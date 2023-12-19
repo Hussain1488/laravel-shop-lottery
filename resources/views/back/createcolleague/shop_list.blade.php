@@ -147,7 +147,7 @@
 
                                                         </td>
                                                         <td>
-                                                            {{ \Carbon\Carbon::parse($key->enddate)->format('Y/m/d') }}
+                                                            {{ jdate(\Carbon\Carbon::parse($key->enddate))->format('Y-m-d') }}
 
                                                         </td>
                                                         @can('createcolleague.shopedit')
@@ -246,7 +246,7 @@
 
                                                     <div class="col">
                                                         <span class="text-dark">
-                                                            {{ \Carbon\Carbon::parse($key->enddate)->format('Y/m/d') }}
+                                                            {{ jdate(\Carbon\Carbon::parse($key->enddate))->format('Y-m-d') }}
                                                     </div>
 
                                                 </div>

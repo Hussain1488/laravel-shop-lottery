@@ -393,7 +393,7 @@
 @push('scripts')
     <script>
         var user = @json($users);
-        var url = '{{ route('admin.user.searchUser') }}'
+        var url = '{{ route('admin.user.searchUser') }}';
     </script>
     <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
 @endpush
