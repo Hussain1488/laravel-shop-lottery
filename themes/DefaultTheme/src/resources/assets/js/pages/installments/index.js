@@ -3,8 +3,8 @@
 var flag;
 var pay_url;
 var insta_pay_url;
-var wallet = parseFloat($('#wallet-value').val()); // Parse as float
-var credit = parseFloat($('#credit-value').val());
+var wallet = parseFloat($('#wallet-value').val().replace(/,/g, '')); // Parse as float
+var credit = parseFloat($('#credit-value').val().replace(/,/g, ''));
 var resend_time = Math.floor(Date.now() / 1000) + 60;
 var loading = {
     message:
@@ -45,8 +45,11 @@ $('#sendAgain1').on('click', function () {
 
 $(document).on('click', '.smsGeneratButton', function () {
     var clickedButton = $(this);
+    wallet = parseFloat($('#wallet-value').val().replace(/,/g, ''));
+    credit = parseFloat($('#credit-value').val().replace(/,/g, ''));
     let prePay = parseFloat(clickedButton.attr('data-prepay'));
     let amount = parseFloat(clickedButton.attr('data-amount'));
+    console.log(wallet, credit);
     if (prePay > wallet || amount > credit) {
         let alertContainer = $('.alert-message');
         alertContainer.text(
@@ -90,6 +93,7 @@ $(document).on('click', '.smsGeneratButton', function () {
 });
 $('.insta_pay_button').on('click', function () {
     var clickedButton = $(this);
+    wallet = parseFloat($('#wallet-value').val().replace(/,/g, ''));
     let amount = parseFloat(clickedButton.attr('data-amount'));
     if (amount > wallet) {
         let alertContainer = $('.alert-message');
