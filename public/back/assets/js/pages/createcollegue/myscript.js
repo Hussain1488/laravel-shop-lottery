@@ -108,7 +108,12 @@ $(document).ready(function () {
 
         $('#colleagueDocumentStore').submit();
     });
-
+    $('.moneyInputReady').each(function () {
+        var input = $(this).val();
+        var digits = input.replace(/\D/g, '');
+        var formattedNumber = addCommas(digits);
+        $(this).val(formattedNumber);
+    });
     $('.moneyInput').on('input', function () {
         // console.log('hey');
         var input = $(this).val();
