@@ -38,12 +38,28 @@ class InstallmentsController extends Controller
     //  going to installments records of user
     public function index()
     {
+        $perPage = 15;
+        $installmentsm = Makeinstallmentsm::where('userselected', Auth::user()->id)->where('statususer', 0)->with('installments', 'store', 'user')->latest()->paginate($perPage, ['*'], 'insta');
 
-        $installmentsm = Makeinstallmentsm::where('userselected', Auth::user()->id)->with('installments', 'store', 'user')->get();
-        $installmentsm1 = Makeinstallmentsm::where('userselected', Auth::user()->id)->where('statususer', 1)->with('installments', 'store', 'user')->get();
-        $installmentsm2 = Makeinstallmentsm::where('userselected', Auth::user()->id)->where('paymentstatus', 1)->with('installments', 'store', 'user')->get();
+        $installmentsm1 = installmentdetails::where('paymentstatus', 0)
+            ->whereHas('installments', function ($query) {
+                $query->where('userselected', Auth::user()->id);
+            })
+            ->with(['installments' => function ($query) {
+                $query->where('userselected', Auth::user()->id)->with('store', 'user');
+            }])
+            ->latest()
+            ->paginate($perPage, ['*'], 'insta1');
+        $installmentsm2 = installmentdetails::where('paymentstatus', 1)
+            ->whereHas('installments', function ($query) {
+                $query->where('userselected', Auth::user()->id);
+            })
+            ->with(['installments' => function ($query) {
+                $query->where('userselected', Auth::user()->id)->with('store', 'user');
+            }])->latest()->paginate($perPage, ['*'], 'insta2');
         $userstat = 0;
         $paystatus = 0;
+
         foreach ($installmentsm1 as $key) {
             if ($key->installments->where('paymentstatus', 0)->count() > 0) {
                 $userstat++;
@@ -55,7 +71,6 @@ class InstallmentsController extends Controller
             }
         }
         $gateways = Gateway::active()->get();
-        // dd($userstat, $paystatus);
 
         $user = User::with('wallet')->find(Auth::user()->id);
 

@@ -10,6 +10,7 @@ use App\Models\banktransaction;
 use App\Models\bankTypeModel;
 use App\Models\createstore;
 use App\Models\createstoretransaction;
+use App\Models\installmentdetails;
 use App\Models\Makeinstallmentsm;
 use App\Models\OperatorActivity;
 use App\Models\paymentdetails;
@@ -48,27 +49,17 @@ class InstallmentReportsController extends Controller
 
         $perPage = 15;
 
-        $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->latest()->paginate($perPage, ['*'], 'installments');
-        $installments1 =
-            Makeinstallmentsm::where('statususer', 1)
-            ->with(['store', 'user', 'installments' => function ($query) {
-                $query->where('paymentstatus', 0);
-            }])
-            ->whereHas('installments', function ($query) {
-                $query->where('paymentstatus', 0);
-            })
+        $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->latest()->paginate($perPage, ['*'], 'insta');
+        $installments1 = installmentdetails::where('paymentstatus', 0)->with(['installments' => function ($query) {
+            $query->with('store', 'user');
+        }])
             ->latest()
-            ->paginate($perPage, ['*'], 'installments2');
+            ->paginate($perPage, ['*'], 'insta1');
 
-        $installments2 = Makeinstallmentsm::where('statususer', 1)
-            ->with(['store', 'user', 'installments' => function ($query) {
-                $query->where('paymentstatus', 1);
-            }])
-            ->whereHas('installments', function ($query) {
-                $query->where('paymentstatus', 1);
-            })
-            ->latest()
-            ->paginate($perPage, ['*'], 'installments2');
+        $installments2 = installmentdetails::where('paymentstatus', 1)->with(['installments' => function ($query) {
+            $query->with('store', 'user');
+        }])->latest()
+            ->paginate($perPage, ['*'], 'insta2');
         // dd($installments1, $installments2);
 
         return view('back.installmentreports.index', compact('installments', 'installments1', 'installments2', 'payment_stat'));
@@ -244,22 +235,25 @@ class InstallmentReportsController extends Controller
     {
         // dd($request->all());
         $payment_stat = 'wait';
-
-        $all_installments = Makeinstallmentsm::with("store", "user")->get();
-
+        $perPage = 15;
         $user = User::where('username', 'like', '%' . $request->filter . '%')->get();
-        $installments = $all_installments->where('statususer', 0)->whereIn('userselected', $user->pluck('id'))->all();
+        $installments = Makeinstallmentsm::with("store", "user")->where('statususer', 0)->whereIn('userselected', $user->pluck('id'))->latest()->paginate($perPage, ['*'], 'insta');
 
         if ($user->isEmpty()) {
-
             toastr()->warning('قسطی با شماره وارد شده یافت نشد.');
-            $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
-            $installments1 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
-            $installments2 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
-            return view('back.installmentreports.index', compact('installments', 'installments1', 'payment_stat'));
+            return redirect()->back();
         } else {
-            $installments1 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
-            $installments2 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
+            $installments1 = installmentdetails::where('paymentstatus', 0)->with(['installments' => function ($query) {
+                $query->with('store', 'user');
+            }])
+                ->latest()
+                ->paginate($perPage, ['*'], 'insta1');
+            $installments2
+                = $installments2 = installmentdetails::where('paymentstatus', 1)->with(['installments' => function ($query) {
+                    $query->with('store', 'user');
+                }])->latest()
+                ->paginate($perPage, ['*'], 'insta2');
+
             return view('back.installmentreports.index', compact('installments', 'installments1', 'installments2', 'payment_stat'));
             // dd($installments);
         }
@@ -271,24 +265,29 @@ class InstallmentReportsController extends Controller
 
         // dd($request->all());
         $payment_stat = 'not_paid';
-
+        $perPage = 15;
         $payment_stat = 'not_paid';
         $all_installments = Makeinstallmentsm::with("store", "user")->get();
 
         $user = User::where('username', 'like', '%' . $request->filter1 . '%')->get();
         // dd($user);
-        $installments1 = $all_installments->where('status', 1)->whereIn('userselected', $user->pluck('id'))->all();
-        // dd($installments1);
-        if (empty($installments1)) {
+        $installments1 = installmentdetails::where('paymentstatus', 0)->whereHas('installments', function ($query) use ($user) {
+            $query->whereIn('userselected', $user->pluck('id'));
+        })->with(['installments' => function ($query) use ($user) {
+            $query->with('store', 'user')->whereIn('userselected', $user->pluck('id'));
+        }])->latest()
+            ->paginate($perPage, ['*'], 'insta1');
 
+
+        if (!$installments1->count() > 0) {
             toastr()->warning('قسطی با شماره وارد شده یافت نشد.');
-            $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
-            $installments2 = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
-            $installments1 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
-            return view('back.installmentreports.index', compact('installments', 'installments1', 'payment_stat'));
+            return redirect()->back();
         } else {
-            $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
-            $installments2 = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
+            $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->latest()->paginate($perPage, ['*'], 'insta1');
+            $installments2 = installmentdetails::where('paymentstatus', 1)->with(['installments' => function ($query) {
+                $query->with('store', 'user');
+            }])->latest()
+                ->paginate($perPage, ['*'], 'insta2');
             return view('back.installmentreports.index', compact('installments', 'installments1', 'installments2', 'payment_stat'));
             // dd($installments);
         }
@@ -300,22 +299,25 @@ class InstallmentReportsController extends Controller
 
         // dd($request->all());
         $payment_stat = 'paid';
-        $all_installments = Makeinstallmentsm::with("store", "user")->get();
+        $perPage = 15;
 
         $user = User::where('username', 'like', '%' . $request->filter1 . '%')->get();
         // dd($user);
-        $installments2 = $all_installments->where('statususer', 1)->whereIn('userselected', $user->pluck('id'))->all();
-        // dd($installments1);
-        if (empty($installments2)) {
-
+        $installments2 = installmentdetails::where('paymentstatus', 1)->whereHas('installments', function ($query) use ($user) {
+            $query->whereIn('userselected', $user->pluck('id'));
+        })->with(['installments' => function ($query) use ($user) {
+            $query->with('store', 'user')->whereIn('userselected', $user->pluck('id'));
+        }])->latest()
+            ->paginate($perPage, ['*'], 'insta1');
+        if (!$installments2->count() > 0) {
             toastr()->warning('قسطی با شماره وارد شده یافت نشد.');
-            $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
-            $installments1 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
-            $installments2 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
-            return view('back.installmentreports.index', compact('installments', 'installments1', 'payment_stat'));
+            return redirect()->back();
         } else {
-            $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
-            $installments1 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
+            $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->latest()->paginate($perPage, ['*'], 'insta1');
+            $installments1 = installmentdetails::where('paymentstatus', 0)->with(['installments' => function ($query) {
+                $query->with('store', 'user');
+            }])->latest()
+                ->paginate($perPage, ['*'], 'insta2');
             return view('back.installmentreports.index', compact('installments', 'installments1', 'installments2', 'payment_stat'));
             // dd($installments);
         }
@@ -332,7 +334,7 @@ class InstallmentReportsController extends Controller
     public function show_shop_installments($id, $slug)
     {
         // dd($id, $slug);
-
+        $perPage = 15;
         if ($slug == 'wait') {
             $payment_stat = 'wait';
         } else if ($slug == 'not_paid') {
@@ -340,11 +342,28 @@ class InstallmentReportsController extends Controller
         } else if ($slug == 'paid') {
             $payment_stat = 'paid';
         }
+        $currentPaginationPart = request()->query('tab');
+        // Define the default value for $payment_stat
+        $payment_stat = 'wait';
+        if ($currentPaginationPart == 'insta1') {
+            $payment_stat = 'not_paid';
+        } elseif ($currentPaginationPart == 'insta2') {
+            $payment_stat = 'paid';
+        }
         $shop = createstore::where('id', $id)->first();
-        $installments = Makeinstallmentsm::where('statususer', 0)->where('store_id', $id)->with("store", "user")->get();
-        $installments1 = Makeinstallmentsm::where('statususer', 1)->where('store_id', $id)->with("store", "user")->get();
-        $installments2 = $installments1;
-        // dd($installments2);
+        // dd($shop);
+        $installments = Makeinstallmentsm::where('statususer', 0)->where('store_id', $id)->with("store", "user")->latest()->paginate($perPage, ['*'], 'insta');
+        $installments1 = installmentdetails::where('paymentstatus', 0)->whereHas('installments', function ($query) use ($shop) {
+            $query->where('store_id', $shop->id)->where('paymentstatus', 0);
+        })->with(['installments' => function ($query) use ($shop) {
+            $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 0);;
+        }])->latest()->paginate($perPage, ['*'], 'insta1');
+
+        $installments2 = installmentdetails::where('paymentstatus', 1)->whereHas('installments', function ($query) use ($shop) {
+            $query->where('store_id', $shop->id)->where('paymentstatus', 1);;
+        })->with(['installments' => function ($query) use ($shop) {
+            $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 1);;
+        }])->latest()->paginate($perPage, ['*'], 'insta2');
 
         return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
     }
@@ -353,37 +372,37 @@ class InstallmentReportsController extends Controller
 
     public function show_shop_installments_filter(Request $request)
     {
-        // dd($request->all());
         $shop = createstore::where('id', $request->store)->first();
+        // dd($request->all());
+        $perPage = 15;
+        $payment_stat = 'wait';
+        $installments = Makeinstallmentsm::where('statususer', 0)->where('store_id', $request->store)->where('userselected', $request->user)
+            ->with("store", "user")->latest()->paginate($perPage, ['*'], 'insta');
+        $installments1 = installmentdetails::where('paymentstatus', 0)->whereHas('installments', function ($query) use ($shop, $request) {
+            $query->where('store_id', $shop->id)->where('paymentstatus', 0)->where('userselected', $request->user);
+        })->with(['installments' => function ($query) use ($shop, $request) {
+            $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 0)->where('userselected', $request->user);
+        }])->latest()->paginate(
+            $perPage,
+            ['*'],
+            'insta1'
+        );
+        $installments2 = installmentdetails::where('paymentstatus', 1)->whereHas('installments', function ($query) use ($shop, $request) {
+            $query->where('store_id', $shop->id)->where('paymentstatus', 1)->where('userselected', $request->user);
+        })->with(['installments' => function ($query) use ($shop, $request) {
+            $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 1)->where('userselected', $request->user);
+        }])->latest()->paginate($perPage, ['*'], 'insta2');
 
+        $currentPaginationPart = request()->query('tab');
 
-        if ($request->payment_stat == 'wait') {
-            $payment_stat = 'wait';
-            // dd('it is in wait');
-            $installments = Makeinstallmentsm::where('statususer', 0)->where('store_id', $request->store)->where('userselected', $request->user)->with("store", "user")->get();
-
-            $installments1 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
-            $installments2 = $installments1;
-
-            return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
-        } else if ($request->payment_stat == 'not_paid') {
-            // dd('it is in not paid');
+        $payment_stat = 'wait';
+        if ($currentPaginationPart == 'insta1') {
             $payment_stat = 'not_paid';
-            $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
-            $installments1 = Makeinstallmentsm::where('statususer', 1)->where('store_id', $request->store)->where('userselected', $request->user)->with("store", "user")->get();
-            $installments2 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
-
-            return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
-        } else if ($request->payment_stat == 'paid') {
-            // dd('it is in paid');
+        } elseif ($currentPaginationPart == 'insta2') {
             $payment_stat = 'paid';
-            $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
-            $installments1 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
-            $installments2 = Makeinstallmentsm::where('statususer', 1)->where('store_id', $request->store)->where('userselected', $request->user)->with("store", "user")->get();
-
-
-            return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
         }
+
+        return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
     }
 
     //  filtering the records of installmnets of specific store's installments accorgin to phone number input
@@ -391,51 +410,43 @@ class InstallmentReportsController extends Controller
     public function show_shop_installments_filter_name(Request $request)
     {
         // dd($request->all());
+        $payment_stat = $request->payment_stat;
         $user = User::where('username', 'like', '%' . $request->filter . '%')->get();
-        // dd($user);
         $shop = createstore::where('id', $request->store)->first();
 
+        $perPage = 15;
         if ($user->isEmpty()) {
-            $payment_stat = $request->payment_stat;
-            $installments = Makeinstallmentsm::where('statususer', 0)->where('store_id', $request->store)->with("store", "user")->get();
-            $installments1 = Makeinstallmentsm::where('statususer', 1)->where('store_id', $request->store)->with("store", "user")->get();
-            $installments2 = Makeinstallmentsm::where('statususer', 1)->where('store_id', $request->store)->with("store", "user")->get();
-
             toastr()->warning("هیچ کاربری با شماره وارده یافت نشد.");
-
-            return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
+            return redirect()->back();
         }
+        $installments = Makeinstallmentsm::where('statususer', 0)->where('store_id', $request->store)->whereIn('userselected', $user->pluck('id'))
+            ->with("store", "user")->latest()->paginate($perPage, ['*'], 'insta');
 
-        if ($request->payment_stat == 'wait') {
-            $payment_stat = 'wait';
-            // dd('it is in wait');
-            $installments = Makeinstallmentsm::where('statususer', 0)->where('store_id', $request->store)->whereIn('userselected', $user->pluck('id'))->with("store", "user")->get();
-            $installments1 = Makeinstallmentsm::where('statususer', 1)->where('store_id', $request->store)->with("store", "user")->get();
-            $installments2 = $installments1;
+        $installments1 = installmentdetails::where('paymentstatus', 0)->whereHas('installments', function ($query) use ($shop, $user) {
+            $query->where('store_id', $shop->id)->where('paymentstatus', 0)->whereIn('userselected', $user->pluck('id'));
+        })->with(['installments' => function ($query) use ($shop, $user) {
+            $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 0)->whereIn('userselected', $user->pluck('id'));
+        }])->latest()->paginate(
+            $perPage,
+            ['*'],
+            'insta1'
+        );
+        $installments2 = installmentdetails::where('paymentstatus', 1)->whereHas('installments', function ($query) use ($shop, $user) {
+            $query->where('store_id', $shop->id)->where('paymentstatus', 1)->whereIn('userselected', $user->pluck('id'));
+        })->with(['installments' => function ($query) use ($shop, $user) {
+            $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 1)->whereIn('userselected', $user->pluck('id'));
+        }])->latest()->paginate($perPage, ['*'], 'insta2');
 
-
-            return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
-        } else if ($request->payment_stat == 'not_paid') {
-            // dd('it is in not paid');
+        $currentPaginationPart = request()->query('tab');
+        $payment_stat = 'wait';
+        if ($currentPaginationPart == 'insta1') {
             $payment_stat = 'not_paid';
-            $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
-            $installments1 = Makeinstallmentsm::where('statususer', 1)->where('store_id', $request->store)->whereIn('userselected', $user->pluck('id'))->with("store", "user")->get();
-            $installments2 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
-
-
-
-            return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
-        } else if ($request->payment_stat == 'paid') {
-            // dd('it is in paid');
+        } elseif ($currentPaginationPart == 'insta2') {
             $payment_stat = 'paid';
-            $installments = Makeinstallmentsm::where('statususer', 0)->with("store", "user")->get();
-            $installments1 = Makeinstallmentsm::where('statususer', 1)->with("store", "user")->get();
-            $installments2 = Makeinstallmentsm::where('statususer', 1)->where('store_id', $request->store)->whereIn('userselected', $user->pluck('id'))->with("store", "user")->get();
-
-
-            return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
         }
+        return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
     }
+
 
     /**
      * Update the specified resource in storage.
