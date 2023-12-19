@@ -13,21 +13,21 @@ class ChangeDateDatatypesToString extends Migration
      */
     public function up()
     {
-        Schema::table('buyertransactions', function (Blueprint $table) {
-            $table->string('datetransaction')->change();
-        });
-        Schema::table('createstoretransactions', function (Blueprint $table) {
-            $table->string('datetransaction')->change();
-        });
-        Schema::table('list_of_payment', function (Blueprint $table) {
-            $table->string('depositdate')->change();
-        });
-        Schema::table('banktransactions', function (Blueprint $table) {
-            $table->string('transactionsdate')->change();
-        });
-        Schema::table('installmentdetails', function (Blueprint $table) {
-            $table->string('duedate')->change();
-        });
+        // Schema::table('buyertransactions', function (Blueprint $table) {
+        //     $table->string('datetransaction')->change();
+        // });
+        // Schema::table('createstoretransactions', function (Blueprint $table) {
+        //     $table->string('datetransaction')->change();
+        // });
+        // Schema::table('list_of_payment', function (Blueprint $table) {
+        //     $table->string('depositdate')->change();
+        // });
+        // Schema::table('banktransactions', function (Blueprint $table) {
+        //     $table->string('transactionsdate')->change();
+        // });
+        // Schema::table('installmentdetails', function (Blueprint $table) {
+        //     $table->string('duedate')->change();
+        // });
     }
 
     /**

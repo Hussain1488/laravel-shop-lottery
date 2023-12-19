@@ -20,7 +20,7 @@ class CreateCreatestoresTable extends Migration
             $table->string('nameofstore');
             $table->string('addressofstore');
             $table->string('feepercentage');
-            $table->string('enddate');
+            $table->date('enddate');
             $table->timestamps();
         });
     }
