@@ -431,6 +431,7 @@ sizeSortable();
 //------------ prices js codes
 
 $('#add-product-prices').click(function () {
+    console.log('hey');
     addProductPrice();
 });
 
@@ -487,7 +488,7 @@ function addProductPrice() {
         .attr('name', 'prices[' + count + '][discount_expire]');
 
     setTimeout(() => {
-        $('.persian-date-picker').);
+        $('.persian-date-picker');
         price.find('.single-price').removeClass('.animated fadeIn');
     }, 700);
 }
