@@ -16,7 +16,7 @@ class CreateBanktransactionsTable extends Migration
         Schema::create('banktransactions', function (Blueprint $table) {
             $table->id();
             $table->string('namebank');
-            $table->string('bankbalance');
+            $table->bigInteger('bankbalance');
             $table->bigInteger('transactionprice');
             $table->date('transactionsdate');
             $table->timestamps();
