@@ -32,7 +32,7 @@ class CooperationSalesController extends Controller
         $perPage = 10;
         $installmentsm = Makeinstallmentsm::where('seller_id', Auth::user()->id)->where('statususer', 0)->with('store', 'user')->latest()->paginate($perPage, ['*'], 'insta');
         $installmentsm1 = Makeinstallmentsm::where('seller_id', Auth::user()->id)->where('statususer', 1)->where('status', 0)->with('store', 'user')->latest()->paginate($perPage, ['*'], 'insta1');
-        $store = createstore::where('selectperson', Auth::user()->id)->first();
+        $store = createstore::where('user_id', Auth::user()->id)->first();
 
         $today = Carbon::now();
 
@@ -51,7 +51,7 @@ class CooperationSalesController extends Controller
     public function create()
     {
         $shopkeeper = Auth::user();
-        $shop = createstore::where('selectperson', $shopkeeper->id)->first();
+        $shop = createstore::where('user_id', $shopkeeper->id)->first();
         $jalaliEndDate = Jalalian::fromFormat('Y-m-d', $shop->enddate);
         $carbonEndDate = Carbon::createFromFormat('Y-m-d H:i:s', $jalaliEndDate->toCarbon()->toDateTimeString());
         $shop->enddate = $carbonEndDate;
@@ -155,7 +155,7 @@ class CooperationSalesController extends Controller
     // going to clearing view page
     public function clearing()
     {
-        $store = createstore::where('selectperson', Auth::user()->id)->first();
+        $store = createstore::where('user_id', Auth::user()->id)->first();
 
         return view('back.cooperationsales.clearing', Compact('store'));
     }
