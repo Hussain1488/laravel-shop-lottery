@@ -306,7 +306,7 @@ class UserController extends Controller
         $users = [];
 
         foreach ($user as $key) {
-            if (!createstore::where('selectperson', $key->id)->exists()) {
+            if (!createstore::where('user_id', $key->id)->exists()) {
                 $users[] = $key;
             };
         }

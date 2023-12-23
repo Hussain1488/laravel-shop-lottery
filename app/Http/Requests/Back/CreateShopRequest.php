@@ -24,21 +24,21 @@ class CreateShopRequest extends FormRequest
     public function rules()
     {
         return [
-            'selectperson' => 'required',
+            'user_id' => 'required',
             'uploaddocument' => 'required',
             'nameofstore' => 'required|string',
             'addressofstore' => 'required|string',
             'storecredit' => 'required',
             'enddate' => 'required|date',
             'feepercentage' => 'required|numeric',
-            'settlementtime' => 'required',
+            'settlementtime' => 'required|min:1|max:255',
             'account_id' => 'required',
         ];
     }
     public function attributes()
     {
         return [
-            'selectperson' => 'کاربر',
+            'user_id' => 'کاربر',
             'uploaddocument' => 'فایل مستندات',
             'nameofstore' => 'نام فروشگاه',
             'addressofstore' => 'آدرس فروشگاه',

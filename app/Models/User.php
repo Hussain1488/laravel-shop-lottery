@@ -266,6 +266,6 @@ class User extends Authenticatable
     }
     public function store()
     {
-        return $this->hasOne(createstore::class, 'selectperson');
+        return $this->hasOne(createstore::class, 'user_id');
     }
 }

@@ -15,6 +15,6 @@ class createstore extends Model
     //  defining relation with user model
     public function user()
     {
-        return $this->belongsTo(User::class, 'selectperson');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

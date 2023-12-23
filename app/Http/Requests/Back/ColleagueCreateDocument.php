@@ -25,8 +25,8 @@ class ColleagueCreateDocument extends FormRequest
     {
 
         return [
-            "namedebtor" => "required",
-            "namecreditor" => "required",
+            "bank_id" => "required",
+            "user_id" => "required",
             "ReCredintAmount" => "required",
             "documents" => "required",
             "description" => "required|max:700",
@@ -36,8 +36,8 @@ class ColleagueCreateDocument extends FormRequest
     {
 
         return [
-            "namedebtor" => "اسم بدهکار",
-            "namecreditor" => "اسم بستانکار",
+            "bank_id" => "اسم بدهکار",
+            "user_id" => "اسم بستانکار",
             "ReCredintAmount" => "مقدار اعتبار",
             "documents" => "اسناد",
             "description" => "توضیحات",

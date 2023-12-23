@@ -15,12 +15,15 @@ class CreateCreatestoresTable extends Migration
     {
         Schema::create('createstores', function (Blueprint $table) {
             $table->id();
-            $table->string('selectperson');
+            $table->unsignedBigInteger('user_id');
             $table->string('uploaddocument');
             $table->string('nameofstore');
             $table->string('addressofstore');
             $table->string('feepercentage');
             $table->date('enddate');
+            $table->tinyInteger('settlementtime');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->index('user_id');
             $table->timestamps();
         });
     }

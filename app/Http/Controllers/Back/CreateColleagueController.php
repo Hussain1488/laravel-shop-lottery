@@ -138,8 +138,8 @@ class CreateColleagueController extends Controller
                 'conrn_job_reccredite' => $conrn_job_reccredite,
             ]);
 
-            // dd($store->selectperson);
-            $operator_id = OperatorActivity::createActivity($store->selectperson, 'EDIT_STORE');
+            // dd($store->user_id);
+            $operator_id = OperatorActivity::createActivity($store->user_id, 'EDIT_STORE');
             ActivityDetailsModel::createActivityDetail($operator_id, $data);
             DB::commit();
             toastr()->success('فروشگاه با موفقیت اصلاح شد.');
@@ -170,7 +170,7 @@ class CreateColleagueController extends Controller
         $users = [];
 
         foreach ($user as $key) {
-            if (!createstore::where('selectperson', $key->id)->exists()) {
+            if (!createstore::where('user_id', $key->id)->exists()) {
                 $users[] = $key;
             };
         }
@@ -235,7 +235,7 @@ class CreateColleagueController extends Controller
             DB::beginTransaction();
             $store = createstore::create([
                 'storecredit' => $storecredit,
-                'selectperson' => $request->selectperson,
+                'user_id' => $request->user_id,
                 'nameofstore' => $request->nameofstore,
                 'addressofstore' => $request->addressofstore,
                 'feepercentage' => $request->feepercentage,
@@ -249,7 +249,7 @@ class CreateColleagueController extends Controller
             StoreTransactionDetailsModel::createDetail($trans_id, $trans_data);
             $bankt_tras = banktransaction::transaction($bank_id->id, $storecredit, true, $trans_id, 'store');
 
-            $operator_id = OperatorActivity::createActivity($request->selectperson, 'CREATE_STORE');
+            $operator_id = OperatorActivity::createActivity($request->user_id, 'CREATE_STORE');
             ActivityDetailsModel::createActivityDetail($operator_id, $data);
 
             DB::commit();
@@ -437,13 +437,13 @@ class CreateColleagueController extends Controller
     // storing document store function
     public function createDocumentStore(ColleagueCreateDocument $request)
     {
-        // dd('hey');
-        $user = User::find($request->namecreditor);
+        // dd($request->all());
+        $user = User::find($request->user_id);
 
         $buyerTrans = buyertransaction::transaction($user, $request->ReCredintAmount, true, 1, 0, 'ایجاد سند مالی');
 
         // transaction($bank_id, $creditAmount, $status, $trans_id)
-        $bank = banktransaction::transaction($request->namedebtor, $request->ReCredintAmount, false, $buyerTrans->id, 'user');
+        $bank = banktransaction::transaction($request->bank_id, $request->ReCredintAmount, false, $buyerTrans->id, 'user');
 
 
         if ($request->hasFile('documents')) {
@@ -478,8 +478,8 @@ class CreateColleagueController extends Controller
             ];
             $wallet->balance += $request->ReCredintAmount;
             createdocument::create([
-                'namedebtor' => $request->namedebtor,
-                'namecreditor' => $user->first_name,
+                'bank_id' => $request->bank_id,
+                'user_id' => $user->id,
                 'price' => $request->ReCredintAmount,
                 'description' => $request->description,
                 'documents' => $docPath,

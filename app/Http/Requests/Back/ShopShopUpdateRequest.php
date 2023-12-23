@@ -27,13 +27,13 @@ class ShopShopUpdateRequest extends FormRequest
             'nameofstore' => 'required|string',
             'addressofstore' => 'required|string',
             'feepercentage' => 'required|numeric',
-            'settlementtime' => 'required',
+            'settlementtime' => 'required|min:1|max:255',
         ];
     }
     public function attributes()
     {
         return [
-            'selectperson' => 'کاربر',
+            'user_id' => 'کاربر',
             'uploaddocument' => 'فایل مستندات',
             'nameofstore' => 'نام فروشگاه',
             'addressofstore' => 'آدرس فروشگاه',
