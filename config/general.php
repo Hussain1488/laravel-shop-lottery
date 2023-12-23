@@ -24,7 +24,7 @@ return [
         ],
 
         'cooperationsales' => [
-            'title' =>  'همکاران',
+            'title' =>  'فروشگاه',
             'values' => [
                 'index' => 'لیست فروش',
                 'create' => 'ایجاد قسط',
