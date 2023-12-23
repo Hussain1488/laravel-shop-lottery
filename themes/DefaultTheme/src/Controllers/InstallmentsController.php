@@ -39,23 +39,23 @@ class InstallmentsController extends Controller
     public function index()
     {
         $perPage = 15;
-        $installmentsm = Makeinstallmentsm::where('userselected', Auth::user()->id)->where('statususer', 0)->with('installments', 'store', 'user')->latest()->paginate($perPage, ['*'], 'insta');
+        $installmentsm = Makeinstallmentsm::where('user_id', Auth::user()->id)->where('statususer', 0)->with('installments', 'store', 'user')->latest()->paginate($perPage, ['*'], 'insta');
 
         $installmentsm1 = installmentdetails::where('paymentstatus', 0)
             ->whereHas('installments', function ($query) {
-                $query->where('userselected', Auth::user()->id);
+                $query->where('user_id', Auth::user()->id);
             })
             ->with(['installments' => function ($query) {
-                $query->where('userselected', Auth::user()->id)->with('store', 'user');
+                $query->where('user_id', Auth::user()->id)->with('store', 'user');
             }])
             ->latest()
             ->paginate($perPage, ['*'], 'insta1');
         $installmentsm2 = installmentdetails::where('paymentstatus', 1)
             ->whereHas('installments', function ($query) {
-                $query->where('userselected', Auth::user()->id);
+                $query->where('user_id', Auth::user()->id);
             })
             ->with(['installments' => function ($query) {
-                $query->where('userselected', Auth::user()->id)->with('store', 'user');
+                $query->where('user_id', Auth::user()->id)->with('store', 'user');
             }])->latest()->paginate($perPage, ['*'], 'insta2');
         $userstat = 0;
         $paystatus = 0;
@@ -176,7 +176,7 @@ class InstallmentsController extends Controller
         $insta_dateils->paymentstatus = 1;
         $installments->paymentstatus = 1;
 
-        $user = User::with('wallet')->find($installments->userselected);
+        $user = User::with('wallet')->find($installments->user_id);
         $wallet = $user->getWallet();
 
         if ($wallet->balance >= $insta_dateils->installmentprice) {

@@ -107,7 +107,7 @@
                                                         action="{{ route('admin.installments.shop.installments.filter') }}"
                                                         method="get">
                                                         @csrf
-                                                        <input type="hidden" value="{{ $key->userselected }}"
+                                                        <input type="hidden" value="{{ $key->user_id }}"
                                                             name="user" id="">
                                                         <input type="hidden" value="wait" name="payment_stat"
                                                             id="">
@@ -207,7 +207,7 @@
                                                         method="get">
                                                         @csrf
                                                         <input type="hidden"
-                                                            value="{{ $key->installments->userselected }}" name="user"
+                                                            value="{{ $key->installments->user_id }}" name="user"
                                                             id="">
                                                         <input type="hidden" value="not_paid" name="payment_stat"
                                                             id="">
@@ -307,7 +307,7 @@
                                                         method="get">
                                                         @csrf
                                                         <input type="hidden"
-                                                            value="{{ $key->installments->userselected }}" name="user"
+                                                            value="{{ $key->installments->user_id }}" name="user"
                                                             id="">
                                                         <input type="hidden" value="paid" name="payment_stat"
                                                             id="">
