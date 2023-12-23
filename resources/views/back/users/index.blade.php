@@ -1,7 +1,6 @@
 @extends('back.layouts.master')
 
 @section('content')
-
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -34,7 +33,9 @@
                         @can('users.export')
                             <div class="heading-elements">
                                 <ul class="list-inline mb-0">
-                                    <li><button type="button" data-toggle="modal" data-target="#users-export-modal" class="btn btn-outline-primary waves-effect waves-light"><i class="fa fa-file-excel-o"></i> خروجی گرفتن از لیست</button></li>
+                                    <li><button type="button" data-toggle="modal" data-target="#users-export-modal"
+                                            class="btn btn-outline-primary waves-effect waves-light"><i
+                                                class="fa fa-file-excel-o"></i> خروجی گرفتن از لیست</button></li>
                                 </ul>
                             </div>
                         @endcan
@@ -43,12 +44,15 @@
                         <div class="card-body">
                             <div class="mb-2 collapse datatable-actions">
                                 <div class="d-flex align-items-center">
-                                    <div class="font-weight-bold text-danger mr-3"><span id="datatable-selected-rows">0</span> مورد انتخاب شده: </div>
+                                    <div class="font-weight-bold text-danger mr-3"><span
+                                            id="datatable-selected-rows">0</span> مورد انتخاب شده: </div>
 
-                                    <button class="btn btn-danger mr-2" type="button" data-toggle="modal" data-target="#multiple-delete-modal">حذف همه</button>
+                                    <button class="btn btn-danger mr-2" type="button" data-toggle="modal"
+                                        data-target="#multiple-delete-modal">حذف همه</button>
                                 </div>
                             </div>
-                            <div class="datatable datatable-bordered datatable-head-custom" id="users_datatable" data-action="{{ route('admin.users.apiIndex') }}"></div>
+                            <div class="datatable datatable-bordered datatable-head-custom" id="users_datatable"
+                                data-action="{{ route('admin.users.apiIndex') }}"></div>
                         </div>
                     </div>
                 </section>
@@ -58,7 +62,7 @@
     </div>
 
     {{-- multiple delete modal --}}
-    <div class="modal fade text-left" id="multiple-delete-modal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade text-left" id="multiple-delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-sm" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -74,7 +78,8 @@
                     <form action="{{ route('admin.users.multipleDestroy') }}" id="user-multiple-delete-form">
                         @csrf
                         @method('delete')
-                        <button type="button" class="btn btn-success waves-effect waves-light" data-dismiss="modal">خیر</button>
+                        <button type="button" class="btn btn-success waves-effect waves-light"
+                            data-dismiss="modal">خیر</button>
                         <button type="submit" class="btn btn-danger waves-effect waves-light">بله حذف شود</button>
                     </form>
                 </div>
@@ -83,7 +88,7 @@
     </div>
 
     <!-- export modal -->
-    <div class="modal fade text-left" id="users-export-modal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal fade text-left" id="users-export-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -97,38 +102,46 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="custom-control custom-checkbox custom-checkbox-success">
-                                    <input id="export-checkbox-id" type="checkbox" class="custom-control-input" name="filters[id]" value="1" checked>
+                                    <input id="export-checkbox-id" type="checkbox" class="custom-control-input"
+                                        name="filters[id]" value="1" checked>
                                     <label class="custom-control-label" for="export-checkbox-id">آیدی</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="custom-control custom-checkbox custom-checkbox-success">
-                                    <input id="export-checkbox-first_name" type="checkbox" class="custom-control-input" name="filters[first_name]" value="1" checked>
+                                    <input id="export-checkbox-first_name" type="checkbox" class="custom-control-input"
+                                        name="filters[first_name]" value="1" checked>
                                     <label class="custom-control-label" for="export-checkbox-first_name">نام</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="custom-control custom-checkbox custom-checkbox-success">
-                                    <input id="export-checkbox-last_name" type="checkbox" class="custom-control-input" name="filters[last_name]" value="1" checked>
-                                    <label class="custom-control-label" for="export-checkbox-last_name">نام خانوادگی</label>
+                                    <input id="export-checkbox-last_name" type="checkbox" class="custom-control-input"
+                                        name="filters[last_name]" value="1" checked>
+                                    <label class="custom-control-label" for="export-checkbox-last_name">نام
+                                        خانوادگی</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="custom-control custom-checkbox custom-checkbox-success">
-                                    <input id="export-checkbox-username" type="checkbox" class="custom-control-input" name="filters[username]" value="1" checked>
+                                    <input id="export-checkbox-username" type="checkbox" class="custom-control-input"
+                                        name="filters[username]" value="1" checked>
                                     <label class="custom-control-label" for="export-checkbox-username">نام کاربری</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="custom-control custom-checkbox custom-checkbox-success">
-                                    <input id="export-checkbox-email" type="checkbox" class="custom-control-input" name="filters[email]" value="1" checked>
+                                    <input id="export-checkbox-email" type="checkbox" class="custom-control-input"
+                                        name="filters[email]" value="1" checked>
                                     <label class="custom-control-label" for="export-checkbox-email">ایمیل</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="custom-control custom-checkbox custom-checkbox-success">
-                                    <input id="export-checkbox-created_at" type="checkbox" class="custom-control-input" name="filters[created_at]" value="1" checked>
-                                    <label class="custom-control-label" for="export-checkbox-created_at">تاریخ ثبت نام</label>
+                                    <input id="export-checkbox-created_at" type="checkbox" class="custom-control-input"
+                                        name="filters[created_at]" value="1" checked>
+                                    <label class="custom-control-label" for="export-checkbox-created_at">تاریخ ثبت
+                                        نام</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -149,15 +162,12 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @include('back.partials.plugins', ['plugins' => ['datatable']])
 
 @php
-    $help_videos = [
-        config('general.video-helpes.users')
-    ];
+    $help_videos = [config('general.video-helpes.users')];
 @endphp
 
 
