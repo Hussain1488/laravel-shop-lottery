@@ -85,7 +85,7 @@
                                                         <label>سرچ بر اساس شماره تلفن</label>
 
                                                         <select class="form-control user_select2" id="user_select"
-                                                            name="userselected">
+                                                            name="user_id">
                                                             {{-- <option value="0">کاربر را انتخاب کنید</option> --}}
                                                             {{-- @foreach ($users as $item)
                                                                 <option data-name="{{ $item->first_name }}"
@@ -97,7 +97,7 @@
                                                             @endforeach --}}
                                                         </select>
 
-                                                        @error('userselected')
+                                                        @error('user_id')
                                                             <span class="text-danger">
                                                                 {{ $message }}
                                                             </span>

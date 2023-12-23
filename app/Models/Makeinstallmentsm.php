@@ -17,7 +17,7 @@ class Makeinstallmentsm extends Model
     // defining relation with user model as user
     public function user()
     {
-        return $this->belongsTo(User::class, 'userselected');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     // defining relation with user model as seller
@@ -45,7 +45,7 @@ class Makeinstallmentsm extends Model
     {
         $refuse = Makeinstallmentsm::find($id);
         $store = createstore::find($refuse->store_id);
-        $user = User::find($refuse->userselected);
+        $user = User::find($refuse->user_id);
         $store->storecredit += $refuse->Creditamount;
         $user->purchasecredit += $refuse->Creditamount;
         // dd($refuse->Creditamount, $user->purchasecredit);

@@ -325,7 +325,7 @@ class CreateColleagueController extends Controller
             $docPath = json_encode($paths);
         }
 
-        $userUpdate = User::find($request->userselected);
+        $userUpdate = User::find($request->user_id);
 
         $data = [
             'اعتبار قبلی' => $userUpdate->purchasecredit . ' ریال',

@@ -24,7 +24,7 @@ class CooperationSaleCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            "userselected" => "required",
+            "user_id" => "required",
             "Creditamount" => "required",
             "typeofpayment" => "required",
         ];
@@ -33,7 +33,7 @@ class CooperationSaleCreateRequest extends FormRequest
     public function attributes()
     {
         return [
-            "userselected" => "کاربر",
+            "user_id" => "کاربر",
             "Creditamount" => "قیمت اصلی",
             "typeofpayment" => "نقدی یا اقساط",
             "numberofinstallments" => "تعداد اقساط",

@@ -66,7 +66,7 @@ class CooperationSalesController extends Controller
     {
         // dd($request);
         $store = createstore::find($request->store_id);
-        $user = User::find($request->userselected);
+        $user = User::find($request->user_id);
         $Creditamount = intval(str_replace(',', '', $request->Creditamount));
 
         if (!$store->storecredit >= $Creditamount) {
@@ -102,7 +102,7 @@ class CooperationSalesController extends Controller
         $trans_data = [
             'تراکنش:' => $description,
             'توسط:' => Auth::user()->username,
-            'برای:' => User::find($request->userselected)->username,
+            'برای:' => User::find($request->user_id)->username,
             'مقدار تراکنش:' => $Creditamount . 'ریال',
             'نوع فروش:' => $request->typeofpayment == 'cash' ? 'نقدی' : 'اقساطی',
             'تعداد قسط:' => $request->typeofpayment == 'cash' ? 0 : $request->numberofinstallments,
@@ -118,7 +118,7 @@ class CooperationSalesController extends Controller
                 'status' => 0,
                 'seller_id' => Auth::user()->id,
                 'Creditamount' => $Creditamount,
-                'userselected' => $request->userselected,
+                'user_id' => $request->user_id,
                 'typeofpayment' => $request->typeofpayment,
                 'numberofinstallments' => $request->typeofpayment == 'cash' ? 0 : $request->numberofinstallments,
                 'prepaidamount' => $prepaidamount,
@@ -128,7 +128,7 @@ class CooperationSalesController extends Controller
                 'statususer' => 0,
                 'store_id' => $store->id,
             ]);
-            $store_trans = createstoretransaction::storeTransaction($store, $Creditamount, false, 3, 0, $request->userselected, null, $description);
+            $store_trans = createstoretransaction::storeTransaction($store, $Creditamount, false, 3, 0, $request->user_id, null, $description);
             StoreTransactionDetailsModel::createDetail($store_trans, $trans_data);
             $bankt_tras = banktransaction::transaction($bank_id->id, $Creditamount, false, $store_trans, 'store');
 
@@ -292,7 +292,7 @@ class CooperationSalesController extends Controller
                 $number = 10000;
                 // $final_price =
             }
-            $transaction = createstoretransaction::storeTransaction($store, $installment->Creditamount, true, 1, 1, $installment->userselected, $installment->updated_at, $description);
+            $transaction = createstoretransaction::storeTransaction($store, $installment->Creditamount, true, 1, 1, $installment->user_id, $installment->updated_at, $description);
             StoreTransactionDetailsModel::createDetail($transaction, $trans_data);
             $bank_trans = banktransaction::transaction($store->account_id, $result, true, $transaction, 'store');
 

@@ -12,6 +12,6 @@ class CooperationSales extends Model
     // defining relation with MakeInstallments model
     public function makeInstallmentsms()
     {
-        return $this->belongsTo(Makeinstallmentsm::class, 'userselected');
+        return $this->belongsTo(Makeinstallmentsm::class, 'user_id');
     }
 }

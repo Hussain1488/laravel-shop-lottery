@@ -24,7 +24,7 @@ class CreateColleagueIndexRequest extends FormRequest
     public function rules()
     {
         return [
-            "userselected" => "required",
+            "user_id" => "required",
             "purchasecredit" => "required|numeric",
             "documents" => "required",
             "enddate" => "required|date",
@@ -34,7 +34,7 @@ class CreateColleagueIndexRequest extends FormRequest
     public function attributes()
     {
         return [
-            "userselected" => "کابر",
+            "user_id" => "کابر",
             "purchasecredit" => "اعتبار خرید",
             "inventory" => "موجودی نقدی",
             "documents" => "مدارک",

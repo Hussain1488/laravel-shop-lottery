@@ -54,7 +54,7 @@
                                                  <div class="form-group">
                                                      <label>سرچ بر اساس شماره تلفن</label>
                                                      <select type="text" class="form-control user_select2 user_selection"
-                                                         id="User_selected" id="" name="userselected">
+                                                         id="User_selected" id="" name="user_id">
                                                          {{-- <option value="">کاربر را انتخاب کنید</option>
                                                          @foreach ($users as $item)
                                                              <option data-name="{{ $item->first_name }}"
@@ -64,7 +64,7 @@
                                                              </option>
                                                          @endforeach --}}
                                                      </select>
-                                                     @error('userselected')
+                                                     @error('user_id')
                                                          <span class="text-danger">
                                                              {{ $message }}
                                                          </span>

@@ -237,7 +237,7 @@ class InstallmentReportsController extends Controller
         $payment_stat = 'wait';
         $perPage = 15;
         $user = User::where('username', 'like', '%' . $request->filter . '%')->get();
-        $installments = Makeinstallmentsm::with("store", "user")->where('statususer', 0)->whereIn('userselected', $user->pluck('id'))->latest()->paginate($perPage, ['*'], 'insta');
+        $installments = Makeinstallmentsm::with("store", "user")->where('statususer', 0)->whereIn('user_id', $user->pluck('id'))->latest()->paginate($perPage, ['*'], 'insta');
 
         if ($user->isEmpty()) {
             toastr()->warning('قسطی با شماره وارد شده یافت نشد.');
@@ -272,9 +272,9 @@ class InstallmentReportsController extends Controller
         $user = User::where('username', 'like', '%' . $request->filter1 . '%')->get();
         // dd($user);
         $installments1 = installmentdetails::where('paymentstatus', 0)->whereHas('installments', function ($query) use ($user) {
-            $query->whereIn('userselected', $user->pluck('id'));
+            $query->whereIn('user_id', $user->pluck('id'));
         })->with(['installments' => function ($query) use ($user) {
-            $query->with('store', 'user')->whereIn('userselected', $user->pluck('id'));
+            $query->with('store', 'user')->whereIn('user_id', $user->pluck('id'));
         }])->latest()
             ->paginate($perPage, ['*'], 'insta1');
 
@@ -304,9 +304,9 @@ class InstallmentReportsController extends Controller
         $user = User::where('username', 'like', '%' . $request->filter1 . '%')->get();
         // dd($user);
         $installments2 = installmentdetails::where('paymentstatus', 1)->whereHas('installments', function ($query) use ($user) {
-            $query->whereIn('userselected', $user->pluck('id'));
+            $query->whereIn('user_id', $user->pluck('id'));
         })->with(['installments' => function ($query) use ($user) {
-            $query->with('store', 'user')->whereIn('userselected', $user->pluck('id'));
+            $query->with('store', 'user')->whereIn('user_id', $user->pluck('id'));
         }])->latest()
             ->paginate($perPage, ['*'], 'insta1');
         if (!$installments2->count() > 0) {
@@ -376,21 +376,21 @@ class InstallmentReportsController extends Controller
         // dd($request->all());
         $perPage = 15;
         $payment_stat = 'wait';
-        $installments = Makeinstallmentsm::where('statususer', 0)->where('store_id', $request->store)->where('userselected', $request->user)
+        $installments = Makeinstallmentsm::where('statususer', 0)->where('store_id', $request->store)->where('user_id', $request->user)
             ->with("store", "user")->latest()->paginate($perPage, ['*'], 'insta');
         $installments1 = installmentdetails::where('paymentstatus', 0)->whereHas('installments', function ($query) use ($shop, $request) {
-            $query->where('store_id', $shop->id)->where('paymentstatus', 0)->where('userselected', $request->user);
+            $query->where('store_id', $shop->id)->where('paymentstatus', 0)->where('user_id', $request->user);
         })->with(['installments' => function ($query) use ($shop, $request) {
-            $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 0)->where('userselected', $request->user);
+            $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 0)->where('user_id', $request->user);
         }])->latest()->paginate(
             $perPage,
             ['*'],
             'insta1'
         );
         $installments2 = installmentdetails::where('paymentstatus', 1)->whereHas('installments', function ($query) use ($shop, $request) {
-            $query->where('store_id', $shop->id)->where('paymentstatus', 1)->where('userselected', $request->user);
+            $query->where('store_id', $shop->id)->where('paymentstatus', 1)->where('user_id', $request->user);
         })->with(['installments' => function ($query) use ($shop, $request) {
-            $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 1)->where('userselected', $request->user);
+            $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 1)->where('user_id', $request->user);
         }])->latest()->paginate($perPage, ['*'], 'insta2');
 
         $currentPaginationPart = request()->query('tab');
@@ -419,22 +419,22 @@ class InstallmentReportsController extends Controller
             toastr()->warning("هیچ کاربری با شماره وارده یافت نشد.");
             return redirect()->back();
         }
-        $installments = Makeinstallmentsm::where('statususer', 0)->where('store_id', $request->store)->whereIn('userselected', $user->pluck('id'))
+        $installments = Makeinstallmentsm::where('statususer', 0)->where('store_id', $request->store)->whereIn('user_id', $user->pluck('id'))
             ->with("store", "user")->latest()->paginate($perPage, ['*'], 'insta');
 
         $installments1 = installmentdetails::where('paymentstatus', 0)->whereHas('installments', function ($query) use ($shop, $user) {
-            $query->where('store_id', $shop->id)->where('paymentstatus', 0)->whereIn('userselected', $user->pluck('id'));
+            $query->where('store_id', $shop->id)->where('paymentstatus', 0)->whereIn('user_id', $user->pluck('id'));
         })->with(['installments' => function ($query) use ($shop, $user) {
-            $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 0)->whereIn('userselected', $user->pluck('id'));
+            $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 0)->whereIn('user_id', $user->pluck('id'));
         }])->latest()->paginate(
             $perPage,
             ['*'],
             'insta1'
         );
         $installments2 = installmentdetails::where('paymentstatus', 1)->whereHas('installments', function ($query) use ($shop, $user) {
-            $query->where('store_id', $shop->id)->where('paymentstatus', 1)->whereIn('userselected', $user->pluck('id'));
+            $query->where('store_id', $shop->id)->where('paymentstatus', 1)->whereIn('user_id', $user->pluck('id'));
         })->with(['installments' => function ($query) use ($shop, $user) {
-            $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 1)->whereIn('userselected', $user->pluck('id'));
+            $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 1)->whereIn('user_id', $user->pluck('id'));
         }])->latest()->paginate($perPage, ['*'], 'insta2');
 
         $currentPaginationPart = request()->query('tab');

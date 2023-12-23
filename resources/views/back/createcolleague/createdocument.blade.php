@@ -56,12 +56,12 @@
                                                 <div class="form-group">
                                                     <label></label>
                                                     <select type="text" class="form-control select2 account_selection"
-                                                        name="namedebtor">
+                                                        name="bank_id">
                                                         @isset($bank)
                                                             <option attr-name="" value="mellat bank">بده کار را انتخاب کنید
                                                             </option>
                                                             @foreach ($bank as $key)
-                                                                <option {{ old('namedebtor') == $key->id ? 'selected' : '' }}
+                                                                <option {{ old('bank_id') == $key->id ? 'selected' : '' }}
                                                                     attr-name="{{ $key->bankname }}"
                                                                     value="{{ $key->id }}">{{ $key->accountnumber }}
                                                                 </option>
@@ -75,7 +75,7 @@
                                                         <span class="account-title" id=""></span>
                                                         <span class="text-success account-name" id=""></span>
                                                     </div>
-                                                    @error('namedebtor')
+                                                    @error('bank_id')
                                                         <span class="text-danger">
                                                             {{ $message }}
                                                         </span>
@@ -93,12 +93,12 @@
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
                                                     <select type="text" class="form-control user_select2"
-                                                        id="user_selection" name="namecreditor">
+                                                        id="user_selection" name="user_id">
                                                         {{-- @isset($users)
                                                             <option value=" ">کاربر را انتخاب کنید
                                                             </option>
                                                             @foreach ($users as $item)
-                                                                <option {{ old('namecreditor') == $item->id ? 'selected' : '' }}
+                                                                <option {{ old('user_id') == $item->id ? 'selected' : '' }}
                                                                     data-name="{{ $item->first_name }}"
                                                                     data-lastname="{{ $item->last_name }}"
                                                                     value="{{ $item->id }}">
@@ -108,7 +108,7 @@
                                                             <option value="">کاربری برای انتخاب وجود ندارد</option>
                                                         @endisset --}}
                                                     </select>
-                                                    @error('namecreditor')
+                                                    @error('user_id')
                                                         <span class="text-danger">
                                                             {{ $message }}
                                                         </span>

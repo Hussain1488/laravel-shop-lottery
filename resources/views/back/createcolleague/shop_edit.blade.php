@@ -54,7 +54,7 @@
                                                     </h6>
 
                                                     <div class="m-1">
-                                                        {{-- <input readonly type="selectperson" class="form-control"
+                                                        {{-- <input readonly type="user_id" class="form-control"
                                                             value="{{ $store->user->username }}"> --}}
 
                                                         <div class="text-success"><label for="username">

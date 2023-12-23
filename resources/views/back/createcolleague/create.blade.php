@@ -55,14 +55,14 @@
 
                                                     <div class="d-flex">
                                                         <select type="text" id="user_selection"
-                                                            class="form-control user_select2" name="selectperson">
+                                                            class="form-control user_select2" name="user_id">
                                                             {{-- @isset($users)
                                                                 <option value="">کاربر را انتخاب کنید
                                                                 </option>
                                                                 @foreach ($users as $item)
                                                                     <option data-name="{{ $item->first_name }}"
                                                                         data-lastname="{{ $item->last_name }}"
-                                                                        {{ old('selectperson') == $item->id ? 'selected' : '' }}
+                                                                        {{ old('user_id') == $item->id ? 'selected' : '' }}
                                                                         value="{{ $item->id }}">
                                                                         {{ $item->username }}</option>
                                                                 @endforeach
@@ -71,7 +71,7 @@
                                                             @endisset --}}
                                                         </select>
                                                     </div>
-                                                    @error('selectperson')
+                                                    @error('user_id')
                                                         <span class="text-danger">
                                                             {{ $message }}
                                                         </span>
