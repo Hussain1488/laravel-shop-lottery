@@ -60,7 +60,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        dd($request->all());
+        // dd($request->all());
         $this->validate($request, [
             'first_name' => ['required', 'string', 'max:255', new NotSpecialChar()],
             'last_name'  => ['required', 'string', 'max:255', new NotSpecialChar()],
