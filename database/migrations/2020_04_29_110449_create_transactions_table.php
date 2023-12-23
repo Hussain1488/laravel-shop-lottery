@@ -25,12 +25,13 @@ class CreateTransactionsTable extends Migration
             $table->string('traceNumber')->nullable();
             $table->string('message')->nullable();
             $table->string('token');
-            
+
             $table->unsignedBigInteger('transactionable_id');
             $table->string('transactionable_type');
 
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->index('user_id');
             $table->timestamps();
         });
     }

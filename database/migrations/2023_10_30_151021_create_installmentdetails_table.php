@@ -20,6 +20,7 @@ class CreateInstallmentdetailsTable extends Migration
             $table->date("duedate");
             $table->bigInteger("installmentnumber");
             $table->string("installmentprice");
+            $table->index('installment_id');
             $table->boolean("paymentstatus");
 
             $table->timestamps();

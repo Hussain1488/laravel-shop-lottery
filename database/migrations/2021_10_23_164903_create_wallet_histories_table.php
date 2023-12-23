@@ -24,6 +24,8 @@ class CreateWalletHistoriesTable extends Migration
             $table->enum('status', ['fail', 'success'])->default('fail');
             $table->decimal('amount', 64, 0);
             $table->text('description')->nullable();
+            $table->index('status');
+            $table->index('wallet_id');
             $table->timestamps();
         });
     }

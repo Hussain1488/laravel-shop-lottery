@@ -24,6 +24,7 @@ class CreateCreatestoretransactionsTable extends Migration
             $table->bigInteger('price');
             $table->bigInteger('finalprice');
             $table->bigInteger('documentnumber');
+            $table->index('store_id');
             $table->timestamps();
         });
     }

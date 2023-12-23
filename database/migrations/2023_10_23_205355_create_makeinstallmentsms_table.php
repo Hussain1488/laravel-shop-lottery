@@ -16,10 +16,10 @@ class CreateMakeinstallmentsmsTable extends Migration
         Schema::create('makeinstallmentsms', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('seller_id');
+            $table->unsignedBigInteger('user_id');
             $table->boolean('status');
             $table->integer('Creditamount');
-            $table->unsignedBigInteger('userselected');
-            $table->string('typeofpayment');
+            $table->enum('typeofpayment', ['cash', 'installment']);
             $table->string('numberofinstallments');
             $table->string('prepaidamount');
             $table->string('amounteachinstallment');
@@ -27,7 +27,9 @@ class CreateMakeinstallmentsmsTable extends Migration
             $table->boolean('paymentstatus');
             $table->integer('statususer');
             $table->foreign('seller_id')->references('id')->on('users');
-            $table->foreign('userselected')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->index('seller_id');
+            $table->index('user_id');
             $table->timestamps();
         });
     }
@@ -39,6 +41,5 @@ class CreateMakeinstallmentsmsTable extends Migration
      */
     public function down()
     {
-        
     }
 }

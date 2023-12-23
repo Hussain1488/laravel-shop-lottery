@@ -24,6 +24,7 @@ class CreateBuyertransactionsTable extends Migration
             $table->bigInteger('price');
             $table->bigInteger('finalprice');
             $table->bigInteger('documentnumber');
+            $table->index('user_id');
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ class CreateListOfPayment extends Migration
             $table->date('depositdate');
             $table->tinyInteger('status')->default(0);
             $table->foreign('store_id')->references('id')->on('createstores')->onDelete('cascade');
+            $table->index('store_id');
             $table->timestamps();
         });
     }

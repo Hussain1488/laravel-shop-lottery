@@ -19,6 +19,7 @@ class CreateWalletsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->decimal('balance', 64, 0)->default(0);
             $table->boolean('is_active')->default(true);
+            $table->index('user_id');
             $table->timestamps();
         });
     }
