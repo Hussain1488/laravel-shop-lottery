@@ -45,12 +45,12 @@
 
 
                                          <div class="row">
-                                             <div class="col-md-3 col-6 pt-2">
+                                             <div class="col-lg-3 col-md-6 col-12 ">
                                                  <h5>
                                                      انتخاب فرد مورد نظر
                                                  </h5>
                                              </div>
-                                             <div class="col-md-3 col-6">
+                                             <div class="col-lg-3 col-md-6 col-12">
                                                  <div class="form-group">
                                                      <label>سرچ بر اساس شماره تلفن</label>
                                                      <select type="text" class="form-control user_select2 user_selection"
@@ -79,18 +79,16 @@
                                              </div>
                                          </div>
 
-                                         <div class="row">
+                                         <div class="row mt-1">
 
-                                             <div class="col-md-3 col-6 pt-2">
-                                                 <div class="form-group d-flex align-items-center">
-                                                     <h5 for="inventory" class="mr-2">
-                                                         موجودی نقدی
-                                                     </h5>
+                                             <div class="col-lg-3 col-md-6 col-12">
 
+                                                 <h5 for="inventory" class="mr-2">
+                                                     موجودی نقدی
+                                                 </h5>
 
-                                                 </div>
                                              </div>
-                                             <div class="col-md-3 col-6 pt-2">
+                                             <div class="col-lg-3 col-md-6 col-12 ">
                                                  <div class="d-flex align-items-center">
                                                      <input readonly type="text" placeholder="100,000"
                                                          class="form-control moneyInput" id="inventory" name="inventory"
@@ -104,16 +102,16 @@
                                                  @enderror
                                              </div>
                                          </div>
-                                         <div class="row">
+                                         <div class="row mt-1">
 
-                                             <div class="col-md-3 col-6 pt-2">
-                                                 <div class="form-group d-flex align-items-center">
-                                                     <h5 for="purchasecredit" class="mr-2">
-                                                         مقدار اعتبار خرید اقساطی
-                                                     </h5>
-                                                 </div>
+                                             <div class="col-lg-3 col-md-6 col-12 ">
+
+                                                 <h5 for="purchasecredit" class="mr-2">
+                                                     مقدار اعتبار خرید اقساطی
+                                                 </h5>
+
                                              </div>
-                                             <div class="col-md-3 col-6 pt-2">
+                                             <div class="col-lg-3 col-md-6 col-12 ">
                                                  <div class="d-flex align-items-center">
                                                      <input type="text" placeholder="100,000"
                                                          class="form-control moneyInput" id="purchase_credit"
@@ -127,18 +125,16 @@
                                                  @enderror
                                              </div>
                                          </div>
-                                         <div class="row">
-                                             <div class="col-md-3 col-6 pt-2">
-                                                 <div class="form-group d-flex align-items-center">
-                                                     <h5 for="documents" class="mr-2">
-                                                         آپلود مدارک
-                                                     </h5>
-                                                 </div>
+                                         <div class="row mt-1">
+                                             <div class="col-lg-3 col-md-6 col-12 ">
+                                                 <h5 for="documents" class="mr-2">
+                                                     آپلود مدارک
+                                                 </h5>
                                              </div>
-                                             <div class="col-md-3 col-6 pt-2">
+                                             <div class="col-lg-3 col-md-6 col-12 ">
                                                  <div class="d-flex align-items-center">
-                                                     <input multiple type="file"
-                                                         class="form-control mt-1 mr-1 imageInput" name="documents[]">
+                                                     <input multiple type="file" class="form-control imageInput"
+                                                         name="documents[]">
                                                      @error('documents')
                                                          <span class="text-danger">
                                                              {{ $message }}
@@ -150,13 +146,13 @@
                                          </div>
 
 
-                                         <div class="row my-2">
-                                             <div class="col-md-6 col-12 pt-2">
+                                         <div class="row mt-1">
+                                             <div class="col-lg-3 col-md-6 col-12 ">
                                                  <h5>
                                                      تاریخ پایان اعتبار
                                                  </h5>
                                              </div>
-                                             <div class="col-md-6 col-12">
+                                             <div class="col-lg-3 col-md-6 col-12">
                                                  <div class="form-group">
                                                      <input type="text" class="form-control persian-date-picker"
                                                          name="enddate">
@@ -170,11 +166,13 @@
                                          </div>
 
                                          <div class="row ">
-                                             <div class="col d-flex align-items-baseline justify-content-center">
+                                             <div
+                                                 class="col-lg-3 col-md-6 col-6 d-flex align-items-baseline justify-content-center">
                                                  <input type="button" id="summit_button1"
                                                      class="btn btn-primary my-1"value=" تأیید تغییرات" />
                                              </div>
-                                             <div class="col d-flex align-items-baseline justify-content-center">
+                                             <div
+                                                 class="col-lg-3 col-md-6 col-6 d-flex align-items-baseline justify-content-center">
                                                  <a href="" class="btn btn-danger my-1">انصراف </a>
                                              </div>
                                          </div>

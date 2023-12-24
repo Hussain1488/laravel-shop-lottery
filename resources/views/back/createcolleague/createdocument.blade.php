@@ -46,13 +46,13 @@
                                     <div id="home" class="container tab-pane active"><br>
 
 
-                                        <div class="row">
-                                            <div class="col-md-3 col-6 pt-2">
+                                        <div class="row mt-1">
+                                            <div class="col-lg-3 col-md-6 col-12">
                                                 <h5>
                                                     نام بده کار
                                                 </h5>
                                             </div>
-                                            <div class="col-md-3 col-6">
+                                            <div class="col-lg-3 col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label></label>
                                                     <select type="text" class="form-control select2 account_selection"
@@ -84,12 +84,12 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-3 col-6 pt-2">
+                                            <div class="col-lg-3 col-md-6 col-12 ">
                                                 <h5>
                                                     نام بستانکار
                                                 </h5>
                                             </div>
-                                            <div class="col-md-3 col-6">
+                                            <div class="col-lg-3 col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
                                                     <select type="text" class="form-control user_select2"
@@ -120,16 +120,15 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row mt-1">
 
-                                            <div class="col-md-3 col-6 pt-2">
-                                                <div class="form-group d-flex align-items-center">
-                                                    <h5 for="purchasecredit" class="mr-2">
-                                                        مقدار شارژ
-                                                    </h5>
-                                                </div>
+                                            <div class="col-lg-3 col-md-6 col-12 ">
+
+                                                <h5 for="purchasecredit" class="">
+                                                    مقدار شارژ
+                                                </h5>
                                             </div>
-                                            <div class="col-md-3 col-6 pt-2">
+                                            <div class="col-lg-3 col-md-6 col-12 ">
                                                 <label>مبلغ به ریال وارد شود</label>
                                                 <div class="d-flex align-items-center">
 
@@ -148,17 +147,17 @@
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-md-3 col-6 pt-2">
-                                                <div class="form-group d-flex align-items-center">
-                                                    <h5 for="documents" class="mr-2">
-                                                        توضیحات:
-                                                    </h5>
-                                                </div>
+                                        <div class="row mt-1">
+                                            <div class="col-lg-3 col-md-6 col-12 ">
+
+                                                <h5 for="documents" class="">
+                                                    توضیحات:
+                                                </h5>
+
                                             </div>
-                                            <div class="col-md-3 col-6 pt-2">
+                                            <div class="col-lg-3 col-md-6 col-12 ">
                                                 <div class="d-flex align-items-center">
-                                                    <textarea class="form-control mt-1 mr-1" name="description"></textarea>
+                                                    <textarea class="form-control mr-1" name="description"></textarea>
                                                 </div>
                                                 @error('description')
                                                     <span class="text-danger">
@@ -167,18 +166,18 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-3 col-6 pt-2">
-                                                <div class="form-group d-flex align-items-center">
-                                                    <h5 for="documents" class="mr-2">
-                                                        آپلود مدارک
-                                                    </h5>
-                                                </div>
+                                        <div class="row mt-1">
+                                            <div class="col-lg-3 col-md-6 col-12 ">
+
+                                                <h5 for="documents" class="">
+                                                    آپلود مدارک
+                                                </h5>
+
                                             </div>
-                                            <div class="col-md-3 col-6 pt-2">
+                                            <div class="col-lg-3 col-md-6 col-12 ">
                                                 <div class="d-flex align-items-center">
                                                     <input multiple type="file" onchange="showpic()"
-                                                        class="form-control mt-1 mr-1 imageInput" name="documents[]"
+                                                        class="form-control mr-1 imageInput" name="documents[]"
                                                         id="imageInput">
                                                 </div>
                                                 <div class="imgContainer"></div>

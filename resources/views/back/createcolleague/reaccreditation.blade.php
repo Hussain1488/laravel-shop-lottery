@@ -45,12 +45,12 @@
 
 
                                         <div class="row">
-                                            <div class="col-md-3 col-6 pt-2">
+                                            <div class="col-lg-3 col-md-6 col-12">
                                                 <h5>
                                                     فروشگاه مد نظر
                                                 </h5>
                                             </div>
-                                            <div class="col-md-3 col-6">
+                                            <div class="col-lg-3 col-md-6 col-12">
                                                 <div class="form-group">
                                                     <label>سرچ بر اساس شماره تلفن</label>
                                                     <select dir="rtl" type="text" class="form-control select2"
@@ -61,7 +61,7 @@
                                                                 {{ old('select_store') == $item->id ? ' selected' : '' }}
                                                                 value="{{ $item->id }}">
                                                                 فروشگاه:
-                                                                {{ $item->user->username . ' ' . $item->nameofstore }}
+                                                                {{ $item->nameofstore . '. شماره تماس:' . $item->user->username }}
                                                             </option>
                                                         @endforeach
 
@@ -77,15 +77,15 @@
 
                                         <div class="row">
 
-                                            <div class="col-md-3 col-6 pt-2">
-                                                <div class="form-group d-flex align-items-center">
-                                                    <h5 for="purchasecredit" class="mr-2">
-                                                        مبلغ به ریال وارد شود
-                                                    </h5>
-                                                </div>
+                                            <div class="col-lg-3 col-md-6 col-12">
+
+                                                <h5 for="purchasecredit" class="mr-2">
+                                                    مبلغ به ریال وارد شود
+                                                </h5>
+
 
                                             </div>
-                                            <div class="col-md-3 col-6 pt-2">
+                                            <div class="col-lg-3 col-md-6 col-12">
                                                 <div class="d-flex align-items-center">
                                                     <input type="text" placeholder="100,000"
                                                         class="form-control moneyInput" id="recredition_amount"
@@ -102,7 +102,8 @@
                                         </div>
 
                                         <div class="row ">
-                                            <div class="col d-flex align-items-baseline justify-content-center">
+                                            <div
+                                                class="col-lg-3 col-md-6 col-12 d-flex align-items-baseline justify-content-center">
                                                 <input type="button" id="summit_button1"
                                                     class="btn btn-primary my-1"value=" تأیید نهایی تغییرات" />
                                             </div>
