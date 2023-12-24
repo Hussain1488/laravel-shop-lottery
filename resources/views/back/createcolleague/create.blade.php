@@ -162,8 +162,8 @@
                                                 </h5>
                                             </div>
                                             <div class="col-md-6 col-12">
-                                                <div class="col pb-2">
 
+                                                <div class="form-group">
                                                     <div class="d-flex align-items-center">
                                                         <input type="text" class="form-control moneyInput"
                                                             id="moneyInput" name="storecredit" style="margin-left: 4px"
@@ -171,12 +171,13 @@
                                                         ریال
 
                                                     </div>
-                                                    <span class="text-danger">
-                                                        @error('storecredit')
-                                                            {{ $message }}
-                                                        @enderror
-                                                    </span>
                                                 </div>
+                                                <span class="text-danger">
+                                                    @error('storecredit')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </span>
+
                                             </div>
                                         </div>
                                         <div class="row">
@@ -237,7 +238,8 @@
                                                                         {{ $item->accountnumber }}</option>
                                                                 @endforeach
                                                             @else
-                                                                <option value="">کاربری برای انتخاب وجود ندارد</option>
+                                                                <option value="">کاربری برای انتخاب وجود ندارد
+                                                                </option>
                                                             @endisset
                                                         </select>
                                                     </div>
