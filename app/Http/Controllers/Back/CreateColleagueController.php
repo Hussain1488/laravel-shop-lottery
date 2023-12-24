@@ -440,7 +440,7 @@ class CreateColleagueController extends Controller
         // dd($request->all());
         $user = User::find($request->user_id);
 
-        // $buyerTrans = buyertransaction::transaction($user, $request->ReCredintAmount, true, 1, 0, 'ایجاد سند مالی');
+        $buyerTrans = buyertransaction::transaction($user, $request->ReCredintAmount, true, 1, 0, 'ایجاد سند مالی');
 
         // transaction($bank_id, $creditAmount, $status, $trans_id)
         $bank = banktransaction::transaction($request->bank_id, $request->ReCredintAmount, false, $buyerTrans->id, 'user');
