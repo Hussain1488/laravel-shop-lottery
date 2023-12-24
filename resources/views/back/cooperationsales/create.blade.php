@@ -74,8 +74,8 @@
                                             <div class="card-header">
                                                 <h4 class="card-title">ساخت فروش برای کاربر</h4>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-12 pt-2">
+                                            <div class="row mt-1">
+                                                <div class="col-md-6 col-12">
                                                     <h5>
                                                         انتخاب کاربر
                                                     </h5>
@@ -105,8 +105,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-12 pt-2">
+                                            <div class="row mt-1">
+                                                <div class="col-md-6 col-12">
                                                     <h5>
                                                         قیمت اصلی کالا
                                                     </h5>
@@ -132,8 +132,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-12 pt-2">
+                                            <div class="row mt-1">
+                                                <div class="col-md-6 col-12">
                                                     <h5>
                                                         نقدی یا اقساط
                                                     </h5>
@@ -153,8 +153,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-12 pt-2">
+                                            <div class="row mt-1">
+                                                <div class="col-md-6 col-12">
                                                     <h5>
                                                         تعداد اقساط
                                                     </h5>
@@ -210,8 +210,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-12 pt-2">
+                                            <div class="row mt-1">
+                                                <div class="col-md-6 col-12">
                                                     <h5>
                                                         مبلغ پیش پرداخت
                                                     </h5>
@@ -234,8 +234,8 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-6 col-12 pt-2">
+                                            <div class="row mt-1">
+                                                <div class="col-md-6 col-12">
                                                     <h5>
                                                         مبلغ هر قسط
                                                     </h5>
@@ -259,7 +259,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="row">
+                                        <div class="row mt-1">
                                             <div class="col-12">
                                                 <button type="button" id="submit_button"
                                                     data-end-date="{{ $shop->enddate }}"
