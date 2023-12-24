@@ -30,7 +30,7 @@ $(document).ready(function () {
                 for (var key in detailsData) {
                     if (detailsData.hasOwnProperty(key)) {
                         $('.modal-body ul').append(
-                            '<li><strong>' +
+                            '<li class="mt-1"><strong>' +
                                 key +
                                 ':</strong> ' +
                                 detailsData[key] +
@@ -40,10 +40,10 @@ $(document).ready(function () {
                 }
                 $('.modal-body').append('</ul>');
                 $('.modal-body').append(
-                    '<p><strong>تاریخ:</strong> ' +
+                    '<p class="mt-1"><strong>تاریخ:</strong> ' +
                         date +
                         '</p>' +
-                        '<p><strong>زمان:</strong> ' +
+                        '<p class="mt-1"><strong>زمان:</strong> ' +
                         time +
                         '</p>'
                 );

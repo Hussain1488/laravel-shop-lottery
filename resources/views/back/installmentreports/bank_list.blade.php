@@ -46,7 +46,7 @@
                                 </h3>
                             </div>
                             @foreach ($listbank as $item)
-                                <div class="border rounded p-2 my-1">
+                                <div class="border rounded p-2 m-1">
                                     <div class="row">
                                         <div class="col">
                                             <a
