@@ -18,6 +18,7 @@ class CreateBanktransactionsTable extends Migration
             $table->string('namebank');
             $table->bigInteger('bankbalance');
             $table->bigInteger('transactionprice');
+            $table->enum('type', ['deposit', 'withdraw'])->index();
             $table->date('transactionsdate');
             $table->timestamps();
         });
