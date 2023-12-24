@@ -88,14 +88,14 @@
 
                                     <div class="row mt-1 ml-2">
                                         <h3>
-                                            اقساطی که در انتظار است
+                                            فروش هایی که در انتظار تأیید است
                                         </h3>
                                     </div>
 
-                                    @if (empty($installments))
-                                        <div class="row mt-3 ml-2">
-                                            <h4>
-                                                هیچ قسطی برای نمایش وجود ندارد!
+                                    @if (!$installments->count() > 0)
+                                        <div class="row mt-3 ml-2 alret alert-warning p-2 rounded rounded ">
+                                            <h4 class="text-danger">
+                                                هیچ فروشی برای نمایش وجود ندارد!
                                             </h4>
                                         </div>
                                     @else
@@ -191,9 +191,10 @@
                                     </div>
 
 
-                                    @if (empty($installments1))
-                                        <div class="row mt-3 ml-2">
-                                            <h4>
+                                    @if (!$installments1->count() > 0)
+                                        )
+                                        <div class="row mt-3 ml-2 alret alert-warning p-2 rounded">
+                                            <h4 class="text-danger">
                                                 .هیچ قسطی برای نمایش وجود ندارد!
                                             </h4>
                                         </div>
@@ -291,9 +292,9 @@
                                         </h3>
                                     </div>
 
-                                    @if (empty($installments2))
-                                        <div class="row mt-3 ml-2">
-                                            <h4>
+                                    @if (!$installments2->count() > 0)
+                                        <div class="row mt-3 ml-2 alret alert-warning p-2 rounded">
+                                            <h4 class="text-danger">
                                                 هیچ قسطی برای نمایش وجود ندارد!
                                             </h4>
                                         </div>
