@@ -94,7 +94,8 @@
                                                     <span class="moneyInputSpan">{{ $key->price }}</span> ریال
                                                 </td>
                                                 <td class="">
-                                                    <span class="moneyInputSpan text-danger">{{ $key->finalprice }}</span>
+                                                    <span
+                                                        class="moneyInputSpan {{ $key->typeoftransaction == 1 ? 'text-success' : 'text-danger' }}">{{ $key->finalprice }}</span>
                                                     ریال
 
                                                 </td>
@@ -173,7 +174,8 @@
                                             <div class="col">
 
                                                 <span class="transaction_datetime">
-                                                    <span class="moneyInputSpan text-danger">{{ $key->finalprice }}</span>
+                                                    <span
+                                                        class="moneyInputSpan {{ $key->typeoftransaction == 1 ? 'text-success' : 'text-danger' }}">{{ $key->finalprice }}</span>
                                                     ریال
 
                                                 </span>
