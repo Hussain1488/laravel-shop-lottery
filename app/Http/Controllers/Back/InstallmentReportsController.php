@@ -53,12 +53,12 @@ class InstallmentReportsController extends Controller
         $installments1 = installmentdetails::where('paymentstatus', 0)->with(['installments' => function ($query) {
             $query->with('store', 'user');
         }])
-            ->latest()
+            ->latest()->orderBy('installmentnumber', 'asc')
             ->paginate($perPage, ['*'], 'insta1');
 
         $installments2 = installmentdetails::where('paymentstatus', 1)->with(['installments' => function ($query) {
             $query->with('store', 'user');
-        }])->latest()
+        }])->latest()->orderBy('installmentnumber', 'asc')
             ->paginate($perPage, ['*'], 'insta2');
         // dd($installments1, $installments2);
 
@@ -357,13 +357,13 @@ class InstallmentReportsController extends Controller
             $query->where('store_id', $shop->id)->where('paymentstatus', 0);
         })->with(['installments' => function ($query) use ($shop) {
             $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 0);;
-        }])->latest()->paginate($perPage, ['*'], 'insta1');
+        }])->latest()->orderBy('installmentnumber', 'asc')->paginate($perPage, ['*'], 'insta1');
 
         $installments2 = installmentdetails::where('paymentstatus', 1)->whereHas('installments', function ($query) use ($shop) {
             $query->where('store_id', $shop->id)->where('paymentstatus', 1);;
         })->with(['installments' => function ($query) use ($shop) {
             $query->with('store', 'user')->where('store_id', $shop->id)->where('paymentstatus', 1);;
-        }])->latest()->paginate($perPage, ['*'], 'insta2');
+        }])->latest()->orderBy('installmentnumber', 'asc')->paginate($perPage, ['*'], 'insta2');
 
         return view('back.installmentreports.shop_installments', compact('installments', 'installments1', 'installments2', 'payment_stat', 'shop'));
     }

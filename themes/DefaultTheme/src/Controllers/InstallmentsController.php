@@ -48,7 +48,7 @@ class InstallmentsController extends Controller
             ->with(['installments' => function ($query) {
                 $query->where('user_id', Auth::user()->id)->with('store', 'user');
             }])
-            ->latest()
+            ->oldest()->orderBy('installmentnumber', 'asc')
             ->paginate($perPage, ['*'], 'insta1');
         $installmentsm2 = installmentdetails::where('paymentstatus', 1)
             ->whereHas('installments', function ($query) {
@@ -56,7 +56,7 @@ class InstallmentsController extends Controller
             })
             ->with(['installments' => function ($query) {
                 $query->where('user_id', Auth::user()->id)->with('store', 'user');
-            }])->latest()->paginate($perPage, ['*'], 'insta2');
+            }])->oldest()->orderBy('installmentnumber', 'asc')->paginate($perPage, ['*'], 'insta2');
         $userstat = 0;
         $paystatus = 0;
 
@@ -110,7 +110,7 @@ class InstallmentsController extends Controller
                 // $new_date = $jalali_date_now->addMonths(1)->format('Y-m-d');
                 if ($installments->numberofinstallments > 0) {
                     for ($i = 0; $i < $installments->numberofinstallments; $i++) {
-                        $dutedate = $jalali_date_now->addMonths($i + 1)->format('Y-m-d');
+                        $dutedate = $jalali_date_now->addMonths(1)->format('Y-m-d');
                         $Insta_dateils->create([
                             'installment_id' => $installments->id,
                             'installmentnumber' => $i + 1,
