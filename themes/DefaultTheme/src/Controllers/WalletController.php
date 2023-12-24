@@ -172,7 +172,7 @@ class WalletController extends Controller
 
             return redirect()->route('front.wallet.index', ['history' => $history])->with('message', 'ok');
         } catch (\Exception $exception) {
-            \Log::error('Exception: ' . $exception->getMessage());
+            // \Log::error('Exception: ' . $exception->getMessage());
 
             DB::table('transactions')->where('transID', $transactionId)->update([
                 'message'              => $transaction->message . '<br>' . $exception->getMessage(),
