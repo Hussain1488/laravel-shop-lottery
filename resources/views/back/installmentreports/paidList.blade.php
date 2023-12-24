@@ -58,7 +58,7 @@
                                             ریال
                                         </div>
                                     </div>
-                                    <div class="pc-size">
+                                    <div class="pc-size" data-screen="pc">
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
@@ -117,7 +117,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="mobile-size ">
+                                    <div class="mobile-size " data-screen="mobile">
                                         @foreach ($paidList as $key)
                                             <div class=" border rounded mb-1">
                                                 <div class="row pt-1">
@@ -204,6 +204,5 @@
 
 @push('scripts')
     <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}"></script>
-
     <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
 @endpush

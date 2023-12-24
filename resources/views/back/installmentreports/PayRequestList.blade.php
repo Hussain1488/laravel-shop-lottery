@@ -89,7 +89,7 @@
                                             </div>
                                         </div>
                                     @else
-                                        <div class="pc-size">
+                                        <div class="pc-size" data-screen="pc">
                                             <table class="table table-hover">
                                                 <thead>
                                                     <tr>
@@ -170,7 +170,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="mobile-size ">
+                                        <div class="mobile-size " data-screen="mobile">
                                             @foreach ($transaction as $key)
                                                 <div class=" border rounded mb-1">
                                                     <div class="row pt-1">
@@ -298,7 +298,7 @@
                                             </div>
                                         </div>
                                     @else
-                                        <div class="pc-size">
+                                        <div class="pc-size" data-screen="pc">
                                             <table class="table table-hover">
                                                 <thead>
                                                     <tr>
@@ -365,7 +365,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div class="mobile-size ">
+                                        <div class="mobile-size " data-screen="mobile">
                                             @foreach ($transaction as $key)
                                                 @if ($key->status == 1)
                                                     <div class=" border rounded mb-1">

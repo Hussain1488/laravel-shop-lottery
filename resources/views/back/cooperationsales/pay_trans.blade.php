@@ -56,7 +56,7 @@
                                             ریال
                                         </div>
                                     </div>
-                                    <div class="pc-size">
+                                    <div class="pc-size" data-screen="pc">
 
                                         <table class="table table-hover">
                                             <thead>
@@ -133,7 +133,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="mobile-size ">
+                                    <div class="mobile-size " data-screen="mobile">
                                         @foreach ($trans as $key)
                                             <div class=" border rounded mb-1">
                                                 <div class="row pt-1">

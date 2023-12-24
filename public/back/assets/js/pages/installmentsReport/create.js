@@ -1,6 +1,38 @@
 $(document).ready(function () {
     // $('.transaction_date').pDatePicker();
 
+    function loadDataBasedOnScreenSize() {
+        // Get the screen width
+        var screenWidth = $(window).width();
+
+        // Check if it's a mobile screen (you can adjust the breakpoint as needed)
+        if (screenWidth < 768) {
+            // Load mobile-size data
+            loadMobileSizeData();
+        } else {
+            // Load pc-size data
+            loadPcSizeData();
+        }
+    }
+
+    // Function to load data for pc-size
+    function loadPcSizeData() {
+        // Add your logic to load data for pc-size
+        console.log('Loading PC-size data');
+        // For example, you can make an AJAX request to fetch data
+    }
+
+    // Function to load data for mobile-size
+    function loadMobileSizeData() {
+        // Add your logic to load data for mobile-size
+        console.log('Loading Mobile-size data');
+        // For example, you can make an AJAX request to fetch data
+    }
+
+    // Call the function when the page loads and on window resize
+    loadDataBasedOnScreenSize();
+    $(window).resize(loadDataBasedOnScreenSize);
+
     $('.monyInputSpan').each(function () {
         var input = $(this).text();
         var digits = input.replace(/\D/g, '');
