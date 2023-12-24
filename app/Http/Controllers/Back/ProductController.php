@@ -114,6 +114,7 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
+        // dd($request->all());
         $data = $request->only([
             'title',
             'title_en',
@@ -137,8 +138,8 @@ class ProductController extends Controller
         $data['spec_type_id']     = spec_type($request);
         $data['price_type']       = "multiple-price";
         $data['slug']             = $request->slug ?: $request->title;
-        $data['publish_date']     = $request->publish_date ? Jalalian::fromFormat('Y-m-d H:i:s', $request->publish_date)->toCarbon() : null;
-        $data['special_end_date'] = $request->special_end_date ? Jalalian::fromFormat('Y-m-d H:i:s', $request->special_end_date)->toCarbon() : null;
+        $data['publish_date']     = $request->publish_date ? carbon::parse($request->publish_date)->format('Y/m/d H:i:s') : null;
+        $data['special_end_date'] = $request->special_end_date ? carbon::parse($request->special_end_date)->format('Y/m/d H:i:s') : null;
         $data['lang']             = app()->getLocale();
 
         $product = Product::create($data);

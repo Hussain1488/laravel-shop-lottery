@@ -120,8 +120,32 @@ $('#publish_date_picker').pDatepicker({
     altField: '#publish_date',
     altFormat: 'YYYY-MM-DD HH:mm:ss',
 
+    // onSelect: function (unixDate) {
+    //     var date = $('#publish_date').val();
+    //     $('#publish_date').val(date.toEnglishDigit());
+    // }
     onSelect: function (unixDate) {
-        var date = $('#publish_date').val();
-        $('#publish_date').val(date.toEnglishDigit());
+        // Assuming unixDate is in milliseconds
+        var selectedDate = new Date(unixDate);
+
+        // Debugging: Log the initial date
+        // console.log('Selected Date:', selectedDate);
+
+        // Format the selected date in 'YYYY-MM-DD HH:mm:ss' format
+        var formattedDate = selectedDate.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZoneName: 'short'
+        });
+
+        // Debugging: Log the formatted date
+        console.log('Formatted Date:', formattedDate);
+
+        // Set the formatted date to the #publish_date input
+        $('#publish_date').val(formattedDate);
     }
 });
