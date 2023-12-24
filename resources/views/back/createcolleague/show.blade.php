@@ -178,14 +178,17 @@
 
                                                         @foreach ($doc as $document)
                                                             @if (Str::endsWith($document, ['.jpg', '.jpeg', '.png', '.gif', '.bmp']))
-                                                                <a href="{{ asset($document) }}"><img
+                                                                <a href="{{ asset($document) }}"
+                                                                    download="{{ $document }}"><img
                                                                         src="{{ asset($document) }}" alt="Image"></a>
                                                             @else
-                                                                <div class="col">
+                                                                <div class="col text-success">
 
-                                                                    <a href="{{ asset($document) }}">download
-                                                                        file
-                                                                        {{ $counter++ }}</a>
+                                                                    <a href="{{ asset($document) }}"
+                                                                        download="{{ $document }}">دانلود فایل
+
+                                                                        <i
+                                                                            class="feather icon-download"></i>{{ $counter++ }}</a>
                                                                 </div>
                                                             @endif
                                                         @endforeach

@@ -105,7 +105,8 @@
                                                             <span class="">{{ $key->Issuetracking }}</span>
                                                         </td>
                                                         <td class="">
-                                                            <a href="{{ asset($key->documentpayment) }}">
+                                                            <a href="{{ asset($key->documentpayment) }}"
+                                                                download="download_doc">
                                                                 <span class="text-success">دانلود سند</span>
                                                             </a>
                                                         </td>
