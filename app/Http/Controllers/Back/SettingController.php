@@ -8,6 +8,7 @@ use App\Models\Gateway;
 use App\Models\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
@@ -50,9 +51,14 @@ class SettingController extends Controller
 
             $old_icon = option('info_icon');
 
-            if ($old_icon) {
-                Storage::disk('public')->delete($old_icon);
+            // if (File::exists(public_path('../..' . $old_icon))) {
+            //     File::delete(public_path('../..' . $old_icon));
+            // }
+
+            if (File::exists(public_path($old_icon))) {
+                File::delete(public_path($old_icon));
             }
+
 
             $informations['info_icon'] = '/uploads/' . $imageName;
         }
@@ -64,10 +70,13 @@ class SettingController extends Controller
 
             $old_logo = option('info_logo');
 
-            if ($old_logo) {
-                Storage::disk('public')->delete($old_logo);
-            }
+            // if (File::exists(public_path('../..' . $old_logo))) {
+            //     File::delete(public_path('../..' . $old_logo));
+            // }
 
+            if (File::exists(public_path($old_logo))) {
+                File::delete(public_path($old_logo));
+            }
             $informations['info_logo'] = '/uploads/' . $imageName;
         }
 
