@@ -29,11 +29,7 @@
                     <div class="card-header">
                         {{-- @isset($store) --}}
                         <h4 class="card-title">لیست تراکنش های: {{ $title }}</h4>
-                        {{-- @else
-                            <h4 class="text-warning">
-                                شما فروشگاهی برای نمایش ندارید!
-                            </h4>
-                        @endisset --}}
+
                     </div>
 
                     {{-- bank transacion report page --}}
@@ -52,12 +48,12 @@
 
                                     <div class="row mt-1 ml-2 mb-2">
                                         <h3>
-                                            لیست تراکنش های بانکی </h3>
+                                            {{ $title }} لیست تراکنش های حساب </h3>
                                     </div>
                                     <div class="row mb-2">
                                         <div class="g-col-6 g-col-sm-12 d-flex align-items-center">
                                             <h4>
-                                                موجودی بانک
+                                                موجودی حساب
                                             </h4>
                                         </div>
                                         <div class="g-col-6 d-col-sm-12 d-flex align-items-center">
@@ -87,7 +83,7 @@
                                                     مبلغ تراکنش(ریال)
                                                 </th>
                                                 <th class="text-danger">
-                                                    موجودی بانک(ریال)
+                                                    موجودی حساب(ریال)
                                                 </th>
                                                 <th>
                                                     تاریخ تراکنش
