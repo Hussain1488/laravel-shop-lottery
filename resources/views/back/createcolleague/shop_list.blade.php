@@ -153,9 +153,14 @@
                                                         @can('createcolleague.shopedit')
                                                             <td>
                                                                 <a href="{{ route('admin.createcolleague.shopedit', [$key->id]) }}"
-                                                                    class="text-success">
-                                                                    <i class="feather icon-edit"></i>
+                                                                    class="text-black btn btn-warning btn-sm">
+                                                                    <i class="feather icon-edit" alt="اصلاح"
+                                                                        title="اصلاح"></i>اصلاح
                                                                 </a>
+                                                                <a href="{{ route('admin.installments.shop.installments', [$key->id, 'wait']) }}"
+                                                                    class="text-black btn btn-success btn-sm">
+                                                                    <i class="feather icon-more" alt="فروش ها"
+                                                                        title="فروش ها"></i>فروش ها</a>
 
                                                             </td>
                                                         @endcan
@@ -261,9 +266,14 @@
                                                         <div class="col">
 
                                                             <a href="{{ route('admin.createcolleague.shopedit', [$key->id]) }}"
-                                                                class="text-success">
-                                                                <i class="feather icon-edit"></i>
+                                                                class="text-black btn btn-warning btn-sm">
+                                                                <i class="feather icon-edit" alt="اصلاح"
+                                                                    title="اصلاح"></i>اصلاح
                                                             </a>
+                                                            <a href="{{ route('admin.installments.shop.installments', [$key->id, 'wait']) }}"
+                                                                class="text-black btn btn-success btn-sm">
+                                                                <i class="feather icon-more" alt="فروش ها"
+                                                                    title="فروش ها"></i>فروش ها</a>
 
                                                         </div>
                                                     @endcan
