@@ -30,7 +30,7 @@ class WalletController extends Controller
     public function index()
     {
         $wallet    = auth()->user()->getWallet();
-        $trans = $wallet->histories()->latest()->paginate(20);
+        $trans = $wallet->histories()->latest()->paginate(15);
         $user = User::with('wallet')->find(Auth::user()->id);
         $gateways = Gateway::active()->get();
 
