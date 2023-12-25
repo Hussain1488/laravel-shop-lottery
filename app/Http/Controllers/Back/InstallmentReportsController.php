@@ -512,14 +512,8 @@ class InstallmentReportsController extends Controller
 
     public function paidList()
     {
-        // dd('hey');
-
         $paidList = paymentdetails::with('payments.store')->latest()->paginate(20);
-        // $paidList = $paidList->map(function ($item) {
-        //     $item->date = Jalalian::fromCarbon($item->created_at)->format('Y-m-d');
-        //     return $item;
-        // });
-        // dd($paidList);
+
         return view('back.installmentreports.paidList', compact('paidList'));
     }
 }
