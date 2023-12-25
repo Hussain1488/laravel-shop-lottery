@@ -78,14 +78,14 @@
                                         <li>
                                             <a href="{{ route('front.wallet.index') }}"
                                                 class="{{ active_class('front.wallet.index') }}">
-                                                <i class="mdi mdi-credit-card-outline"></i>
+                                                <i class="mdi mdi-cash-multiple"></i>
                                                 {{ trans('front::messages.profile.wallet') }}
                                             </a>
                                         </li>
                                         <li>
                                             <a href="{{ route('front.installments.index') }}"
                                                 class="{{ active_class('front.installments.index') }}">
-                                                <i class="mdi mdi-credit-card-outline"></i>
+                                                <i class="mdi mdi-calendar-multiple-check"></i>
                                                 {{ trans('front::messages.header.my_installments') }}
                                             </a>
                                         </li>
