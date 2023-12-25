@@ -13,7 +13,7 @@ class banktransaction extends Model
 
     protected $table = "banktransactions";
 
-    protected $fillable = ['bank_id', 'bankbalance', 'transactionprice', 'transactionsdate', 'buyer_trans_id', 'store_trans_id'];
+    protected $fillable = ['bank_id', 'bankbalance', 'transactionprice', 'transactionsdate', 'buyer_trans_id', 'store_trans_id', 'type'];
 
     public function bank()
     {
@@ -50,6 +50,7 @@ class banktransaction extends Model
                 'bank_id' => $bank_id,
                 'bankbalance' => $status ? $creditAmount : -$creditAmount,
                 'transactionprice' => $creditAmount,
+                'type' => $status ? 'deposit' : 'withdraw',
                 'transactionsdate' => Carbon::now()->format('Y-m-d'),
                 'buyer_trans_id' => $user == 'user' ? $trans_id : null,
                 'store_trans_id' => $user == 'store' ? $trans_id : null
