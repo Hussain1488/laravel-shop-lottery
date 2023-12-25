@@ -496,6 +496,6 @@ function theme_first_config()
     widget_seeder();
 
     if (!option('info_footer_text')) {
-        option_update('info_footer_text', 'کلیه حقوق این فروشگاه محفوظ است');
+        option_update('info_footer_text', 'کلیه حقوق این فروشگاه برای خانه اقساط (khaneaghsate.ir) محفوظ است');
     }
 }
