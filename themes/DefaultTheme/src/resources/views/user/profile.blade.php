@@ -14,7 +14,7 @@
                             <div class="col-md-6 col-sm-12">
                                 <div class="label-info">
                                     <span>{{ trans('front::messages.profile.fname') }}</span>
-                                </div>t
+                                </div>
                                 <div class="value-info">
                                     <span>{{ $user->first_name }}</span>
                                 </div>
