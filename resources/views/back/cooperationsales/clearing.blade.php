@@ -194,6 +194,9 @@
 @endsection
 
 @push('scripts')
+    <script>
+        var url = '';
+    </script>
     <script src="{{ asset('back/assets/js/pages/users/all.js') }}"></script>
     <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
 @endpush
