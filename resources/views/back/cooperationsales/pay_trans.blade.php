@@ -56,167 +56,175 @@
                                             ریال
                                         </div>
                                     </div>
-                                    <div class="pc-size" data-screen="pc">
+                                    @if (!$trans->count() > 0)
+                                        <div class="alert alert-warning m-2 p-2">
+                                            <h5 class="text-danger">
+                                                تراکنشی برای نمایش وجود ندارد!
+                                            </h5>
+                                        </div>
+                                    @else
+                                        <div class="pc-size" data-screen="pc">
 
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>
-                                                        #
-                                                    </th>
-                                                    <th>
-                                                        تاریخ تراکنش
-                                                    </th>
-                                                    <th>
-                                                        نوع تراکنش
-                                                    </th>
-                                                    <th>
-                                                        مبلغ تراکنش
-                                                    </th>
-                                                    <th>
-                                                        مجموع تراکنش
-                                                    </th>
-                                                    <th class="">
-                                                        شماره شبا
-                                                    </th>
-                                                    <th>
-                                                        شماره سند
-                                                    </th>
-                                                    <th>
-                                                        جزئیات
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            @php
-                                                $counter = ($trans->currentPage() - 1) * $trans->perPage() + 1;
-                                            @endphp
-                                            <tbody>
-                                                @foreach ($trans as $key)
+                                            <table class="table table-hover">
+                                                <thead>
                                                     <tr>
-                                                        <td>
-                                                            {{ $counter++ }}
-                                                        </td>
-                                                        <td>
-                                                            <span class="transaction_datetime">
+                                                        <th>
+                                                            #
+                                                        </th>
+                                                        <th>
+                                                            تاریخ تراکنش
+                                                        </th>
+                                                        <th>
+                                                            نوع تراکنش
+                                                        </th>
+                                                        <th>
+                                                            مبلغ تراکنش
+                                                        </th>
+                                                        <th>
+                                                            مجموع تراکنش
+                                                        </th>
+                                                        <th class="">
+                                                            شماره شبا
+                                                        </th>
+                                                        <th>
+                                                            شماره سند
+                                                        </th>
+                                                        <th>
+                                                            جزئیات
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                @php
+                                                    $counter = ($trans->currentPage() - 1) * $trans->perPage() + 1;
+                                                @endphp
+                                                <tbody>
+                                                    @foreach ($trans as $key)
+                                                        <tr>
+                                                            <td>
+                                                                {{ $counter++ }}
+                                                            </td>
+                                                            <td>
+                                                                <span class="transaction_datetime">
+                                                                    {{ \Carbon\Carbon::parse($key->depositdate)->format('Y-m-d') }}
+                                                                    <br>
+                                                                    {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                                </span>
+                                                            </td>
+                                                            <td>
+                                                                {{ 'درخواست واریز' }}
+                                                            </td>
+                                                            <td>
+                                                                <span class="monyInputSpan">{{ $key->depositamount }}</span>
+                                                            </td>
+                                                            <td>
+                                                                <span class="monyInputSpan">{{ $key->final_price }}</span>
+                                                            </td>
+                                                            <td class="text-danger">
+                                                                <span class="">{{ $key->shabanumber }}</span>
+
+                                                            </td>
+                                                            <td>
+                                                                {{ $key->list_id }}
+                                                            </td>
+                                                            <td>
+                                                                <button
+                                                                    data-action="{{ route('admin.cooperationsales.transaction.details', [$key->trans_id]) }}"
+                                                                    class="btn transaction_details"
+                                                                    data-id="{{ $key->trans_id }}" value=""><i
+                                                                        class="text-success feather icon-info"></i>
+                                                                </button>
+                                                            </td>
+
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="mobile-size " data-screen="mobile">
+                                            @foreach ($trans as $key)
+                                                <div class=" border rounded mb-1">
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+                                                            <h5 class="text-light">
+                                                                تاریخ تراکنش:
+
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col"><span class="text-dark">
                                                                 {{ \Carbon\Carbon::parse($key->depositdate)->format('Y-m-d') }}
-                                                                <br>
                                                                 {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
                                                             </span>
-                                                        </td>
-                                                        <td>
-                                                            {{ 'درخواست واریز' }}
-                                                        </td>
-                                                        <td>
-                                                            <span class="monyInputSpan">{{ $key->depositamount }}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="monyInputSpan">{{ $key->final_price }}</span>
-                                                        </td>
-                                                        <td class="text-danger">
-                                                            <span class="">{{ $key->shabanumber }}</span>
+                                                        </div>
+                                                    </div>
 
-                                                        </td>
-                                                        <td>
-                                                            {{ $key->list_id }}
-                                                        </td>
-                                                        <td>
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+                                                            <h5 class="text-light">نوع تراکنش:
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col">
+                                                            <span class="text-dark">
+                                                                {{ 'درخواست واریز' }}
+
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+                                                            <h5 class="text-light">مبلغ تراکنش:
+
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col">
+
+                                                            <span class="monyInputSpan">{{ $key->depositamount }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+
+                                                            <h5 class="text-light">شماره شبا:
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col">
+
+                                                            <span class="monyInputSpan">{{ $key->final_price }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+
+                                                            <h5 class="text-light"> شماره سند:
+                                                            </h5>
+                                                        </div>
+
+                                                        <div class="col">
+                                                            <span class="text-dark">
+                                                                {{ $key->list_id }} </span>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+
+                                                            <h5 class="text-light">جزئیات:
+                                                            </h5>
+                                                        </div>
+
+                                                        <div class="col">
                                                             <button
                                                                 data-action="{{ route('admin.cooperationsales.transaction.details', [$key->trans_id]) }}"
                                                                 class="btn transaction_details"
                                                                 data-id="{{ $key->trans_id }}" value=""><i
-                                                                    class="text-success feather icon-info"></i>
+                                                                    class="text-success feather icon-info"></i>جزئیات
                                                             </button>
-                                                        </td>
+                                                        </div>
 
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="mobile-size " data-screen="mobile">
-                                        @foreach ($trans as $key)
-                                            <div class=" border rounded mb-1">
-                                                <div class="row pt-1">
-                                                    <div class="col ml-1">
-                                                        <h5 class="text-light">
-                                                            تاریخ تراکنش:
-
-                                                        </h5>
-                                                    </div>
-                                                    <div class="col"><span class="text-dark">
-                                                            {{ \Carbon\Carbon::parse($key->depositdate)->format('Y-m-d') }}
-                                                            {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
-                                                        </span>
                                                     </div>
                                                 </div>
-
-                                                <div class="row pt-1">
-                                                    <div class="col ml-1">
-                                                        <h5 class="text-light">نوع تراکنش:
-                                                        </h5>
-                                                    </div>
-                                                    <div class="col">
-                                                        <span class="text-dark">
-                                                            {{ 'درخواست واریز' }}
-
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="row pt-1">
-                                                    <div class="col ml-1">
-                                                        <h5 class="text-light">مبلغ تراکنش:
-
-                                                        </h5>
-                                                    </div>
-                                                    <div class="col">
-
-                                                        <span class="monyInputSpan">{{ $key->depositamount }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row pt-1">
-                                                    <div class="col ml-1">
-
-                                                        <h5 class="text-light">شماره شبا:
-                                                        </h5>
-                                                    </div>
-                                                    <div class="col">
-
-                                                        <span class="monyInputSpan">{{ $key->final_price }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row pt-1">
-                                                    <div class="col ml-1">
-
-                                                        <h5 class="text-light"> شماره سند:
-                                                        </h5>
-                                                    </div>
-
-                                                    <div class="col">
-                                                        <span class="text-dark">
-                                                            {{ $key->list_id }} </span>
-                                                    </div>
-
-                                                </div>
-                                                <div class="row pt-1">
-                                                    <div class="col ml-1">
-
-                                                        <h5 class="text-light">جزئیات:
-                                                        </h5>
-                                                    </div>
-
-                                                    <div class="col">
-                                                        <button
-                                                            data-action="{{ route('admin.cooperationsales.transaction.details', [$key->trans_id]) }}"
-                                                            class="btn transaction_details" data-id="{{ $key->trans_id }}"
-                                                            value=""><i
-                                                                class="text-success feather icon-info"></i>جزئیات
-                                                        </button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
 
