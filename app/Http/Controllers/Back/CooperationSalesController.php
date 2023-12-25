@@ -199,7 +199,7 @@ class CooperationSalesController extends Controller
         // dd($final_price);
         $store->salesamount -= $depositamount;
         $register_number = $number;
-        $description = 'درخواست تسویه';
+        $description = 'درخواست واریز';
         $trans_data = [
             'تراکنش:' => $description,
             'توسط:' => Auth::user()->username,
@@ -257,7 +257,7 @@ class CooperationSalesController extends Controller
             toastr()->error('شما هیچ بانکی با ماهیت واسط اقساط ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
             return redirect()->back();
         }
-        $description = 'درخواست واریز';
+        $description = 'درخواست تسویه';
         $store = createstore::find($id);
         // dd($store);
         $fee = $store->feepercentage;
