@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Morilog\Jalali\Jalalian;
+use Yajra\DataTables\Facades\DataTables;
+
 use function PHPUnit\Framework\isEmpty;
 
 class InstallmentReportsController extends Controller
@@ -507,8 +509,57 @@ class InstallmentReportsController extends Controller
         }
 
 
-        return view('back.installmentreports.banktransaction', compact('transactions', 'total', 'title', 'log'));
+        return view('back.installmentreports.banktransaction', compact('total', 'title', 'log', 'id'));
     }
+    public function transactionFilterData(Request $request)
+    {
+        $trans = BankTransaction::query()->with('bank.account_type', 'buyerTransaction.user', 'storeTransaction.store.user');
+        $trans = $trans->where('bank_id', $request->input('bankId'))->latest();
+
+        $result = DataTables::eloquent($trans)
+            ->addColumn('counter', function () {
+                // static $counter = 0; // Use static to persist the counter across rows
+                return null;
+            })
+            ->addColumn('user', function ($trans) {
+                return $trans->store_trans_id
+                    ? $trans->storeTransaction->store->nameofstore
+                    : $trans->buyerTransaction->user->first_name . ' ' . $trans->buyerTransaction->user->last_name;
+            })
+            ->addColumn('username', function ($trans) {
+                return $trans->store_trans_id
+                    ? $trans->storeTransaction->store->user->username
+                    : $trans->buyerTransaction->user->username;
+            })
+            ->filterColumn('username', function ($query, $keyword) {
+                $query->where(function ($query) use ($keyword) {
+                    $query->whereHas('storeTransaction.store.user', function ($query) use ($keyword) {
+                        $query->where('username', 'like', '%' . $keyword . '%');
+                    })
+                        ->orWhereHas('buyerTransaction.user', function ($query) use ($keyword) {
+                            $query->where('username', 'like', '%' . $keyword . '%');
+                        });
+                });
+            })
+            ->addColumn('transactionprice', function ($trans) {
+                return $trans->transactionprice;
+            })
+            ->addColumn('bankbalance', function ($trans) {
+                return $trans->bankbalance;
+            })
+            ->addColumn('transaction_date', function ($trans) {
+                return [
+                    'date' => jdate($trans->created_at)->format('Y-d-m'),
+                    'time' => $trans->created_at->format('H:i:s'),
+                ];
+            })
+            ->rawColumns(['username']) // Mark 'username' as raw HTML
+            ->make(true);
+        // Log::info($result);
+
+        return $result;
+    }
+
 
     public function paidList()
     {

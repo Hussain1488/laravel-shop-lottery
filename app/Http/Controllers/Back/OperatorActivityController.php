@@ -8,6 +8,7 @@ use App\Models\ActivityDetailsModel;
 use App\Models\OperatorActivity;
 use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
+use Yajra\DataTables\Facades\DataTables;
 
 class OperatorActivityController extends Controller
 {
@@ -22,6 +23,7 @@ class OperatorActivityController extends Controller
         $users = User::where('level', '!=', 'user')->with('roles')->latest()->paginate(15);
         return view('back.operatoractivity.index', compact('users'));
     }
+
 
     public function search(Request $request)
     {
@@ -72,10 +74,47 @@ class OperatorActivityController extends Controller
      */
     public function show($id)
     {
-        $operations = OperatorActivity::where('operator_id', $id)->with('user')->latest()->paginate(20);
+        // $operations = OperatorActivity::where('operator_id', $id)->with('user')->latest()->paginate(20);
         $operator = User::find($id);
         // dd($id);
-        return view('back.operatoractivity.show', compact('operations', 'operator'));
+        return view('back.operatoractivity.show', compact('operator'));
+    }
+    public function getOperatorActivityData(Request $request)
+    {
+        $operatorId = $request->input('operator_id');
+
+        $operations = OperatorActivity::query()->with('user');
+
+        $operations->where('operator_id', $operatorId);
+
+
+        return DataTables::eloquent($operations)
+            ->addColumn('counter', function () {
+                // static $counter = 0; // Use static to persist the counter across rows
+                return null;
+            })
+            ->addColumn('formatted_date', function ($operation) {
+                return jdate($operation->created_at)->format('H:i:s Y-m-d');
+            })
+            ->addColumn('username', function ($operation) {
+                return $operation->user ? $operation->user->username : '<span class="text-danger">گیرنده ندارد</span>';
+            })->filterColumn('username', function ($query, $keyword) {
+                $query->whereHas('user', function ($query) use ($keyword) {
+                    $query->where('username', 'like', '%' . $keyword . '%');
+                });
+            })
+            ->addColumn('details_action', function ($operation) {
+                $dataDate = jdate($operation->created_at)->format('Y-m-d');
+                $dataTime = $operation->created_at->format('H:i:s');
+                $dataAction = route('admin.operatoractivity.details', [$operation->id]);
+                return [
+                    'data_date' => $dataDate,
+                    'data_time' => $dataTime,
+                    'data_action' => $dataAction,
+                ];
+            })
+            ->rawColumns(['details_action', 'username']) // Mark 'details_action' as raw HTML
+            ->make(true);
     }
 
     /**
