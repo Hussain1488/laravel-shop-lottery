@@ -32,7 +32,7 @@
 
                     <div class="card-content">
                         <div class="container mt-3">
-
+                            <input type="hidden" id="user_data" value="{!! json_encode($users) !!}">
 
                             <!-- Tab panes -->
                             <div class="">
@@ -67,7 +67,7 @@
                                     </div>
 
 
-                                    <table class="table table-hover">
+                                    <table class="table table-hover" id="operator_list">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -85,7 +85,7 @@
                                             </tr>
                                         </thead>
                                         @php
-                                            $counter = $counter = ($users->currentPage() - 1) * $users->perPage() + 1;
+                                            $counter = 1;
                                         @endphp
 
                                         <tbody>
@@ -121,9 +121,9 @@
 
                         </div>
                     </div>
-                    <div class="m-3">
+                    {{-- <div class="m-3">
                         {{ $users->links() }}
-                    </div>
+                    </div> --}}
                 </section>
 
 
@@ -135,4 +135,6 @@
 @push('scripts')
     <script src="{{ asset('back/assets/js/pages/users/all.js') }}"></script>
     <script src="{{ asset('back/assets/js/pages/installmentpurchse/create.js') }}"></script>
+    <script src="{{ asset('back/assets/datatable/datatables.min.js') }}"></script>
+    <script src="{{ asset('back/assets/js/pages/operatorActivity/index.js') }}"></script>
 @endpush

@@ -51,17 +51,18 @@
 
                                     <div class="">
 
-                                        <form action="{{ route('admin.operatoractivity.filter') }}" method="post">
+                                        {{-- <form action="{{ route('admin.operatoractivity.filter') }}" method="post">
                                             @csrf
                                             <div class="row ">
                                                 <div class="col-md-6 col-12 d-flex justify-content-around">
                                                     <h4>
-                                                        جستوجو کیرنده عملیات اساس شماره تماس
+                                                        جستوجو گیرنده عملیات اساس شماره تماس
                                                     </h4>
-                                                    <div class="d-flex">
-                                                        <input type="hidden" name="operator"
-                                                            class="form-control w-auto mr-1" value="{{ $operator->id }}">
-                                                        <input type="text" name="filter"
+                                                    <div class="d-flex"> --}}
+                                        <input type="hidden" name="operator" id="operato-id"
+                                            data-action="{{ route('admin.get.operator.activity.data') }}"
+                                            class="form-control w-auto mr-1" value="{{ $operator->id }}">
+                                        {{-- <input type="text" name="filter"
                                                             class="form-control w-auto mr-1" placeholder="جستجو">
                                                         <input type="submit" class="btn btn-info" value="جستجو">
                                                     </div>
@@ -69,37 +70,20 @@
                                                 <div class="col-md-6 col-12">
                                                 </div>
                                             </div>
-                                        </form>
+                                        </form> --}}
                                     </div>
 
-                                    <table class="table table-hover">
+                                    <table class="" id="operatorActivity">
                                         <thead>
-                                            <tr>
-                                                <th>#</th>
 
-                                                <td>
-                                                    عملیات
-                                                </td>
-                                                <th>
-                                                    گیرنده فعالیت
-                                                </th>
-                                                <th>
-                                                    تاریخ
-                                                </th>
-                                                <th>
-                                                    جزئیات
-                                                </th>
-
-
-                                            </tr>
                                         </thead>
-                                        @php
+                                        {{-- @php
                                             $counter = ($operations->currentPage() - 1) * $operations->perPage() + 1;
-                                        @endphp
+                                        @endphp --}}
 
                                         <tbody>
 
-                                            @foreach ($operations as $key)
+                                            {{-- @foreach ($operations as $key)
                                                 <tr>
                                                     <td>
                                                         {{ $counter++ }}
@@ -115,14 +99,13 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        {{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->created_at))->format('Y-m-d') }}
+                                                        {{ jdate($key->created_at)->format('Y-m-d') }}
                                                         <br>
-                                                        {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                        {{ $key->created_at->format('H:i:s') }}
                                                     </td>
                                                     <td>
-                                                        <button
-                                                            data-date="{{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->created_at))->format('d-m-Y') }}"
-                                                            data-time="{{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}"
+                                                        <button data-date="{{ jdate($key->created_at)->format('d-m-Y') }}"
+                                                            data-time="{{ $key->created_at->format('H:i:s') }}"
                                                             data-action="{{ route('admin.operatoractivity.details', [$key->id]) }}"
                                                             class="btn details-show" data-id="{{ $key->id }}"
                                                             value=""><i class="text-success feather icon-info"></i>
@@ -130,7 +113,7 @@
 
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            @endforeach --}}
 
                                         </tbody>
                                     </table>
@@ -140,9 +123,9 @@
 
                         </div>
                     </div>
-                    <div class="m-3">
+                    {{-- <div class="m-3">
                         {{ $operations->links() }}
-                    </div>
+                    </div> --}}
                 </section>
 
             </div>
@@ -179,5 +162,6 @@
     'plugins' => ['persian-datepicker', 'jquery.validate'],
 ])
 @push('scripts')
+    <script src="{{ asset('back/assets/datatable/datatables.min.js') }}"></script>
     <script src="{{ asset('back/assets/js/pages/operatorActivity/index.js') }}"></script>
 @endpush
