@@ -2,6 +2,8 @@
 
 @section('content')
     <div class="app-content content">
+        <input type="hidden" value="{{ $id }}" id="bank_data"
+            data-action="{{ route('admin.installmentreports.transactionFilter.data') }}">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
@@ -27,7 +29,6 @@
             <div class="content-body">
                 <section class="card">
                     <div class="card-header">
-                        {{-- @isset($store) --}}
                         <h4 class="card-title">لیست تراکنش های: {{ $title }}</h4>
 
                     </div>
@@ -63,38 +64,15 @@
                                         </div>
                                     </div>
 
-                                    <table class="table table-hover">
+                                    <table class="table table-hover" id="bank_transaction_list">
                                         <thead>
-                                            <tr>
-                                                <th>
-                                                    #
-                                                </th>
-                                                <th>
-                                                    @if ($log)
-                                                        نام فروشگاه
-                                                    @else
-                                                        کاربر
-                                                    @endif
-                                                </th>
-                                                <th>
-                                                    شماره تماس
-                                                </th>
-                                                <th>
-                                                    مبلغ تراکنش(ریال)
-                                                </th>
-                                                <th class="text-danger">
-                                                    موجودی حساب(ریال)
-                                                </th>
-                                                <th>
-                                                    تاریخ تراکنش
-                                                </th>
-                                            </tr>
+
                                         </thead>
-                                        @php
+                                        {{-- @php
                                             $counter = 1;
-                                        @endphp
+                                        @endphp --}}
                                         <tbody>
-                                            @foreach ($transactions as $key)
+                                            {{-- @foreach ($transactions as $key)
                                                 <tr>
                                                     <td>
                                                         {{ $counter++ }}
@@ -136,7 +114,7 @@
                                                     </td>
 
                                                 </tr>
-                                            @endforeach
+                                            @endforeach --}}
                                         </tbody>
                                     </table>
 
@@ -163,6 +141,6 @@
 
 @push('scripts')
     <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}"></script>
-
+    <script src="{{ asset('back/assets/datatable/datatables.min.js') }}"></script>
     <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
 @endpush
