@@ -13,12 +13,16 @@ class paymentdetails extends Model
     protected $fillable = [
         'list_of_payment_id',
         'Issuetracking',
-        'nameofbank',
+        'bank_id',
         'documentpayment',
     ];
 
     public function payments()
     {
         return $this->belongsTo(PaymentListModel::class, 'list_of_payment_id');
+    }
+    public function bank()
+    {
+        return $this->belongsTo(BankAccount::class, 'bank_id');
     }
 }
