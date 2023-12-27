@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Morilog\Jalali\Jalalian;
+use Yajra\DataTables\Facades\DataTables;
+
 use function PHPUnit\Framework\isEmpty;
 
 class InstallmentReportsController extends Controller
@@ -67,19 +69,19 @@ class InstallmentReportsController extends Controller
     public function payRequestlist()
     {
         $perPage = 15;
-
         $transaction = PaymentListModel::with('store')
             ->where('status', 0)
             ->latest()
             ->paginate($perPage, ['*'], 'transaction_page');
 
-        $transaction1 = PaymentListModel::with('store')
+        $transaction1 = PaymentListModel::with('store', 'details')
             ->where('status', 1)
             ->latest()
             ->paginate($perPage, ['*'], 'transaction1_page');
 
-        $total[1] = $transaction->where('status', 1)->sum('depositamount');
-        $total[0] = $transaction->where('status', 0)->sum('depositamount');
+        $total[1] = PaymentListModel::where('status', 1)->sum('depositamount');
+        $total[0] = PaymentListModel::where('status', 0)->sum('depositamount');
+
         $bank =  BankAccount::whereHas('account_type', function ($query) {
             $query->where('code', 21);
         })->get();
@@ -114,8 +116,8 @@ class InstallmentReportsController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        // dd($request->all());
         $bank_name = $request->nameofbank;
+
         if ($request->hasFile('documentpayment')) {
 
             $imageName = time() . '_clearing.' . $request->file('documentpayment')->getClientOriginalExtension();
@@ -146,7 +148,7 @@ class InstallmentReportsController extends Controller
             paymentdetails::create([
                 'list_of_payment_id' => $request->pay_list_id,
                 'Issuetracking' => $request->Issuetracking,
-                'nameofbank'  => $bank_name,
+                'bank_id'  => $bank_name,
                 'documentpayment'  => $path,
             ]);
 
@@ -215,9 +217,6 @@ class InstallmentReportsController extends Controller
         }
         return redirect()->back();
     }
-
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -507,9 +506,8 @@ class InstallmentReportsController extends Controller
         }
 
 
-        return view('back.installmentreports.banktransaction', compact('transactions', 'total', 'title', 'log'));
+        return view('back.installmentreports.banktransaction', compact('id', 'total', 'title', 'log'));
     }
-<<<<<<< HEAD
     public function transactionFilterData(Request $request)
     {
         $trans = BankTransaction::query()->with('bank.account_type', 'buyerTransaction.user', 'storeTransaction.store.user');
@@ -524,6 +522,11 @@ class InstallmentReportsController extends Controller
                 return $trans->store_trans_id
                     ? $trans->storeTransaction->store->nameofstore
                     : $trans->buyerTransaction->user->first_name . ' ' . $trans->buyerTransaction->user->last_name;
+            })
+            ->addColumn('source', function ($trans) {
+                return $trans->store_trans_id
+                    ? 'اپراتور'
+                    : 'کاربر';
             })
             ->addColumn('username', function ($trans) {
                 return $trans->store_trans_id
@@ -559,8 +562,6 @@ class InstallmentReportsController extends Controller
         return $result;
     }
 
-=======
->>>>>>> parent of 6ffbb5a (datatable added for fetching data.)
 
     public function paidList()
     {
