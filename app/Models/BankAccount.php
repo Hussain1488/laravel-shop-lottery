@@ -16,4 +16,8 @@ class BankAccount extends Model
     {
         return $this->belongsTo(bankTypeModel::class, 'account_type_id');
     }
+    public function paymentDetails()
+    {
+        return $this->hasMany(paymentdetails::class, 'bank_id');
+    }
 }
