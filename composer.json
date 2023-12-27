@@ -36,7 +36,6 @@
         "rachidlaasri/laravel-installer": "^4.1",
         "rap2hpoutre/laravel-log-viewer": "^1.7",
         "spatie/laravel-backup": "^6.14",
-        "yajra/laravel-datatables-oracle": "*",
         "yoeunes/toastr": "^1.2"
     },
     "require-dev": {
