@@ -31,7 +31,6 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/css-rtl/themes/dark-layout.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/css-rtl/themes/semi-dark-layout.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/css-rtl/plugins/extensions/toastr.css') }}">
-    <link rel="stylesheet" href="{{ asset('back/assets/datatable/datatables.min.css') }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -51,7 +50,6 @@
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([
-            'datatable_fa' => asset('back/assets/datatable/fa.json'),
             'user' => auth()->user(),
             'csrfToken' => csrf_token(),
             'vapidPublicKey' => config('webpush.vapid.public_key'),
