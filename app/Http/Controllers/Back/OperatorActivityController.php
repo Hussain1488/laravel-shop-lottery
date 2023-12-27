@@ -8,7 +8,6 @@ use App\Models\ActivityDetailsModel;
 use App\Models\OperatorActivity;
 use Illuminate\Http\Request;
 use Morilog\Jalali\Jalalian;
-use Yajra\DataTables\Facades\DataTables;
 
 class OperatorActivityController extends Controller
 {
@@ -23,7 +22,6 @@ class OperatorActivityController extends Controller
         $users = User::where('level', '!=', 'user')->with('roles')->latest()->paginate(15);
         return view('back.operatoractivity.index', compact('users'));
     }
-
 
     public function search(Request $request)
     {
@@ -74,9 +72,10 @@ class OperatorActivityController extends Controller
      */
     public function show($id)
     {
-        // $operations = OperatorActivity::where('operator_id', $id)->with('user')->latest()->paginate(20);
+        $operations = OperatorActivity::where('operator_id', $id)->with('user')->latest()->paginate(20);
         $operator = User::find($id);
         // dd($id);
+<<<<<<< HEAD
         return view('back.operatoractivity.show', compact('operator'));
     }
     public function getOperatorActivityData(Request $request)
@@ -113,6 +112,9 @@ class OperatorActivityController extends Controller
             })
             ->rawColumns(['details_action', 'username']) // Mark 'details_action' as raw HTML
             ->make(true);
+=======
+        return view('back.operatoractivity.show', compact('operations', 'operator'));
+>>>>>>> parent of 6ffbb5a (datatable added for fetching data.)
     }
 
     /**

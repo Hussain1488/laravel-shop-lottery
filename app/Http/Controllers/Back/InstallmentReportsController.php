@@ -24,8 +24,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Morilog\Jalali\Jalalian;
-use Yajra\DataTables\Facades\DataTables;
-
 use function PHPUnit\Framework\isEmpty;
 
 class InstallmentReportsController extends Controller
@@ -509,8 +507,9 @@ class InstallmentReportsController extends Controller
         }
 
 
-        return view('back.installmentreports.banktransaction', compact('total', 'title', 'log', 'id'));
+        return view('back.installmentreports.banktransaction', compact('transactions', 'total', 'title', 'log'));
     }
+<<<<<<< HEAD
     public function transactionFilterData(Request $request)
     {
         $trans = BankTransaction::query()->with('bank.account_type', 'buyerTransaction.user', 'storeTransaction.store.user')->where('bank_id', $request->input('bankId'))->latest();
@@ -558,6 +557,8 @@ class InstallmentReportsController extends Controller
             ->make(true);
     }
 
+=======
+>>>>>>> parent of 6ffbb5a (datatable added for fetching data.)
 
     public function paidList()
     {
