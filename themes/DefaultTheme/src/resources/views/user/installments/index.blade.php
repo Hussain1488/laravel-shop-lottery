@@ -212,7 +212,10 @@
                                                                         </div>
 
                                                                         <div class="row m-2">
-                                                                            مقدار جریمه دیر کرد ۰ ریال
+                                                                            مقدار جریمه دیر کرد <span class="text-danger">
+                                                                                (بعدا محاسبه
+                                                                                میگردد)
+                                                                            </span>
                                                                         </div>
                                                                         <div class="row mr-2">
 
@@ -238,14 +241,15 @@
                                                                             </div>
                                                                             <div class="">
 
-
-                                                                                <input type='button'
-                                                                                    data-amount="{{ $key->installmentprice }}"
-                                                                                    data-url="{{ route('front.wallet.codeGenerate') }}"
-                                                                                    data-href="{{ route('front.installments.paymentStatus.edit', ['id1' => $key->id, 'id2' => $key->installments->id]) }}"
-                                                                                    class="btn btn-info btn-sm insta_pay_button"
-                                                                                    style=""value="پرداخت"
-                                                                                    id="insta_pay_button" />
+                                                                                @if ($key->state == 1)
+                                                                                    <input type='button'
+                                                                                        data-amount="{{ $key->installmentprice }}"
+                                                                                        data-url="{{ route('front.wallet.codeGenerate') }}"
+                                                                                        data-href="{{ route('front.installments.paymentStatus.edit', ['id1' => $key->id, 'id2' => $key->installments->id]) }}"
+                                                                                        class="btn btn-info btn-sm insta_pay_button"
+                                                                                        style=""value="پرداخت"
+                                                                                        id="insta_pay_button" />
+                                                                                @endif
                                                                             </div>
                                                                         </div>
 
@@ -295,12 +299,12 @@
 
                                                                     <div class="row m-2">
                                                                         وضعیت: پرداخت شده در تاریخ
-                                                                        {{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->updated_at))->format('d-m-Y') }}
+                                                                        {{ jdate(\Carbon\Carbon::parse($value->updated_at))->format('d-m-Y') }}
                                                                     </div>
                                                                     <div class="row mr-2">
 
                                                                         مبلغ قسط: <span class="moneyInputSpan">
-                                                                            {{ $key->installmentprice }}
+                                                                            {{ $value->installmentprice }}
                                                                         </span>
                                                                         ریال
                                                                     </div>
@@ -311,11 +315,11 @@
 
                                                                             <div class="row m-2">
                                                                                 قسط شماره
-                                                                                {{ $key->installmentnumber }}
+                                                                                {{ $value->installmentnumber }}
                                                                                 به
                                                                                 سر
                                                                                 رسید تاریخ:
-                                                                                {{ \Carbon\Carbon::parse($key->duedate)->format('d-m-Y') }}
+                                                                                {{ jdate(\Carbon\Carbon::parse($value->duedate))->format('d-m-Y') }}
                                                                             </div>
                                                                         </div>
                                                                         <div class="">
