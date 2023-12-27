@@ -28,9 +28,15 @@
                 <section class="card">
                     <div class="card-header">
                         <h4 class="card-title">لیست درخواست های تسویه حساب</h4>
+
                     </div>
+
+
+
+
                     <div class="card-content">
                         <div class="container mt-3">
+
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
@@ -45,7 +51,9 @@
                                         پرداخت
                                         شده</a>
                                 </li>
+
                             </ul>
+
                             <!-- Tab panes -->
                             <div class="tab-content">
 
@@ -53,10 +61,14 @@
                                 <div id="home"
                                     class="container tab-pane {{ request('tab') != 'transaction1' ? 'active' : 'fade' }}">
                                     <br>
+
+
+
                                     <div class="row mb-2">
                                         <div class="g-col-6 g-col-sm-12 d-flex align-items-center">
                                             <h4>
                                                 مجموعه درخواست ها:
+
                                             </h4>
                                         </div>
                                         <div class="g-col-6 d-col-sm-12 d-flex align-items-center">
@@ -176,6 +188,7 @@
                                                             </span>
                                                         </div>
                                                     </div>
+
                                                     <div class="row pt-1">
                                                         <div class="col ml-1">
                                                             <h5 class="text-light">
@@ -203,11 +216,13 @@
                                                     </div>
                                                     <div class="row pt-1">
                                                         <div class="col ml-1">
+
                                                             <h5 class="text-light">
                                                                 تاریخ درخواست:
                                                             </h5>
                                                         </div>
                                                         <div class="col">
+
                                                             <span class="transaction_datetime">
                                                                 {{ jdate($key->created_at)->format('Y-m-d') }}
 
@@ -217,14 +232,17 @@
                                                     </div>
                                                     <div class="row pt-1">
                                                         <div class="col ml-1">
+
                                                             <h5 class="text-light">
                                                                 شماره درخواست
                                                             </h5>
                                                         </div>
+
                                                         <div class="col">
                                                             <span class="text-dark">
                                                                 {{ $key->list_id }}
                                                         </div>
+
                                                     </div>
                                                     @can('installmentreports.RequestPaymentStore')
                                                         <div class="row pt-1">
@@ -234,12 +252,14 @@
                                                                     عملیات
                                                                 </h5>
                                                             </div>
+
                                                             <div class="col">
                                                                 <span class="text-dark">
                                                                     <button data-id="{{ $key->id }}"
                                                                         data-amount="{{ $key->depositamount }}"
                                                                         class="btn btn-success pay_button">پرداخت</button>
                                                             </div>
+
                                                         </div>
                                                     @endcan
                                                 </div>
@@ -346,7 +366,7 @@
                                             </table>
                                         </div>
                                         <div class="mobile-size " data-screen="mobile">
-                                            @foreach ($transaction1 as $key)
+                                            @foreach ($transaction as $key)
                                                 @if ($key->status == 1)
                                                     <div class=" border rounded mb-1">
                                                         <div class="row pt-1">
@@ -364,6 +384,7 @@
                                                                 </span>
                                                             </div>
                                                         </div>
+
                                                         <div class="row pt-1">
                                                             <div class="col ml-1">
                                                                 <h5 class="text-light">
@@ -385,17 +406,20 @@
                                                                 </h5>
                                                             </div>
                                                             <div class="col">
+
                                                                 +<span
                                                                     class="monyInputSpan">{{ $key->final_price }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="row pt-1">
                                                             <div class="col ml-1">
+
                                                                 <h5 class="text-light">
                                                                     تاریخ درخواست:
                                                                 </h5>
                                                             </div>
                                                             <div class="col">
+
                                                                 <span class="transaction_datetime">
                                                                     {{ jdate($key->depositdate)->format('Y-m-d') }}
 
@@ -405,16 +429,20 @@
                                                         </div>
                                                         <div class="row pt-1">
                                                             <div class="col ml-1">
+
                                                                 <h5 class="text-light">
                                                                     شماره درخواست
                                                                 </h5>
                                                             </div>
+
                                                             <div class="col">
                                                                 <span class="text-dark">
                                                                     {{ $key->list_id }}
                                                                 </span>
                                                             </div>
+
                                                         </div>
+
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -442,6 +470,7 @@
                                         id="deposit_amount_show"></span>ریال
                                 </h4>
                             </div>
+
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <form id="payment_form" action="{{ '#' }}" method="POST"
@@ -474,12 +503,15 @@
                                                 @else
                                                     <option value="">گزینه ای برای انتخاب وجود ندارد</option>
                                                 @endisset
+
                                             </select>
                                             <div class="m-1">
                                                 <span class="account-title" id=""></span>
                                                 <span class="text-success account-name" id=""></span>
                                             </div>
+
                                         </div>
+
                                     </div>
                                     <div class="d-flex justify-content-around my-1">
                                         <div class="col">
@@ -507,8 +539,11 @@
                                             value="انصراف">
                                     </div>
                                 </form>
+
                             </div>
+
                             <!-- Modal footer -->
+
                         </div>
                     </div>
                 </div>
