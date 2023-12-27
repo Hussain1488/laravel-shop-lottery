@@ -148,7 +148,7 @@ class InstallmentReportsController extends Controller
             paymentdetails::create([
                 'list_of_payment_id' => $request->pay_list_id,
                 'Issuetracking' => $request->Issuetracking,
-                'nameofbank'  => $bank_name,
+                'bank_id'  => $bank_name,
                 'documentpayment'  => $path,
             ]);
 
@@ -513,18 +513,19 @@ class InstallmentReportsController extends Controller
     }
     public function transactionFilterData(Request $request)
     {
-        $trans = BankTransaction::query()->with('bank.account_type', 'buyerTransaction.user', 'storeTransaction.store.user');
-        $trans = $trans->where('bank_id', $request->input('bankId'))->latest();
+        $trans = BankTransaction::query()->with('bank.account_type', 'buyerTransaction.user', 'storeTransaction.store.user')->where('bank_id', $request->input('bankId'))->latest();
 
-        $result = DataTables::eloquent($trans)
+        return DataTables::eloquent($trans)
             ->addColumn('counter', function () {
                 // static $counter = 0; // Use static to persist the counter across rows
                 return null;
             })
             ->addColumn('user', function ($trans) {
                 return $trans->store_trans_id
-                    ? $trans->storeTransaction->store->nameofstore
+                    ? $trans->storeTransaction->store->user->first_name . ' ' . $trans->storeTransaction->store->user->last_name
                     : $trans->buyerTransaction->user->first_name . ' ' . $trans->buyerTransaction->user->last_name;
+            })->addColumn('source', function ($trans) {
+                return $trans->store_trans_id ? 'اپراتور' : 'کاربر';
             })
             ->addColumn('username', function ($trans) {
                 return $trans->store_trans_id
@@ -548,16 +549,13 @@ class InstallmentReportsController extends Controller
                 return $trans->bankbalance;
             })
             ->addColumn('transaction_date', function ($trans) {
-                return [
-                    'date' => jdate($trans->created_at)->format('Y-d-m'),
-                    'time' => $trans->created_at->format('H:i:s'),
-                ];
+                return
+                    [
+                        'date' => jdate($trans->created_at)->format('Y-d-m'),
+                        'time' => $trans->created_at->format('H:i:s'),
+                    ];
             })
-            ->rawColumns(['username']) // Mark 'username' as raw HTML
             ->make(true);
-        // Log::info($result);
-
-        return $result;
     }
 
 
