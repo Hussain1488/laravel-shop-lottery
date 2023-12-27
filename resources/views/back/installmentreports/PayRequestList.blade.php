@@ -148,7 +148,7 @@
                                                                     <td>
                                                                         <button data-id="{{ $key->id }}"
                                                                             data-amount="{{ $key->depositamount }}"
-                                                                            class="btn btn-success pay_button">پرداخت</button>
+                                                                            class="btn btn-success btn-sm pay_button">پرداخت</button>
                                                                     </td>
                                                                 @endcan
 
@@ -179,17 +179,18 @@
                                                     <div class="row pt-1">
                                                         <div class="col ml-1">
                                                             <h5 class="text-light">
-                                                                مبلغ درخواست(ریال):
+                                                                مبلغ درخواست:
                                                             </h5>
                                                         </div>
                                                         <div class="col">
                                                             <span class="text-dark">
                                                                 <span
                                                                     class="monyInputSpan">{{ $key->depositamount }}</span>
+                                                                ریال
                                                             </span>
                                                         </div>
                                                     </div>
-                                                    <div class="row pt-1">
+                                                    {{-- <div class="row pt-1">
                                                         <div class="col ml-1">
                                                             <h5 class="text-light">
                                                                 مجموع درخواست ها (ریال):
@@ -200,7 +201,7 @@
 
                                                             +<span class="monyInputSpan">{{ $key->final_price }}</span>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                     <div class="row pt-1">
                                                         <div class="col ml-1">
                                                             <h5 class="text-light">
@@ -227,7 +228,7 @@
                                                         </div>
                                                     </div>
                                                     @can('installmentreports.RequestPaymentStore')
-                                                        <div class="row pt-1">
+                                                        <div class="row p-1">
                                                             <div class="col ml-1">
 
                                                                 <h5 class="text-light">
@@ -238,7 +239,7 @@
                                                                 <span class="text-dark">
                                                                     <button data-id="{{ $key->id }}"
                                                                         data-amount="{{ $key->depositamount }}"
-                                                                        class="btn btn-success pay_button">پرداخت</button>
+                                                                        class="btn btn-success btn-sm pay_button">پرداخت</button>
                                                             </div>
                                                         </div>
                                                     @endcan
@@ -300,6 +301,9 @@
                                                         <th>
                                                             شماره درخواست
                                                         </th>
+                                                        <th>
+                                                            شماره پیگیری
+                                                        </th>
 
                                                     </tr>
                                                 </thead>
@@ -336,6 +340,9 @@
                                                             <td>
                                                                 {{ $key->list_id }}
                                                             </td>
+                                                            <td>
+                                                                {{ $key->details->Issuetracking }}
+                                                            </td>
                                                             {{-- <td>
                                                             <a href="#"><i class="feather icon-pay"></i></a>
                                                         </td> --}}
@@ -367,17 +374,18 @@
                                                         <div class="row pt-1">
                                                             <div class="col ml-1">
                                                                 <h5 class="text-light">
-                                                                    مبلغ درخواست(ریال):
+                                                                    مبلغ درخواست:
                                                                 </h5>
                                                             </div>
                                                             <div class="col">
                                                                 <span class="text-dark">
                                                                     <span
                                                                         class="monyInputSpan">{{ $key->depositamount }}</span>
+                                                                    ریال
                                                                 </span>
                                                             </div>
                                                         </div>
-                                                        <div class="row pt-1">
+                                                        {{-- <div class="row pt-1">
                                                             <div class="col ml-1">
                                                                 <h5 class="text-light">
                                                                     مجموع درخواست ها (ریال):
@@ -388,7 +396,7 @@
                                                                 +<span
                                                                     class="monyInputSpan">{{ $key->final_price }}</span>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
                                                         <div class="row pt-1">
                                                             <div class="col ml-1">
                                                                 <h5 class="text-light">
@@ -412,6 +420,18 @@
                                                             <div class="col">
                                                                 <span class="text-dark">
                                                                     {{ $key->list_id }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row pt-1">
+                                                            <div class="col ml-1">
+                                                                <h5 class="text-light">
+                                                                    شماره پیگیری
+                                                                </h5>
+                                                            </div>
+                                                            <div class="col">
+                                                                <span class="text-dark">
+                                                                    {{ $key->details->Issuetracking }}
                                                                 </span>
                                                             </div>
                                                         </div>
