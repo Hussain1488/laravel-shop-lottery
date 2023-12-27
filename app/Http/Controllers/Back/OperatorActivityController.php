@@ -82,7 +82,9 @@ class OperatorActivityController extends Controller
     {
         $operatorId = $request->input('operator_id');
 
-        $operations = OperatorActivity::query()->with('user')->where('operator_id', $operatorId);
+        $operations = OperatorActivity::query()->with('user');
+
+        $operations->where('operator_id', $operatorId);
 
 
         return DataTables::eloquent($operations)
