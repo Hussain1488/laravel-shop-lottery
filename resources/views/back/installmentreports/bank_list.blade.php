@@ -48,17 +48,17 @@
                             @foreach ($listbank as $item)
                                 <div class="border rounded p-2 m-1">
                                     <div class="row">
-                                        <div class="col">
+                                        <div class="col-lg-4 col-md-4 col-sm-12">
                                             <a
                                                 href="{{ route('admin.installmentreports.transactionFilter', [$item->id]) }}">
                                                 نام حساب :
                                                 {{ $item->bankname }}
                                             </a>
                                         </div>
-                                        <div class="col">
+                                        <div class="col-lg-4 col-md-4 col-sm-12">
                                             شماره حساب : {{ $item->accountnumber }}
                                         </div>
-                                        <div class="col">
+                                        <div class="col-lg-4 col-md-4 col-sm-12">
                                             ماهیت حساب :
                                             {{ $item->account_type->name }}
                                         </div>
