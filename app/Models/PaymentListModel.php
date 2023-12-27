@@ -20,4 +20,8 @@ class PaymentListModel extends Model
     {
         return $this->belongsTo(createstore::class, 'store_id');
     }
+    public function details()
+    {
+        return $this->hasOne(paymentdetails::class, 'list_of_payment_id');
+    }
 }
