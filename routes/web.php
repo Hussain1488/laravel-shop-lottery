@@ -118,7 +118,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     // ------------------ OperatorActivity
     Route::get('operatoractivity/index', [OperatorActivityController::class, 'index'])->name('operatoractivity.index');
     Route::get('operatoractivity/show{id}', [OperatorActivityController::class, 'show'])->name('operatoractivity.show');
-    Route::post('/get-operator-activity-data', [OperatorActivityController::class, 'getOperatorActivityData'])->name('get.operator.activity.data');
     Route::get('operatoractivity/details/{id}', [OperatorActivityController::class, 'details'])->name('operatoractivity.details');
     Route::post('operatoractivity/search', [OperatorActivityController::class, 'search'])->name('operatoractivity.search');
     Route::post('operatoractivity/filter', [OperatorActivityController::class, 'filter'])->name('operatoractivity.filter');
@@ -148,7 +147,6 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('installmentreports/index', [InstallmentReportsController::class, 'index'])->name('installmentreports.index');
     Route::get('installmentreports/payRequestList', [InstallmentReportsController::class, 'payRequestList'])->name('installmentreports.payRequestList');
     Route::get('installmentreports/transactionFilter/{id}', [InstallmentReportsController::class, 'transactionFilter'])->name('installmentreports.transactionFilter');
-    Route::post('installmentreports/transactionFilter/data', [InstallmentReportsController::class, 'transactionFilterData'])->name('installmentreports.transactionFilter.data');
     Route::post('installmentreports/RequestPaymentStore', [InstallmentReportsController::class, 'RequestPaymentStore'])->name('installmentreports.RequestPaymentStore');
     Route::get('installmentreports/bankList', [InstallmentReportsController::class, 'bankList'])->name('installmentreports.banklist');
     Route::get('installmentreports/createinternalaccount', [InstallmentReportsController::class, 'createinternalaccount'])->name('installmentreports.createinternalaccount');
