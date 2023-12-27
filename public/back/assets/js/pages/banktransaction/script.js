@@ -1,6 +1,5 @@
 $(document).ready(function () {
     var bankId = $('#bank_data');
-    console.log(bankId.data('action'));
     $('#bank_transaction_list').DataTable({
         searching: true,
         processing: true,
@@ -19,7 +18,7 @@ $(document).ready(function () {
         },
         serverSide: true,
         columnDefs: [
-            {targets: [0, 4], orderable: false} // Disable sorting for columns 1 and 5 (indexes start from 0)
+            {targets: [0, 1, 2, 3, 4, 5], orderable: false} // Disable sorting for columns 1 and 5 (indexes start from 0)
         ],
         columns: [
             {data: 'counter', name: 'counter', title: '#'},
@@ -29,10 +28,15 @@ $(document).ready(function () {
                 title: 'کاربر'
             },
             {
+                data: 'source',
+                name: 'source',
+                title: 'منبع',
+                searchable: false
+            },
+            {
                 data: 'username',
                 name: 'username',
                 title: 'شماره تماس',
-
                 searchable: true
             },
             {
@@ -82,9 +86,10 @@ $(document).ready(function () {
                 searchable: false
             }
         ],
-
+        // order: [[6, 'desc']],
         select: 'single',
         drawCallback: function (settings) {
+            // console.log('Draw callback executed');
             // Reset the counter on each page change
             var api = this.api();
             var rows = api.rows({page: 'current'}).nodes();

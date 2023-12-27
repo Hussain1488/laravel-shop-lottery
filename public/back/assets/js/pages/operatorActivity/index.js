@@ -18,7 +18,7 @@ $(document).ready(function () {
         },
         serverSide: true,
         columnDefs: [
-            {targets: [0, 4], orderable: false} // Disable sorting for columns 1 and 5 (indexes start from 0)
+            {targets: [0, 1, 2, 4], orderable: false} // Disable sorting for columns 1 and 5 (indexes start from 0)
         ],
         columns: [
             {data: 'counter', name: 'counter', title: '#'},
@@ -63,6 +63,7 @@ $(document).ready(function () {
             }
         ],
         select: 'single',
+        order: [[3, 'desc']],
         drawCallback: function (settings) {
             // Reset the counter on each page change
             var api = this.api();
