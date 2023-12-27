@@ -17,7 +17,7 @@ class CreateInstallmentdetailsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('installment_id')->nullable();
             $table->foreign('installment_id')->references('id')->on('makeinstallmentsms')->onDelete('cascade');
-            $table->enum("state", [true, false]);
+            $table->enum("state", ['1', '0']);
             $table->date("duedate");
             $table->bigInteger("installmentnumber");
             $table->string("installmentprice");
