@@ -50,6 +50,7 @@ class InstallmentsController extends Controller
             }])
             ->oldest()->orderBy('installmentnumber', 'asc')
             ->paginate($perPage, ['*'], 'insta1');
+
         $installmentsm2 = installmentdetails::where('paymentstatus', 1)
             ->whereHas('installments', function ($query) {
                 $query->where('user_id', Auth::user()->id);
@@ -59,17 +60,18 @@ class InstallmentsController extends Controller
             }])->oldest()->orderBy('installmentnumber', 'asc')->paginate($perPage, ['*'], 'insta2');
         $userstat = 0;
         $paystatus = 0;
+        // dd($installmentsm1);
 
-        foreach ($installmentsm1 as $key) {
-            if ($key->installments->where('paymentstatus', 0)->count() > 0) {
-                $userstat++;
-            }
+
+        if ($installmentsm1->where('paymentstatus', 0)->count() > 0) {
+            $userstat++;
         }
-        foreach ($installmentsm2 as $key) {
-            if ($key->installments->where('paymentstatus', 1)->count() > 0) {
-                $paystatus++;
-            }
+
+
+        if ($installmentsm2->where('paymentstatus', 1)->count() > 0) {
+            $paystatus++;
         }
+
         $gateways = Gateway::active()->get();
 
         $user = User::with('wallet')->find(Auth::user()->id);
@@ -112,6 +114,7 @@ class InstallmentsController extends Controller
                     for ($i = 0; $i < $installments->numberofinstallments; $i++) {
                         $dutedate = $jalali_date_now->addMonths(1)->format('Y-m-d');
                         $Insta_dateils->create([
+                            'state' => $i == 0 ? '1' : '0',
                             'installment_id' => $installments->id,
                             'installmentnumber' => $i + 1,
                             'installmentprice' => $installments->amounteachinstallment,
@@ -148,6 +151,7 @@ class InstallmentsController extends Controller
                 DB::commit();
                 return redirect()->back()->with('success', $message);
             } catch (\Exception $e) {
+                Log::error($e);
                 DB::rollBack();
                 return redirect()->back()->with('warning', 'عملیات انجام نشد!');
             }
@@ -172,31 +176,43 @@ class InstallmentsController extends Controller
         }
         // dd($id, $st);
         $installments = Makeinstallmentsm::find($st);
-        $insta_dateils = installmentdetails::find($id);
-        $insta_dateils->paymentstatus = 1;
+        $insta_details = installmentdetails::where('installment_id', $st)
+            ->where('id', '>', $id)
+            ->orderBy('id', 'asc')
+            ->first();
+
+        if ($insta_details) {
+            $insta_details->update(['state' => 1]);
+        }
+        $insta_detail = installmentdetails::find($id);
+        $insta_detail->paymentstatus = 1;
         $installments->paymentstatus = 1;
 
         $user = User::with('wallet')->find($installments->user_id);
         $wallet = $user->getWallet();
 
-        if ($wallet->balance >= $insta_dateils->installmentprice) {
+        if ($wallet->balance >= $insta_detail->installmentprice) {
             try {
                 DB::beginTransaction();
-                $wallet->balance -= $insta_dateils->installmentprice;
+                $wallet->balance -= $insta_detail->installmentprice;
                 $history = $wallet->histories()->create([
                     'type'        => 'withdraw',
-                    'amount'      => $insta_dateils->installmentprice,
+                    'amount'      => $insta_detail->installmentprice,
                     'description' => 'پرداخت قسط',
                     'source'      => 'user',
                     'status'      => 'success'
                 ]);
-                $buyer_trans = buyertransaction::transaction(Auth::user(), $insta_dateils->installmentprice, false, 1, 0, 'پرداخت قسط');
+                $buyer_trans = buyertransaction::transaction(Auth::user(), $insta_detail->installmentprice, false, 1, 0, 'پرداخت قسط');
 
-                $bank = banktransaction::transaction($bank_id, $insta_dateils->installmentprice, true, $buyer_trans->id, 'user');
+                $bank = banktransaction::transaction($bank_id, $insta_detail->installmentprice, true, $buyer_trans->id, 'user');
 
                 $wallet->save();
                 $user->save();
-                $insta_dateils->save();
+                if ($insta_details) {
+
+                    $insta_details->save();
+                }
+                $insta_detail->save();
                 $installments->save();
                 DB::commit();
                 return redirect()->back()->with('success', 'قسط شما با موفقیت پرداخت شد!');
