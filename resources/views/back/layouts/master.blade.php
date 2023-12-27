@@ -6,7 +6,7 @@
     @include('back.partials.meta')
     <title>
         @isset($title)
-            {{ $title }}
+            {{ option('info_site_title', 'خانه اقساط') }} | {{ $title }}
         @else
             {{ option('info_site_title', 'خانه اقساط') }}
         @endisset
