@@ -93,7 +93,7 @@
                                             <div class="border rounded p-2 my-1">
                                                 <div class="row">
                                                     <h5>آقای:
-                                                        {{ $key->user->first_name . ' ' . $key->user->last_name }}
+                                                        {{ $key->user->first_name . ' ' . $key->user->last_name . '(' . $key->user->username . ')' }}
                                                     </h5>
                                                 </div>
                                                 <div class="row">
@@ -153,7 +153,7 @@
                                             <div class="border rounded p-2 my-1">
                                                 <div class="row">
                                                     <h5>آقای:
-                                                        {{ $index->user->first_name . ' ' . $index->user->last_name }}
+                                                        {{ $index->user->first_name . ' ' . $index->user->last_name . '(' . $index->user->username . ')' }}
                                                     </h5>
                                                 </div>
 
