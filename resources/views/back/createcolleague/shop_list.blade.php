@@ -289,7 +289,7 @@
                     </div>
 
                     <div class="m-3">
-                        {{ $store->links() }}
+                        {{ $store->appends(['filter' => request('filter')])->links() }}
                     </div>
 
 
