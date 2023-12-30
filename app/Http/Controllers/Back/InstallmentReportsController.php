@@ -88,6 +88,34 @@ class InstallmentReportsController extends Controller
 
         return view('back.installmentreports.PayRequestList', compact('transaction', 'transaction1', 'total', 'bank'));
     }
+    public function payReqDetails($id)
+    {
+        try {
+            $paidRequests = PaymentListModel::with('details.bank', 'store.user')->find($id);
+            $data = [
+                'فروشگاه:' => $paidRequests->store->nameofstore,
+                'شماره تماس:' => $paidRequests->store->user->username,
+                'تاریخ درخواست:' => jdate($paidRequests->created_at)->format('Y-m-d'),
+                'زمان درخواست:' => jdate($paidRequests->created_at)->format('H:i:s'),
+                'مبلغ درخواست:' => $paidRequests->depositamount,
+                'شماره شبا:' => $paidRequests->shabanumber,
+                'شماره ثبت:' => $paidRequests->list_id,
+                'شماره پیگیری:' => $paidRequests->details->Issuetracking,
+                'تاریخ ثبت:' => jdate($paidRequests->details->created_at)->format('Y-m-d'),
+                'زمان ثبت:' => jdate($paidRequests->details->created_at)->format('H:i:s'),
+                'اسم بانک:' => $paidRequests->details->bank->bankname,
+            ];
+            $doc =  asset($paidRequests->details->documentpayment);
+
+            return response()->json(['data' => $data, 'doc' => $doc]);
+        } catch (\Exception $e) {
+            // Log the error
+            \Log::error($e->getMessage());
+
+            // Return an error response
+            return response()->json(['error' => 'An error occurred while processing the request.'], 500);
+        }
+    }
 
     public function RequestPayment($id, $bank_id, $trans_id)
     {
