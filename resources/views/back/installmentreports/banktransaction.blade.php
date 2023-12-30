@@ -3,7 +3,8 @@
 @section('content')
     <div class="app-content content">
         <input type="hidden" value="{{ $id }}" id="bank_data"
-            data-action="{{ route('admin.installmentreports.transactionFilter.data') }}">
+            data-action="{{ route('admin.installmentreports.transactionFilter.data') }}"
+            data-details-action="{{ route('admin.installmentreports.transactionDetails', ['id' => ':id']) }}">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
@@ -129,6 +130,31 @@
 
         </section>
     </div>
+    <div class="modal fade" id="bank_transaction_details">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                    </h4>
+                </div>
+                <hr />
+
+                <!-- Modal body -->
+                <div class="modal-body p-2">
+
+
+                </div>
+
+                <!-- Modal footer -->
+
+                <div class="modal-footer">
+
+                </div>
+                <button type="button" class="btn btn-danger m-1 btn-sm" data-dismiss="modal">بستن</button>
+            </div>
+        </div>
 
     </div>
     </div>

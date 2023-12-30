@@ -150,6 +150,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('installmentreports/payRequestList', [InstallmentReportsController::class, 'payRequestList'])->name('installmentreports.payRequestList');
     Route::get('installmentreports/payReqDetails/{id}', [InstallmentReportsController::class, 'payReqDetails'])->name('installmentreports.payReqDetails');
     Route::get('installmentreports/transactionFilter/{id}', [InstallmentReportsController::class, 'transactionFilter'])->name('installmentreports.transactionFilter');
+    Route::get('installmentreports/transactionDetails/{id}', [InstallmentReportsController::class, 'transactionDetails'])->name('installmentreports.transactionDetails');
     Route::post('installmentreports/transactionFilter/data', [InstallmentReportsController::class, 'transactionFilterData'])->name('installmentreports.transactionFilter.data');
     Route::post('installmentreports/RequestPaymentStore', [InstallmentReportsController::class, 'RequestPaymentStore'])->name('installmentreports.RequestPaymentStore');
     Route::get('installmentreports/bankList', [InstallmentReportsController::class, 'bankList'])->name('installmentreports.banklist');

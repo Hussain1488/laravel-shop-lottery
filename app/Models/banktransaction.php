@@ -40,10 +40,10 @@ class banktransaction extends Model
                 'bank_id' => $bank_id,
                 'bankbalance' => $status ? $lastRecord->bankbalance + $creditAmount : $lastRecord->bankbalance - $creditAmount,
                 'transactionprice' => $creditAmount,
+                'type' => $status ? 'deposit' : 'withdraw',
                 'transactionsdate' => Carbon::now()->format('Y-m-d'),
                 'buyer_trans_id' => $user == 'user' ? $trans_id : null,
                 'store_trans_id' => $user == 'store' ? $trans_id : null
-
             ]);
         } else {
             $bank = banktransaction::create([

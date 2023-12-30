@@ -8,6 +8,7 @@ use App\Models\ActivityDetailsModel;
 use App\Models\BankAccount;
 use App\Models\banktransaction;
 use App\Models\bankTypeModel;
+use App\Models\buyertransaction;
 use App\Models\createstore;
 use App\Models\createstoretransaction;
 use App\Models\installmentdetails;
@@ -573,6 +574,8 @@ class InstallmentReportsController extends Controller
             })
             ->addColumn('transactionprice', function ($trans) {
                 return $trans->transactionprice;
+            })->addColumn('status', function ($trans) {
+                return $trans->type;
             })
             ->addColumn('bankbalance', function ($trans) {
                 return $trans->bankbalance;
@@ -583,11 +586,52 @@ class InstallmentReportsController extends Controller
                     'time' => $trans->created_at->format('H:i:s'),
                 ];
             })
+            ->addColumn('transaction_details', function ($trans) {
+                return $trans->id;
+            })
             ->rawColumns(['username']) // Mark 'username' as raw HTML
             ->make(true);
         // Log::info($result);
 
         return $result;
+    }
+    public function transactionDetails($id)
+    {
+        $trans = banktransaction::find($id);
+        $data = [];
+        $type = '';
+        if ($trans->buyer_trans_id) {
+            $trans_buyer = buyertransaction::find($trans->buyer_trans_id);
+            $data = [
+                'اسم کاربر' => $trans_buyer->user->first_name . ' ' . $trans_buyer->user->last_name,
+                'شماره تماس کاربر' => $trans_buyer->user->username,
+                'توضیح تراکنش' => $trans_buyer->description,
+                'نوع تراکنش' => $trans_buyer->flag == 1 ? 'کیف پول کاربر' : 'اعتبار خرید',
+                'وضعیت' => $trans_buyer->typeoftransaction == 1 && $trans_buyer->flag == 1 ? 'افزایش موجودی کیف پول کاربر' : ($trans_buyer->typeoftransaction == 1 && $trans_buyer->flag == 0 ? 'افزایش اعتبار کاربر' : ($trans_buyer->typeoftransaction == 0 && $trans_buyer->flag == 1 ? 'کاهش موجودی کیف پول کاربر' : 'کاهش اعتبار خرید کاربر')),
+                'مبلغ تراکنش' => number_format($trans_buyer->price) . ' ریال',
+                'شماره سند' => $trans_buyer->documentnumber,
+                'تاریخ تراکنش' => jdate($trans_buyer->created_at)->format('Y-m-d'),
+                'زمان تراکنش' =>  $trans_buyer->created_at->format('H:i:s'),
+            ];
+            $type = 'buyer';
+        } else if ($trans->store_trans_id) {
+            $store_trans = createstoretransaction::find($trans->store_trans_id);
+            $data = [
+                'اسم کاربر' => $store_trans->store->user->first_name . ' ' . $store_trans->store->user->last_name,
+                'اسم فروشگاه' => $store_trans->store->nameofstore,
+                'شماره تماس کاربر' => $store_trans->store->user->username,
+                'توضیح تراکنش' => $store_trans->description,
+                'مبلغ تراکنش' => number_format($store_trans->price) . ' ریال',
+                'شماره سند' => $store_trans->documentnumber,
+                'بانک' => $store_trans->bankTransaction->bank->accountnumber,
+                'تاریخ تراکنش' => jdate($store_trans->created_at)->format('Y-m-d'),
+                'زمان تراکنش' =>  $store_trans->created_at->format('H:i:s'),
+            ];
+            $type = 'store';
+        } else {
+            return response('error');
+        }
+        return response()->json(['data' => $data, 'type' => $type]);
     }
 
 

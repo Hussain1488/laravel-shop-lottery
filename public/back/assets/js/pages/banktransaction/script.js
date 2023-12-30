@@ -54,6 +54,23 @@ $(document).ready(function () {
                 searchable: false
             },
             {
+                data: 'status',
+                name: 'status',
+                title: 'نوع تراکنش',
+                render: function (data) {
+                    if (data == 'deposit') {
+                        return (
+                            '<span class="text-success">' + 'افزایش' + '</span>'
+                        );
+                    } else {
+                        return (
+                            '<span class="text-danger">' + 'کاهش' + '</span>'
+                        );
+                    }
+                },
+                searchable: false
+            },
+            {
                 data: 'bankbalance',
                 name: 'bankbalance',
                 title: 'موجودی حساب(ریال)',
@@ -84,6 +101,20 @@ $(document).ready(function () {
                     return html_show;
                 },
                 searchable: false
+            },
+            {
+                data: 'transaction_details',
+                name: 'transaction_details',
+                title: 'جزئیات',
+                render: function (data) {
+                    // Assuming 'date' and 'time' are properties of the 'transaction_date' object
+                    var html_show =
+                        '<button data-id="' +
+                        data +
+                        '" class="btn btn-info btn-sm details-show transaction_details">بیشتر<i class="feather icon-info"></i></button>';
+                    return html_show;
+                },
+                searchable: false
             }
         ],
         // order: [[6, 'desc']],
@@ -110,6 +141,55 @@ $(document).ready(function () {
                 });
         }
     });
+
+    $(document).on('click', '.transaction_details', function () {
+        let url = $('#bank_data').data('details-action');
+        let id = $(this).data('id');
+        let full_url = url.replace(':id', id);
+        $.ajax({
+            url: full_url,
+            type: 'GET',
+            success: function (data) {
+                var transDetails = data.data;
+                var type = data.type;
+                // console.log(data.data, data.type);
+                if (type == 'buyer') {
+                    $('.modal-title').text(
+                        'جزئیات تراکنش: ' + transDetails['شماره تماس کاربر']
+                    );
+                } else {
+                    $('.modal-title').text(
+                        'جزئیات تراکنش فروشگاه: ' + transDetails['اسم فروشگاه']
+                    );
+                }
+                $('.modal-body').html('');
+
+                var contentDiv = $('<div></div>');
+                var list = $('<ul></ul>');
+
+                for (var key in transDetails) {
+                    if (transDetails.hasOwnProperty(key)) {
+                        list.append(
+                            '<li class="mt-1"><div class="row"><div class="col-4"><strong>' +
+                                key +
+                                ':</strong></div><div class="col-8"> ' +
+                                transDetails[key] +
+                                '</div></div></li>'
+                        );
+                    }
+                }
+                contentDiv.append(list);
+                // Append the content div to the modal body
+                $('.modal-body').append(contentDiv);
+
+                $('#bank_transaction_details').modal();
+            },
+            error: function () {
+                toastr.error('خطا در دریاف اطلاعات');
+            }
+        });
+    });
+
     function formatMoney(value) {
         return numeral(value).format('0,0');
     }
