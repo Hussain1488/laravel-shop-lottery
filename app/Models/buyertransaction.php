@@ -59,7 +59,7 @@ class buyertransaction extends Model
             'user_id' => $user->id,
             'flag' => $flag,
             'datetransaction' => Carbon::now(),
-            'typeoftransaction' => $type,
+            'typeoftransaction' => $status ? 1 : 0,
             'price' => $amount,
             'finalprice' => $final_price,
             'documentnumber' => $doc_number,
