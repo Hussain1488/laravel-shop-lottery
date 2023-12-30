@@ -54,7 +54,7 @@ $(document).ready(function () {
                             row.details_action.data_time +
                             '" data-date="' +
                             row.details_action.data_date +
-                            '" class="btn details-show"><i class="text-success feather icon-info"></i></button>';
+                            '" class="btn btn-info btn-sm details-show">بیشتر<i class="feather icon-info"></i></button>';
                         return buttonHTML;
                     }
                     return data;
@@ -108,34 +108,45 @@ $(document).ready(function () {
                 var detailsData = data.details.data;
 
                 $('.modal-body').html('');
-
-                $('.modal-body').append(
-                    '<p><strong>عملیات:</strong> ' +
+                var contentDiv = $('<div></div>');
+                contentDiv.append(
+                    '<div class="row"><div class="col-4"><strong>عملیات:</strong></div><div class="col-8"> ' +
                         activityData.workdescription +
-                        '</p>'
+                        '</div></div>'
                 );
-                // Iterate through detailsData and create a list in modal body
-                $('.modal-body').append('<ul>');
+                var list = $('<ul></ul>');
+
+                // Iterate through detailsData and create list items
                 for (var key in detailsData) {
                     if (detailsData.hasOwnProperty(key)) {
-                        $('.modal-body ul').append(
-                            '<li class="mt-1"><strong>' +
+                        list.append(
+                            '<li class="mt-1"><div class="row"><div class="col-4"><strong>' +
                                 key +
-                                ':</strong> ' +
+                                ':</strong></div><div class="col-8"> ' +
                                 detailsData[key] +
-                                '</li>'
+                                '</div></div></li>'
                         );
                     }
                 }
-                $('.modal-body').append('</ul>');
-                $('.modal-body').append(
-                    '<p class="mt-1"><strong>تاریخ:</strong> ' +
+
+                // Append the list to the content div
+                contentDiv.append(list);
+
+                // Append content for activityData
+
+                // Append additional content to the modal body
+                contentDiv.append(
+                    '<p class="mt-1"><div class="row"><div class="col-4"><strong>تاریخ:</strong></div><div class="col-8"> ' +
                         date +
-                        '</p>' +
-                        '<p class="mt-1"><strong>زمان:</strong> ' +
+                        '</div></div></p>' +
+                        '<p class="mt-1"><div class="row"><div class="col-4"><strong>زمان:</strong></div><div class="col-8"> ' +
                         time +
-                        '</p>'
+                        '</div></div></p>'
                 );
+
+                // Append the content div to the modal body
+                $('.modal-body').append(contentDiv);
+
                 $('#activity_details').modal();
             }
         });
