@@ -1,6 +1,64 @@
 $(document).ready(function () {
     // $('.transaction_date').pDatePicker();
 
+    $('.payDetailsButton').on('click', function () {
+        var url = $(this).data('href');
+        console.log(url);
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (data) {
+                var detailsData = data.data;
+                var doc = data.doc;
+
+                // console.log(data);
+                // Clear previous content
+                $('.modal-body').html('');
+                // Create a list in modal body
+                var contentDiv = $('<div></div>');
+
+                // Create a list in modal body
+                var list = $('<ul></ul>');
+
+                // Iterate through detailsData and create list items
+                for (var key in detailsData) {
+                    if (detailsData.hasOwnProperty(key)) {
+                        list.append(
+                            '<li class="mt-1"><div class="row"><div class="col-5"><strong>' +
+                                key +
+                                '</strong></div><div class="col-7"> ' +
+                                detailsData[key] +
+                                '</div></div></li>'
+                        );
+                    }
+                }
+
+                // Append the list to the content div
+                contentDiv.append(list);
+                let docAddress =
+                    '<ul><li class="mt-1"><div class="row"><div class="col-5"><strong>' +
+                    'دانلود فایل' +
+                    '</strong></div><div class="col-7"> ' +
+                    '<a href="' +
+                    doc +
+                    '" class="btn btn-success"' +
+                    ' download ><i class="feather icon-download">دانلود فایل</i>' +
+                    '</div></div></li></ul>';
+
+                contentDiv.append(docAddress);
+
+                // Append the content div to the modal body
+                $('.modal-body').append(contentDiv);
+                $('.modal-body').append('</ul>');
+                // Append the list to the modal body
+                // $('.modal-body').append(list);
+                // Show the modal
+                $('#payListDetails').modal('show');
+            }
+        });
+    });
+
     function loadDataBasedOnScreenSize() {
         // Get the screen width
         var screenWidth = $(window).width();
@@ -174,20 +232,21 @@ $('.transaction_details').on('click', function () {
         success: function (data) {
             var detailsData = data;
             $('.modal-body').empty();
-
+            var contentDiv = $('<div></div>');
             var $ul = $('<ul>'); // Create a ul element
             for (var key in detailsData) {
                 if (detailsData.hasOwnProperty(key)) {
                     $ul.append(
-                        '<li class="pb-1"><strong>' +
+                        '<li class="mt-1"><div class="row"><div class="col-5"><strong>' +
                             key +
-                            '</strong> ' +
+                            '</strong></div><div class="col-7"> ' +
                             detailsData[key] +
-                            '</li>'
+                            '</div></div></li>'
                     );
                 }
             }
-            $('.modal-body').append($ul); // Append the ul element
+            contentDiv.append($ul);
+            $('.modal-body').append(contentDiv); // Append the ul element
             $('.transaction_details_modal').modal();
         }
     });
