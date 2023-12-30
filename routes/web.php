@@ -133,6 +133,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('createcolleague/create', [CreateColleagueController::class, 'create'])->name('createcolleague.create');
     Route::get('createcolleague/shopedit/{id}', [CreateColleagueController::class, 'shopedit'])->name('createcolleague.shopedit');
     Route::get('createcolleague/show/{id}', [CreateColleagueController::class, 'show'])->name('createcolleague.show');
+    Route::get('createcolleague/fileDownload/{id}', [CreateColleagueController::class, 'fileDownload'])->name('createcolleague.fileDownload');
     Route::put('createcolleague/shopUpdate/{id}', [CreateColleagueController::class, 'shopUpdate'])->name('createcolleague.shopUpdate');
     Route::post('createcolleague/store', [CreateColleagueController::class, 'store'])->name('createcolleague.store');
     Route::post('createcolleague/Creditstore', [CreateColleagueController::class, 'colleagueCreditStore'])->name('createcolleague.Creditstore');
@@ -147,6 +148,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     // ------------------ installment Reports
     Route::get('installmentreports/index', [InstallmentReportsController::class, 'index'])->name('installmentreports.index');
     Route::get('installmentreports/payRequestList', [InstallmentReportsController::class, 'payRequestList'])->name('installmentreports.payRequestList');
+    Route::get('installmentreports/payReqDetails/{id}', [InstallmentReportsController::class, 'payReqDetails'])->name('installmentreports.payReqDetails');
     Route::get('installmentreports/transactionFilter/{id}', [InstallmentReportsController::class, 'transactionFilter'])->name('installmentreports.transactionFilter');
     Route::post('installmentreports/transactionFilter/data', [InstallmentReportsController::class, 'transactionFilterData'])->name('installmentreports.transactionFilter.data');
     Route::post('installmentreports/RequestPaymentStore', [InstallmentReportsController::class, 'RequestPaymentStore'])->name('installmentreports.RequestPaymentStore');
