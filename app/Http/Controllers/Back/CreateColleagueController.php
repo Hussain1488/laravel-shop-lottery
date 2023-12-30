@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Morilog\Jalali\Jalalian;
+use ZipArchive;
 
 class CreateColleagueController extends Controller
 {
@@ -53,11 +54,16 @@ class CreateColleagueController extends Controller
     }
     public function shopListFilter(Request $request)
     {
+        // dd(request());
         $filter = $request->filter;
-        $store = CreateStore::where('nameofstore', 'like', '%' . $filter . '%')->get();
-        // dd($store);
+        $store = CreateStore::where(function ($query) use ($filter) {
+            $query->where('nameofstore', 'like', '%' . $filter . '%');
+        })->orWhereHas('user', function ($query) use ($filter) {
+            $query->where('username', 'like', '%' . $filter . '%');
+        })->with('user')->latest()->paginate(15);
+
         if ($store->isEmpty()) {
-            $store = createstore::with('user')->get();
+            $store = createstore::with('user')->latest()->paginate(15);
             toastr()->error('هیچ فروشگاهی برای شما یافت نشد.');
         }
         return view('back.createcolleague.shop_list', compact('store'));
@@ -159,6 +165,30 @@ class CreateColleagueController extends Controller
         // dd($doc);
 
         return view('back.createcolleague.show', compact('store', 'doc'));
+    }
+    public function fileDownload($id)
+    {
+
+        $store = createstore::find($id);
+        $zip = new ZipArchive;
+        if ($zip->open(public_path($store->nameofstore . '_اسناد_فروشگاه.zip'), ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+            $doc = json_decode($store->uploaddocument);
+
+            foreach ($doc as $document) {
+                $filePath = public_path($document);
+
+                // Add file to the zip archive
+                $zip->addFile($filePath, basename($filePath));
+            }
+
+            $zip->close();
+
+            // Download the zip file
+            return response()->download(public_path($store->nameofstore . 'all_files.zip'))->deleteFileAfterSend(true);
+        } else {
+            // Handle the case where ZipArchive could not be opened
+            return response()->json(['error' => 'Failed to create or open the zip file'], 500);
+        }
     }
 
     public function create()
