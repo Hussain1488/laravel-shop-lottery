@@ -153,7 +153,7 @@
                 <div class="modal-footer">
 
                 </div>
-
+                <button type="button" class="btn btn-danger m-1 btn-sm" data-dismiss="modal">بستن</button>
             </div>
         </div>
     </div>

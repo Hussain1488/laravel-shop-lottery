@@ -304,6 +304,9 @@
                                                         <th>
                                                             شماره پیگیری
                                                         </th>
+                                                        <th>
+                                                            جزئیات
+                                                        </th>
 
                                                     </tr>
                                                 </thead>
@@ -343,9 +346,11 @@
                                                             <td>
                                                                 {{ $key->details->Issuetracking }}
                                                             </td>
-                                                            {{-- <td>
-                                                            <a href="#"><i class="feather icon-pay"></i></a>
-                                                        </td> --}}
+                                                            <td>
+                                                                <button class="payDetailsButton btn btn-info btn-sm"
+                                                                    data-href="{{ route('admin.installmentreports.payReqDetails', [$key->id]) }}"><i
+                                                                        class="feather icon-info"></i> بیشتر</button>
+                                                            </td>
 
                                                         </tr>
                                                     @endforeach
@@ -433,6 +438,18 @@
                                                                 <span class="text-dark">
                                                                     {{ $key->details->Issuetracking }}
                                                                 </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row p-1">
+                                                            <div class="col ml-1">
+                                                                <h5 class="text-light">
+                                                                    جزئیات
+                                                                </h5>
+                                                            </div>
+                                                            <div class="col ">
+                                                                <button class="payDetailsButton btn btn-info btn-sm"
+                                                                    data-href="{{ route('admin.installmentreports.payReqDetails', [$key->id]) }}"><i
+                                                                        class="feather icon-info"></i> بیشتر</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -536,14 +553,40 @@
             </div>
 
         </div>
-    </div>
-@endsection
-@include('back.partials.plugins', ['plugins' => ['jquery.validate']])
+        <div class="modal fade" id="payListDetails">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
 
-@push('scripts')
-    <script>
-        var pay_url = "{{ route('admin.installmentreports.RequestPaymentStore') }}"
-    </script>
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">جزئیات تسویه حساب:<span class="text-success"
+                                id="deposit_amount_show"></span>
+                        </h4>
+                    </div>
+                    <hr />
 
-    <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
-@endpush
+                    <!-- Modal body -->
+                    <div class="modal-body p-2">
+
+
+                    </div>
+
+                    <!-- Modal footer -->
+
+                    <div class="modal-footer">
+
+                    </div>
+                    <button type="button" class="btn btn-danger m-1 d-flex justify-content-center"
+                        data-dismiss="modal"><i class="feather icon-x-circle" style=""></i> بستن</button>
+                </div>
+            </div>
+        </div>
+    @endsection
+    @include('back.partials.plugins', ['plugins' => ['jquery.validate']])
+
+    @push('scripts')
+        <script>
+            var pay_url = "{{ route('admin.installmentreports.RequestPaymentStore') }}";
+        </script>
+        <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
+    @endpush

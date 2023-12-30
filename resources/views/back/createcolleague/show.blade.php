@@ -49,23 +49,23 @@
 
                                 <div class="mr-1 mt-1">
                                     <a href="{{ route('admin.cooperationsales.mainWallet', [$store->id]) }}"
-                                        class="btn btn-success">کیف پول
+                                        class="btn btn-info">کیف پول
                                         اصلی</a>
                                 </div>
                                 <div class="mr-1 mt-1">
 
                                     <a href="{{ route('admin.cooperationsales.payRequestWallet', [$store->id]) }}"
-                                        class="btn btn-success">کیف پول درخواست واریز</a>
+                                        class="btn btn-info">کیف پول درخواست واریز</a>
                                 </div>
                                 <div class="mr-1 mt-1">
 
                                     <a href="{{ route('admin.cooperationsales.paidSales', [$store->id]) }}"
-                                        class="btn btn-success">فروش های تسویه شده</a>
+                                        class="btn btn-info">فروش های تسویه شده</a>
                                 </div>
                                 <div class="mr-1 mt-1">
 
                                     <a href="{{ route('admin.cooperationsales.creditTrans', [$store->id]) }}"
-                                        class="btn btn-success">تراکنش های اعتبار فروشگاه</a>
+                                        class="btn btn-info">تراکنش های اعتبار فروشگاه</a>
                                 </div>
                                 {{-- <a href="mr-1 mt-1" class="btn btn-success">مقدار فروش اقساط ماهانه</a> --}}
                             </div>
@@ -73,13 +73,10 @@
 
 
                         <!-- Tab panes -->
-                        <div class="mb-3 ">
+                        <div class="mb-3 mx-2 ">
+                            <div class="row d-flex justify-center mt-2">
 
-
-
-                            <div class="row d-flex justify-center mt-2 mt-4">
-
-                                <div class="col-12 col-lg-6 col-md-6 col-lx-6 col-sm-6">
+                                <div class="col-12 col-lg-6 col-md-6 col-lx-6 col-sm-12">
                                     <div class="row">
                                         <div class="col">
 
@@ -93,7 +90,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-lg-6 col-md-6 col-lx-6 col-sm-6">
+                                <div class="col-12 col-lg-6 col-md-6 col-lx-6 col-sm-12">
                                     <div class="row">
                                         <div class="col">
 
@@ -108,9 +105,9 @@
                                 </div>
 
                             </div>
-                            <div class="row d-flex justify-center mt-2 mt-4">
+                            <div class="row d-flex justify-center mt-2">
 
-                                <div class="col-12 col-lg-6 col-md-6 col-lx-6 col-sm-6">
+                                <div class="col-12 col-lg-6 col-md-6 col-lx-6 col-sm-12">
                                     <div class="row">
                                         <div class="col">
 
@@ -124,7 +121,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-lg-6 col-md-6 col-lx-6 col-sm-6">
+                                <div class="col-12 col-lg-6 col-md-6 col-lx-6 col-sm-12">
                                     <div class="row">
                                         <div class="col">
 
@@ -141,9 +138,9 @@
 
                             </div>
 
-                            <div class="row d-flex justify-center mt-2 mt-4">
+                            <div class="row d-flex justify-center mt-2">
 
-                                <div class="col-6 col-lg-6 col-md-6 col-lx-6 col-sm-6 ">
+                                <div class="col-6 col-lg-6 col-md-6 col-lx-6 col-sm-12 ">
                                     <div class="row">
                                         <div class="col">
 
@@ -158,7 +155,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-6 col-lg-6 col-md-6 col-lx-6 col-sm-6">
+                                <div class="col-6 col-lg-6 col-md-6 col-lx-6 col-sm-12">
                                     <div class="row">
                                         <div class="col">
 
@@ -167,32 +164,50 @@
                                             </h5>
                                         </div>
                                         <div class="col">
-                                            <div class="row">
+                                            <div class="row d-flex flex-wrap">
 
                                                 @php
                                                     use Illuminate\Support\Str;
                                                     $counter = 1;
                                                 @endphp
                                                 @isset($doc)
-                                                    <div class="col-6">
+                                                    @if (count($doc) > 1)
+                                                        <div class="col-12">
+                                                            <a href="{{ route('admin.createcolleague.fileDownload', [$store->id]) }}"
+                                                                class="btn btn-primary">
+                                                                دانلود همه فایل ها<i class="feather icon-download"></i>
+                                                            </a>
+                                                        </div>
+                                                    @endif
 
-                                                        @foreach ($doc as $document)
-                                                            @if (Str::endsWith($document, ['.jpg', '.jpeg', '.png', '.gif', '.bmp']))
-                                                                <a href="{{ asset($document) }}"
-                                                                    download="{{ $document }}"><img
-                                                                        src="{{ asset($document) }}" alt="Image"></a>
-                                                            @else
-                                                                <div class="col text-success">
 
-                                                                    <a href="{{ asset($document) }}"
-                                                                        download="{{ $document }}">دانلود فایل
-
-                                                                        <i
-                                                                            class="feather icon-download"></i>{{ $counter++ }}</a>
+                                                    @foreach ($doc as $document)
+                                                        @if (Str::endsWith($document, ['.jpg', '.jpeg', '.png', '.gif', '.bmp']))
+                                                            <div class="mt-1 mr-1">
+                                                                <div
+                                                                    style="position: relative; display: inline-block; width:100px">
+                                                                    <a style="position: absolute; top: 5%; right: 5%;"
+                                                                        class="badge badge-secondary badge-pill"
+                                                                        href="{{ asset($document) }}"
+                                                                        download="{{ $document }}">
+                                                                        <span class="badge badge-success badge-pill"><i
+                                                                                class="feather icon-download"></i></span>
+                                                                        دانلود
+                                                                    </a>
+                                                                    <img src="{{ asset($document) }}" alt="Image">
                                                                 </div>
-                                                            @endif
-                                                        @endforeach
-                                                    </div>
+                                                            </div>
+                                                        @else
+                                                            <div class="mt-1 mr-1">
+                                                                <a class="btn btn-secondary" href="{{ asset($document) }}"
+                                                                    download="{{ $document }}"><span
+                                                                        class="badge badge-success badge-pill"><i
+                                                                            class="feather icon-download"></i></span> دانلود
+                                                                    فایل
+                                                                    {{ $counter++ }}</a>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
                                                 @endisset
                                             </div>
                                         </div>

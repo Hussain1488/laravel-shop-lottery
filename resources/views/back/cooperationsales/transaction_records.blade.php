@@ -126,9 +126,9 @@
                                                             <td>
                                                                 <button
                                                                     data-action="{{ route('admin.cooperationsales.transaction.details', [$key->id]) }}"
-                                                                    class="btn transaction_details"
+                                                                    class="btn transaction_details btn btn-info btn-sm"
                                                                     data-id="{{ $key->id }}" value=""><i
-                                                                        class="text-success feather icon-info"></i>
+                                                                        class=" feather icon-info"> بیشتر</i>
                                                                 </button>
                                                             </td>
 
@@ -205,7 +205,7 @@
                                                         </div>
 
                                                     </div>
-                                                    <div class="row pt-1">
+                                                    <div class="row p-1">
                                                         <div class="col ml-1">
 
                                                             <h5 class="text-light">جزئیات:
@@ -215,9 +215,9 @@
                                                         <div class="col">
                                                             <button
                                                                 data-action="{{ route('admin.cooperationsales.transaction.details', [$key->id]) }}"
-                                                                class="btn transaction_details"
+                                                                class="btn transaction_details btn btn-info btn-sm"
                                                                 data-id="{{ $key->id }}" value=""><i
-                                                                    class="text-success feather icon-info"></i>جزئیات
+                                                                    class=" feather icon-info"> بیشتر</i>
                                                             </button>
                                                         </div>
 
@@ -263,7 +263,8 @@
                 <div class="modal-footer">
 
                 </div>
-
+                <button type="button" class="btn btn-danger m-1 d-flex justify-content-center" data-dismiss="modal"><i
+                        class="feather icon-x-circle" style=""></i> بستن</button>
             </div>
         </div>
     </div>
