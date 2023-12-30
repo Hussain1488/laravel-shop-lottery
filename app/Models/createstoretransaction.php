@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use CreateBankAcountsTable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Morilog\Jalali\Jalalian;
@@ -12,7 +13,7 @@ class createstoretransaction extends Model
     use HasFactory;
 
     protected $table = "createstoretransactions";
-    protected $fillable = ["store_id", "flag", "datetransaction", "typeoftransaction", "price", "finalprice", "documentnumber", "bank_id", 'user_id', 'pre_paid_time', 'description'];
+    protected $fillable = ["store_id", "flag", "datetransaction", "typeoftransaction", "price", "finalprice", "documentnumber", 'user_id', 'pre_paid_time', 'description'];
 
 
     public function store()
