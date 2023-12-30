@@ -17,9 +17,9 @@ class CreateBuyertransactionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('flag');
+            $table->enum('flag', ['1', '0']);
             $table->date('datetransaction');
-            $table->string('typeoftransaction');
+            $table->enum('typeoftransaction', ['1', '0']);
             $table->string('description', 500)->default('بدون توضیح');
             $table->bigInteger('price');
             $table->bigInteger('finalprice');
