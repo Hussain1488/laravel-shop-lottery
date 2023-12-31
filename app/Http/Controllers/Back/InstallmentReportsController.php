@@ -98,7 +98,7 @@ class InstallmentReportsController extends Controller
                 'شماره تماس:' => $paidRequests->store->user->username,
                 'تاریخ درخواست:' => jdate($paidRequests->created_at)->format('Y-m-d'),
                 'زمان درخواست:' => jdate($paidRequests->created_at)->format('H:i:s'),
-                'مبلغ درخواست:' => $paidRequests->depositamount,
+                'مبلغ درخواست:' => number_format($paidRequests->depositamount) . ' ریال',
                 'شماره شبا:' => $paidRequests->shabanumber,
                 'شماره ثبت:' => $paidRequests->list_id,
                 'شماره پیگیری:' => $paidRequests->details->Issuetracking,
