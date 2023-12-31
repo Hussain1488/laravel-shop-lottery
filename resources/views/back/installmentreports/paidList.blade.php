@@ -78,6 +78,9 @@
                                                     <th class="">
                                                         اسناد:
                                                     </th>
+                                                    <th class="">
+                                                        جزئیات:
+                                                    </th>
 
                                                 </tr>
                                             </thead>
@@ -106,9 +109,14 @@
                                                         </td>
                                                         <td class="">
                                                             <a href="{{ asset($key->documentpayment) }}"
-                                                                download="download_doc">
+                                                                download="سند پرداخت فروشگاه {{ $key->payments->store->nameofstore }}">
                                                                 <span class="text-success">دانلود سند</span>
                                                             </a>
+                                                        </td>
+                                                        <td>
+                                                            <button class="payDetailsButton btn btn-info btn-sm"
+                                                                data-href="{{ route('admin.installmentreports.payReqDetails', [$key->payments->id]) }}"><i
+                                                                    class="feather icon-info"></i> بیشتر</button>
                                                         </td>
 
 
@@ -167,8 +175,25 @@
                                                     </div>
 
                                                     <div class="col">
-                                                        <a href="{{ asset($key->documentpayment) }}">
+                                                        <a href="{{ asset($key->documentpayment) }}"
+                                                            download="سند پرداخت فروشگاه {{ $key->payments->store->nameofstore }}">
                                                             <span class="text-success">دانلود سند</span>
+                                                        </a>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row p-1">
+                                                    <div class="col ml-1">
+
+                                                        <h5 class="text-light">
+                                                            جزئیات:
+                                                        </h5>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <button class="payDetailsButton btn btn-info btn-sm"
+                                                            data-href="{{ route('admin.installmentreports.payReqDetails', [$key->payments->id]) }}"><i
+                                                                class="feather icon-info"></i> بیشتر</button>
                                                         </a>
                                                     </div>
 
@@ -192,7 +217,7 @@
 
         </section>
     </div>
-
+    @include('back.installmentreports.payDetailsModal')
     </div>
     </div>
 @endsection
