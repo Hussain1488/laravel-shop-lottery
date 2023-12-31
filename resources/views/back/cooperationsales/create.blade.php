@@ -121,6 +121,7 @@
                                                                 name="Creditamount" style="margin-left: 4px"
                                                                 value="{{ old('Creditamount') }}"> ریال
                                                         </div>
+                                                        <span class="text-danger price_limit_error"></span>
                                                         @error('Creditamount')
                                                             <span class="text-danger">
                                                                 {{ $message }}

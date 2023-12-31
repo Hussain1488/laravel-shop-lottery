@@ -138,6 +138,7 @@
                                                         value="{{ old('ReCredintAmount') }}">
                                                     <span>ریال</span>
                                                 </div>
+                                                <span class="text-danger price_limit_message"></span>
                                                 @error('ReCredintAmount')
                                                     <span class="text-danger">
                                                         {{ $message }}
