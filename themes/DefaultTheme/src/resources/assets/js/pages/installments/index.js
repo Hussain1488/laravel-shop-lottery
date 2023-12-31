@@ -50,24 +50,10 @@ $(document).on('click', '.smsGeneratButton', function () {
     let prePay = parseFloat(clickedButton.attr('data-prepay'));
     let amount = parseFloat(clickedButton.attr('data-amount'));
     console.log(wallet, credit);
-    if (prePay > wallet || amount > credit) {
-        let alertContainer = $('.alert-message');
-        alertContainer.text(
-            'مقدار پیش پرداخت از موجودی کیف پول یا مقدار خرید از اعتبار شما بیشتر میباشد!'
-        );
-        alertContainer.fadeIn(1000, function () {
-            alertContainer.removeClass('d-none');
-        });
-        setTimeout(function () {
-            // Use jQuery to add the fade-out class
-            alertContainer.fadeOut(1000, function () {
-                // Reset visibility before fadeIn
-                alertContainer.css('display', 'block');
-
-                // Add the d-none class after the fade-out effect completes
-                $(this).addClass('d-none');
-            });
-        }, 4000);
+    if (prePay > wallet) {
+        toastr.warning('موجودی کیف پول کمتر از مقدار پیش پرداخت میباشد!');
+    } else if (amount > credit) {
+        toastr.warning('اعتبار شما کمتر از مقدار خرید میباشد!');
     } else {
         flag = 2;
         pay_url = $(this).data('href');
@@ -96,21 +82,22 @@ $('.insta_pay_button').on('click', function () {
     wallet = parseFloat($('#wallet-value').val().replace(/,/g, ''));
     let amount = parseFloat(clickedButton.attr('data-amount'));
     if (amount > wallet) {
-        let alertContainer = $('.alert-message');
-        alertContainer.text('مقدار قسط از موجودی کیف پول شما بیشتر میباشد!');
-        alertContainer.fadeIn(1000, function () {
-            alertContainer.removeClass('d-none');
-        });
+        toastr.warning('مقدار قسط از موجودی کیف پول شما بیشتر میباشد!');
+        // let alertContainer = $('.alert-message');
+        // alertContainer.text('مقدار قسط از موجودی کیف پول شما بیشتر میباشد!');
+        // alertContainer.fadeIn(1000, function () {
+        //     alertContainer.removeClass('d-none');
+        // });
 
-        setTimeout(function () {
-            // Use jQuery to add the fade-out class
-            alertContainer.fadeOut(1000, function () {
-                // Reset visibility before fadeIn
-                alertContainer.css('display', 'block');
-                // Add the d-none class after the fade-out effect completes
-                $(this).addClass('d-none');
-            });
-        }, 4000);
+        // setTimeout(function () {
+        //     // Use jQuery to add the fade-out class
+        //     alertContainer.fadeOut(1000, function () {
+        //         // Reset visibility before fadeIn
+        //         alertContainer.css('display', 'block');
+        //         // Add the d-none class after the fade-out effect completes
+        //         $(this).addClass('d-none');
+        //     });
+        // }, 4000);
     } else {
         flag = 3;
         insta_pay_url = $(this).data('href');
