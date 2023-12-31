@@ -48,9 +48,17 @@
 
 
 
-                                    <div class="row mt-1 ml-2 mb-2">
-                                        <h3>
-                                            {{ $title }} لیست تراکنش های حساب </h3>
+                                    <div class="row mt-1 ml-2 mb-2 d-flex justify-content-around">
+                                        <div class="col">
+                                            <h3>
+                                                لیست تراکنش های حساب: {{ $title }}</h3>
+                                        </div>
+                                        <div class="col d-flex justify-content-end">
+                                            <a href="{{ route('admin.installmentreports.banklist') }}"
+                                                style="font-size:20px" class="btn btn-primary"><i
+                                                    class="feather icon-arrow-left-circle"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                     <div class="row mb-2">
                                         <div class="g-col-6 g-col-sm-12 d-flex align-items-center">
