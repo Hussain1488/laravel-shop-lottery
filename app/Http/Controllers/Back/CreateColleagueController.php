@@ -277,7 +277,7 @@ class CreateColleagueController extends Controller
             ]);
             $trans_id = createstoretransaction::storeTransaction($store, $storecredit, true, 3, 0, null, null, $description);
             StoreTransactionDetailsModel::createDetail($trans_id, $trans_data);
-            $bankt_tras = banktransaction::transaction($bank_id->id, $storecredit, true, $trans_id, 'store');
+            $bankt_tras = banktransaction::transaction($bank_id->id, $storecredit, false, $trans_id, 'store');
 
             $operator_id = OperatorActivity::createActivity($request->user_id, 'CREATE_STORE');
             ActivityDetailsModel::createActivityDetail($operator_id, $data);
@@ -371,7 +371,7 @@ class CreateColleagueController extends Controller
             $operator_id = OperatorActivity::createActivity($userUpdate->id, 'BUYER_CREDIT');
             ActivityDetailsModel::createActivityDetail($operator_id, $data);
             // public function transaction($user, $amount, $status, $flag, $type)
-            $buyer_trans = buyertransaction::transaction($userUpdate, $request->purchasecredit, true, 0, 1, 'افزایش اعتبار توسط اپراتور');
+            $buyer_trans = buyertransaction::transaction($userUpdate, $request->purchasecredit, true, '0', '1', 'افزایش اعتبار توسط اپراتور');
             // transaction($bank_id, $creditAmount, $status, $trans_id)
             $bank_trans = banktransaction::transaction($bank_id->id, $request->purchasecredit, false, $buyer_trans->id, 'user');
 
@@ -380,6 +380,7 @@ class CreateColleagueController extends Controller
             toastr()->success('اعتبار دهی به کاربر با موفقیت انجام شد.');
         } catch (\Exception $e) {
             DB::rollBack();
+            log::error($e);
             toastr()->warning('اعتبار دهی به کاربر با خطا روبرو شد!' . $e);
         }
         return redirect()->back();
@@ -469,13 +470,6 @@ class CreateColleagueController extends Controller
     {
         // dd($request->all());
         $user = User::find($request->user_id);
-
-        $buyerTrans = buyertransaction::transaction($user, $request->ReCredintAmount, true, 1, 1, 'ایجاد سند مالی');
-
-        // transaction($bank_id, $creditAmount, $status, $trans_id)
-        $bank = banktransaction::transaction($request->bank_id, $request->ReCredintAmount, false, $buyerTrans->id, 'user');
-
-
         if ($request->hasFile('documents')) {
             $files = $request->file('documents');
             $paths = [];
@@ -494,6 +488,9 @@ class CreateColleagueController extends Controller
 
         try {
             DB::beginTransaction();
+
+            $buyerTrans = buyertransaction::transaction($user, $request->ReCredintAmount, true, '1', '1', 'ایجاد سند مالی');
+            $bank = banktransaction::transaction($request->bank_id, $request->ReCredintAmount, false, $buyerTrans->id, 'user');
 
             $history = $wallet->histories()->create([
                 'type'        => 'deposit',

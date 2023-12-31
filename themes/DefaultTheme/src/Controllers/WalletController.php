@@ -152,7 +152,7 @@ class WalletController extends Controller
             event(new WalletAmountIncreased($history->wallet));
             $user = User::find(Auth::user()->id);
 
-            $user_trans = buyertransaction::transaction($user, ($amount * 10), true, 1, 1, 'شارژ کیف پول');
+            $user_trans = buyertransaction::transaction($user, ($amount * 10), true, '1', '1', 'شارژ کیف پول');
             banktransaction::transaction(session()->get('bank_id')->id, ($amount * 10), false, $user_trans->id, 'user');
 
 
@@ -226,7 +226,7 @@ class WalletController extends Controller
 
 
         $user = User::find($request->user_id);
-        $user_trans = buyertransaction::transaction($user, $RecharAmount, false, 1, 1, 'شارژ کیف پول');
+        $user_trans = buyertransaction::transaction($user, $RecharAmount, false, '1', '1', 'شارژ کیف پول');
 
         banktransaction::transaction($bank_id->id, $RecharAmount, false, $user_trans->id, 'user');
 

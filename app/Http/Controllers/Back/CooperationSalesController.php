@@ -278,8 +278,8 @@ class CooperationSalesController extends Controller
         ];
 
         try {
-            DB::beginTransaction();
 
+            DB::beginTransaction();
             $store->salesamount += $final;
             $installment->status = 1;
 
