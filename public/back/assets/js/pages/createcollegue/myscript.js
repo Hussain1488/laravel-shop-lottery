@@ -105,8 +105,11 @@ $(document).ready(function () {
         let money = moneyInput1.val();
         let money_changed1 = money.replace(/,/g, '');
         moneyInput1.val(money_changed1);
-
-        $('#colleagueDocumentStore').submit();
+        if (money_changed1 < 10000) {
+            toastr.error('مبلغ شارژ کمتر از مقدار معتبر میباشد!');
+        } else {
+            $('#colleagueDocumentStore').submit();
+        }
     });
     $('.moneyInputReady').each(function () {
         var input = $(this).val();
@@ -115,11 +118,26 @@ $(document).ready(function () {
         $(this).val(formattedNumber);
     });
     $('.moneyInput').on('input', function () {
-        // console.log('hey');
         var input = $(this).val();
         var digits = input.replace(/\D/g, '');
         var formattedNumber = addCommas(digits);
         $(this).val(formattedNumber);
+        if (input < 10000) {
+            $('.price_limit_message').text(
+                'مبلغ وارده باید بیشتر از ' + addCommas(10000) + 'ریال باشد!'
+            );
+        } else {
+            $('.price_limit_message').text('');
+        }
+    });
+    $('#ReCredintAmount').on('input', function () {
+        if (input < 10000) {
+            $('.price_limit_message').text(
+                'مبلغ وارده باید بیشتر از ' + addCommas(10000) + 'ریال باشد!'
+            );
+        } else {
+            $('.price_limit_message').text('');
+        }
     });
 
     function addCommas(nStr) {

@@ -98,23 +98,11 @@ $(document).ready(function () {
         $(this).val(formattedNumber);
     });
 
-    $('#each_pay').val(0);
-    if ($('#cash_status').val() == 'cash') {
-        $('#main_price').on('change', function () {
-            let payment = $('#main_price').val();
-            $('#prepayment').val(payment);
-            $('#each_pay').val(0);
-        });
-    }
-
     $('#cash_status').on('change', function () {
         var cash_status = $('#cash_status').val();
 
         if (cash_status == 'installment') {
             $('#payment').prop('disabled', false);
-
-            // $('#payment').on('change', function () {
-
             updatePayment();
         } else {
             $('#payment').prop('disabled', true);
@@ -126,8 +114,25 @@ $(document).ready(function () {
         }
     });
     $('#main_price').on('input', function () {
+        let price = $('#main_price').val().replace(/\D/g, '');
+        console.log(price);
+        if (price < 1000000) {
+            $('.price_limit_error').text(
+                'قیمت اصلی باید بیشتر از' + addCommas(1000000) + 'ریال باشد'
+            );
+        } else if (price > 100000000) {
+            $('.price_limit_error').text(
+                'قیمت اصلی باید کمتر از' + addCommas(100000000) + 'ریال باشد'
+            );
+        } else {
+            $('.price_limit_error').text('');
+        }
         if ($('#cash_status').val() == 'installment') {
             updatePayment();
+        } else {
+            let payment = $('#main_price').val();
+            $('#prepayment').val(payment);
+            $('#each_pay').val(0);
         }
     });
     $('#payment').on('change', function () {
@@ -231,32 +236,48 @@ $(document).ready(function () {
             } else {
                 if (store_creadit >= main_price) {
                     if (creadit >= main_price) {
-                        $('#user-create-form').submit();
+                        if (main_price < 1000000) {
+                            toastr.warning(
+                                'قیمت فروش شما کمتر از مقدار معتبر میباشد!'
+                            );
+                        } else if (main_price > 100000000) {
+                            toastr.warning(
+                                'قیمت فروش شما بیشتر از مقدار معتبر میباشد!'
+                            );
+                        } else {
+                            $('#user-create-form').submit();
+                        }
                     } else {
                         // If the condition is not met, show a confirmation dialog
-                        $('#modal_body').html(
-                            '<p>' +
-                                'مقدار قیمت اصلی نباید از اعتبار خریدار بیشتر باشد.' +
-                                '<br />' +
-                                'لطفا اصلاح کنید بعد تآیید و ارسال کنید.' +
-                                '</p>'
+                        // $('#modal_body').html(
+                        //     '<p>' +
+                        //         'مقدار قیمت اصلی نباید از اعتبار خریدار بیشتر باشد.' +
+                        //         '<br />' +
+                        //         'لطفا اصلاح کنید بعد تآیید و ارسال کنید.' +
+                        //         '</p>'
+                        // );
+                        // $('#myModal').modal();
+                        toastr.warning(
+                            'مقدار قیمت اصلی نباید از اعتبار خریدار بیشتر باشد.'
                         );
-                        $('#myModal').modal();
 
                         // Close the popup when the close button is clicked
                     }
                 } else {
-                    $('#store_creadit2').text(store_creadit);
+                    $('#store_creadit2').text(addCommas(store_creadit));
                     $('#myModal2').modal();
                 }
             }
         } else {
-            $('#modal_body').html(
-                '<p>' +
-                    'مهلت اعتبار فروشگاه شما به اتمام رسیده است و شما نمیتوانید قسطی ایجاد کنید' +
-                    '</p>'
+            toastr.warning(
+                'مهلت اعتبار فروشگاه شما به اتمام رسیده است و شما نمیتوانید فروشی انجام دهید!'
             );
-            $('#myModal').modal();
+            // $('#modal_body').html(
+            //     '<p>' +
+            //         'مهلت اعتبار فروشگاه شما به اتمام رسیده است و شما نمیتوانید قسطی ایجاد کنید' +
+            //         '</p>'
+            // );
+            // $('#myModal').modal();
         }
     });
     $('#User_selected').change(function () {
