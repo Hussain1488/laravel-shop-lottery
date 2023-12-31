@@ -30,7 +30,7 @@ class banktransaction extends Model
         return $this->belongsTo(buyertransaction::class, 'buyer_trans_id');
     }
 
-    public function transaction($bank_id, $creditAmount, $status, $trans_id, $user)
+    public static function transaction($bank_id, $creditAmount, $status, $trans_id, $user)
     {
 
         $recordCount = banktransaction::where('bank_id', $bank_id)->count();

@@ -35,7 +35,7 @@ class createstoretransaction extends Model
     }
 
 
-    public function storeTransaction($store, $CreditAmount, $status, $type, $flag, $user = null, $timestamp = null, $description)
+    public static function storeTransaction($store, $CreditAmount, $status, $type, $flag, $user = null, $timestamp = null, $description)
     {
         $count = createstoretransaction::count();
         if ($count > 0) {
