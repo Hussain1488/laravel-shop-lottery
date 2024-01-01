@@ -47,7 +47,7 @@
                                     </div>
 
 
-                                    <table class="table table-hover">
+                                    <table class="table table-hover" id="cornjob_report_table">
                                         <thead>
                                             <tr>
                                                 <th>
@@ -62,6 +62,7 @@
                                                 <th>
                                                     تاریخ
                                                 </th>
+
                                             </tr>
                                         </thead>
                                         @php
@@ -108,6 +109,10 @@
         </div>
     </div>
 @endsection
-
+@include('back.partials.plugins', [
+    'plugins' => ['persian-datepicker', 'jquery.validate'],
+])
 @push('scripts')
+    <script src="{{ asset('back/assets/datatable/datatables.min.js') }}"></script>
+    <script src="{{ asset('back/assets/js/pages/cornjob/index.js') }}"></script>
 @endpush
