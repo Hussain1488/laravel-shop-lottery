@@ -30,26 +30,24 @@
                         <div id="main-card" class="card-content">
                             <div class="card-body">
                                 <div class="tab-content">
-                                    <form id="sms-form" action="{{ route('admin.cornjob.store') }}" method="POST">
+                                    <form id="corn_job_form" action="{{ route('admin.cornjob.store') }}" method="POST">
                                         @csrf
-                                        <h4 class="my-2">تنظیمات کرن جاب</h4>
-
+                                        <h4 class="my-1">تنظیمات کرن جاب</h4>
                                         <hr>
-
                                         <fieldset>
-
                                             <legend>
                                                 کرن جاب اعتبار فروشگاه
                                             </legend>
                                             <div class="row">
-                                                <div class="col-md-2">
+                                                <div class="col-lg-3 col-md-6 col-sm-12">
                                                     <label>روز فراخوانی کرن
                                                         جاب <span class="text-danger">(۱ الی ۲۹)</span></label>
-                                                    <input id="reccredit_day" type="number" class="form-control"
+                                                    <input type="number" class="form-control reccredit_day corn_job_day"
+                                                        data-min="1" data-max='29' data-class="corn_job_day_message"
                                                         name="cornjob_call_day"
                                                         value="{{ option('cornjob_call_day') != null ? option('cornjob_call_day') : 1 }}">
 
-                                                    <span class="text-danger" id="validationMessage"></span>
+                                                    <span class="text-danger text-sm corn_job_day_message"></span>
                                                     @error('cornjob_call_day')
                                                         <span class="text-danger">
                                                             {{ $message }}
@@ -59,12 +57,13 @@
 
                                             </div>
 
-                                            <div class="row my-2 mb-4">
+                                            <div class="row my-2">
 
                                                 <div class="form-group col-md-4">
                                                     <fieldset class="checkbox">
-                                                        <div class="vs-checkbox-con vs-checkbox-primary">
-                                                            <input data-class="store_reccredition_status" type="checkbox"
+                                                        <div class="vs-checkbox-con vs-checkbox-primary ">
+                                                            <input data-class='reccredit_day' class="check_status checkbox"
+                                                                id='store_recredit_check' type="checkbox"
                                                                 name="store_reccredition_status"
                                                                 {{ option('store_reccredition_status') == 'on' ? 'checked' : '' }}>
                                                             <span class="vs-checkbox">
@@ -77,17 +76,128 @@
                                                     </fieldset>
                                                 </div>
 
-                                                <div class="row">
-                                                    <div
-                                                        class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                                                        <button type="submit" id="cornjob_form_button"
-                                                            class="btn btn-primary glow">ذخیره
-                                                            تغییرات</button>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </fieldset>
+                                        <hr>
 
+                                        <fieldset>
+                                            <legend>
+                                                پیامک اقساط رو به انقضاء </legend>
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                                    <label>مشخص کنید چند روز قبل از ختم تاریخ پرداخت قسط پیامک ارسال شود.
+                                                        <span class="text-danger">(۱ الی ۷)</span></label>
+                                                    <input id="" type="number" data-min="1" data-max='7'
+                                                        data-class="corn_job_befor_message"
+                                                        class="form-control befor_pay_message corn_job_day"
+                                                        name="message_send_befor_day"
+                                                        value="{{ option('message_send_befor_day') != null ? option('message_send_befor_day') : 1 }}">
+
+                                                    <span class="text-danger text-sm corn_job_befor_message"></span>
+                                                    @error('message_send_befor_day')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                                    <label>متن پیامک ارسالی:</label>
+                                                    <textarea id="reccredit_day" type="text" class="form-control befor_pay_message" name="installment_befor_message">{{ option('installment_befor_message') != null ? option('installment_befor_message') : 'مشتری عزیز موعد قسط رو به پایان است لطفا هرچه زود تر جهت پرداخت قسط اقدام کنید!' }}</textarea>
+                                                    <span class="text-danger" id="validationMessage"></span>
+                                                    @error('installment_befor_message')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row my-2">
+
+                                                <div class="form-group col-md-4">
+                                                    <fieldset class="checkbox">
+                                                        <div class="vs-checkbox-con vs-checkbox-primary">
+                                                            <input data-class="befor_pay_message" type="checkbox"
+                                                                id="befor_message_stat" class="checkbox"
+                                                                name="message_send_befor_status"
+                                                                {{ option('message_send_befor_status') == 'on' ? 'checked' : '' }}>
+                                                            <span class="vs-checkbox">
+                                                                <span class="vs-checkbox--check">
+                                                                    <i class="vs-icon feather icon-check"></i>
+                                                                </span>
+                                                            </span>
+                                                            <span class="">فعال</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+
+                                            </div>
+                                        </fieldset>
+                                        <hr>
+
+                                        <fieldset>
+
+                                            <legend>
+                                                پیامک اقساط منقضی شده </legend>
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-6 col-sm-12">
+                                                    <label>مشخص کنید چند روز بعد از ختم تاریخ پرداخت قسط پیامک ارسال شود.
+                                                        <span class="text-danger">(۱ الی ۷)</span></label>
+                                                    <input id="reccredit_day" type="number" data-min="1" data-max='7'
+                                                        data-class="corn_job_after_message"
+                                                        class="form-control after_pay_message corn_job_day"
+                                                        name="message_send_after_day"
+                                                        value="{{ option('message_send_after_day') != null ? option('message_send_after_day') : 1 }}">
+
+                                                    <span class="text-danger text-sm corn_job_after_message"></span>
+                                                    @error('message_send_after_day')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                                    <label>متن پیامک ارسالی:</label>
+                                                    <textarea id="reccredit_day" type="text" class="form-control" name="installment_after_message">{{ option('installment_after_message') != null ? option('installment_after_message') : 'مشتری عزیز موعد قسط شما به پایان رسیده است لطفا هرچه زود تر جهت پرداخت قسط اقدام کنید!' }}</textarea>
+                                                    <span class="text-danger" id="validationMessage"></span>
+                                                    @error('installment_after_message')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row my-2">
+
+                                                <div class="form-group col-md-4">
+                                                    <fieldset class="checkbox">
+                                                        <div class="vs-checkbox-con vs-checkbox-primary">
+                                                            <input data-class="after_pay_message" type="checkbox"
+                                                                id="after_message_stat" class="checkbox"
+                                                                name="message_send_after_status"
+                                                                {{ option('message_send_after_status') == 'on' ? 'checked' : '' }}>
+                                                            <span class="vs-checkbox">
+                                                                <span class="vs-checkbox--check">
+                                                                    <i class="vs-icon feather icon-check"></i>
+                                                                </span>
+                                                            </span>
+                                                            <span class="">فعال</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+
+                                            </div>
+                                        </fieldset>
+                                        <div class="row">
+                                            <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                                                <button type="button" id="cornjob_form_button"
+                                                    class="btn btn-primary glow">ذخیره
+                                                    تغییرات</button>
+                                            </div>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -95,7 +205,6 @@
                     </div>
                 </section>
                 <!-- users edit ends -->
-
             </div>
         </div>
     </div>

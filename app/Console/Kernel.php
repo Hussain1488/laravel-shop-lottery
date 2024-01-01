@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\BeforInstallmentMessageCommand;
 use App\Console\Commands\StoreCreditReset;
 use App\Jobs\CalculateViewers;
 use Illuminate\Console\Scheduling\Schedule;
@@ -20,6 +21,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         // InstallCommand::class
         StoreCreditReset::class,
+        BeforInstallmentMessageCommand::class,
     ];
 
     /**
@@ -68,6 +70,11 @@ class Kernel extends ConsoleKernel
             $cornjobDay = option('cornjob_call_day') != null ? option('cornjob_call_day') : 1;
             $status = option('store_reccredition_status') == 'on' ? true : false;
             return ($day == $cornjobDay && $hour == '00:00' && $status);
+        });
+
+        $schedule->command('command:BeforInstallmentMessageCommand')->daily()->when(function () {
+            $status = option('message_send_befor_status') == 'on' ? true : false;
+            return $status; // Replace this with your actual condition
         });
     }
 

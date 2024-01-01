@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\CornJobStoreRequest;
 use App\Models\CornjobModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CornjobController extends Controller
 {
@@ -13,7 +14,6 @@ class CornjobController extends Controller
     {
 
         $cornjobs = CornjobModel::latest()->get();
-
         return view('back.cornjob.index', compact('cornjobs'));
     }
     public function create()
@@ -22,27 +22,37 @@ class CornjobController extends Controller
     }
     public function store(CornJobStoreRequest $request)
     {
+        // dd($request);
+        try {
+            DB::beginTransaction();
+            $this->authorize('cornjob');
 
-        $this->authorize('cornjob');
+            $except = [
+                'store_reccredition_status',
+                'message_send_befor_status',
+                'message_send_after_status',
+            ];
 
-        $except = [
-            'store_reccredition_status',
-        ];
+            $cornjob = $request->except($except);
 
-        $cornjob = $request->except($except);
-
-        foreach ($cornjob as $key => $value) {
-            option_update($key, $value);
-        }
-
-        foreach ($except as $option) {
-            if ($request->$option) {
-                option_update($option, 'on');
-            } else {
-                option_update($option, 'off');
+            foreach ($cornjob as $key => $value) {
+                option_update($key, $value);
             }
+
+            foreach ($except as $option) {
+                if ($request->$option) {
+                    option_update($option, 'on');
+                } else {
+                    option_update($option, 'off');
+                }
+            }
+            DB::commit();
+            return response('success');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \log::error($e);
+            return response('warning');
         }
-        toastr()->success('تغییرات کرن جاب با موفقیت ذخیره شد');
-        return redirect()->back();
+        // return redirect()->back();
     }
 }
