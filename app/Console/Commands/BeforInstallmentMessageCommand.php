@@ -49,7 +49,7 @@ class BeforInstallmentMessageCommand extends Command
             foreach ($installments as $key) {
                 $counter++;
                 $text = (option('installment_befor_message') ?? 'اطلاع رسانی جهت پرداخت قسط!') . "\r\n" .
-                    'قسط شماره ' . $key->installmentnumber . ' شما در تاریخ ( ' . jdate($key->duedate)->format('d-M-Y') .
+                    'قسط شماره ' . $key->installmentnumber . ' شما در تاریخ ( ' . jdate($key->duedate)->format('d/M/Y') .
                     ' )   سر رسید میشود، لطفاً جهت پرداخت قسط اقدام نمایید.';
                 $smsMessage = $text . "\r\n" . 'ممنون که از ما خرید کردید!' . "\r\n" . url()->to('/');
                 $this->sendSms($key->installments->user, $smsMessage);
