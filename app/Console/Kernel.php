@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\AfterInstallmentMessageCommand;
 use App\Console\Commands\BeforInstallmentMessageCommand;
 use App\Console\Commands\StoreCreditReset;
 use App\Jobs\CalculateViewers;
@@ -22,6 +23,7 @@ class Kernel extends ConsoleKernel
         // InstallCommand::class
         StoreCreditReset::class,
         BeforInstallmentMessageCommand::class,
+        AfterInstallmentMessageCommand::class
     ];
 
     /**
@@ -74,6 +76,10 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('command:BeforInstallmentMessageCommand')->daily()->when(function () {
             $status = option('message_send_befor_status') == 'on' ? true : false;
+            return $status; // Replace this with your actual condition
+        });
+        $schedule->command('command:AfterInstallmentMessageCommand')->daily()->when(function () {
+            $status = option('message_send_after_status') == 'on' ? true : false;
             return $status; // Replace this with your actual condition
         });
     }

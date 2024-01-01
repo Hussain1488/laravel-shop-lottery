@@ -48,20 +48,18 @@ class BeforInstallmentMessageCommand extends Command
         if ($installments) {
             foreach ($installments as $key) {
                 $counter++;
-                $text = (option('installment_befor_message') ?? 'اطلاع رسانی جهت پرداخت قسط') . "\r\n" .
+                $text = (option('installment_befor_message') ?? 'اطلاع رسانی جهت پرداخت قسط!') . "\r\n" .
                     'قسط شماره ' . $key->installmentnumber . ' شما در تاریخ ( ' . jdate($key->duedate)->format('d-M-Y') .
-                    ' ) به پایان میرسد، لطفاً جهت پرداخت قسط اقدام نمایید.';
+                    ' )   سر رسید میشود، لطفاً جهت پرداخت قسط اقدام نمایید.';
                 $smsMessage = $text . "\r\n" . 'ممنون که از ما خرید کردید!' . "\r\n" . url()->to('/');
                 $this->sendSms($key->installments->user, $smsMessage);
             }
             CornjobModel::create([
                 'name' => 'اطلاع رسانی پرداخت قسط',
-                'description' => 'برای ' . $counter . ' کاربر جهت پرداخت قسط پیامک ارسال شد!'
+                'description' => 'برای ' . $counter . ' کاربر جهت پرداخت قسط قبل از سر رسید پیامک ارسال شد!'
             ]);
         }
-
-
-        Log::info('Cron job executed successfully at ' . now());
+        Log::info('Cron job installment befor message executed successfully at ' . now());
         return 0;
     }
     public function sendSms($user, $message)
@@ -78,7 +76,7 @@ class BeforInstallmentMessageCommand extends Command
             $json = json_decode($response);
             // echo $json->Value; //RecId or Error Number
         } catch (Exception $e) {
-            // echo $e->getMessage();
+            Log::error($e);
             // dd($e->getMessage());
         }
         return;
