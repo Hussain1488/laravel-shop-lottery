@@ -218,7 +218,7 @@
                                                 </div>
                                                 <div class="row">
                                                     قسط شماره ({{ $value->installmentnumber }})به سر رسید
-                                                    ({{ jdate($value->duedate)->format('d-m-Y') }})
+                                                    ({{ jdate($value->duedate)->format('d/M/Y') }})
                                                 </div>
                                                 <div class="row">
                                                     به مبلغ قسط
@@ -312,7 +312,7 @@
                                                 <div class="row">
                                                     قسط شماره ({{ $value->installmentnumber }})
                                                     پرداخت شده در
-                                                    ({{ jdate($value->updated_at)->format('d-m-Y H:i:s') }})
+                                                    ({{ jdate($value->updated_at)->format('d/M/Y H:i:s') }})
                                                 </div>
                                                 <div class="row">
                                                     به مبلغ قسط

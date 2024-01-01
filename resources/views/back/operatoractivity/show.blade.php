@@ -99,12 +99,12 @@
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        {{ jdate($key->created_at)->format('Y-m-d') }}
+                                                        {{ jdate($key->created_at)->format('d/M/Y') }}
                                                         <br>
                                                         {{ $key->created_at->format('H:i:s') }}
                                                     </td>
                                                     <td>
-                                                        <button data-date="{{ jdate($key->created_at)->format('d-m-Y') }}"
+                                                        <button data-date="{{ jdate($key->created_at)->format('d/M/Y') }}"
                                                             data-time="{{ $key->created_at->format('H:i:s') }}"
                                                             data-action="{{ route('admin.operatoractivity.details', [$key->id]) }}"
                                                             class="btn details-show" data-id="{{ $key->id }}"

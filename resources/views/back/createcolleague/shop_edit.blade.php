@@ -214,7 +214,7 @@
                                                 <div class="form-group">
                                                     تاریخ فعلی ختم قرار داد:
                                                     <span class="text-danger">
-                                                        {{ jdate(\Carbon\Carbon::parse($store->enddate))->format('d-m-Y') }}
+                                                        {{ jdate(\Carbon\Carbon::parse($store->enddate))->format('d/M/Y') }}
                                                     </span>
                                                     است در صورت تمایل میتوانید تغییر بدهید.
                                                     <input type="text" placeholder="تاریخ پایان قرار داد را مشخص کنید."

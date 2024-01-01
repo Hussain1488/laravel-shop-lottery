@@ -90,7 +90,7 @@ class OperatorActivityController extends Controller
                 return null;
             })
             ->addColumn('formatted_date', function ($operation) {
-                return jdate($operation->created_at)->format('H:i:s Y-m-d');
+                return jdate($operation->created_at)->format('H:i:s d/M/Y');
             })
             ->addColumn('username', function ($operation) {
                 return $operation->user ? $operation->user->username : '<span class="text-danger">گیرنده ندارد</span>';
@@ -100,7 +100,7 @@ class OperatorActivityController extends Controller
                 });
             })
             ->addColumn('details_action', function ($operation) {
-                $dataDate = jdate($operation->created_at)->format('Y-m-d');
+                $dataDate = jdate($operation->created_at)->format('d/M/Y');
                 $dataTime = $operation->created_at->format('H:i:s');
                 $dataAction = route('admin.operatoractivity.details', [$operation->id]);
                 return [

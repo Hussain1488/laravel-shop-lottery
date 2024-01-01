@@ -137,7 +137,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <span class="transaction_datetime">
-                                                                        {{ jdate($key->depositdate)->format('Y-m-d') }}
+                                                                        {{ jdate($key->depositdate)->format('d/M/Y') }}
                                                                         <br>
                                                                         {{ jdate($key->created_at)->format('H:i:s') }}
                                                                     </span>
@@ -212,7 +212,7 @@
                                                         </div>
                                                         <div class="col">
                                                             <span class="transaction_datetime">
-                                                                {{ jdate($key->created_at)->format('Y-m-d') }}
+                                                                {{ jdate($key->created_at)->format('d/M/Y') }}
 
                                                                 {{ jdate($key->created_at)->format('H:i:s') }}
                                                             </span>
@@ -340,7 +340,7 @@
 
                                                             </td>
                                                             <td>
-                                                                {{ jdate($key->depositdate)->format('Y-m-d') }}
+                                                                {{ jdate($key->depositdate)->format('d/M/Y') }}
                                                                 <br>
                                                                 {{ jdate($key->created_at)->format('H:i:s') }}
                                                             </td>
@@ -414,7 +414,7 @@
                                                             </div>
                                                             <div class="col">
                                                                 <span class="transaction_datetime">
-                                                                    {{ jdate($key->depositdate)->format('Y-m-d') }}
+                                                                    {{ jdate($key->depositdate)->format('d/M/Y') }}
 
                                                                     {{ jdate($key->created_at)->format('H:i:s') }}
                                                                 </span>

@@ -225,22 +225,18 @@
                                                                             ریال
                                                                         </div>
 
-                                                                        <div
-                                                                            class="row my-1 mx-2 p-1 d-flex justify-content-between">
 
-                                                                            <div>
 
-                                                                                <div class="row m-2">
-                                                                                    قسط شماره
-                                                                                    {{ $key->installmentnumber }}
-                                                                                    به
-                                                                                    سر
-                                                                                    رسید تاریخ:
-                                                                                    {{ jdate($key->duedate)->format('d-m-Y') }}
-                                                                                </div>
+                                                                        <div class="row ">
+                                                                            <div class="col m-2">
+                                                                                قسط شماره
+                                                                                {{ $key->installmentnumber }}
+                                                                                به
+                                                                                سر
+                                                                                رسید تاریخ:
+                                                                                {{ jdate($key->duedate)->format('d/M/Y') }}
                                                                             </div>
-                                                                            <div class="">
-
+                                                                            <div class="col  d-flex justify-content-end">
                                                                                 @if ($key->state == 1)
                                                                                     <input type='button'
                                                                                         data-amount="{{ $key->installmentprice }}"
@@ -252,7 +248,6 @@
                                                                                 @endif
                                                                             </div>
                                                                         </div>
-
                                                                     </div>
                                                                 @endif
                                                                 {{-- @endforeach --}}
@@ -298,8 +293,8 @@
                                                                     </div>
 
                                                                     <div class="row m-2">
-                                                                        وضعیت: پرداخت شده در تاریخ
-                                                                        {{ jdate(\Carbon\Carbon::parse($value->updated_at))->format('d-m-Y') }}
+                                                                        پرداخت شده در تاریخ:
+                                                                        {{ jdate(\Carbon\Carbon::parse($value->updated_at))->format('d/M/Y') }}
                                                                     </div>
                                                                     <div class="row mr-2">
 
@@ -308,24 +303,21 @@
                                                                         </span>
                                                                         ریال
                                                                     </div>
-                                                                    <div
-                                                                        class="row my-1 mx-2 p-1 d-flex justify-content-between">
 
-                                                                        <div>
 
-                                                                            <div class="row m-2">
-                                                                                قسط شماره
-                                                                                {{ $value->installmentnumber }}
-                                                                                به
-                                                                                سر
-                                                                                رسید تاریخ:
-                                                                                {{ jdate(\Carbon\Carbon::parse($value->duedate))->format('d-m-Y') }}
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="">
 
-                                                                        </div>
+
+                                                                    <div class="row m-2">
+                                                                        قسط شماره
+                                                                        {{ $value->installmentnumber }}
+                                                                        به
+                                                                        سر
+                                                                        رسید تاریخ:
+                                                                        {{ jdate(\Carbon\Carbon::parse($value->duedate))->format('d/M/Y') }}
                                                                     </div>
+
+
+
 
                                                                 </div>
                                                             @endforeach

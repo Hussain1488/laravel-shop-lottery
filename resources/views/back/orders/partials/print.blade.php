@@ -22,7 +22,7 @@
             </div>
             <div>
                 <b>تاریخ فاکتور:</b>
-                <span>{{ jdate($order->created_at)->format('Y/m/d') }}</span>
+                <span>{{ jdate($order->created_at)->format('d/M/Y') }}</span>
             </div>
             <div>
                 <img style="height: 30px;object-fit: contain; margin: 4px 0px" src="{{ barcode($order->id) }}" alt="barcode">

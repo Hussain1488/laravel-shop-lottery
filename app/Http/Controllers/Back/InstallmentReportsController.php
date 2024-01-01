@@ -96,13 +96,13 @@ class InstallmentReportsController extends Controller
             $data = [
                 'فروشگاه:' => $paidRequests->store->nameofstore,
                 'شماره تماس:' => $paidRequests->store->user->username,
-                'تاریخ درخواست:' => jdate($paidRequests->created_at)->format('Y-m-d'),
+                'تاریخ درخواست:' => jdate($paidRequests->created_at)->format('d/M/Y'),
                 'زمان درخواست:' => jdate($paidRequests->created_at)->format('H:i:s'),
                 'مبلغ درخواست:' => number_format($paidRequests->depositamount) . ' ریال',
                 'شماره شبا:' => $paidRequests->shabanumber,
                 'شماره ثبت:' => $paidRequests->list_id,
                 'شماره پیگیری:' => $paidRequests->details->Issuetracking,
-                'تاریخ ثبت:' => jdate($paidRequests->details->created_at)->format('Y-m-d'),
+                'تاریخ ثبت:' => jdate($paidRequests->details->created_at)->format('d/M/Y'),
                 'زمان ثبت:' => jdate($paidRequests->details->created_at)->format('H:i:s'),
                 'اسم بانک:' => $paidRequests->details->bank->bankname,
             ];
@@ -582,7 +582,7 @@ class InstallmentReportsController extends Controller
             })
             ->addColumn('transaction_date', function ($trans) {
                 return [
-                    'date' => jdate($trans->created_at)->format('Y-d-m'),
+                    'date' => jdate($trans->created_at)->format('d/M/Y'),
                     'time' => $trans->created_at->format('H:i:s'),
                 ];
             })
@@ -610,7 +610,7 @@ class InstallmentReportsController extends Controller
                 'وضعیت' => $trans_buyer->typeoftransaction == 1 && $trans_buyer->flag == 1 ? 'افزایش موجودی کیف پول کاربر' : ($trans_buyer->typeoftransaction == 1 && $trans_buyer->flag == 0 ? 'افزایش اعتبار کاربر' : ($trans_buyer->typeoftransaction == 0 && $trans_buyer->flag == 1 ? 'کاهش موجودی کیف پول کاربر' : 'کاهش اعتبار خرید کاربر')),
                 'مبلغ تراکنش' => number_format($trans_buyer->price) . ' ریال',
                 'شماره سند' => $trans_buyer->documentnumber,
-                'تاریخ تراکنش' => jdate($trans_buyer->created_at)->format('Y-m-d'),
+                'تاریخ تراکنش' => jdate($trans_buyer->created_at)->format('d/M/Y'),
                 'زمان تراکنش' =>  $trans_buyer->created_at->format('H:i:s'),
             ];
             $type = 'buyer';
@@ -624,7 +624,7 @@ class InstallmentReportsController extends Controller
                 'مبلغ تراکنش' => number_format($store_trans->price) . ' ریال',
                 'شماره سند' => $store_trans->documentnumber,
                 'بانک' => $store_trans->bankTransaction->bank->accountnumber,
-                'تاریخ تراکنش' => jdate($store_trans->created_at)->format('Y-m-d'),
+                'تاریخ تراکنش' => jdate($store_trans->created_at)->format('d/M/Y'),
                 'زمان تراکنش' =>  $store_trans->created_at->format('H:i:s'),
             ];
             $type = 'store';

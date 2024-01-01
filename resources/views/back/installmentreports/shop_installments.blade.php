@@ -233,7 +233,7 @@
                                                 </div>
                                                 <div class="row">
                                                     قسط شماره ({{ $key->installmentnumber }}) به سر رسید تاریخ
-                                                    ({{ jdate($key->duedate)->format('d-m-Y') }})
+                                                    ({{ jdate($key->duedate)->format('d/M/Y') }})
 
                                                 </div>
                                                 <div class="row">
@@ -339,7 +339,7 @@
                                                 </div>
                                                 <div class="row">
                                                     پرداخت شده در:
-                                                    {{ jdate($key->updated_at)->format('d-m-Y H:i:s') }}
+                                                    {{ jdate($key->updated_at)->format('d/M/Y H:i:s') }}
                                                 </div>
 
                                                 <div class="row">

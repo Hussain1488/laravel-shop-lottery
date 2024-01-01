@@ -85,9 +85,9 @@
                                                             {{ $key->description }}
                                                         </td>
                                                         <td>
-                                                            {{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($key->created_at))->format('Y-m-d') }}
+                                                            {{ jdate($key->created_at)->format('d/M/Y') }}
                                                             <br>
-                                                            {{ \Carbon\Carbon::parse($key->created_at)->format('H:i:s') }}
+                                                            {{ $key->created_at->format('H:i:s') }}
 
                                                         </td>
                                                     </tr>
@@ -110,6 +110,4 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('back/assets/js/pages/users/all.js') }}"></script>
-    <script src="{{ asset('back/assets/js/pages/installmentpurchse/create.js') }}"></script>
 @endpush
