@@ -171,7 +171,7 @@ class CreateColleagueController extends Controller
 
         $store = createstore::find($id);
         $zip = new ZipArchive;
-        if ($zip->open(public_path($store->nameofstore . '_اسناد_فروشگاه.zip'), ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+        if ($zip->open(public_path('اسناد فروشگاه ' . $store->nameofstore), ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
             $doc = json_decode($store->uploaddocument);
 
             foreach ($doc as $document) {
@@ -184,7 +184,7 @@ class CreateColleagueController extends Controller
             $zip->close();
 
             // Download the zip file
-            return response()->download(public_path($store->nameofstore . 'all_files.zip'))->deleteFileAfterSend(true);
+            return response()->download(public_path('اسناد فروشگاه ' . $store->nameofstore))->deleteFileAfterSend(true);
         } else {
             // Handle the case where ZipArchive could not be opened
             return response()->json(['error' => 'Failed to create or open the zip file'], 500);
