@@ -150,20 +150,19 @@
                                                             {{ jdate(\Carbon\Carbon::parse($key->enddate))->format('d/M/Y') }}
 
                                                         </td>
-                                                        @can('createcolleague.shopedit')
-                                                            <td>
+                                                        <td>
+                                                            @can('createcolleague.shopedit')
                                                                 <a href="{{ route('admin.createcolleague.shopedit', [$key->id]) }}"
                                                                     class="text-black btn btn-warning btn-sm">
                                                                     <i class="feather icon-edit" alt="اصلاح"
                                                                         title="اصلاح"></i>اصلاح
                                                                 </a>
-                                                                <a href="{{ route('admin.installments.shop.installments', [$key->id, 'wait']) }}"
-                                                                    class="text-black btn btn-success btn-sm">
-                                                                    <i class="feather icon-more" alt="فروش ها"
-                                                                        title="فروش ها"></i>فروش ها</a>
-
-                                                            </td>
-                                                        @endcan
+                                                            @endcan
+                                                            <a href="{{ route('admin.installments.shop.installments', [$key->id, 'wait']) }}"
+                                                                class="text-black btn btn-success btn-sm">
+                                                                <i class="feather icon-more" alt="فروش ها"
+                                                                    title="فروش ها"></i>فروش ها</a>
+                                                        </td>
 
                                                     </tr>
                                                 @endforeach
@@ -255,29 +254,27 @@
                                                     </div>
 
                                                 </div>
-                                                @can('createcolleague.shopedit')
-                                                    <div class="row pt-1">
-                                                        <div class="col ml-1">
+                                                <div class="row p-1">
+                                                    <div class="col ml-1">
 
-                                                            <h5 class="text-light">عملیات:
-                                                            </h5>
-                                                        </div>
+                                                        <h5 class="text-light">عملیات:
+                                                        </h5>
+                                                    </div>
 
-                                                        <div class="col">
-
+                                                    <div class="col">
+                                                        @can('createcolleague.shopedit')
                                                             <a href="{{ route('admin.createcolleague.shopedit', [$key->id]) }}"
                                                                 class="text-black btn btn-warning btn-sm">
                                                                 <i class="feather icon-edit" alt="اصلاح"
                                                                     title="اصلاح"></i>اصلاح
                                                             </a>
-                                                            <a href="{{ route('admin.installments.shop.installments', [$key->id, 'wait']) }}"
-                                                                class="text-black btn btn-success btn-sm">
-                                                                <i class="feather icon-more" alt="فروش ها"
-                                                                    title="فروش ها"></i>فروش ها</a>
+                                                        @endcan
+                                                        <a href="{{ route('admin.installments.shop.installments', [$key->id, 'wait']) }}"
+                                                            class="text-black btn btn-success btn-sm">
+                                                            <i class="feather icon-more" alt="فروش ها"
+                                                                title="فروش ها"></i>فروش ها</a>
 
-                                                        </div>
-                                                    @endcan
-
+                                                    </div>
                                                 </div>
                                             </div>
                                         @endforeach
