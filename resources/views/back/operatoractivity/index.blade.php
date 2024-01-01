@@ -39,7 +39,7 @@
                                 <div id="home" class="container tab-pane "><br>
 
 
-                                    <div class="">
+                                    {{-- <div class="">
 
                                         <form action="{{ route('admin.operatoractivity.search') }}" method="post">
                                             @csrf
@@ -58,7 +58,7 @@
                                                 </div>
                                             </div>
                                         </form>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="row mt-1 ml-2 mb-2">
                                         <h3>
