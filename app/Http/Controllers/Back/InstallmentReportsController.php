@@ -598,7 +598,7 @@ class InstallmentReportsController extends Controller
     }
     public function transactionDetails($id)
     {
-        $trans = banktransaction::find($id);
+        $trans = BankTransaction::with('userDocument')->where('id', $id)->first();
         $data = [];
         $type = '';
         if ($trans->buyer_trans_id) {
@@ -614,6 +614,13 @@ class InstallmentReportsController extends Controller
                 'تاریخ تراکنش' => jdate($trans_buyer->created_at)->format('d/M/Y'),
                 'زمان تراکنش' =>  $trans_buyer->created_at->format('H:i:s'),
             ];
+            if ($trans->userDocument) {
+                $doc = json_decode($trans->userDocument->documents, true);
+                $data['سند'] = [];
+                foreach ($doc as $key) {
+                    $data['سند'][] = asset($key);
+                }
+            }
             $type = 'buyer';
         } else if ($trans->store_trans_id) {
             $store_trans = createstoretransaction::find($trans->store_trans_id);

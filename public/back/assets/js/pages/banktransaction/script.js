@@ -168,7 +168,40 @@ $(document).ready(function () {
                 var list = $('<ul></ul>');
 
                 for (var key in transDetails) {
-                    if (transDetails.hasOwnProperty(key)) {
+                    if (key === 'سند') {
+                        list.append(
+                            '<li class="mt-1"><div class="row"><div class="col-4"><strong>' +
+                                key +
+                                ':</strong></div><div class="col-8 img">'
+                        );
+
+                        // Assuming transDetails[key] is an array or object
+                        $.each(transDetails[key], function (index, value) {
+                            // Append each image and download link to the 'col-8' div
+                            list.find('.img').append(
+                                '<div style="position: relative; display: inline-block; margin: 5px;">' +
+                                    '<a style="position: absolute; top: 5%;' +
+                                    ' right: 5%; display: block; padding: 5px;' +
+                                    '  text-decoration: none; border-radius: 5px;"' +
+                                    'class="bg-color-primary text-success"' +
+                                    'href="' +
+                                    value +
+                                    '" download="' +
+                                    value +
+                                    '">' +
+                                    '<span class="badge badge-success badge-pill">' +
+                                    '<i class="feather icon-download"></i></span>' +
+                                    '</a>' +
+                                    '<img style="width:70px; display:inline;margin:2px;"' +
+                                    'src="' +
+                                    value +
+                                    '"/>' +
+                                    '</div>'
+                            );
+                        });
+                        // Close the remaining tags after the loop
+                        list.append('</div></div></li>');
+                    } else if (transDetails.hasOwnProperty(key)) {
                         list.append(
                             '<li class="mt-1"><div class="row"><div class="col-4"><strong>' +
                                 key +

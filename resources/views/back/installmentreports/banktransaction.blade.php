@@ -175,5 +175,5 @@
 @push('scripts')
     <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}"></script>
     <script src="{{ asset('back/assets/datatable/datatables.min.js') }}"></script>
-    <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
+    {{-- <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script> --}}
 @endpush
