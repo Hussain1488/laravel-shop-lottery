@@ -17,7 +17,6 @@ class CreateCreatedocumentsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('transaction_id');
             $table->unsignedBigInteger('user_id');
-            $table->bigInteger('price')->nullable();
             $table->string('documents')->nullable();
             $table->bigInteger('numberofdocuments')->nullable();
             $table->foreign('transaction_id')->references('id')->on('banktransactions');
