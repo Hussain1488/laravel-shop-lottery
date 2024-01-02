@@ -163,13 +163,13 @@ class InstallmentReportsController extends Controller
         $trans_data = [
             'تراکنش:' => $description,
             'توسط:' => Auth::user()->username,
-            'مقدار تراکنش' => $payList->depositamount . ' ریال',
+            'مقدار تراکنش' => number_format($payList->depositamount) . ' ریال',
             'تاریخ:' => Jalalian::now()->format('d-m-Y'),
             'زمان:' => Jalalian::now()->format('H:i:s'),
         ];
         $data = [
             'فروشگاه' => $store->nameofstore,
-            'مقدار پرداخت' => $payList->depositamount . ' ریال',
+            'مقدار پرداخت' => number_format($payList->depositamount) . ' ریال',
             'شماره پیگیری بانک' => $request->Issuetracking,
         ];
         try {
@@ -223,11 +223,7 @@ class InstallmentReportsController extends Controller
     public function storebank(internalBankStoreRequest $request)
     {
         // dd($request->all());
-        BankAccount::create([
-            'bankname' => $request->bankname,
-            'accountnumber' => $request->accountnumber,
-            'account_type_id' => $request->account_type_id,
-        ]);
+
         bankTypeModel::find($request->account_type_id)->name;
         $data = [
             'اسم بانک' => $request->bankname,
@@ -236,6 +232,11 @@ class InstallmentReportsController extends Controller
         ];
         try {
             DB::beginTransaction();
+            BankAccount::create([
+                'bankname' => $request->bankname,
+                'accountnumber' => $request->accountnumber,
+                'account_type_id' => $request->account_type_id,
+            ]);
             $operator_id = OperatorActivity::createActivity(null, 'CREATE_INTERNAL_ACCOUNT');
             ActivityDetailsModel::createActivityDetail($operator_id, $data);
             DB::commit();

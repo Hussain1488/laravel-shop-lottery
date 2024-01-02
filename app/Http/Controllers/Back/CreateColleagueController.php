@@ -250,13 +250,13 @@ class CreateColleagueController extends Controller
             'تراکنش:' => $description,
             'اسم فروشگاه:' => $request->nameofstore,
             'توسط:' => Auth::user()->username,
-            'مقدار اعتبار:' => $storecredit . 'ریال',
+            'مقدار اعتبار:' => number_format($storecredit) . 'ریال',
             'تاریخ:' => Jalalian::now()->format('d-m-Y'),
             'زمان:' => Jalalian::now()->format('H:i:s'),
         ];
         $data = [
             'اسم فروشگاه' => $request->nameofstore,
-            'مقدار اعتبار داده شده' => $storecredit . ' ریال',
+            'مقدار اعتبار داده شده' => number_format($storecredit) . ' ریال',
             'مقدار کارمز' => $request->feepercentage . ' درصد',
             'شماره حساب درآمد' => BankAccount::find($request->account_id)->accountnumber,
         ];
@@ -341,6 +341,8 @@ class CreateColleagueController extends Controller
             toastr()->error('شما هیچ بانکی با ماهیت اعتبار خرید خریدارها ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
             return redirect()->back();
         }
+        $userUpdate = User::find($request->user_id);
+        $paths[] = json_decode($userUpdate->documents);
         $docPath = '';
         if ($request->file('documents')) {
             $files = $request->file('documents');
@@ -355,11 +357,10 @@ class CreateColleagueController extends Controller
             $docPath = json_encode($paths);
         }
 
-        $userUpdate = User::find($request->user_id);
 
         $data = [
-            'اعتبار قبلی' => $userUpdate->purchasecredit . ' ریال',
-            'مقدار افزایش اعتبار' => $request->purchasecredit . ' ریال',
+            'اعتبار قبلی' => number_format($userUpdate->purchasecredit) . ' ریال',
+            'مقدار افزایش اعتبار' => number_format($request->purchasecredit) . ' ریال',
         ];
 
         try {
@@ -414,15 +415,15 @@ class CreateColleagueController extends Controller
         $trans_data = [
             'تراکنش:' => $description,
             'توسط:' => Auth::user()->username,
-            'اعتبار قبلی' => $ex_credit . ' ریال',
-            'مقدار افزایش اعتبار' => $request->storecredit . ' ریال',
+            'اعتبار قبلی' => number_format($ex_credit) . ' ریال',
+            'مقدار افزایش اعتبار' => number_format($request->storecredit) . ' ریال',
             'تاریخ:' => Jalalian::now()->format('d-m-Y'),
             'زمان:' => Jalalian::now()->format('H:i:s'),
         ];
         $data = [
             'اسم فروشگاه' => $store->nameofstore,
-            'اعتبار قبلی' => $ex_credit . ' ریال',
-            'مقدار افزایش اعتبار' => $request->storecredit . ' ریال',
+            'اعتبار قبلی' => number_format($ex_credit) . ' ریال',
+            'مقدار افزایش اعتبار' => number_format($request->storecredit) . ' ریال',
         ];
         try {
             DB::beginTransaction();
@@ -507,7 +508,7 @@ class CreateColleagueController extends Controller
             createdocument::create([
                 'bank_id' => $request->bank_id,
                 'user_id' => $user->id,
-                'price' => $request->ReCredintAmount,
+                'price' => number_format($request->ReCredintAmount) . ' ریال',
                 'description' => $request->description,
                 'documents' => $docPath,
                 'numberofdocuments' => $request->numberofdocuments,
