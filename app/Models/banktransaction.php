@@ -30,6 +30,11 @@ class banktransaction extends Model
         return $this->belongsTo(buyertransaction::class, 'buyer_trans_id');
     }
 
+    public function userDocument()
+    {
+        return $this->hasOne(createdocument::class, 'transaction_id');
+    }
+
     public static function transaction($bank_id, $creditAmount, $status, $trans_id, $user)
     {
 

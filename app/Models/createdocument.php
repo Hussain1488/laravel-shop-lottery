@@ -10,5 +10,10 @@ class createdocument extends Model
     use HasFactory;
     protected $table = 'createdocuments';
 
-    protected $fillable = ['bank_id', 'user_id', 'price', 'documents', 'numberofdocuments', 'description'];
+    protected $fillable = ['transaction_id', 'user_id', 'documents', 'numberofdocuments', 'description'];
+
+    public function transaction()
+    {
+        return $this->belongsTo(banktransaction::class, 'transaction_id');
+    }
 }
