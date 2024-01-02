@@ -15,15 +15,15 @@ class CreateCreatedocumentsTable extends Migration
     {
         Schema::create('createdocuments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('bank_id');
+            $table->unsignedBigInteger('transaction_id');
             $table->unsignedBigInteger('user_id');
             $table->bigInteger('price')->nullable();
             $table->string('documents')->nullable();
             $table->bigInteger('numberofdocuments')->nullable();
-            $table->foreign('bank_id')->references('id')->on('createbankaccounts');
+            $table->foreign('transaction_id')->references('id')->on('banktransactions');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->index('user_id');
-            $table->index('bank_id');
+            $table->index('transaction_id');
             $table->timestamps();
         });
     }
