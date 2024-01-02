@@ -50,8 +50,7 @@
 
                                     <div class="row mt-1 ml-2 mb-2 d-flex justify-content-around">
                                         <div class="col">
-                                            <h3>
-                                                لیست تراکنش های حساب: {{ $title }}</h3>
+
                                         </div>
                                         <div class="col d-flex justify-content-end">
                                             <a href="{{ route('admin.installmentreports.banklist') }}"

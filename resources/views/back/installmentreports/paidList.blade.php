@@ -28,7 +28,7 @@
                 <section class="card">
                     <div class="card-header">
 
-                        <h4 class="card-title">لیست تراکنش های فروشگاه: </h4>
+                        <h4 class="card-title">لیست درخواست های پرداخت شده:</h4>
 
                     </div>
 

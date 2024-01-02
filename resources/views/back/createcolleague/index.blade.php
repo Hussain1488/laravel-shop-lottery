@@ -27,10 +27,10 @@
              <div class="content-body">
                  <section class="card">
                      <div class="card-header">
-                         <h4 class="card-title">اعتبار سنجی خریداران</h4>
+                         <h4 class="card-title">اعتبار دهی به کاربر</h4>
                      </div>
                      <div class="card-content">
-                         <h6 class="card-title m-2">ساخت افرادی که همکاری در فروش دارند</h6>
+
                          <div class="container mt-3">
 
                              {{-- giving creadit to users from seller --}}
