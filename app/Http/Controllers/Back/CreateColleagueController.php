@@ -506,9 +506,8 @@ class CreateColleagueController extends Controller
             ];
             $wallet->balance += $request->ReCredintAmount;
             createdocument::create([
-                'bank_id' => $request->bank_id,
+                'transaction_id' => $bank->id,
                 'user_id' => $user->id,
-                'price' => number_format($request->ReCredintAmount) . ' ریال',
                 'description' => $request->description,
                 'documents' => $docPath,
                 'numberofdocuments' => $request->numberofdocuments,
