@@ -8363,10 +8363,10 @@ footer.mini-footer .copy-right-mini-footer {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.lazyLoadXT-completed {
+/* .lazyLoadXT-completed {
     width: 60px;
     height: 60px;
-}
+} */
 
 #showPassword:hover {
     cursor: pointer;
