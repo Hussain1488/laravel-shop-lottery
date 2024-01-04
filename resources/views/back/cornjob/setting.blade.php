@@ -159,7 +159,7 @@
                                                 </div>
                                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                                     <label>متن پیامک ارسالی:</label>
-                                                    <textarea id="reccredit_day" type="text" class="form-control" name="installment_after_message">{{ option('installment_after_message') != null ? option('installment_after_message') : 'مشتری عزیز موعد قسط شما به پایان رسیده است لطفا هرچه زود تر جهت پرداخت قسط اقدام کنید!' }}</textarea>
+                                                    <textarea id="reccredit_day" type="text" class="form-control after_pay_message" name="installment_after_message">{{ option('installment_after_message') != null ? option('installment_after_message') : 'مشتری عزیز موعد قسط شما به پایان رسیده است لطفا هرچه زود تر جهت پرداخت قسط اقدام کنید!' }}</textarea>
                                                     <span class="text-danger" id="validationMessage"></span>
                                                     @error('installment_after_message')
                                                         <span class="text-danger">
