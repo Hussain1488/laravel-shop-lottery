@@ -39,8 +39,6 @@
                             <form action="{{ route('admin.createcolleague.Documentstore') }}" method="POST"
                                 enctype="multipart/form-data" id="colleagueDocumentStore">
                                 @csrf
-                                <input readonly name="numberofdocuments" type="hidden" value="{{ $number }}">
-
 
                                 <div class="tab-content">
                                     <div id="home" class="container tab-pane active"><br>
@@ -206,9 +204,6 @@
 
                                             </div>
                                         @endif
-
-
-
                                         <div class="row ">
                                             <div class="col d-flex align-items-baseline justify-content-center">
                                                 <input type="button" id="submit_button2"
