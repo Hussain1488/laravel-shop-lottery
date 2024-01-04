@@ -97,19 +97,20 @@
                                                     </h5>
                                                 </div>
                                                 <div class="row">
-                                                    مبلغ کل فروش:<span
-                                                        class="monyInputSpan">{{ $key->Creditamount }}</span>ریال
+                                                    مبلغ کل فروش:(<span
+                                                        class="monyInputSpan">{{ $key->Creditamount }}</span>)ریال
                                                 </div>
                                                 <div class="row">
-                                                    {{ $key->numberofinstallments }} عدد قسط به مبلغ هر قسط
-                                                    <span class="monyInputSpan">{{ $key->amounteachinstallment }}</span>
+                                                    ({{ $key->numberofinstallments }})
+                                                    عدد قسط به مبلغ هر قسط
+                                                    (<span class="monyInputSpan">{{ $key->amounteachinstallment }}</span>)
                                                     ریال
                                                 </div>
 
                                                 <div class="row">
 
-                                                    مقدار پیش پرداخت <span
-                                                        class="monyInputSpan">{{ $key->prepaidamount }}</span> ریال
+                                                    مقدار پیش پرداخت (<span
+                                                        class="monyInputSpan">{{ $key->prepaidamount }}</span>) ریال
 
 
                                                 </div>
@@ -147,9 +148,6 @@
                                         </section>
                                     @else
                                         @foreach ($installmentsm1 as $index)
-                                            @php
-                                                $updated_date = \Carbon\Carbon::parse($index->datepayment);
-                                            @endphp
                                             <div class="border rounded p-2 my-1">
                                                 <div class="row">
                                                     <h5>آقای:
@@ -159,23 +157,24 @@
 
 
                                                 <div class="row">
-                                                    مبلغ کل فروش: <span
-                                                        class="monyInputSpan">{{ $index->Creditamount }}</span>
+                                                    مبلغ کل فروش: (<span
+                                                        class="monyInputSpan">{{ $index->Creditamount }}</span>)
                                                     ریال
                                                 </div>
                                                 <div class="row">
-                                                    تعداد {{ $index->numberofinstallments }} قسط به سر رسید تاریخ
+                                                    تعداد ({{ $index->numberofinstallments }}) قسط به سر رسید تاریخ
                                                     ({{ \Carbon\Carbon::parse($index->datepayment)->format('d') }})
                                                     هر ماه
                                                     به مبلغ قسط
-                                                    <span
-                                                        class="monyInputSpan">{{ $index->amounteachinstallment }}</span>ریال
+                                                    (<span
+                                                        class="monyInputSpan">{{ $index->amounteachinstallment }}</span>)
+                                                    ریال
                                                 </div>
 
                                                 <div class="row ">
 
-                                                    مقدار پیش پرداخت <span
-                                                        class="monyInputSpan">{{ $index->prepaidamount }}</span> ریال
+                                                    مقدار پیش پرداخت (<span
+                                                        class="monyInputSpan">{{ $index->prepaidamount }}</span>) ریال
 
                                                 </div>
                                                 <div class="row d-flex justify-content-between p-1">
