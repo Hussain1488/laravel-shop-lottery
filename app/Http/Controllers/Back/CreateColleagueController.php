@@ -356,6 +356,12 @@ class CreateColleagueController extends Controller
             }
             $docPath = json_encode($paths);
         }
+        $number = createdocument::count();
+        if ($number > 0 && $number != 0) {
+            $number = createdocument::latest()->first()->numberofdocuments + 1;
+        } else {
+            $number = 10000;
+        }
 
 
         $data = [
@@ -367,7 +373,6 @@ class CreateColleagueController extends Controller
             DB::beginTransaction();
             $userUpdate->purchasecredit += $request->purchasecredit;
             $userUpdate->enddate = $carbonDate;
-            $userUpdate->documents = $docPath;
 
             $operator_id = OperatorActivity::createActivity($userUpdate->id, 'BUYER_CREDIT');
             ActivityDetailsModel::createActivityDetail($operator_id, $data);
@@ -375,6 +380,14 @@ class CreateColleagueController extends Controller
             $buyer_trans = buyertransaction::transaction($userUpdate, $request->purchasecredit, true, '0', '1', 'افزایش اعتبار توسط اپراتور');
             // transaction($bank_id, $creditAmount, $status, $trans_id)
             $bank_trans = banktransaction::transaction($bank_id->id, $request->purchasecredit, false, $buyer_trans->id, 'user');
+
+            createdocument::create([
+                'transaction_id' => $bank_trans->id,
+                'user_id' => $userUpdate->id,
+                'description' => 'افزایش اعتبار خریدار توسط اپراتور',
+                'documents' => $docPath,
+                'numberofdocuments' => $number,
+            ]);
 
             $userUpdate->save();
             DB::commit();
