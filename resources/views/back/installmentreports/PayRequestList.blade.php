@@ -248,10 +248,10 @@
                                                 </div>
                                             @endforeach
                                         </div>
+                                        <div class="m-3">
+                                            {{ $transaction->appends(['tab' => 'transaction', 'page' => $transaction->currentPage()])->links() }}
+                                        </div>
                                     @endif
-                                    <div class="m-3">
-                                        {{ $transaction->appends(['tab' => 'transaction', 'page' => $transaction->currentPage()])->links() }}
-                                    </div>
                                 </div>
                                 {{--  not payd installments which are paid prepayment of isntallments list --}}
                                 <div id="menu1"
@@ -277,7 +277,7 @@
                                     @if (!$transaction1->count() > 0)
                                         <div class="m-2">
                                             <div class="alert alert-warning">
-                                                درخواستی موجود نیست
+                                                درخواستی موجود نیست!
                                             </div>
                                         </div>
                                     @else
