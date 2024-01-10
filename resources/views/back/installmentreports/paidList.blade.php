@@ -58,159 +58,167 @@
                                             ریال
                                         </div>
                                     </div>
-                                    <div class="pc-size" data-screen="pc">
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>
-                                                        #
-                                                    </th>
-                                                    <th>
-                                                        نام فروشگاه
-                                                    </th>
-                                                    <th>
-                                                        تاریخ پرداخت
-                                                    </th>
-
-                                                    <th>
-                                                        شماره ره گیری
-                                                    </th>
-                                                    <th class="">
-                                                        اسناد:
-                                                    </th>
-                                                    <th class="">
-                                                        جزئیات:
-                                                    </th>
-
-                                                </tr>
-                                            </thead>
-                                            @php
-                                                $counter = ($paidList->currentPage() - 1) * $paidList->perPage() + 1;
-                                            @endphp
-                                            <tbody>
-                                                @foreach ($paidList as $key)
+                                    @if (!$paidList->count() > 0)
+                                        <div class="m-2">
+                                            <div class="alert alert-warning">
+                                                چیزی برای نمایش نیست!
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="pc-size" data-screen="pc">
+                                            <table class="table table-hover">
+                                                <thead>
                                                     <tr>
-                                                        <td>
-                                                            {{ $counter++ }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $key->payments->store->nameofstore }}
-                                                        </td>
-                                                        <td>
+                                                        <th>
+                                                            #
+                                                        </th>
+                                                        <th>
+                                                            نام فروشگاه
+                                                        </th>
+                                                        <th>
+                                                            تاریخ پرداخت
+                                                        </th>
+
+                                                        <th>
+                                                            شماره ره گیری
+                                                        </th>
+                                                        <th class="">
+                                                            اسناد:
+                                                        </th>
+                                                        <th class="">
+                                                            جزئیات:
+                                                        </th>
+
+                                                    </tr>
+                                                </thead>
+                                                @php
+                                                    $counter = ($paidList->currentPage() - 1) * $paidList->perPage() + 1;
+                                                @endphp
+                                                <tbody>
+                                                    @foreach ($paidList as $key)
+                                                        <tr>
+                                                            <td>
+                                                                {{ $counter++ }}
+                                                            </td>
+                                                            <td>
+                                                                {{ $key->payments->store->nameofstore }}
+                                                            </td>
+                                                            <td>
+                                                                <span class="transaction_datetime">
+                                                                    {{ jdate($key->created_at)->format('d/M/Y') }}
+                                                                    <br>
+                                                                    {{ jdate($key->created_at)->format('H:i:s') }}
+                                                                </span>
+                                                            </td>
+
+                                                            <td>
+                                                                <span class="">{{ $key->Issuetracking }}</span>
+                                                            </td>
+                                                            <td class="">
+                                                                <a href="{{ asset($key->documentpayment) }}"
+                                                                    download="سند پرداخت فروشگاه {{ $key->payments->store->nameofstore }}">
+                                                                    <span class="text-success">دانلود سند</span>
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <button class="payDetailsButton btn btn-info btn-sm"
+                                                                    data-href="{{ route('admin.installmentreports.payReqDetails', [$key->payments->id]) }}"><i
+                                                                        class="feather icon-info"></i> بیشتر</button>
+                                                            </td>
+
+
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="mobile-size " data-screen="mobile">
+                                            @foreach ($paidList as $key)
+                                                <div class=" border rounded mb-1">
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+                                                            <h5 class="text-light">
+                                                                نام فروشگاه:
+
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col"><span class="text-dark">
+                                                                {{ $key->payments->store->nameofstore }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+                                                            <h5 class="text-light">
+                                                                تاریخ پرداخت </h5>
+                                                        </div>
+                                                        <div class="col">
                                                             <span class="transaction_datetime">
                                                                 {{ jdate($key->created_at)->format('d/M/Y') }}
                                                                 <br>
                                                                 {{ jdate($key->created_at)->format('H:i:s') }}
                                                             </span>
-                                                        </td>
+                                                        </div>
+                                                    </div>
 
-                                                        <td>
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+
+                                                            <h5 class="text-light">
+                                                                شماره رهگیری:
+                                                            </h5>
+                                                        </div>
+                                                        <div class="col">
                                                             <span class="">{{ $key->Issuetracking }}</span>
-                                                        </td>
-                                                        <td class="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+
+                                                            <h5 class="text-light">
+                                                                اسناد:
+                                                            </h5>
+                                                        </div>
+
+                                                        <div class="col">
                                                             <a href="{{ asset($key->documentpayment) }}"
                                                                 download="سند پرداخت فروشگاه {{ $key->payments->store->nameofstore }}">
                                                                 <span class="text-success">دانلود سند</span>
                                                             </a>
-                                                        </td>
-                                                        <td>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row p-1">
+                                                        <div class="col ml-1">
+
+                                                            <h5 class="text-light">
+                                                                جزئیات:
+                                                            </h5>
+                                                        </div>
+
+                                                        <div class="col">
                                                             <button class="payDetailsButton btn btn-info btn-sm"
                                                                 data-href="{{ route('admin.installmentreports.payReqDetails', [$key->payments->id]) }}"><i
                                                                     class="feather icon-info"></i> بیشتر</button>
-                                                        </td>
+                                                            </a>
+                                                        </div>
 
-
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="mobile-size " data-screen="mobile">
-                                        @foreach ($paidList as $key)
-                                            <div class=" border rounded mb-1">
-                                                <div class="row pt-1">
-                                                    <div class="col ml-1">
-                                                        <h5 class="text-light">
-                                                            نام فروشگاه:
-
-                                                        </h5>
-                                                    </div>
-                                                    <div class="col"><span class="text-dark">
-                                                            {{ $key->payments->store->nameofstore }}
-                                                        </span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row pt-1">
-                                                    <div class="col ml-1">
-                                                        <h5 class="text-light">
-                                                            تاریخ پرداخت </h5>
-                                                    </div>
-                                                    <div class="col">
-                                                        <span class="transaction_datetime">
-                                                            {{ jdate($key->created_at)->format('d/M/Y') }}
-                                                            <br>
-                                                            {{ jdate($key->created_at)->format('H:i:s') }}
-                                                        </span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row pt-1">
-                                                    <div class="col ml-1">
-
-                                                        <h5 class="text-light">
-                                                            شماره رهگیری:
-                                                        </h5>
-                                                    </div>
-                                                    <div class="col">
-                                                        <span class="">{{ $key->Issuetracking }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="row pt-1">
-                                                    <div class="col ml-1">
-
-                                                        <h5 class="text-light">
-                                                            اسناد:
-                                                        </h5>
-                                                    </div>
-
-                                                    <div class="col">
-                                                        <a href="{{ asset($key->documentpayment) }}"
-                                                            download="سند پرداخت فروشگاه {{ $key->payments->store->nameofstore }}">
-                                                            <span class="text-success">دانلود سند</span>
-                                                        </a>
                                                     </div>
 
                                                 </div>
-                                                <div class="row p-1">
-                                                    <div class="col ml-1">
-
-                                                        <h5 class="text-light">
-                                                            جزئیات:
-                                                        </h5>
-                                                    </div>
-
-                                                    <div class="col">
-                                                        <button class="payDetailsButton btn btn-info btn-sm"
-                                                            data-href="{{ route('admin.installmentreports.payReqDetails', [$key->payments->id]) }}"><i
-                                                                class="feather icon-info"></i> بیشتر</button>
-                                                        </a>
-                                                    </div>
-
-                                                </div>
-
-                                            </div>
-                                        @endforeach
-                                    </div>
-
+                                            @endforeach
+                                        </div>
+                                        <div class="m-3">
+                                            {{ $paidList->links() }}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                    <div class="m-3">
-                        {{ $paidList->links() }}
-                    </div>
+
             </div>
 
         </div>
@@ -228,6 +236,6 @@
 
 
 @push('scripts')
-    <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}"></script>
+    {{-- <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}"></script> --}}
     <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
 @endpush
