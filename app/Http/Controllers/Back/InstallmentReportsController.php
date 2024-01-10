@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Validator;
 use Morilog\Jalali\Jalalian;
 use Yajra\DataTables\Facades\DataTables;
 
+use ZipArchive;
 use function PHPUnit\Framework\isEmpty;
 
 class InstallmentReportsController extends Controller
@@ -108,7 +109,7 @@ class InstallmentReportsController extends Controller
             ];
             $doc =  asset($paidRequests->details->documentpayment);
 
-            return response()->json(['data' => $data, 'doc' => $doc]);
+            return response()->json(['data' => $data, 'doc' => $doc, 'id' => $id]);
         } catch (\Exception $e) {
             // Log the error
             \Log::error($e->getMessage());
@@ -116,6 +117,21 @@ class InstallmentReportsController extends Controller
             // Return an error response
             return response()->json(['error' => 'An error occurred while processing the request.'], 500);
         }
+    }
+    public function reqDocDownload($id)
+    {
+        $trans = PaymentListModel::find($id);
+        $zip = new ZipArchive();
+
+        if ($zip->open(public_path('اسناد درخواست' . $trans->list_id . '.zip'), ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+            $doc = json_decode($trans->factor);
+            foreach ($doc as $key) {
+                $filePath = public_path($key);
+                $zip->addFile($filePath, basename($filePath));
+            }
+            $zip->close();
+        }
+        return response()->download(public_path('اسناد درخواست' . $trans->list_id . '.zip'))->deleteFileAfterSend(true);
     }
 
     public function RequestPayment($id, $bank_id, $trans_id)
