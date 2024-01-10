@@ -26,7 +26,7 @@ use Themes\DefaultTheme\src\Controllers\InstallmentsController;
 
 Route::group(['as' => 'front.'], function () {
     // ------------------ MainController
-    
+
 
     Route::get('/', [MainController::class, 'index'])->name('index');
     Route::get('/get-new-captcha', [MainController::class, 'captcha']);
@@ -100,7 +100,7 @@ Route::group(['as' => 'front.'], function () {
         // ------------------ wallet
         Route::resource('wallet', WalletController::class)->only(['index', 'show', 'create', 'store']);
         Route::post('wallet/rechargeVarify', [WalletController::class, 'rechargeVarify'])->name('wallet.rechargeVarify');
-        Route::get('wallets/codeGenerate', [WalletController::class, 'codeGenerate'])->name('wallet.codeGenerate');
+        Route::get('wallets/codeGenerate/{smsType}', [WalletController::class, 'codeGenerate'])->name('wallet.codeGenerate');
         Route::post('wallet/sendCode', [WalletController::class, 'sendCode'])->name('wallet.sentCode');
 
         // installmentsController
