@@ -82,10 +82,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-12 d-flex justify-content-end">
-                                                        <div class=""><input type="button"
-                                                                data-url="{{ route('front.wallet.codeGenerate') }}"
-                                                                value="شارژ کیف پول" class="btn btn-success"
-                                                                id="wallet_recharg_button1"></div>
+                                                        <div class=""><input type="button" value="شارژ کیف پول"
+                                                                class="btn btn-success" id="wallet_recharg_button1"></div>
 
                                                     </div>
                                                 </div>
@@ -165,7 +163,7 @@
                                                                             <input type="button"
                                                                                 data-amount="{{ $key->Creditamount }}"
                                                                                 data-prepay="{{ $key->prepaidamount }}"
-                                                                                data-url="{{ route('front.wallet.codeGenerate') }}"
+                                                                                data-url="{{ route('front.wallet.codeGenerate', ['PRE_PAY_CODE']) }}"
                                                                                 data-href="{{ route('front.installments.usrestatus.edit', [$key->id]) }}"
                                                                                 class="btn btn-success smsGeneratButton pre_pay_button"
                                                                                 id="pre_pay_button" style=""
@@ -240,7 +238,7 @@
                                                                                 @if ($key->state == 1)
                                                                                     <input type='button'
                                                                                         data-amount="{{ $key->installmentprice }}"
-                                                                                        data-url="{{ route('front.wallet.codeGenerate') }}"
+                                                                                        data-url="{{ route('front.wallet.codeGenerate', ['INSTA_CODE']) }}"
                                                                                         data-href="{{ route('front.installments.paymentStatus.edit', ['id1' => $key->id, 'id2' => $key->installments->id]) }}"
                                                                                         class="btn btn-info btn-sm insta_pay_button"
                                                                                         style=""value="پرداخت"
@@ -490,7 +488,8 @@
                         <div class="form-row mt-2 resent-counter1" id="resent-counter2">
                             <span
                                 class="text-primary">{{ trans('front::messages.auth.retrieve-verification-code') }}</span>
-                            (<p data-action="{{ route('front.wallet.codeGenerate') }}" id="countdown-verify-end2"></p>)
+                            (<p data-action="{{ route('front.wallet.codeGenerate', ['RESEND_VERIFY_CODE']) }}"
+                                id="countdown-verify-end2"></p>)
                         </div>
                         <input type="button" class="btn btn-info mb-1 d-none " id='sendAgain1' value="ارسال مجدد">
 

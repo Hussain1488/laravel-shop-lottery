@@ -7,6 +7,7 @@ use App\Models\Gateway;
 use App\Models\OneTimeCode;
 use App\Models\Option;
 use App\Models\Order;
+use App\Models\Sms;
 use App\Models\Specification;
 use App\Models\SpecificationGroup;
 use App\Models\SpecType;
@@ -15,6 +16,7 @@ use App\Models\User;
 use App\Models\UserOption;
 use App\Models\Viewer;
 use Carbon\Carbon;
+use GrahamCampbell\ResultType\Success;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
@@ -110,16 +112,15 @@ function oneTimeCode($user, $type)
     $code = OneTimeCode::create([
         'user_id' => $user->id,
         'code'    => rand(11111, 99999),
-
     ]);
-    $code->text =  $type['string'];
+    $code->text =  $type;
 
     return  $code;
 }
 
 function verifySms($type, $user)
 {
-    // dd($type);
+
     try {
         $username = option('MELIPAYAMAK_PANEL_USERNAME');
         $password = option('MELIPAYAMAK_PANEL_PASSWORD');
@@ -127,15 +128,31 @@ function verifySms($type, $user)
         $sms = $api->sms();
         $to = $user->username;
         $from = option('admin_mobile_number');
-        $text = $type->text . ' :' .  $type->code;
+        $text = $type->text['string'] . ' :' .  $type->code;
         $response = $sms->send($to, $from, $text);
         $json = json_decode($response);
-        // echo $json->Value; //RecId or Error Number
+        SmsLog($response, $user, $type->text);
     } catch (Exception $e) {
         // echo $e->getMessage();
         // dd($e->getMessage());
+        SmsLog($response, $user, $type->text);
+        return $e->getMessage();
     }
     return;
+}
+
+function SmsLog($response, $user, $type)
+{
+
+    Sms::create([
+        'mobile'     => $user->username,
+        'ip'         => request()->ip(),
+        'type'       => $type['key'],
+        'user_id'    => $user->id,
+        'response'   => $response,
+        'provider'   => option('sms_panel_provider', 'ippanel'),
+        'message'   => $type['string']
+    ]);
 }
 
 function user_option_update($option_name, $option_value, $user_id = null)

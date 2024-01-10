@@ -123,8 +123,7 @@ class MainController extends Controller
     }
     public function resentSms()
     {
-
-        $sms = oneTimeCode(Auth::user(), Sms::TYPES['VERIFY_CODE']);
+        $sms = oneTimeCode(Auth::user(), Sms::TYPES['RESEND_VERIFY_CODE']);
         verifySms($sms, Auth::user());
         return response('success');
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\OneTimeCode;
+use App\Models\Sms;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -25,7 +26,7 @@ class ResendSmsController extends Controller
 
         $type = new \stdClass(); // Creating a new instance of stdClass
         $type->code = rand(11111, 99999);
-        $type->text = 'کد تأیید خانه اقساط:';
+        $type->text = Sms::TYPES['RESEND_VERIFY_CODE'];
 
         // Assuming verifySms is a function that expects $type and $user as arguments
         verifySms($type, $user);
