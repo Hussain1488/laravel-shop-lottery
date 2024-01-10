@@ -9,6 +9,7 @@ use App\Traits\OrderStatisticsTrait;
 use App\Traits\UserStatisticsTrait;
 use App\Traits\ViewStatisticsTrait;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class StatisticsController extends Controller
 {
@@ -67,8 +68,28 @@ class StatisticsController extends Controller
     {
         $this->authorize('statistics.sms');
 
-        $sms = Sms::latest()->paginate(20);
+        // $sms = Sms::latest()->paginate(20);
 
-        return view('back.statistics.sms.sms-log', compact('sms'));
+        return view('back.statistics.sms.sms-log');
+    }
+    public function smsLogData()
+    {
+        $queries = Sms::orderBy('created_at', 'desc')->select('mobile', 'type', 'created_at', 'id')->get();
+
+        if ($queries->count() === 0) {
+            return DataTables::collection([])->make(true);
+        }
+
+        $data = collect($queries)->map(function ($query) {
+            return [
+                'counter' => null,
+                'mobile' => $query->mobile,
+                'type' => $query->type(),
+                'time' => $query->created_at->ago(),
+                'action' => '<button type="button" data-action="' . route('admin.sms.show', ['sms' => $query->id]) . '" class="btn btn-info waves-effect waves-light show-sms btn-sm">بیشتر<i class="feather icon-info"></i></button>',
+            ];
+        });
+
+        return DataTables::collection($data)->make(true);
     }
 }

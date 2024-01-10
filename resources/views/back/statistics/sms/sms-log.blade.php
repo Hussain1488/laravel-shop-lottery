@@ -1,7 +1,6 @@
 @extends('back.layouts.master')
 
 @section('content')
-
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -32,44 +31,49 @@
                     <div class="card-content">
                         <div class="card-body">
 
-                            @if($sms->count())
-                                <div class="table-responsive">
-                                    <table class="table table-striped mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>ردیف</th>
-                                                <th>شماره</th>
-                                                <th>نوع</th>
-                                                <th>زمان</th>
-                                                <th class="text-center">عملیات</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                            {{-- @if ($sms->count()) --}}
+                            <div class="table-responsive">
+                                <table class="table table-striped mb-0" id='sms-log-table'
+                                    data-href={{ route('admin.statistics.smsLogData') }}>
+                                    <thead>
+                                        <tr>
+                                            {{-- <th>ردیف</th>
+                                            <th>شماره</th>
+                                            <th>نوع</th>
+                                            <th>زمان</th>
+                                            <th class="text-center">عملیات</th> --}}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                                            @foreach ($sms as $s)
+                                        {{-- @foreach ($sms as $s)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $s->mobile }}</td>
                                                     <td>{{ $s->type() }}</td>
-                                                    <td title="{{ jdate($s->created_at)  }}">{{ jdate($s->created_at)->ago() }}</td>
+                                                    <td title="{{ jdate($s->created_at) }}">
+                                                        {{ jdate($s->created_at)->ago() }}</td>
                                                     <td class="text-center">
-                                                        <button type="button" data-action="{{ route('admin.sms.show', ['sms' => $s]) }}" class="btn btn-info waves-effect waves-light show-sms">مشاهده</button>
+                                                        <button type="button"
+                                                            data-action="{{ route('admin.sms.show', ['sms' => $s]) }}"
+                                                            class="btn btn-info waves-effect waves-light show-sms btn-sm">بشتر<i
+                                                                class="feather icon-info"></i></button>
                                                     </td>
                                                 </tr>
-                                            @endforeach
+                                            @endforeach --}}
 
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @else
+                                    </tbody>
+                                </table>
+                            </div>
+                            {{-- @else
                                 <p>چیزی برای نمایش وجود ندارد!</p>
-                            @endif
+                            @endif --}}
 
                         </div>
                     </div>
                 </section>
 
-                {{ $sms->links() }}
+                {{-- {{ $sms->links() }} --}}
 
             </div>
         </div>
@@ -89,9 +93,9 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @push('scripts')
+    <script src="{{ asset('back/assets/datatable/datatables.min.js') }}"></script>
     <script src="{{ asset('back/assets/js/pages/statistics/sms.js') }}"></script>
 @endpush
