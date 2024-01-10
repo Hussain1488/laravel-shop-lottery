@@ -43,8 +43,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-12 d-flex justify-content-end">
-                                    <div class="m-2"><input data-url="{{ route('front.wallet.codeGenerate') }}"
-                                            type="button" value="شارژ کیف پول" class="btn btn-success"
+                                    <div class="m-2"><input type="button" value="شارژ کیف پول" class="btn btn-success"
                                             id="wallet_recharg_button"></div>
 
                                 </div>
