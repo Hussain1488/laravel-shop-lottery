@@ -149,6 +149,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('installmentreports/index', [InstallmentReportsController::class, 'index'])->name('installmentreports.index');
     Route::get('installmentreports/payRequestList', [InstallmentReportsController::class, 'payRequestList'])->name('installmentreports.payRequestList');
     Route::get('installmentreports/payReqDetails/{id}', [InstallmentReportsController::class, 'payReqDetails'])->name('installmentreports.payReqDetails');
+    Route::get('installmentreports/reqDocDownload/{id}', [InstallmentReportsController::class, 'reqDocDownload'])->name('installmentreports.reqDocDownload');
     Route::get('installmentreports/transactionFilter/{id}', [InstallmentReportsController::class, 'transactionFilter'])->name('installmentreports.transactionFilter');
     Route::get('installmentreports/transactionDetails/{id}', [InstallmentReportsController::class, 'transactionDetails'])->name('installmentreports.transactionDetails');
     Route::post('installmentreports/transactionFilter/data', [InstallmentReportsController::class, 'transactionFilterData'])->name('installmentreports.transactionFilter.data');
@@ -337,6 +338,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('statistics/userCounts', [StatisticsController::class, 'userCounts'])->name('statistics.userCounts');
 
     Route::get('statistics/smsLog', [StatisticsController::class, 'smsLog'])->name('statistics.smsLog');
+    Route::post('statistics/smsLogData', [StatisticsController::class, 'smsLogData'])->name('statistics.smsLogData');
 
     // ------------------ sms
     Route::resource('sms', SmsController::class)->only(['show']);
