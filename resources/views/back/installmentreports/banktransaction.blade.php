@@ -72,15 +72,16 @@
                                         </div>
                                     </div>
 
-                                    <table class="table table-hover" id="bank_transaction_list">
-                                        <thead>
+                                    <div class="table-responsive table-responsive">
+                                        <table class="table table-hover" id="bank_transaction_list">
+                                            <thead>
 
-                                        </thead>
-                                        {{-- @php
+                                            </thead>
+                                            {{-- @php
                                             $counter = 1;
                                         @endphp --}}
-                                        <tbody>
-                                            {{-- @foreach ($transactions as $key)
+                                            <tbody>
+                                                {{-- @foreach ($transactions as $key)
                                                 <tr>
                                                     <td>
                                                         {{ $counter++ }}
@@ -123,8 +124,9 @@
 
                                                 </tr>
                                             @endforeach --}}
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
                                 </div>
                             </div>
