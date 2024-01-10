@@ -143,8 +143,9 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.transaction_details', function () {
+        let btn = $(this);
         let url = $('#bank_data').data('details-action');
-        let id = $(this).data('id');
+        let id = btn.data('id');
         let full_url = url.replace(':id', id);
         $.ajax({
             url: full_url,
@@ -219,6 +220,12 @@ $(document).ready(function () {
             },
             error: function () {
                 toastr.error('خطا در دریاف اطلاعات');
+            },
+            beforeSend: function (xhr) {
+                block(btn);
+            },
+            complete: function () {
+                unblock(btn);
             }
         });
     });

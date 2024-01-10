@@ -2,8 +2,8 @@ $(document).ready(function () {
     // $('.transaction_date').pDatePicker();
 
     $('.payDetailsButton').on('click', function () {
-        var url = $(this).data('href');
-        console.log(url);
+        let btn = $(this);
+        var url = btn.data('href');
 
         $.ajax({
             url: url,
@@ -11,6 +11,7 @@ $(document).ready(function () {
             success: function (data) {
                 var detailsData = data.data;
                 var doc = data.doc;
+                let id = data.id;
 
                 // console.log(data);
                 // Clear previous content
@@ -38,14 +39,17 @@ $(document).ready(function () {
                 contentDiv.append(list);
                 let docAddress =
                     '<ul><li class="mt-1"><div class="row"><div class="col-5"><strong>' +
-                    'دانلود فایل' +
+                    'اسناد تراکنش' +
                     '</strong></div><div class="col-7"> ' +
                     '<a href="' +
                     doc +
-                    '" class="btn btn-success"' +
-                    ' download ><i class="feather icon-download">دانلود فایل</i>' +
+                    '" class="btn btn-success ml-1 btn-sm"' +
+                    ' download ><i class="feather icon-download">سند پرداخت </i></a>' +
+                    '<a href="reqDocDownload/' +
+                    id +
+                    '" class="btn btn-success btn-sm"' +
+                    ' download ><i class="feather icon-download">اسناد درخواست </i></a>' +
                     '</div></div></li></ul>';
-
                 contentDiv.append(docAddress);
 
                 // Append the content div to the modal body
@@ -55,6 +59,12 @@ $(document).ready(function () {
                 // $('.modal-body').append(list);
                 // Show the modal
                 $('#payListDetails').modal('show');
+            },
+            beforeSend: function (xhr) {
+                block(btn);
+            },
+            complete: function () {
+                unblock(btn);
             }
         });
     });

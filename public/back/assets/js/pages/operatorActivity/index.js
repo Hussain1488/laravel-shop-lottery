@@ -31,7 +31,6 @@ $(document).ready(function () {
                 data: 'username',
                 name: 'username',
                 title: 'گیرنده فعالیت',
-
                 searchable: true
             },
             {
@@ -54,7 +53,7 @@ $(document).ready(function () {
                             row.details_action.data_time +
                             '" data-date="' +
                             row.details_action.data_date +
-                            '" class="btn btn-info btn-sm details-show">بیشتر<i class="feather icon-info"></i></button>';
+                            '" class="btn btn-info btn-sm details-show waves-effect waves-light">بیشتر<i class="feather icon-info"></i></button>';
                         return buttonHTML;
                     }
                     return data;
@@ -77,7 +76,6 @@ $(document).ready(function () {
                     if (last !== group) {
                         counter = api.page.info().start + 1;
                     }
-
                     $(rows).eq(i).find('td:eq(0)').html(counter);
                     counter++;
 
@@ -98,6 +96,7 @@ $(document).ready(function () {
     $(document).on('click', '.details-show', function () {
         let date = $(this).data('date');
         let time = $(this).data('time');
+        let btn = $(this);
 
         $.ajax({
             url: $(this).data('action'),
@@ -148,6 +147,12 @@ $(document).ready(function () {
                 $('.modal-body').append(contentDiv);
 
                 $('#activity_details').modal();
+            },
+            beforeSend: function (xhr) {
+                block(btn);
+            },
+            complete: function () {
+                unblock(btn);
             }
         });
     });
