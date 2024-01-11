@@ -102,7 +102,6 @@ $(document).ready(function () {
             url: $(this).data('action'),
             type: 'GET',
             success: function (data) {
-                console.log(data);
                 var activityData = data.data;
                 var detailsData = data.details.data;
 
