@@ -18,7 +18,7 @@ class CreatePaymentdetailsTable extends Migration
             $table->unsignedBigInteger("list_of_payment_id")->index();
             $table->bigInteger("Issuetracking");
             $table->unsignedBigInteger("bank_id")->index();
-            $table->string("documentpayment");
+            $table->text("documentpayment");
             $table->foreign("list_of_payment_id")->references("id")->on("list_of_payment")->onDelete('cascade');
             $table->foreign("bank_id")->references("id")->on("createbankaccounts")->onDelete('cascade');
             $table->timestamps();
