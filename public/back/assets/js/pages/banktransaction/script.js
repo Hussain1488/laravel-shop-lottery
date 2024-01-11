@@ -218,14 +218,14 @@ $(document).ready(function () {
 
                 $('#bank_transaction_details').modal();
             },
-            error: function () {
-                toastr.error('خطا در دریاف اطلاعات');
-            },
             beforeSend: function (xhr) {
                 block(btn);
             },
             complete: function () {
                 unblock(btn);
+            },
+            error: function () {
+                toastr.error('خطا در دریاف اطلاعات');
             }
         });
     });
