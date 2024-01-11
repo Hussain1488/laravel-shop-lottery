@@ -33,6 +33,10 @@ class createstoretransaction extends Model
     {
         return $this->hasOne(StoreTransactionDetailsModel::class, 'transaction_id');
     }
+    public function payList()
+    {
+        return $this->hasOne(PaymentListModel::class, 'trans_id');
+    }
 
 
     public static function storeTransaction($store, $CreditAmount, $status, $type, $flag, $user = null, $timestamp = null, $description)
