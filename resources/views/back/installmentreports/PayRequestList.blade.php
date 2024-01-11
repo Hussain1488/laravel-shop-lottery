@@ -528,7 +528,7 @@
                                         </div>
                                         <div class="col">
                                             <input multiple required id="issue_doc" type="file"
-                                                class="form-control imageInput" name="documentpayment">
+                                                class="form-control imageInput" name="documentpayment[]">
                                         </div>
                                     </div>
                                     <div class="row">

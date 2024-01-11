@@ -79,15 +79,19 @@
                                                             نوع تراکنش
                                                         </th>
                                                         <th>
-                                                            مبلغ تراکنش
+                                                            مبلغ فاکتور
                                                         </th>
                                                         <th class="text-danger">
-                                                            مجموع
+                                                            موجودی
                                                         </th>
 
                                                         <th>
+                                                            شماره شبا
+                                                        </th>
+                                                        <th>
                                                             شماره سند
                                                         </th>
+
                                                         <th>
                                                             جزئیات
                                                         </th>
@@ -110,24 +114,28 @@
                                                                 </span>
                                                             </td>
                                                             <td>
-                                                                {{ $key->description }}
+                                                                {{ 'پرداخت درخواست واریز' }}
                                                             </td>
                                                             <td>
-                                                                <span class="monyInputSpan">{{ $key->price }}</span>
+                                                                <span class="monyInputSpan">{{ $key->depositamount }}</span>
                                                             </td>
+                                                            <td>
+                                                                <span class="monyInputSpan">{{ $key->final_price }}</span>
+                                                            </td>
+
                                                             <td class="text-danger">
-                                                                <span class="monyInputSpan">{{ $key->finalprice }}</span>
+                                                                <span class="">{{ $key->shabanumber }}</span>
 
                                                             </td>
-
                                                             <td>
-                                                                {{ $key->documentnumber }}
+                                                                {{ $key->list_id }}
                                                             </td>
+
                                                             <td>
                                                                 <button
-                                                                    data-action="{{ route('admin.cooperationsales.transaction.details', [$key->id]) }}"
+                                                                    data-action="{{ route('admin.cooperationsales.transaction.details', [$key->trans_id]) }}"
                                                                     class="btn transaction_details btn btn-info btn-sm"
-                                                                    data-id="{{ $key->id }}" value=""><i
+                                                                    data-id="{{ $key->trans_id }}" value=""><i
                                                                         class=" feather icon-info"> بیشتر</i>
                                                                 </button>
                                                             </td>
@@ -162,34 +170,43 @@
                                                         </div>
                                                         <div class="col">
                                                             <span class="text-dark">
-                                                                {{ $key->description }}
+                                                                {{ 'پرداخت درخواست واریز' }}
 
                                                             </span>
                                                         </div>
                                                     </div>
                                                     <div class="row pt-1">
                                                         <div class="col ml-1">
-                                                            <h5 class="text-light">مبلغ تراکنش:
+                                                            <h5 class="text-light">مبلغ فاکتور:
 
                                                             </h5>
                                                         </div>
                                                         <div class="col">
-
-                                                            <span
-                                                                class="text-dark monyInputSpan">{{ $key->price }}</span>
+                                                            <span class="monyInputSpan">{{ $key->depositamount }}</span>
                                                         </div>
                                                     </div>
                                                     <div class="row pt-1">
                                                         <div class="col ml-1">
 
-                                                            <h5 class="text-light">مجموع:
+                                                            <h5 class="text-light">موجودی:
                                                             </h5>
                                                         </div>
                                                         <div class="col">
 
-                                                            <span
-                                                                class="text-dark monyInputSpan">{{ $key->finalprice }}</span>
+                                                            <span class="monyInputSpan">{{ $key->final_price }}</span>
                                                         </div>
+                                                    </div>
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+
+                                                            <h5 class="text-light"> شماره شبا:
+                                                            </h5>
+                                                        </div>
+
+                                                        <div class="col">
+                                                            <span class="">{{ $key->shabanumber }}</span>
+                                                        </div>
+
                                                     </div>
                                                     <div class="row pt-1">
                                                         <div class="col ml-1">
@@ -200,7 +217,7 @@
 
                                                         <div class="col">
                                                             <span class="text-dark">
-                                                                {{ $key->documentnumber }}
+                                                                {{ $key->list_id }}
                                                             </span>
                                                         </div>
 

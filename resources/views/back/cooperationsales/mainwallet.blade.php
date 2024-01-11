@@ -79,10 +79,10 @@
                                                             توضیحات
                                                         </th>
                                                         <th>
-                                                            مبلغ تراکنش
+                                                            مبلغ فاکتور
                                                         </th>
                                                         <th class="text-danger">
-                                                            مجموع
+                                                            موجودی
                                                         </th>
 
                                                         <th>
@@ -170,7 +170,7 @@
                                                     </div>
                                                     <div class="row pt-1">
                                                         <div class="col ml-1">
-                                                            <h5 class="text-light">مبلغ تراکنش:
+                                                            <h5 class="text-light">مبلغ فاکتور:
 
                                                             </h5>
                                                         </div>
@@ -182,7 +182,7 @@
                                                     <div class="row pt-1">
                                                         <div class="col ml-1">
 
-                                                            <h5 class="text-light">مجموع:
+                                                            <h5 class="text-light">موجودی:
                                                             </h5>
                                                         </div>
                                                         <div class="col">
@@ -276,6 +276,6 @@
 
 
 @push('scripts')
-    <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}"></script>
+    {{-- <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}"></script> --}}
     <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
 @endpush

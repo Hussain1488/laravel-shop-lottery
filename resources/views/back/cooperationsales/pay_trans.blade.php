@@ -78,16 +78,19 @@
                                                             نوع تراکنش
                                                         </th>
                                                         <th>
-                                                            مبلغ تراکنش
+                                                            مبلغ فاکتور
                                                         </th>
                                                         <th>
-                                                            مجموع تراکنش
+                                                            موجودی
                                                         </th>
                                                         <th class="">
                                                             شماره شبا
                                                         </th>
                                                         <th>
                                                             شماره سند
+                                                        </th>
+                                                        <th>
+                                                            وضعیت
                                                         </th>
                                                         <th>
                                                             جزئیات
@@ -125,6 +128,11 @@
                                                             </td>
                                                             <td>
                                                                 {{ $key->list_id }}
+                                                            </td>
+                                                            <td>
+                                                                {!! $key->status == 1
+                                                                    ? '<span class="badge badge-success">پرداخت شده</span>'
+                                                                    : '<span class="badge badge-warning">انتظار پرداخت</span>' !!}
                                                             </td>
                                                             <td>
                                                                 <button
@@ -171,7 +179,7 @@
                                                     </div>
                                                     <div class="row pt-1">
                                                         <div class="col ml-1">
-                                                            <h5 class="text-light">مبلغ تراکنش:
+                                                            <h5 class="text-light">مبلغ فاکتور:
 
                                                             </h5>
                                                         </div>
@@ -188,7 +196,7 @@
                                                         </div>
                                                         <div class="col">
 
-                                                            <span class="monyInputSpan">{{ $key->final_price }}</span>
+                                                            <span class="">{{ $key->shabanumber }}</span>
                                                         </div>
                                                     </div>
                                                     <div class="row pt-1">
@@ -201,6 +209,21 @@
                                                         <div class="col">
                                                             <span class="text-dark">
                                                                 {{ $key->list_id }} </span>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row pt-1">
+                                                        <div class="col ml-1">
+
+                                                            <h5 class="text-light">وضعیت:
+                                                            </h5>
+                                                        </div>
+
+                                                        <div class="col">
+
+                                                            {!! $key->status == 1
+                                                                ? '<span class="badge badge-success">پرداخت شده</span>'
+                                                                : '<span class="badge badge-warning">انتظار پرداخت</span>' !!}
                                                         </div>
 
                                                     </div>
