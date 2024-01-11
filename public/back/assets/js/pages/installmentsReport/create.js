@@ -236,8 +236,9 @@ $('.account_selection').change(function () {
 });
 
 $('.transaction_details').on('click', function () {
+    let btn = $(this);
     $.ajax({
-        url: $(this).data('action'),
+        url: btn.data('action'),
         type: 'GET',
         success: function (data) {
             var detailsData = data;
@@ -245,7 +246,107 @@ $('.transaction_details').on('click', function () {
             var contentDiv = $('<div></div>');
             var $ul = $('<ul>'); // Create a ul element
             for (var key in detailsData) {
-                if (detailsData.hasOwnProperty(key)) {
+                if (key === 'سند پرداخت') {
+                    $ul.append(
+                        '<li class="mt-1"><div class="row"><div class="col-4"><strong>' +
+                            key +
+                            ':</strong></div><div class="col-8 img">'
+                    );
+
+                    // Assuming transDetails[key] is an array or object
+                    $.each(detailsData[key], function (index, value) {
+                        console.log(detailsData[key]);
+                        // Append each image and download link to the 'col-8' div
+                        if (value && /\.(jpg|jpeg|png|gif)$/i.test(value)) {
+                            // Append each image and download link to the 'col-8' div
+                            $ul.find('.img').append(
+                                '<div style="display: inline-block; margin: 5px;position: relative;">' +
+                                    '<a style=" position: absolute; display: block; padding: 5px; text-decoration: none; border-radius: 5px;"' +
+                                    'class="bg-color-primary text-success"' +
+                                    'href="' +
+                                    value +
+                                    '" download="' +
+                                    value +
+                                    '">' +
+                                    '<span class="badge badge-success badge-pill">' +
+                                    '<i class="feather icon-download"></i></span>' +
+                                    '</a>' +
+                                    '<img style="width:50px; margin: 2px; display: inline-block;"' +
+                                    'src="' +
+                                    value +
+                                    '"/>' +
+                                    '</div>'
+                            );
+                        } else {
+                            // Append download button for other file types
+                            $ul.find('.img').append(
+                                '<div style="display: inline-block; margin: 5px;">' +
+                                    '<a style="position: relative; display: block; padding: 5px; text-decoration: none; border-radius: 5px;"' +
+                                    'class="bg-color-primary text-success"' +
+                                    'href="' +
+                                    value +
+                                    '" download="' +
+                                    value +
+                                    '">' +
+                                    '<span class="badge badge-success badge-pill">' +
+                                    '<i class="feather icon-download"></i>Download</span>' +
+                                    '</a>' +
+                                    '</div>'
+                            );
+                        }
+                    });
+                    // Close the remaining tags after the loop
+                    $ul.append('</div></div></li>');
+                } else if (key === 'سند درخواست') {
+                    $ul.append(
+                        '<li class="mt-1"><div class="row"><div class="col-4"><strong>' +
+                            key +
+                            ':</strong></div><div class="col-8 img1">'
+                    );
+                    // Assuming transDetails[key] is an array or object
+                    $.each(detailsData[key], function (index, value) {
+                        // Append each image and download link to the 'col-8' div
+                        if (value && /\.(jpg|jpeg|png|gif)$/i.test(value)) {
+                            // Append each image and download link to the 'col-8' div
+                            $ul.find('.img1').append(
+                                '<div style="display: inline-block; margin: 5px;position: relative;">' +
+                                    '<a style=" position: absolute; display: block; padding: 5px; text-decoration: none; border-radius: 5px;"' +
+                                    'class="bg-color-primary text-success"' +
+                                    'href="' +
+                                    value +
+                                    '" download="' +
+                                    value +
+                                    '">' +
+                                    '<span class="badge badge-success badge-pill">' +
+                                    '<i class="feather icon-download"></i></span>' +
+                                    '</a>' +
+                                    '<img style="width:50px; margin: 2px; display: inline-block;"' +
+                                    'src="' +
+                                    value +
+                                    '"/>' +
+                                    '</div>'
+                            );
+                        } else {
+                            // Append download button for other file types
+                            $ul.find('.img1').append(
+                                '<div style="display: inline-block; margin: 5px;">' +
+                                    '<a style="position: relative; display: block; padding: 5px; text-decoration: none; border-radius: 5px;"' +
+                                    'class="bg-color-primary text-success"' +
+                                    'href="' +
+                                    value +
+                                    '" download="' +
+                                    value +
+                                    '">' +
+                                    '<span class="badge badge-success badge-pill">' +
+                                    '<i class="feather icon-download"></i>Download</span>' +
+                                    '</a>' +
+                                    '</div>'
+                            );
+                        }
+                    });
+                    // Close the remaining tags after the loop
+                    $ul.append('</div></div></li>');
+                } else {
                     $ul.append(
                         '<li class="mt-1"><div class="row"><div class="col-5"><strong>' +
                             key +
@@ -258,6 +359,12 @@ $('.transaction_details').on('click', function () {
             contentDiv.append($ul);
             $('.modal-body').append(contentDiv); // Append the ul element
             $('.transaction_details_modal').modal();
+        },
+        beforeSend: function (xhr) {
+            block(btn);
+        },
+        complete: function () {
+            unblock(btn);
         }
     });
 });
