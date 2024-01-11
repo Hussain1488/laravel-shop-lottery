@@ -162,12 +162,15 @@ class InstallmentReportsController extends Controller
         }
 
         $bank_name = $request->nameofbank;
-
+        // dd($request->documentpayment);
         if ($request->hasFile('documentpayment')) {
-
-            $imageName = time() . '_clearing.' . $request->file('documentpayment')->getClientOriginalExtension();
-            $request->file('documentpayment')->move('document/payDetails/', $imageName);
-            $path = '/document/payDetails/' . $imageName;
+            $doc_path = []; // Initialize as an empty array
+            foreach ($request->file('documentpayment') as $key) {
+                $imageName = time() . '_clearing.' . $key->getClientOriginalExtension();
+                $key->move('document/payDetails/', $imageName);
+                $doc_path[] = '/document/payDetails/' . $imageName;
+            }
+            $path = json_encode($doc_path); // Use json_encode to convert the array to a JSON string
         } else {
             $path = '';
         }
@@ -180,7 +183,7 @@ class InstallmentReportsController extends Controller
             'تراکنش:' => $description,
             'توسط:' => Auth::user()->username,
             'مقدار تراکنش' => number_format($payList->depositamount) . ' ریال',
-            'تاریخ:' => Jalalian::now()->format('d-m-Y'),
+            'تاریخ:' => Jalalian::now()->format('d/M/Y'),
             'زمان:' => Jalalian::now()->format('H:i:s'),
         ];
         $data = [
