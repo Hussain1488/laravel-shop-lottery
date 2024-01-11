@@ -53,8 +53,8 @@ class Makeinstallmentsm extends Model
         $trans_data = [
             'تراکنش:' => $description,
             'توسط:' => Auth::user()->username,
-            'مقدار فروش' =>  $refuse->Creditamount . ' ریال',
-            'تاریخ:' => Jalalian::now()->format('d-m-Y'),
+            'مقدار فروش' =>  number_format($refuse->Creditamount) . ' ریال',
+            'تاریخ:' => Jalalian::now()->format('d/M/Y'),
             'زمان:' => Jalalian::now()->format('H:i:s'),
         ];
         $store_trans = createstoretransaction::storeTransaction($store, $refuse->Creditamount, true, 3, 0, null, null, $description);

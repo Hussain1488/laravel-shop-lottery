@@ -251,7 +251,7 @@ class CreateColleagueController extends Controller
             'اسم فروشگاه:' => $request->nameofstore,
             'توسط:' => Auth::user()->username,
             'مقدار اعتبار:' => number_format($storecredit) . 'ریال',
-            'تاریخ:' => Jalalian::now()->format('d-m-Y'),
+            'تاریخ:' => Jalalian::now()->format('d/M/Y'),
             'زمان:' => Jalalian::now()->format('H:i:s'),
         ];
         $data = [
@@ -430,7 +430,7 @@ class CreateColleagueController extends Controller
             'توسط:' => Auth::user()->username,
             'اعتبار قبلی' => number_format($ex_credit) . ' ریال',
             'مقدار افزایش اعتبار' => number_format($request->storecredit) . ' ریال',
-            'تاریخ:' => Jalalian::now()->format('d-m-Y'),
+            'تاریخ:' => Jalalian::now()->format('d/M/Y'),
             'زمان:' => Jalalian::now()->format('H:i:s'),
         ];
         $data = [
