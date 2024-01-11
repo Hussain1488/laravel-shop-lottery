@@ -103,10 +103,10 @@ class CooperationSalesController extends Controller
             'تراکنش:' => $description,
             'توسط:' => Auth::user()->username,
             'برای:' => User::find($request->user_id)->username,
-            'مقدار تراکنش:' => $Creditamount . 'ریال',
+            'مقدار تراکنش:' => number_format($Creditamount) . 'ریال',
             'نوع فروش:' => $request->typeofpayment == 'cash' ? 'نقدی' : 'اقساطی',
             'تعداد قسط:' => $request->typeofpayment == 'cash' ? 0 : $request->numberofinstallments,
-            'تاریخ:' => Jalalian::now()->format('d-m-Y'),
+            'تاریخ:' => Jalalian::now()->format('d/M/Y'),
             'زمان:' => Jalalian::now()->format('H:i:s'),
         ];
 
@@ -203,8 +203,8 @@ class CooperationSalesController extends Controller
         $trans_data = [
             'تراکنش:' => $description,
             'توسط:' => Auth::user()->username,
-            'مقدار درخواست:' => $depositamount . 'ریال',
-            'تاریخ:' => Jalalian::now()->format('d-m-Y'),
+            'مقدار درخواست:' => number_format($depositamount) . 'ریال',
+            'تاریخ:' => Jalalian::now()->format('d/M/Y'),
             'زمان:' => Jalalian::now()->format('H:i:s'),
         ];
         // creating new payment request transaction.
@@ -272,8 +272,8 @@ class CooperationSalesController extends Controller
             'تراکنش:' => $description,
             'توسط:' => Auth::user()->username,
             'مقدار درخواست با کسر کارمزد:' => $final . 'ریال',
-            'کارمزد:' => $result . 'ریال',
-            'تاریخ:' => Jalalian::now()->format('d-m-Y'),
+            'کارمزد:' => number_format($result) . 'ریال',
+            'تاریخ:' => Jalalian::now()->format('d/M/Y'),
             'زمان:' => Jalalian::now()->format('H:i:s'),
         ];
 
@@ -339,10 +339,11 @@ class CooperationSalesController extends Controller
     public function paidSales($id)
     {
 
-        $trans = createstoretransaction::where('flag', 2)->where('store_id', $id)->latest()->paginate(20);
+        $trans =
+            PaymentListModel::where('store_id', $id)->where('status', 1)->latest()->paginate(20);
         $store = createstore::find($id);
         if (count($trans) > 0) {
-            $total = createstoretransaction::where('flag', 2)->where('store_id', $id)->latest()->first()->finalprice;
+            $total = PaymentListModel::where('store_id', $id)->where('status', 1)->latest()->latest()->first()->finalprice;
         } else {
             $total = 0;
         }
@@ -361,11 +362,52 @@ class CooperationSalesController extends Controller
         }
         $flag = 'تراکنش های اعتبار فروشگاه';
 
-        return view('back.cooperationsales.transaction_records', compact('trans', 'store', 'total', 'flag'));
+        return view('back.cooperationsales.creadit_transaction_records', compact('trans', 'store', 'total', 'flag'));
     }
     public function transactionDetails($id)
     {
-        $details = StoreTransactionDetailsModel::where('transaction_id', $id)->first()->data;
-        return response()->json($details);
+        $details = StoreTransactionDetailsModel::where('transaction_id', $id)
+            ->with('transaction.payList.details.bank')
+            ->first();
+        $paidDoc = [];
+        // dd($details);
+        $data = $details->data;
+        if ($details->transaction && $details->transaction->payList) {
+            // Check if 'details' relationship exists and is an object
+            $data['وضعیت'][] = $details->transaction->payList->status == 1 ? '<span class="badge badge-success">پرداخت شده</span>'
+                : '<span class="badge badge-warning">انتظار پرداخت</span>';
+
+            if ($details->transaction->payList->details && is_object($details->transaction->payList->details)) {
+                $detail = $details->transaction->payList->details;
+                $data['شماره پیگیری'][] = $detail->Issuetracking;
+                $paidDoc = json_decode($detail->documentpayment);
+
+                // Check if 'bank' relationship exists and is an object
+                if ($detail->bank && is_object($detail->bank)) {
+                    $data['بانک'][] = $detail->bank->bankname;
+                }
+            }
+
+            $all_doc = json_decode($details->transaction->payList->factor);
+
+            if ($all_doc) {
+                $doc1 = [];
+
+                foreach ($all_doc as $key) {
+                    $doc[] = asset($key);
+                }
+
+                $data['سند درخواست'] = $doc;
+            }
+            if ($paidDoc) {
+                $doc1 = [];
+                foreach ($paidDoc as $key) {
+                    $doc1[] = asset($key);
+                }
+                $data['سند پرداخت'] = $doc1;
+            }
+        }
+
+        return response()->json($data);
     }
 }
