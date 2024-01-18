@@ -4,8 +4,10 @@ namespace App\Console;
 
 use App\Console\Commands\AfterInstallmentMessageCommand;
 use App\Console\Commands\BeforInstallmentMessageCommand;
+use App\Console\Commands\DatabaseBackup;
 use App\Console\Commands\StoreCreditReset;
 use App\Jobs\CalculateViewers;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Database\Console\Migrations\InstallCommand;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -23,7 +25,8 @@ class Kernel extends ConsoleKernel
         // InstallCommand::class
         StoreCreditReset::class,
         BeforInstallmentMessageCommand::class,
-        AfterInstallmentMessageCommand::class
+        AfterInstallmentMessageCommand::class,
+        DatabaseBackup::class,
     ];
 
     /**
@@ -34,6 +37,7 @@ class Kernel extends ConsoleKernel
     protected $queues = [
         'default',
     ];
+
 
     /**
      * Create a new console kernel instance.
@@ -82,6 +86,7 @@ class Kernel extends ConsoleKernel
             $status = option('message_send_after_status') == 'on' ? true : false;
             return $status; // Replace this with your actual condition
         });
+        $this->shouldRunBackup($schedule);
     }
 
     /**
@@ -114,12 +119,44 @@ class Kernel extends ConsoleKernel
     protected function getQueueCommand()
     {
         $params = implode(' ', [
-            '--daemon',
+            // '--daemon',
             '--tries=3',
             '--sleep=3',
             '--queue=' . implode(',', $this->queues),
         ]);
 
         return sprintf('queue:work %s', $params);
+    }
+
+    protected function shouldRunBackup($schedule)
+    {
+        $status = option('backup_status') === 'on';
+        $period = option('backup_period');
+
+        switch ($period) {
+            case 'daily':
+                return $status && $this->shouldRunDaily($schedule);
+            case 'weekly':
+                return $status && $this->shouldRunWeekly($schedule);
+            case 'monthly':
+                return $status && $this->shouldRunMonthly($schedule);
+            default:
+                return false; // Unknown backup period
+        }
+    }
+    protected function shouldRunDaily($schedule)
+    {
+        $schedule->command('command:DatabaseBackup')->daily();
+        return true;
+    }
+    protected function shouldRunWeekly($schedule)
+    {
+        $schedule->command('command:DatabaseBackup')->weekly();
+        return true;
+    }
+    protected function shouldRunMonthly($schedule)
+    {
+        $schedule->command('command:DatabaseBackup')->monthly();
+        return true;
     }
 }

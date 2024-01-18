@@ -62,10 +62,10 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
             'dump' => [
-                'dump_binary_path' => env('DB_DUMP_BINARY_PATH') ?: '/usr/bin/', // only the path, so without `mysqldump` or `pg_dump`
-                'use_single_transaction',
+                'dump_binary_path' => env('DB_DUMP_BINARY_PATH') ?? 'C:/xampp/mysql/bin/', // only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction' => true,
                 'timeout' => 60 * 10, // 10 minute timeout
-             ],
+            ],
         ],
 
         'pgsql' => [
@@ -128,7 +128,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [
