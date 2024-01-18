@@ -191,6 +191,67 @@
 
                                             </div>
                                         </fieldset>
+                                        <hr>
+                                        <fieldset>
+                                            <legend>
+                                                بکاپ خودکار دیتابیس
+                                            </legend>
+                                            <h3 style="font-size:large" class="mx-2">دوره:</h3>
+                                            <div class="row mt-1">
+                                                <div class="col-md-3 ">
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio"
+                                                            class="custom-control-input info_map_type backup-period"
+                                                            id="daily_backup" name="backup_period" value="daily"
+                                                            {{ option('backup_period') == 'daily' ? 'checked' : '' }}>
+                                                        <label class="custom-control-label"
+                                                            for="daily_backup">روزانه</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio"
+                                                            class="custom-control-input info_map_type backup-period"
+                                                            id="weekly_backup" name="backup_period" value="weekly"
+                                                            {{ option('backup_period') == 'weekly' ? 'checked' : '' }}>
+                                                        <label class="custom-control-label" for="weekly_backup">هفته
+                                                            وار</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio"
+                                                            class="custom-control-input info_map_type backup-period"
+                                                            id="monthly_backup" name="backup_period" value="monthly"
+                                                            {{ option('backup_period') == 'monthly' ? 'checked' : '' }}>
+                                                        <label class="custom-control-label"
+                                                            for="monthly_backup">ماهانه</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row my-2">
+
+                                                <div class="form-group col-md-4">
+                                                    <fieldset class="checkbox">
+                                                        <div class="vs-checkbox-con vs-checkbox-primary ">
+                                                            <input data-class='backup-period'
+                                                                class="check_status checkbox" id='backup_status'
+                                                                type="checkbox" name="backup_status"
+                                                                {{ option('backup_status') == 'on' ? 'checked' : '' }}>
+                                                            <span class="vs-checkbox">
+                                                                <span class="vs-checkbox--check">
+                                                                    <i class="vs-icon feather icon-check"></i>
+                                                                </span>
+                                                            </span>
+                                                            <span class="">فعال</span>
+                                                        </div>
+                                                    </fieldset>
+                                                </div>
+
+                                            </div>
+                                        </fieldset>
                                         <div class="row">
                                             <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
                                                 <button type="button" id="cornjob_form_button"
