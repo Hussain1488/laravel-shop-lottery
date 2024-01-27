@@ -6,16 +6,47 @@ $(document).ready(function () {
         language: {
             url: window.Laravel.datatable_fa
         },
+        // dom: '<"row"<"col-md-3"f><"col-md-3"l><"col-md-3"B><"col-md-3">>rtip',
+        // other DataTables options...
+        initComplete: function () {
+            // Add start_date and end_date inputs to the search input row
+            $('.dataTables_filter').append(
+                '<label>فیلتر از تاریخ:<input type="text" id="start_date" class="persian-date-picker" placeholder="فیلتر از تاریخ"></label>'
+                // '<div class="col"><input type="text" id="start_date" class="form-control persian-date-picker" placeholder="فیلتر از تاریخ..."></div>'
+            );
+            $('.dataTables_filter').append(
+                '<label>فیلتر تا تاریخ:<input type="text" id="end_date" class="persian-date-picker" placeholder="فیلتر تا تاریخ"></label>'
+                // '<div class="col"><input type="text" id="end_date" class="form-control persian-date-picker" placeholder="فیلتر تا تاریخ..."></div>'
+            );
+
+            // Add event listener to trigger search on date inputs
+            $('#start_date, #end_date').on('change', function () {
+                // Convert Persian dates to Gregorian before sending to server
+                var startDate = $('#start_date').val();
+                var endDate = $('#end_date').val();
+
+                $('#en_start_date').val(startDate.toEnglishDigit());
+                $('#en_end_date').val(endDate.toEnglishDigit());
+
+                $('#bank_transaction_list').DataTable().draw();
+            });
+
+            // Initialize Persian date picker
+            $('.persian-date-picker').customPersianDate();
+        },
         ajax: {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             url: bankId.data('action'), // Replace with the actual URL of your data endpoint
             type: 'POST',
-            data: {
-                bankId: bankId.val()
+            data: function (d) {
+                d.bankId = bankId.val();
+                d.start_date = $('#en_start_date').val();
+                d.end_date = $('#en_end_date').val();
             }
         },
+
         serverSide: true,
         columnDefs: [
             {targets: [0, 1, 2, 3, 4, 5], orderable: false} // Disable sorting for columns 1 and 5 (indexes start from 0)
