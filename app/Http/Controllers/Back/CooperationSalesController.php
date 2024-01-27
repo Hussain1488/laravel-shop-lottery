@@ -271,7 +271,7 @@ class CooperationSalesController extends Controller
         $trans_data = [
             'تراکنش:' => $description,
             'توسط:' => Auth::user()->username,
-            'مبلغ فروش بعد از کسر کارمزد:' => $final . 'ریال',
+            'مبلغ فروش بعد از کسر کارمزد:' => number_format($final) . 'ریال',
             'کارمزد:' => number_format($result) . 'ریال',
             'تاریخ:' => Jalalian::now()->format('d/M/Y'),
             'زمان:' => Jalalian::now()->format('H:i:s'),
