@@ -5,6 +5,8 @@
         <input type="hidden" value="{{ $id }}" id="bank_data"
             data-action="{{ route('admin.installmentreports.transactionFilter.data') }}"
             data-details-action="{{ route('admin.installmentreports.transactionDetails', ['id' => ':id']) }}">
+        <input type="hidden" id="en_start_date" name="start_date" value="">
+        <input type="hidden" id="en_end_date" name="end_date" value="">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
@@ -72,7 +74,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="table-responsive table-responsive">
+                                    <div class="table-responsive">
                                         <table class="table table-hover" id="bank_transaction_list">
                                             <thead>
 
