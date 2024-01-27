@@ -18,6 +18,7 @@ use App\Models\paymentdetails;
 use App\Models\PaymentListModel;
 use App\Models\StoreTransactionDetailsModel;
 use App\Models\User;
+use Carbon\Carbon;
 use CreateTypeOfAccountTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -559,61 +560,90 @@ class InstallmentReportsController extends Controller
     }
     public function transactionFilterData(Request $request)
     {
-        $trans = BankTransaction::query()->with('bank.account_type', 'buyerTransaction.user', 'storeTransaction.store.user');
-        $trans = $trans->where('bank_id', $request->input('bankId'))->latest();
 
-        $result = DataTables::eloquent($trans)
-            ->addColumn('counter', function () {
-                // static $counter = 0; // Use static to persist the counter across rows
-                return null;
-            })
-            ->addColumn('user', function ($trans) {
-                return $trans->store_trans_id
-                    ? $trans->storeTransaction->store->nameofstore
-                    : $trans->buyerTransaction->user->first_name . ' ' . $trans->buyerTransaction->user->last_name;
-            })
-            ->addColumn('source', function ($trans) {
-                return $trans->store_trans_id
-                    ? 'اپراتور'
-                    : 'کاربر';
-            })
-            ->addColumn('username', function ($trans) {
-                return $trans->store_trans_id
-                    ? $trans->storeTransaction->store->user->username
-                    : $trans->buyerTransaction->user->username;
-            })
-            ->filterColumn('username', function ($query, $keyword) {
-                $query->where(function ($query) use ($keyword) {
-                    $query->whereHas('storeTransaction.store.user', function ($query) use ($keyword) {
-                        $query->where('username', 'like', '%' . $keyword . '%');
-                    })
-                        ->orWhereHas('buyerTransaction.user', function ($query) use ($keyword) {
+        try {
+            $trans = BankTransaction::query()->with('bank.account_type', 'buyerTransaction.user', 'storeTransaction.store.user');
+            $trans = $trans->where('bank_id', $request->input('bankId'))->latest();
+            $start = null;
+            $end = null;
+
+            if ($request->has('start_date') && $request->input('start_date') !== null) {
+                $start = Jalalian::fromFormat('Y-m-d', $request->input('start_date'))->toCarbon();
+            }
+
+            if ($request->has('end_date') && $request->input('end_date') !== null) {
+                $end = Jalalian::fromFormat('Y-m-d', $request->input('end_date'))->toCarbon()->endOfDay();
+            }
+
+            if ($start !== null && $end !== null) {
+                // Both start_date and end_date are provided
+                $trans->whereBetween('created_at', [$start, $end]);
+            } elseif ($start !== null) {
+                // Only start_date is provided
+                $trans->where('created_at', '>=', $start);
+            } elseif ($end !== null) {
+                // Only end_date is provided
+                $trans->where('created_at', '<=', $end);
+            }
+
+
+            $result = DataTables::eloquent($trans)
+                ->addColumn('counter', function () {
+                    // static $counter = 0; // Use static to persist the counter across rows
+                    return null;
+                })
+                ->addColumn('user', function ($trans) {
+                    return $trans->store_trans_id
+                        ? $trans->storeTransaction->store->nameofstore
+                        : $trans->buyerTransaction->user->first_name . ' ' . $trans->buyerTransaction->user->last_name;
+                })
+                ->addColumn('source', function ($trans) {
+                    return $trans->store_trans_id
+                        ? 'اپراتور'
+                        : 'کاربر';
+                })
+                ->addColumn('username', function ($trans) {
+                    return $trans->store_trans_id
+                        ? $trans->storeTransaction->store->user->username
+                        : $trans->buyerTransaction->user->username;
+                })
+                ->filterColumn('username', function ($query, $keyword) {
+                    $query->where(function ($query) use ($keyword) {
+                        $query->whereHas('storeTransaction.store.user', function ($query) use ($keyword) {
                             $query->where('username', 'like', '%' . $keyword . '%');
-                        });
-                });
-            })
-            ->addColumn('transactionprice', function ($trans) {
-                return $trans->transactionprice;
-            })->addColumn('status', function ($trans) {
-                return $trans->type;
-            })
-            ->addColumn('bankbalance', function ($trans) {
-                return $trans->bankbalance;
-            })
-            ->addColumn('transaction_date', function ($trans) {
-                return [
-                    'date' => jdate($trans->created_at)->format('d/M/Y'),
-                    'time' => $trans->created_at->format('H:i:s'),
-                ];
-            })
-            ->addColumn('transaction_details', function ($trans) {
-                return $trans->id;
-            })
-            ->rawColumns(['username']) // Mark 'username' as raw HTML
-            ->make(true);
-        // Log::info($result);
+                        })
+                            ->orWhereHas('buyerTransaction.user', function ($query) use ($keyword) {
+                                $query->where('username', 'like', '%' . $keyword . '%');
+                            });
+                    });
+                })
+                ->addColumn('transactionprice', function ($trans) {
+                    return $trans->transactionprice;
+                })->addColumn('status', function ($trans) {
+                    return $trans->type;
+                })
+                ->addColumn('bankbalance', function ($trans) {
+                    return $trans->bankbalance;
+                })
+                ->addColumn('transaction_date', function ($trans) {
+                    return [
+                        'date' => jdate($trans->created_at)->format('d/M/Y'),
+                        'time' => $trans->created_at->format('H:i:s'),
+                    ];
+                })
+                ->addColumn('transaction_details', function ($trans) {
+                    return $trans->id;
+                })
+                ->rawColumns(['username']) // Mark 'username' as raw HTML
+                ->make(true);
+            // Log::info($result);
 
-        return $result;
+            return $result;
+        } catch (\Exception $e) {
+            \Log::error('Error in transactionFilterData: ' . $e->getMessage());
+            // You can return an error response or handle it according to your application's needs.
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
     }
     public function transactionDetails($id)
     {
