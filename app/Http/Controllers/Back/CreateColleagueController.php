@@ -40,9 +40,9 @@ class CreateColleagueController extends Controller
     // going to create colleague index view page
     public function index()
     {
-        $users = User::where('level', 'user', 'wallet')->get();
+        // $users = User::where('level', 'user', 'wallet')->get();
 
-        return view('back.createcolleague.index', compact('users'));
+        return view('back.createcolleague.index');
     }
 
     // creating new seller from users
