@@ -79,38 +79,62 @@ class OperatorActivityController extends Controller
     }
     public function getOperatorActivityData(Request $request)
     {
-        $operatorId = $request->input('operator_id');
+        try {
+            $operatorId = $request->input('operator_id');
 
-        $operations = OperatorActivity::query()->with('user')->where('operator_id', $operatorId);
+            $operations = OperatorActivity::query()->with('user')->where('operator_id', $operatorId);
+            $start = null;
+            $end = null;
+            if ($request->has('start_date') && $request->input('start_date') !== null) {
+                $start = Jalalian::fromFormat('Y-m-d', $request->input('start_date'))->toCarbon();
+            }
 
+            if ($request->has('end_date') && $request->input('end_date') !== null) {
+                $end = Jalalian::fromFormat('Y-m-d', $request->input('end_date'))->toCarbon()->endOfDay();
+            }
 
-        return DataTables::eloquent($operations)
-            ->addColumn('counter', function () {
-                // static $counter = 0; // Use static to persist the counter across rows
-                return null;
-            })
-            ->addColumn('formatted_date', function ($operation) {
-                return jdate($operation->created_at)->format('H:i:s d/M/Y');
-            })
-            ->addColumn('username', function ($operation) {
-                return $operation->user ? $operation->user->username : '<span class="text-danger">گیرنده ندارد</span>';
-            })->filterColumn('username', function ($query, $keyword) {
-                $query->whereHas('user', function ($query) use ($keyword) {
-                    $query->where('username', 'like', '%' . $keyword . '%');
-                });
-            })
-            ->addColumn('details_action', function ($operation) {
-                $dataDate = jdate($operation->created_at)->format('d/M/Y');
-                $dataTime = $operation->created_at->format('H:i:s');
-                $dataAction = route('admin.operatoractivity.details', [$operation->id]);
-                return [
-                    'data_date' => $dataDate,
-                    'data_time' => $dataTime,
-                    'data_action' => $dataAction,
-                ];
-            })
-            ->rawColumns(['details_action', 'username']) // Mark 'details_action' as raw HTML
-            ->make(true);
+            if ($start !== null && $end !== null) {
+                // Both start_date and end_date are provided
+                $operations->whereBetween('created_at', [$start, $end]);
+            } elseif ($start !== null) {
+                // Only start_date is provided
+                $operations->where('created_at', '>=', $start);
+            } elseif ($end !== null) {
+                // Only end_date is provided
+                $operations->where('created_at', '<=', $end);
+            }
+            return DataTables::eloquent($operations)
+                ->addColumn('counter', function () {
+                    // static $counter = 0; // Use static to persist the counter across rows
+                    return null;
+                })
+                ->addColumn('formatted_date', function ($operation) {
+                    return jdate($operation->created_at)->format('H:i:s d/M/Y');
+                })
+                ->addColumn('username', function ($operation) {
+                    return $operation->user ? $operation->user->username : '<span class="text-danger">گیرنده ندارد</span>';
+                })->filterColumn('username', function ($query, $keyword) {
+                    $query->whereHas('user', function ($query) use ($keyword) {
+                        $query->where('username', 'like', '%' . $keyword . '%');
+                    });
+                })
+                ->addColumn('details_action', function ($operation) {
+                    $dataDate = jdate($operation->created_at)->format('d/M/Y');
+                    $dataTime = $operation->created_at->format('H:i:s');
+                    $dataAction = route('admin.operatoractivity.details', [$operation->id]);
+                    return [
+                        'data_date' => $dataDate,
+                        'data_time' => $dataTime,
+                        'data_action' => $dataAction,
+                    ];
+                })
+                ->rawColumns(['details_action', 'username']) // Mark 'details_action' as raw HTML
+                ->make(true);
+        } catch (\Exception $e) {
+            \Log::error('Error in operator activity data: ' . $e->getMessage());
+            // You can return an error response or handle it according to your application's needs.
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
     }
 
     /**
