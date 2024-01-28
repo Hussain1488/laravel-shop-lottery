@@ -6,8 +6,7 @@ $(document).ready(function () {
         language: {
             url: window.Laravel.datatable_fa
         },
-        // dom: '<"row"<"col-md-3"f><"col-md-3"l><"col-md-3"B><"col-md-3">>rtip',
-        // other DataTables options...
+        
         initComplete: function () {
             // Add start_date and end_date inputs to the search input row
             $('.dataTables_filter').append(
