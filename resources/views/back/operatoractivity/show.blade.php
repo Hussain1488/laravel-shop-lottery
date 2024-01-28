@@ -1,9 +1,11 @@
 @extends('back.layouts.master')
 
 @section('content')
-    @use \Morilog\Jalali\Jalalian;
-
     <div class="app-content content">
+        <input type="hidden" class="en_start_date" name="start_date" value="">
+        <input type="hidden" class="en_end_date" name="end_date" value="">
+        <input type="hidden" name="operator" id="operato-id" data-action="{{ route('admin.get.operator.activity.data') }}"
+            class="form-control w-auto mr-1" value="{{ $operator->id }}">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
@@ -59,9 +61,7 @@
                                                         جستوجو گیرنده عملیات اساس شماره تماس
                                                     </h4>
                                                     <div class="d-flex"> --}}
-                                        <input type="hidden" name="operator" id="operato-id"
-                                            data-action="{{ route('admin.get.operator.activity.data') }}"
-                                            class="form-control w-auto mr-1" value="{{ $operator->id }}">
+
                                         {{-- <input type="text" name="filter"
                                                             class="form-control w-auto mr-1" placeholder="جستجو">
                                                         <input type="submit" class="btn btn-info" value="جستجو">
