@@ -6,14 +6,43 @@ $(document).ready(function () {
         language: {
             url: window.Laravel.datatable_fa
         },
+        initComplete: function () {
+            // Add start_date and end_date inputs to the search input row
+            $('.dataTables_filter').append(
+                '<label>فیلتر از تاریخ:<input type="text"  class="persian-date-picker start_date" placeholder="فیلتر از تاریخ"></label>'
+                // '<div class="col"><input type="text" id="start_date" class="form-control persian-date-picker" placeholder="فیلتر از تاریخ..."></div>'
+            );
+            $('.dataTables_filter').append(
+                '<label>فیلتر تا تاریخ:<input type="text"  class="persian-date-picker end_date" placeholder="فیلتر تا تاریخ"></label>'
+                // '<div class="col"><input type="text" id="end_date" class="form-control persian-date-picker" placeholder="فیلتر تا تاریخ..."></div>'
+            );
+
+            // Add event listener to trigger search on date inputs
+            $('.start_date, .end_date').on('change', function () {
+                // Convert Persian dates to Gregorian before sending to server
+                var startDate = $('.start_date').val();
+                var endDate = $('.end_date').val();
+
+                $('.en_start_date').val(startDate.toEnglishDigit());
+                $('.en_end_date').val(endDate.toEnglishDigit());
+                // console.log($('.en_end_date').val(), $('.en_start_date').val());
+
+                $('#operatorActivity').DataTable().draw();
+            });
+
+            // Initialize Persian date picker
+            $('.persian-date-picker').customPersianDate();
+        },
         ajax: {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             url: $('#operato-id').data('action'), // Replace with the actual URL of your data endpoint
             type: 'POST',
-            data: {
-                operator_id: operatorId
+            data: function (d) {
+                d.operator_id = operatorId;
+                d.start_date = $('.en_start_date').val();
+                d.end_date = $('.en_end_date').val();
             }
         },
         serverSide: true,
