@@ -130,7 +130,7 @@ class CooperationSalesController extends Controller
             ]);
             $store_trans = createstoretransaction::storeTransaction($store, $Creditamount, false, 3, 0, $request->user_id, null, $description);
             StoreTransactionDetailsModel::createDetail($store_trans, $trans_data);
-            $bankt_tras = banktransaction::transaction($bank_id->id, $Creditamount, false, $store_trans, 'store');
+            // $bankt_tras = banktransaction::transaction($bank_id->id, $Creditamount, false, $store_trans, 'store');
 
 
             $store->save();
@@ -162,13 +162,13 @@ class CooperationSalesController extends Controller
     public function clearingStore(Request $request)
     {
 
-        $bank_id =   BankAccount::whereHas('account_type', function ($query) {
-            $query->where('code', 24);
-        })->first();
-        if (!$bank_id) {
-            toastr()->error('شما هیچ بانکی با ماهیت واسط اقساط ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
-            return redirect()->back();
-        }
+        // $bank_id =   BankAccount::whereHas('account_type', function ($query) {
+        //     $query->where('code', 24);
+        // })->first();
+        // if (!$bank_id) {
+        //     toastr()->error('شما هیچ بانکی با ماهیت واسط اقساط ندارید. لطفا ایجاد نموده دوباره تلاش کنید.');
+        //     return redirect()->back();
+        // }
         // dd($account);
         // dd($request->all());
         $store = createstore::find($request->store);
@@ -224,13 +224,13 @@ class CooperationSalesController extends Controller
             ]);
             // creating new store transaction for mainWallet transaction.
             StoreTransactionDetailsModel::createDetail($transaction, $trans_data);
-            $bank_trans = banktransaction::transaction($bank_id->id, $depositamount, false, $transaction, 'store');
+            // $bank_trans = banktransaction::transaction($bank_id->id, $depositamount, false, $transaction, 'store');
             $store->save();
 
             DB::commit();
             toastr()->success('درخواست تسویه حساب با موفقیت ارسال شد.');
             return redirect()->back()->with('register_number', $register_number);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             Log::error($e);
             toastr()->error('خطایی در ارسال درخواست رخ داده است!.' . $e);
@@ -296,13 +296,13 @@ class CooperationSalesController extends Controller
             StoreTransactionDetailsModel::createDetail($transaction, $trans_data);
             $bank_trans = banktransaction::transaction($store->account_id, $result, true, $transaction, 'store');
 
-            $bank_trans = banktransaction::transaction($bank_id->id, $installment->Creditamount, false, $transaction, 'store');
+            // $bank_trans = banktransaction::transaction($bank_id->id, $installment->Creditamount, false, $transaction, 'store');
 
             $installment->save();
             $store->save();
             DB::commit();
             toastr()->success('درخواست تسویه حساب موفقیت آمیز انجام شد.');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             Log::error($e);
             toastr()->error('مشکلی در درخواست تسویه حساب رخ داده است!!' . $e);
