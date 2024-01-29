@@ -2,8 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\BankAccount;
+use App\Models\banktransaction;
 use App\Models\CornjobModel;
 use App\Models\createstore;
+use App\Models\createstoretransaction;
 use Illuminate\Support\Facades\Log;
 
 use Illuminate\Console\Command;
@@ -44,10 +47,17 @@ class StoreCreditReset extends Command
     public function handle()
     {
         // Session::put('storeCredit', true);
+        $bank_id = BankAccount::whereHas('account_type', function ($query) {
+            $query->where('code', 25);
+        })->first();
 
         $stores = createstore::all();
         foreach ($stores as $key) {
+
+            banktransaction::transaction($bank_id->id, $key->storecredit, true, null, 'store');
             $key->storecredit = $key->conrn_job_reccredite;
+            $trans_id = createstoretransaction::storeTransaction($key, $key->conrn_job_reccredite, true, 3, 1, $key->user_id, null,  'اعتبار دهی دوره ای فروشگاه');
+            banktransaction::transaction($bank_id->id, $key->conrn_job_reccredite, false, $trans_id, 'store');
             $key->save();
         }
 
