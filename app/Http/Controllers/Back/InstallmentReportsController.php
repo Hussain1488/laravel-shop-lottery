@@ -203,10 +203,10 @@ class InstallmentReportsController extends Controller
 
             $operator_id = OperatorActivity::createActivity($store->user->id, 'PAY_REQUEST_PAYMENT');
             ActivityDetailsModel::createActivityDetail($operator_id, $data);
-            $trans_id = createstoretransaction::storeTransaction($store, $payList->depositamount, true, 1, 2, null, null, $description);
-            StoreTransactionDetailsModel::createDetail($trans_id, $trans_data);
+            // $trans_id = createstoretransaction::storeTransaction($store, $payList->depositamount, true, 1, 2, null, null, $description);
+            // StoreTransactionDetailsModel::createDetail($trans_id, $trans_data);
 
-            $this->RequestPayment($request->pay_list_id, $request->nameofbank, $trans_id);
+            $this->RequestPayment($request->pay_list_id, $request->nameofbank, null);
             DB::commit();
             toastr()->success('اطلاعات پرداخت موفقیت آمیز ذخیره شد.');
         } catch (\Exception $e) {
