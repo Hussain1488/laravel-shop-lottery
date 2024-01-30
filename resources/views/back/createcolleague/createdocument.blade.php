@@ -47,21 +47,20 @@
                                         <div class="row mt-1">
                                             <div class="col-lg-3 col-md-6 col-12">
                                                 <h5>
-                                                    نام بده کار
+                                                    بدهکار
                                                 </h5>
                                             </div>
                                             <div class="col-lg-3 col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <label></label>
-                                                    <select type="text" class="form-control select2 account_selection"
-                                                        name="bank_id">
-                                                        @isset($bank)
-                                                            <option attr-name="" value="mellat bank">بده کار را انتخاب کنید
-                                                            </option>
-                                                            @foreach ($bank as $key)
-                                                                <option {{ old('bank_id') == $key->id ? 'selected' : '' }}
-                                                                    attr-name="{{ $key->bankname }}"
-                                                                    value="{{ $key->id }}">{{ $key->accountnumber }}
+                                                    <label>ماهیت بدهکار</label>
+                                                    <select type="text" class="form-control select2 debtor_selection"
+                                                        name="debtor_type">
+                                                        @isset($type)
+                                                            <option value="0">نوع حساب را انتخاب کنید</option>
+                                                            @foreach ($type as $key)
+                                                                <option {{ old('bank_id') == $key['id'] ? 'selected' : '' }}
+                                                                    attr-code="{{ $key['code'] }}" value="{{ $key['id'] }}">
+                                                                    {{ $key['name'] }}
                                                                 </option>
                                                             @endforeach
                                                         @else
@@ -69,7 +68,8 @@
                                                         @endisset
 
                                                     </select>
-                                                    <div class="m-1">
+
+                                                    <div class="">
                                                         <span class="account-title" id=""></span>
                                                         <span class="text-success account-name" id=""></span>
                                                     </div>
@@ -79,32 +79,36 @@
                                                         </span>
                                                     @enderror
                                                 </div>
+                                                <div class="form-group debtor-container">
+                                                    <label></label>
+                                                    <select class="form-control select2 debtor_selection_input"
+                                                        name="debtor">
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-3 col-md-6 col-12 ">
                                                 <h5>
-                                                    نام بستانکار
+                                                    بستانکار
                                                 </h5>
                                             </div>
                                             <div class="col-lg-3 col-md-6 col-12">
                                                 <div class="form-group">
-                                                    <label>سرچ بر اساس شماره تلفن</label>
-                                                    <select type="text" class="form-control user_select2"
-                                                        id="user_selection" name="user_id">
-                                                        {{-- @isset($users)
-                                                            <option value=" ">کاربر را انتخاب کنید
-                                                            </option>
-                                                            @foreach ($users as $item)
-                                                                <option {{ old('user_id') == $item->id ? 'selected' : '' }}
-                                                                    data-name="{{ $item->first_name }}"
-                                                                    data-lastname="{{ $item->last_name }}"
-                                                                    value="{{ $item->id }}">
-                                                                    {{ $item->username }}</option>
+                                                    <label>ماهیت بستانکار</label>
+                                                    <select type="text" class="form-control select2 creditor_selection"
+                                                        name="creditor_account">
+                                                        @isset($type)
+                                                            <option value="0">نوع حساب را انتخاب کنید</option>
+                                                            @foreach ($type as $key)
+                                                                <option {{ old('creditor') == $key['id'] ? 'selected' : '' }}
+                                                                    attr-code="{{ $key['code'] }}" value="{{ $key['id'] }}">
+                                                                    {{ $key['name'] }}
+                                                                </option>
                                                             @endforeach
                                                         @else
-                                                            <option value="">کاربری برای انتخاب وجود ندارد</option>
-                                                        @endisset --}}
+                                                            <option value="mellat bank">گزینه ای برای انتخاب وجود ندارد</option>
+                                                        @endisset
                                                     </select>
                                                     @error('user_id')
                                                         <span class="text-danger">
@@ -114,6 +118,13 @@
                                                     <div class="m-1">
                                                         <span class="user_title" id="user_title"></span>
                                                         <span class="text-success user_name" id="user_name"></span>
+                                                    </div>
+                                                    <div class="form-group creditor-container">
+                                                        <label></label>
+                                                        <select type="text"
+                                                            class="form-control select2 creditor_selection_input"
+                                                            name="creditor">
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -231,7 +242,10 @@
 
 @push('scripts')
     <script>
-        var url = '{{ route('admin.user.searchUser') }}'
+        var url = '{{ route('admin.user.searchUser') }}';
+        var sellerUrl = '{{ route('admin.user.sellerlist') }}';
+        var accountUrl = '{{ route('admin.createcolleague.accountList') }}';
     </script>
     <script src="{{ asset('back/assets/js/pages/createcollegue/myscript.js') }}"></script>
+    <script src="{{ asset('back/assets/js/pages/createcollegue/createDocument.js') }}"></script>
 @endpush
