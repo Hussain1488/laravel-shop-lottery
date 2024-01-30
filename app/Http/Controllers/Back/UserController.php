@@ -313,4 +313,20 @@ class UserController extends Controller
 
         return response()->json($users);
     }
+    public function sellerlist(Request $request)
+    {
+        $query = $request->input('q');
+
+        $user = User::where('username', 'like', "%$query%")
+            ->with('wallet')->get(['id', 'first_name', 'last_name', 'username', 'purchasecredit']);
+        $users = [];
+
+        foreach ($user as $key) {
+            if (createstore::where('user_id', $key->id)->exists()) {
+                $users[] = $key;
+            };
+        }
+
+        return response()->json($users);
+    }
 }
