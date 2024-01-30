@@ -94,7 +94,7 @@ class InstallmentsController extends Controller
             return redirect()->back()->with('warning', 'درخواست شما با مشکل مواجه شده است، لطفا به مرکز گزارش بدهید!');
         }
         $bank_id1 = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('code', 26);
+            $query->where('code', 27);
         })->first();
         if (!$bank_id1) {
             return redirect()->back()->with('warning', 'درخواست شما با مشکل مواجه شده است، لطفا به مرکز گزارش بدهید!');
@@ -139,9 +139,10 @@ class InstallmentsController extends Controller
 
                 $buyer_trans = buyertransaction::transaction(Auth::user(), $installments->Creditamount, false, '0', '0', 'تأیید خرید');
 
-                $bank = banktransaction::transaction($bank_id->id, $installments->prepaidamount, true, $buyer_trans1->id, 'user');
+                $bank1 = banktransaction::transaction($bank_id1->id, $installments->prepaidamount, true, $buyer_trans1->id, 'user');
 
-                $bank1 = banktransaction::transaction($bank_id1->id, $installments->Creditamount, true, $buyer_trans->id, 'user');
+                $bank = banktransaction::transaction($bank_id->id, ($installments->amounteachinstallment * $installments->numberofinstallments), false, null, 'user');
+
 
                 $wallet->save(); // Save the changes to the database
                 $user->save();
