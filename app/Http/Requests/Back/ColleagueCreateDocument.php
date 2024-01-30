@@ -25,11 +25,11 @@ class ColleagueCreateDocument extends FormRequest
     {
 
         return [
-            "bank_id" => "required",
-            "user_id" => "required",
-            "ReCredintAmount" => "required",
-            "documents" => "required",
-            "description" => "required|max:700",
+            // "bank_id" => "required",
+            // "user_id" => "required",
+            // "ReCredintAmount" => "required",
+            // "documents" => "required",
+            // "description" => "required|max:700",
         ];
     }
     public function attributes()
