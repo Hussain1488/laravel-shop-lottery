@@ -144,6 +144,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('createcolleague/reaccreditation', [CreateColleagueController::class, 'reaccreditationIndex'])->name('createcolleague.reaccreditation.index');
     Route::post('createcolleague/reaccreditationStore', [CreateColleagueController::class, 'reaccreditationStore'])->name('createcolleague.reaccreditation.store');
     Route::post('createcolleague/createDocumentStore', [CreateColleagueController::class, 'createDocumentStore'])->name('createcolleague.Documentstore');
+    Route::get('createcolleague/accountList', [CreateColleagueController::class, 'accountList'])->name('createcolleague.accountList');
 
     // ------------------ installment Reports
     Route::get('installmentreports/index', [InstallmentReportsController::class, 'index'])->name('installmentreports.index');
@@ -185,6 +186,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('user/profile', [UserController::class, 'showProfile'])->name('user.profile.show');
     Route::put('user/profile', [UserController::class, 'updateProfile'])->name('user.profile.update');
     Route::get('/searchUser', [UserController::class, 'searchUser'])->name('user.searchUser');
+    Route::get('/sellerlist', [UserController::class, 'sellerlist'])->name('user.sellerlist');
 
     // ------------------ wallets
     Route::resource('wallets', WalletController::class)->only(['show', 'index']);
