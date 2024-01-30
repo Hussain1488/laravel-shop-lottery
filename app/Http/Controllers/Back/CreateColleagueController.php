@@ -11,6 +11,7 @@ use App\Http\Requests\Back\ShopShopUpdateRequest;
 use App\Models\ActivityDetailsModel;
 use App\Models\BankAccount;
 use App\Models\banktransaction;
+use App\Models\bankTypeModel;
 use App\Models\buyertransaction;
 use App\Models\createdocument;
 use App\Models\StoreTransactionDetailsModel;
@@ -27,6 +28,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Morilog\Jalali\Jalalian;
+use stdClass;
 use ZipArchive;
 
 class CreateColleagueController extends Controller
@@ -463,20 +465,36 @@ class CreateColleagueController extends Controller
     // create document view page
     public function createdocument()
     {
+        $existingRecords = bankTypeModel::get();
+        $newRecord1 = new bankTypeModel();
+        $newRecord1->id = 8;
+        $newRecord1->code = 28;
+        $newRecord1->name = 'فروشگاه';
 
-        $bank = BankAccount::whereHas('account_type', function ($query) {
-            $query->where('code', 21);
-        })->get();
+        $newRecord2 = new bankTypeModel();
+        $newRecord2->id = 9;
+        $newRecord2->code = 29;
+        $newRecord2->name = 'خریدار';
 
+        // Convert the existing records and the new records to arrays
+        $existingRecordsArray = $existingRecords->toArray();
+        $newRecordArray1 = $newRecord1->toArray();
+        $newRecordArray2 = $newRecord2->toArray();
+
+        // Merge the arrays into a single array
+        $type = array_merge($existingRecordsArray, [$newRecordArray1, $newRecordArray2]);
+
+        // Display the merged array
+        // dd($type);
         $users = User::where('level', 'user')->get();
 
-        return view('back.createcolleague.createdocument', compact('users', 'bank'));
+        return view('back.createcolleague.createdocument', compact('users', 'type'));
     }
 
     // storing document store function
     public function createDocumentStore(ColleagueCreateDocument $request)
     {
-        // dd($request->all());
+        dd($request->all());
         $user = User::find($request->user_id);
         if ($request->hasFile('documents')) {
             $files = $request->file('documents');
@@ -537,5 +555,10 @@ class CreateColleagueController extends Controller
         }
         toastr()->warning('متأسفانه عملیات انجام نشد!');
         return redirect()->back();
+    }
+    public function accountList()
+    {
+        $account = BankAccount::get(['id', 'bankname']);
+        return response()->json($account);
     }
 }
