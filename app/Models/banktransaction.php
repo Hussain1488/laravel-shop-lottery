@@ -34,6 +34,10 @@ class banktransaction extends Model
     {
         return $this->hasOne(createdocument::class, 'transaction_id');
     }
+    public function storeDocument()
+    {
+        return $this->hasOne(StoreDoumentModel::class, 'transaction_id');
+    }
 
     public static function transaction($bank_id, $creditAmount, $status, $trans_id, $user)
     {
