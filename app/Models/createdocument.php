@@ -10,7 +10,7 @@ class createdocument extends Model
     use HasFactory;
     protected $table = 'createdocuments';
 
-    protected $fillable = ['transaction_id', 'user_id', 'documents', 'numberofdocuments', 'description'];
+    protected $fillable = ['transaction_id', 'user_id', 'documents', 'numberofdocuments', 'description', 'type'];
 
     public function transaction()
     {
