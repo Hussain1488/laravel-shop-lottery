@@ -195,21 +195,9 @@ $('#Account_type').on('change', function () {
 });
 
 function accountType() {
-    let account_type = $('#Account_type option:selected').text();
+    let account_type = $('#Account_type option:selected');
     console.log(account_type);
-    if (account_type == 'بانک') {
-        $('#Acount_number_prefix').val(21);
-    } else if (account_type == 'هزینه') {
-        $('#Acount_number_prefix').val(22);
-    } else if (account_type == 'درآمد') {
-        $('#Acount_number_prefix').val(23);
-    } else if (account_type == 'واسط قسط ها') {
-        $('#Acount_number_prefix').val(24);
-    } else if (account_type == 'واسط اعتبار فروش فروشگاه ها') {
-        $('#Acount_number_prefix').val(25);
-    } else if (account_type == 'مقدار اعتبار خرید خریدارها') {
-        $('#Acount_number_prefix').val(26);
-    }
+    $('#Acount_number_prefix').val(account_type.data('code'));
 }
 
 $('#submit_form_pay').on('click', function () {
