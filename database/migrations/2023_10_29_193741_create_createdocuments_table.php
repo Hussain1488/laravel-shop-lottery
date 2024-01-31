@@ -18,6 +18,7 @@ class CreateCreatedocumentsTable extends Migration
             $table->unsignedBigInteger('transaction_id');
             $table->unsignedBigInteger('user_id');
             $table->text('documents')->nullable();
+            $table->enum('type', ['withdraw', 'deposit'])->nullable();
             $table->bigInteger('numberofdocuments')->nullable();
             $table->foreign('transaction_id')->references('id')->on('banktransactions');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
