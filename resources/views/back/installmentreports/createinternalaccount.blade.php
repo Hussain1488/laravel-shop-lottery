@@ -69,7 +69,8 @@
                                             <select type="text" id="Account_type" class="form-control user_select2"
                                                 name="account_type_id">
                                                 @foreach ($types as $key)
-                                                    <option value="{{ $key->id }}">{{ $key->name }}</option>
+                                                    <option data-code={{ $key->code }} value="{{ $key->id }}">
+                                                        {{ $key->name }}</option>
                                                 @endforeach
                                             </select>
 
