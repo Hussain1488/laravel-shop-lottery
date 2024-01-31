@@ -64,7 +64,7 @@
                                                                 </option>
                                                             @endforeach
                                                         @else
-                                                            <option value="mellat bank">گزینه ای برای انتخاب وجود ندارد</option>
+                                                            <option value="">گزینه ای برای انتخاب وجود ندارد</option>
                                                         @endisset
 
                                                     </select>
@@ -82,7 +82,7 @@
                                                 <div class="form-group debtor-container">
                                                     <label></label>
                                                     <select class="form-control select2 debtor_selection_input"
-                                                        name="debtor">
+                                                        name="debtor" style="width:100%">
                                                     </select>
                                                 </div>
                                             </div>
@@ -97,7 +97,7 @@
                                                 <div class="form-group">
                                                     <label>ماهیت بستانکار</label>
                                                     <select type="text" class="form-control select2 creditor_selection"
-                                                        name="creditor_account">
+                                                        name="creditor_type">
                                                         @isset($type)
                                                             <option value="0">نوع حساب را انتخاب کنید</option>
                                                             @foreach ($type as $key)
@@ -123,7 +123,7 @@
                                                         <label></label>
                                                         <select type="text"
                                                             class="form-control select2 creditor_selection_input"
-                                                            name="creditor">
+                                                            name="creditor" style="width:100%">
                                                         </select>
                                                     </div>
                                                 </div>
@@ -142,9 +142,8 @@
                                                 <div class="d-flex align-items-center">
 
                                                     <input type="text" placeholder="100,000"
-                                                        class="form-control moneyInput" id="ReCredintAmount"
-                                                        name="ReCredintAmount" style="margin-left: 4px;"
-                                                        value="{{ old('ReCredintAmount') }}">
+                                                        class="form-control moneyInput" id="ReCredintAmount" name="amount"
+                                                        style="margin-left: 4px;" value="{{ old('ReCredintAmount') }}">
                                                     <span>ریال</span>
                                                 </div>
                                                 <span class="text-danger price_limit_message"></span>
