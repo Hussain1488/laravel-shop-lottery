@@ -110,7 +110,8 @@ $(document).ready(function () {
                 accountList(
                     accountUrl,
                     debtor_selection,
-                    $('.debtor-container')
+                    $('.debtor-container'),
+                    $('.debtor_selection')
                 );
             }
         }
@@ -147,7 +148,8 @@ $(document).ready(function () {
                 accountList(
                     accountUrl,
                     creditor_selection,
-                    $('.creditor-container')
+                    $('.creditor-container'),
+                    $('.creditor_selection')
                 );
             }
         }
@@ -283,8 +285,9 @@ $(document).ready(function () {
         container.show(500);
     }
 
-    function accountList(url, selector, container) {
+    function accountList(url, selector, container, type_selector) {
         clearSelect2Options(selector);
+        // console.log(type_selector.val());
         selector.select2({
             placeholder: 'حساب مد نظر را انتخاب کنید!',
             tags: false,
@@ -292,6 +295,11 @@ $(document).ready(function () {
                 url: url,
                 dataType: 'json',
                 delay: 250,
+                data: function () {
+                    return {
+                        id: type_selector.val()
+                    };
+                },
                 processResults: function (data) {
                     // Log the data to the console for debugging
                     console.log(data);
