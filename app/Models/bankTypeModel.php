@@ -11,4 +11,9 @@ class bankTypeModel extends Model
 
     protected $table = 'type_of_account';
     protected $fillable = ['Name'];
+
+    public function account()
+    {
+        return $this->hasMany(BankAccount::class, 'account_type_id');
+    }
 }
