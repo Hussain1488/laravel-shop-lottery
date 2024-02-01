@@ -20,6 +20,7 @@ class CreateCreatedocumentsTable extends Migration
             $table->text('documents')->nullable();
             $table->enum('type', ['withdraw', 'deposit'])->nullable();
             $table->bigInteger('numberofdocuments')->nullable();
+            $table->string('description', 710)->nullable();
             $table->foreign('transaction_id')->references('id')->on('banktransactions');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->index('user_id');
