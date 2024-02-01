@@ -20,8 +20,9 @@ class CreateStoreDocumentTable extends Migration
             $table->text('documents')->nullable();
             $table->enum('type', ['withdraw', 'deposit'])->nullable();
             $table->bigInteger('numberofdocuments')->nullable();
+            $table->string('description', 710)->nullable();
             $table->foreign('transaction_id')->references('id')->on('banktransactions');
-            $table->foreign('user_id')->references('id')->on('createstores')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('store_id')->references('id')->on('createstores')->onDelete('cascade')->onUpdate('cascade');
             $table->index('store_id');
             $table->index('transaction_id');
             $table->timestamps();
