@@ -20,6 +20,7 @@ use App\Models\User;
 use App\Models\createstore;
 use App\Models\createstoretransaction;
 use App\Models\OperatorActivity;
+use App\Models\StoreDoumentModel;
 use App\Models\Wallet;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -82,8 +83,8 @@ class CreateColleagueController extends Controller
 
     public function shopUpdate(ShopShopUpdateRequest $request, $id)
     {
-        // dd(ActivityDetailsModel::latest()->first()->data);
         $store = createstore::find($id);
+
         $carbonDate = null;
         $conrn_job_reccredite = intval(str_replace(',', '', $request->conrn_job_reccredite));
 
@@ -495,7 +496,8 @@ class CreateColleagueController extends Controller
     public function createDocumentStore(ColleagueCreateDocument $request)
     {
 
-        if ($request->debtor_type == 9 || $request->debtor_type == 8 && $request->creditor_type == 9 || $request->creditor_type == 8) {
+        if (($request->debtor_type == 9 || $request->debtor_type == 8) && ($request->creditor_type == 9 || $request->creditor_type == 8)) {
+            // dd($request->all());
             toastr()->warning('ماهیت طلب کار باید از نوع حساب های داخلی باشد!');
             return redirect()->back();
         } else if ($request->debtor_type == $request->creditor_type) {
@@ -512,15 +514,34 @@ class CreateColleagueController extends Controller
             ];
             // dd($request->documents, $data);
             $number = $this->buyerCreditor($data);
-            // dd($number);
             if ($number != 0) {
                 return redirect()->back()->with('number', $number);
             } else {
                 toastr()->warning('متأسفانه عملیات انجام نشد!');
                 return redirect()->back();
             }
-        }
-        if ($request->creditor_type == 8) {
+        }else if ($request->debtor_type == 9) {
+            $user = user::with('wallet')->find($request->input('debtor'));
+            if ($user->wallet->balance >= $request->input('amount')) {
+                $data = [
+                    'debtor' => $request->input('debtor'),
+                    'creditor' => $request->input('creditor'),
+                    'amount' => $request->input('amount'),
+                    'description' => $request->input('description'),
+                    'document' => $request->documents,
+                ];
+                $number = $this->buyerDebtor($data);
+                if ($number != 0) {
+                    return redirect()->back()->with('number', $number);
+                } else {
+                    toastr()->warning('متأسفانه عملیات انجام نشد!');
+                    return redirect()->back();
+                }
+            } else {
+                toastr()->warning('مبلغ کیف پول کاربر کمتر از مبلغ درخواستی میباشد!');
+                return redirect()->back();
+            }
+        }else if ($request->creditor_type == 8) {
             $data = [
                 'debtor' => $request->input('debtor'),
                 'creditor' => $request->input('creditor'),
@@ -529,9 +550,40 @@ class CreateColleagueController extends Controller
                 'document' => $request->documents,
             ];
             $number = $this->storeCreditor($data);
+            if ($number != 0) {
+                toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
+                return redirect()->back()->with('number', $number);
+            } else {
+                toastr()->warning('متأسفانه عملیات انجام نشد!');
+                return redirect()->back();
+            }
+        }else if ($request->debtor_type == 8) {
+            $store = createstore::where('user_id', $request->input('debtor'))->first();
+            // dd($store);
+            if ($store->salesamount >= $request->input('amount')) {
+                $data = [
+                    'debtor' => $request->input('debtor'),
+                    'creditor' => $request->input('creditor'),
+                    'amount' => $request->input('amount'),
+                    'description' => $request->input('description'),
+                    'document' => $request->documents,
+                ];
+                $number = $this->storeDebtor($data);
+                if ($number != 0) {
+                    toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
+                    return redirect()->back()->with('number', $number);
+                } else {
+                    toastr()->warning('متأسفانه عملیات انجام نشد!');
+                    return redirect()->back();
+                }
+            } else {
+                toastr()->warning('مبلغ کیف پول فروشگاه کمتر از مبلغ درخواستی میباشد!');
+                return redirect()->back();
+            }
+        }else{
+
         }
     }
-
     public function buyerCreditor($data)
     {
         $user = User::find($data['creditor']);
@@ -539,7 +591,6 @@ class CreateColleagueController extends Controller
             $files = $data['document'];
             $paths = [];
             foreach ($files as $file) {
-
                 $imageName = time() . '_DocCreate.' . $file->getClientOriginalExtension();
                 $file->move('document/DocCreate/', $imageName);
                 $path = '/document/DocCreate/' . $imageName;
@@ -553,16 +604,13 @@ class CreateColleagueController extends Controller
         } else {
             $number = 10000;
         }
-
         // Get the wallet for the user
         $wallet = $user->getWallet();
-
         try {
             DB::beginTransaction();
 
             $buyerTrans = buyertransaction::transaction($user, $data['amount'], true, '1', '1', 'ایجاد سند مالی');
             $bank = banktransaction::transaction($data['debtor'], $data['amount'], false, $buyerTrans->id, 'user');
-
             $history = $wallet->histories()->create([
                 'type'        => 'deposit',
                 'amount'      => $data['amount'],
@@ -571,7 +619,7 @@ class CreateColleagueController extends Controller
                 'status'      => 'success'
             ]);
             $data1 = [
-                'موجودی قبلی' => $wallet->balance,
+                'موجودی قبلی' => $wallet->balance . ' ریال',
                 'مقدار افزایش موجودی' => $data['amount'] . ' ریال',
             ];
             $wallet->balance += $data['amount'];
@@ -585,21 +633,21 @@ class CreateColleagueController extends Controller
             ]);
             $user->save();
             $wallet->save();
-            $operator_id = OperatorActivity::createActivity($user->id, 'CREATE_DOCUMNET');
+            $operator_id = OperatorActivity::createActivity($user->id, 'CREATE_DOCUMNET_INCREASE');
             ActivityDetailsModel::createActivityDetail($operator_id, $data1);
             DB::commit();
             toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
             return $number;
         } catch (\Exception $e) {
             DB::rollBack();
-            toastr()->warning('متأسفانه عملیات انجام نشد!');
+            \log::error($e);
             return 0;
         }
     }
 
     public function buyerDebtor($data)
     {
-        $user = User::find($data['creditor']);
+        $user = User::with('wallet')->find($data['debtor']);
         if ($data['document']) {
             $files = $data['document'];
             $paths = [];
@@ -621,7 +669,6 @@ class CreateColleagueController extends Controller
 
         // Get the wallet for the user
         $wallet = $user->getWallet();
-
         try {
             DB::beginTransaction();
 
@@ -636,10 +683,10 @@ class CreateColleagueController extends Controller
                 'status'      => 'success'
             ]);
             $data1 = [
-                'موجودی قبلی' => $wallet->balance,
-                'مقدار افزایش موجودی' => $data['amount'] . ' ریال',
+                'موجودی قبلی' => $wallet->balance . ' ریال',
+                'مقدار کاهش موجودی' => $data['amount'] . ' ریال',
             ];
-            $wallet->balance += $data['amount'];
+            $wallet->balance -= $data['amount'];
             createdocument::create([
                 'type'        => 'withdraw',
                 'transaction_id' => $bank->id,
@@ -650,21 +697,22 @@ class CreateColleagueController extends Controller
             ]);
             $user->save();
             $wallet->save();
-            $operator_id = OperatorActivity::createActivity($user->id, 'CREATE_DOCUMNET');
+            $operator_id = OperatorActivity::createActivity($user->id, 'CREATE_DOCUMNET_DECREASE');
             ActivityDetailsModel::createActivityDetail($operator_id, $data1);
             DB::commit();
             toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
             return $number;
         } catch (\Exception $e) {
             DB::rollBack();
-            toastr()->warning('متأسفانه عملیات انجام نشد!');
+            \log::error($e);
             return 0;
         }
     }
     public function storeCreditor($data)
     {
         // dd($data);
-        $user = createstore::where('user_id', $data['creditor']);
+        $store = createstore::where('user_id', $data['creditor'])->first();
+        // dd($store);
         if ($data['document']) {
             $files = $data['document'];
             $paths = [];
@@ -677,60 +725,109 @@ class CreateColleagueController extends Controller
             }
             $docPath = json_encode($paths);
         }
-        $number = createdocument::count();
+        $number = StoreDoumentModel::count();
         if ($number > 0 && $number != 0) {
-            $number = createdocument::latest()->first()->numberofdocuments + 1;
+            $number = StoreDoumentModel::latest()->first()->numberofdocuments + 1;
         } else {
             $number = 10000;
         }
 
         // Get the wallet for the user
-        $wallet = $user->getWallet();
 
         try {
             DB::beginTransaction();
 
-            $buyerTrans = buyertransaction::transaction($user, $data['amount'], true, '1', '1', 'ایجاد سند مالی');
-            $bank_trans = banktransaction::transaction($data['debtor'], $data['amount'], false, $buyerTrans->id, 'user');
+            $store_trans = createstoretransaction::storeTransaction($store, $data['amount'], true, 0, 1, $store->user_id, null, 'ایجاد سند مالی فروشگاه');
+            $bank_trans = banktransaction::transaction($data['debtor'], $data['amount'], false, $store_trans, 'store');
 
-            $history = $wallet->histories()->create([
-                'type'        => 'deposit',
-                'amount'      => $data['amount'],
-                'description' => 'شارژ توسط اپراتور',
-                'source'      => 'admin',
-                'status'      => 'success'
-            ]);
+            $store->salesamount += $data['amount'];
+
             $data1 = [
-                'موجودی قبلی' => $wallet->balance,
+                'موجودی قبلی' => $store->salesamount . ' ریال',
                 'مقدار افزایش موجودی' => $data['amount'] . ' ریال',
             ];
-            $wallet->balance += $data['amount'];
-            createdocument::create([
+
+            StoreDoumentModel::create([
+                'type'          => 'deposit',
                 'transaction_id' => $bank_trans->id,
-                'user_id' => $user->id,
+                'store_id' => $store->id,
                 'description' => $data['description'],
                 'documents' => $docPath,
                 'numberofdocuments' => $number,
             ]);
-            $user->save();
-            $wallet->save();
-            $operator_id = OperatorActivity::createActivity($user->id, 'CREATE_DOCUMNET');
+            $store->save();
+
+            $operator_id = OperatorActivity::createActivity($store->user_id, 'STORE_DOCUMENTـICREASE');
             ActivityDetailsModel::createActivityDetail($operator_id, $data1);
             DB::commit();
             toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
             return $number;
         } catch (\Exception $e) {
             DB::rollBack();
-            toastr()->warning('متأسفانه عملیات انجام نشد!');
+            \Log::error($e);
             return 0;
         }
-        return 0;
     }
-    public function storeDebtor()
+    public function storeDebtor($data)
     {
+        $store = createstore::where('user_id', $data['debtor'])->first();
+        if ($data['document']) {
+            $files = $data['document'];
+            $paths = [];
+            foreach ($files as $file) {
+
+                $imageName = time() . '_DocCreate.' . $file->getClientOriginalExtension();
+                $file->move('document/DocCreate/', $imageName);
+                $path = '/document/DocCreate/' . $imageName;
+                $paths[] = $path;
+            }
+            $docPath = json_encode($paths);
+        }
+        $number = StoreDoumentModel::count();
+        if ($number > 0 && $number != 0) {
+            $number = StoreDoumentModel::latest()->first()->numberofdocuments + 1;
+        } else {
+            $number = 10000;
+        }
+
+        // Get the wallet for the user
+
+        try {
+            DB::beginTransaction();
+
+            $store_trans = createstoretransaction::storeTransaction($store, $data['amount'], false, 0, 1, $store->user_id, null, 'ایجاد سند مالی فروشگاه');
+            $bank_trans = banktransaction::transaction($data['debtor'], $data['amount'], true, $store_trans, 'store');
+
+            $store->salesamount -= $data['amount'];
+
+            $data1 = [
+                'موجودی قبلی' => $store->salesamount . ' ریال',
+                'مقدار کاهش موجودی' => $data['amount'] . ' ریال',
+            ];
+
+            StoreDoumentModel::create([
+                'type'          => 'withdraw',
+                'transaction_id' => $bank_trans->id,
+                'store_id' => $store->id,
+                'description' => $data['description'],
+                'documents' => $docPath,
+                'numberofdocuments' => $number,
+            ]);
+            $store->save();
+
+            $operator_id = OperatorActivity::createActivity($store->id, 'STORE_DOCUMENTـDECREASE');
+            ActivityDetailsModel::createActivityDetail($operator_id, $data1);
+            DB::commit();
+            return $number;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error($e);
+            return 0;
+        }
     }
     public function accountDocument()
     {
+        
     }
     public function accountList(Request $request)
     {
