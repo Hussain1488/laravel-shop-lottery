@@ -27,9 +27,13 @@ class OperatorActivity extends Model
             'KEY' => 'edit_store',
             'value' => 'عملیات اصلاح فروشگاه جدید انجام شده ',
         ],
-        'CREATE_DOCUMNET' => [
+        'CREATE_DOCUMNET_INCREASE' => [
             'KEY' => 'create_document',
-            'value' => 'عملیات ایجاد سند مالی جدید انجام شده ',
+            'value' => 'افزایش موجودی و ایجاد سند کاربر',
+        ],
+        'CREATE_DOCUMNET_DECREASE' => [
+            'KEY' => 'create_document',
+            'value' => 'کاهش موجودی و ایجاد سند مالی  کاربر',
         ],
         'BUYER_CREDIT' => [
             'KEY' => 'create_document',
@@ -50,6 +54,14 @@ class OperatorActivity extends Model
         'GIVIN_ROLES' => [
             'KEY' => 'create_document',
             'value' => 'عملیات دادن مقام به کاربر انجام شده ',
+        ],
+        'STORE_DOCUMENTـICREASE' => [
+            'KEY' => 'create_document',
+            'value' => 'افزایش موجودی و ایجاد سند مالی فروشگاه',
+        ],
+        'STORE_DOCUMENTـDECREASE' => [
+            'KEY' => 'create_document',
+            'value' => 'کاهش موجودی و ایجاد سند مالی فروشگاه',
         ],
 
     ];
