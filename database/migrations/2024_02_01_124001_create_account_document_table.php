@@ -18,7 +18,6 @@ class CreateAccountDocumentTable extends Migration
             $table->unsignedBigInteger('debtor_trans_id')->index();
             $table->unsignedBigInteger('creditor_trans_id')->index();
             $table->text('documents')->nullable();
-            $table->enum('type', ['withdraw', 'deposit'])->nullable();
             $table->bigInteger('numberofdocuments')->nullable();
             $table->string('description', 710)->nullable();
             $table->foreign('creditor_trans_id')->references('id')->on('banktransactions');
