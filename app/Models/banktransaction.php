@@ -38,6 +38,14 @@ class banktransaction extends Model
     {
         return $this->hasOne(StoreDoumentModel::class, 'transaction_id');
     }
+    public function dobtorDocument()
+    {
+        return $this->hasOne(AccountDocumentModel::class, 'debtor_trans_id');
+    }
+    public function creditorDocument()
+    {
+        return $this->hasOne(AccountDocumentModel::class, 'creditor_trans_id');
+    }
 
     public static function transaction($bank_id, $creditAmount, $status, $trans_id, $user)
     {
