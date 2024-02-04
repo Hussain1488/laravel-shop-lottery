@@ -78,6 +78,28 @@
                                                  </div>
                                              </div>
                                          </div>
+                                         <div class="row">
+                                             <div class="col-lg-3 col-md-6 col-12 ">
+                                                 <h5>
+                                                     نوعیت تراکنش
+                                                 </h5>
+                                             </div>
+                                             <div class="col-lg-3 col-md-6 col-12">
+                                                 <div class="form-group">
+                                                     <select type="text" class="form-control" id=""
+                                                         id="" name="trans_type">
+                                                         <option value="increase">افزایش اعتبار</option>
+                                                         <option value="decrease">کاهش اعتبار</option>
+
+                                                     </select>
+                                                     @error('trans_type')
+                                                         <span class="text-danger">
+                                                             {{ $message }}
+                                                         </span>
+                                                     @enderror
+                                                 </div>
+                                             </div>
+                                         </div>
 
                                          <div class="row mt-1">
 
