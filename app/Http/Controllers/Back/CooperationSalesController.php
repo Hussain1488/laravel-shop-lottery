@@ -8,6 +8,7 @@ use App\Models\banktransaction;
 use App\Models\createstore;
 use App\Models\Makeinstallmentsm;
 use App\Models\Role;
+use App\Models\StoreDoumentModel;
 use App\Models\User;
 use App\Models\CooperationSales;
 use App\Models\createstoretransaction;
@@ -369,6 +370,10 @@ class CooperationSalesController extends Controller
         $details = StoreTransactionDetailsModel::where('transaction_id', $id)
             ->with('transaction.payList.details.bank')
             ->first();
+        $document = StoreDoumentModel::whereHas('transaction', function ($query) use ($id) {
+            $query->where('store_trans_id', $id)->with('storeTransaction.storeDocument');
+        })->first();
+        log::info($document);
         $paidDoc = [];
         // dd($details);
         $data = $details->data;
@@ -389,7 +394,7 @@ class CooperationSalesController extends Controller
             }
 
             $all_doc = json_decode($details->transaction->payList->factor);
-
+            // log::info($document_doc);
             if ($all_doc) {
                 $doc1 = [];
 
@@ -405,6 +410,19 @@ class CooperationSalesController extends Controller
                     $doc1[] = asset($key);
                 }
                 $data['سند پرداخت'] = $doc1;
+            }
+        }
+        if ($document) {
+            $document_doc = json_decode($document->documents);
+            if ($document_doc) {
+
+                $doc1 = [];
+
+                foreach ($document_doc as $key) {
+                    $doc[] = asset($key);
+                }
+
+                $data['سند مالی'] = $doc;
             }
         }
 
