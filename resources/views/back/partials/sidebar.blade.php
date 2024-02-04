@@ -158,7 +158,7 @@
                         @can('createcolleague.index')
                             <li class="{{ active_class('admin.createcolleague.index') }}">
                                 <a href="{{ route('admin.createcolleague.index') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item">اعتبار دهی به خریدار</span></a>
+                                        class="menu-item">اعتبار خریدار</span></a>
                             </li>
                         @endcan
 
@@ -180,7 +180,7 @@
                         @can('createcolleague.reaccreditation.index')
                             <li class="{{ active_class('admin.createcolleague.reaccreditation.index') }}">
                                 <a href="{{ route('admin.createcolleague.reaccreditation.index') }}"><i
-                                        class="feather icon-circle"></i><span class="menu-item">افزایش اعتبار
+                                        class="feather icon-circle"></i><span class="menu-item">اعتبار
                                         فروشگاه</span></a>
                             </li>
                         @endcan
