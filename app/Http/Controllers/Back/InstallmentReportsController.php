@@ -595,17 +595,17 @@ class InstallmentReportsController extends Controller
                 ->addColumn('user', function ($trans) {
                     return $trans->store_trans_id
                         ? $trans->storeTransaction->store->nameofstore
-                        : $trans->buyerTransaction->user->first_name . ' ' . $trans->buyerTransaction->user->last_name;
+                        : ($trans->store_trans_id ? $trans->buyerTransaction->user->first_name . ' ' . $trans->buyerTransaction->user->last_name : 'ندارد');
                 })
                 ->addColumn('source', function ($trans) {
-                    return $trans->store_trans_id
-                        ? 'اپراتور'
-                        : 'کاربر';
+                    return $trans->user_trans_id
+                        ? 'کاربر'
+                        : 'اپراتور';
                 })
                 ->addColumn('username', function ($trans) {
                     return $trans->store_trans_id
                         ? $trans->storeTransaction->store->user->username
-                        : $trans->buyerTransaction->user->username;
+                        : ($trans->store_trans_id ? $trans->buyerTransaction->user->username : 'ندارد');
                 })
                 ->filterColumn('username', function ($query, $keyword) {
                     $query->where(function ($query) use ($keyword) {
@@ -647,7 +647,7 @@ class InstallmentReportsController extends Controller
     }
     public function transactionDetails($id)
     {
-        $trans = BankTransaction::with('userDocument')->where('id', $id)->first();
+        $trans = BankTransaction::with('userDocument', 'dobtorDocument', 'creditorDocument', 'storeDocument')->where('id', $id)->first();
         $data = [];
         $type = '';
         if ($trans->buyer_trans_id) {
@@ -684,7 +684,51 @@ class InstallmentReportsController extends Controller
                 'تاریخ تراکنش' => jdate($store_trans->created_at)->format('d/M/Y'),
                 'زمان تراکنش' =>  $store_trans->created_at->format('H:i:s'),
             ];
+            if ($trans->storeDocument) {
+                $doc = json_decode($trans->storeDocument->documents, true);
+                $data['سند'] = [];
+                foreach ($doc as $key) {
+                    $data['سند'][] = asset($key);
+                }
+            }
             $type = 'store';
+        } else if ($trans->dobtorDocument) {
+            $account_trans = $trans->dobtorDocument;
+            $data = [
+                'اسم حساب' => $trans->bank->bankname,
+                'شماره حساب' => $trans->bank->accountnumber,
+                'توضیح تراکنش' => $account_trans->description,
+                'مبلغ تراکنش' => number_format($trans->transactionprice) . ' ریال',
+                'شماره سند' => $account_trans->numberofdocuments,
+                'نوع تراکنش' => $trans->type == 'withdraw' ? '<span class="badge badge-warning">کاهش موجودی</span>' : '<span class="badge badge-success">افزایش موجودی</span>',
+                'تاریخ تراکنش' => jdate($account_trans->created_at)->format('d/M/Y'),
+                'زمان تراکنش' =>  $account_trans->created_at->format('H:i:s'),
+            ];
+
+            $doc = json_decode($account_trans->documents, true);
+            $data['سند'] = [];
+            foreach ($doc as $key) {
+                $data['سند'][] = asset($key);
+            }
+            $type = 'account';
+        } else if ($trans->creditorDocument) {
+            $account_trans = $trans->creditorDocument;
+            $data = [
+                'اسم حساب' => $trans->bank->bankname,
+                'شماره حساب' => $trans->bank->accountnumber,
+                'توضیح تراکنش' => $account_trans->description,
+                'مبلغ تراکنش' => number_format($trans->transactionprice) . ' ریال',
+                'شماره سند' => $account_trans->numberofdocuments,
+                'نوع تراکنش' => $trans->type == 'withdraw' ? '<span class="badge badge-warning">کاهش موجودی</span>' : '<span class="badge badge-success">افزایش موجودی</span>',
+                'تاریخ تراکنش' => jdate($account_trans->created_at)->format('d/M/Y'),
+                'زمان تراکنش' =>  $account_trans->created_at->format('H:i:s'),
+            ];
+            $doc = json_decode($account_trans->documents, true);
+            $data['سند'] = [];
+            foreach ($doc as $key) {
+                $data['سند'][] = asset($key);
+            }
+            $type = 'account';
         } else {
             return response('error');
         }
