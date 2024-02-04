@@ -28,11 +28,11 @@ class OperatorActivity extends Model
             'value' => 'عملیات اصلاح فروشگاه جدید انجام شده ',
         ],
         'CREATE_DOCUMNET_INCREASE' => [
-            'KEY' => 'create_document',
+            'KEY' => 'create_document_increase',
             'value' => 'افزایش موجودی و ایجاد سند کاربر',
         ],
         'CREATE_DOCUMNET_DECREASE' => [
-            'KEY' => 'create_document',
+            'KEY' => 'create_document_decrease',
             'value' => 'کاهش موجودی و ایجاد سند مالی  کاربر',
         ],
         'BUYER_CREDIT' => [
@@ -56,13 +56,17 @@ class OperatorActivity extends Model
             'value' => 'عملیات دادن مقام به کاربر انجام شده ',
         ],
         'STORE_DOCUMENTـICREASE' => [
-            'KEY' => 'create_document',
+            'KEY' => 'store_document_increase',
             'value' => 'افزایش موجودی و ایجاد سند مالی فروشگاه',
         ],
         'STORE_DOCUMENTـDECREASE' => [
-            'KEY' => 'create_document',
+            'KEY' => 'store_document_decrease',
             'value' => 'کاهش موجودی و ایجاد سند مالی فروشگاه',
         ],
+        'BANK_DOCUMENT_TRANS' => [
+            'KEY' => 'bank_create_document',
+            'value' => 'ایجاد سند مالی برای حساب های داخلی'
+        ]
 
     ];
     public function operator()
