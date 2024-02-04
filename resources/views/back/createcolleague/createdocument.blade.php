@@ -245,6 +245,6 @@
         var sellerUrl = '{{ route('admin.user.sellerlist') }}';
         var accountUrl = '{{ route('admin.createcolleague.accountList') }}';
     </script>
-    <script src="{{ asset('back/assets/js/pages/createcollegue/myscript.js') }}"></script>
+    {{-- <script src="{{ asset('back/assets/js/pages/createcollegue/myscript.js') }}"></script> --}}
     <script src="{{ asset('back/assets/js/pages/createcollegue/createDocument.js') }}"></script>
 @endpush
