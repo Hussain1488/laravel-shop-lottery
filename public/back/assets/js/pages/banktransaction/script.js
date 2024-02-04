@@ -6,7 +6,7 @@ $(document).ready(function () {
         language: {
             url: window.Laravel.datatable_fa
         },
-        
+
         initComplete: function () {
             // Add start_date and end_date inputs to the search input row
             $('.dataTables_filter').append(
@@ -188,9 +188,13 @@ $(document).ready(function () {
                     $('.modal-title').text(
                         'جزئیات تراکنش: ' + transDetails['شماره تماس کاربر']
                     );
-                } else {
+                } else if (type == 'store') {
                     $('.modal-title').text(
                         'جزئیات تراکنش فروشگاه: ' + transDetails['اسم فروشگاه']
+                    );
+                } else {
+                    $('.modal-title').text(
+                        'جزئیات تراکنش حساب داخلی: ' + transDetails['اسم حساب']
                     );
                 }
                 $('.modal-body').html('');
