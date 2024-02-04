@@ -15,7 +15,7 @@
                                     </li>
                                     <li class="breadcrumb-item">ایجاد همکار
                                     </li>
-                                    <li class="breadcrumb-item active">افزایش اعتبار فروشگاه
+                                    <li class="breadcrumb-item active">اعتبار فروشگاه
                                     </li>
 
                                 </ol>
@@ -30,7 +30,7 @@
                     <div class="card-header">
                     </div>
                     <div class="card-content">
-                        <h6 class="card-title m-2">افزایش اعتبار فروشگاه</h6>
+                        <h6 class="card-title m-2">اعتبار فروشگاه</h6>
                         <div class="container mt-3">
 
                             {{-- rising the credit of store form --}}
@@ -74,51 +74,74 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-6 col-12">
+                                            <h5>
+                                                نوعیت تراکنش
+                                            </h5>
+                                        </div>
+                                        <div class="col-lg-3 col-md-6 col-12">
+                                            <div class="form-group">
 
-                                        <div class="row">
-
-                                            <div class="col-lg-3 col-md-6 col-12">
-
-                                                <h5 for="purchasecredit" class="mr-2">
-                                                    مبلغ به ریال وارد شود
-                                                </h5>
-
-
-                                            </div>
-                                            <div class="col-lg-3 col-md-6 col-12">
-                                                <div class="d-flex align-items-center">
-                                                    <input type="text" placeholder="100,000"
-                                                        class="form-control moneyInput" id="recredition_amount"
-                                                        name="storecredit" style="margin-left: 4px;"
-                                                        value="{{ old('storecredit') }}">
-                                                    <span>ریال</span>
-                                                </div>
-                                                @error('storecredit')
+                                                <select dir="rtl" type="text" class="form-control select2"
+                                                    name="trans_type">
+                                                    <option value="increase">شارژ اعتبار</option>
+                                                    <option value="decrease">کاهش اعتبار</option>
+                                                </select>
+                                                @error('trans_type')
                                                     <span class="text-danger">
                                                         {{ $message }}
                                                     </span>
                                                 @enderror
                                             </div>
                                         </div>
-
-                                        <div class="row ">
-                                            <div
-                                                class="col-lg-3 col-md-6 col-12 d-flex align-items-baseline justify-content-center">
-                                                <input type="button" id="summit_button1"
-                                                    class="btn btn-primary my-1"value=" تأیید نهایی تغییرات" />
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
 
-                            </form>
+                                <div class="row">
 
+                                    <div class="col-lg-3 col-md-6 col-12">
+
+                                        <h5 for="purchasecredit" class="mr-2">
+                                            مبلغ به ریال وارد شود
+                                        </h5>
+
+
+                                    </div>
+                                    <div class="col-lg-3 col-md-6 col-12">
+                                        <div class="d-flex align-items-center">
+                                            <input type="text" placeholder="100,000" class="form-control moneyInput"
+                                                id="recredition_amount" name="storecredit" style="margin-left: 4px;"
+                                                value="{{ old('storecredit') }}">
+                                            <span>ریال</span>
+                                        </div>
+                                        @error('storecredit')
+                                            <span class="text-danger">
+                                                {{ $message }}
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row ">
+                                    <div
+                                        class="col-lg-3 col-md-6 col-12 d-flex align-items-baseline justify-content-center">
+                                        <input type="button" id="summit_button1"
+                                            class="btn btn-primary my-1"value=" تأیید نهایی تغییرات" />
+                                    </div>
+                                </div>
                         </div>
-                </section>
+                    </div>
+
+                    </form>
 
             </div>
+            </section>
 
         </div>
+
+    </div>
     </div>
 @endsection
 
