@@ -113,7 +113,7 @@ class InstallmentReportsController extends Controller
             return response()->json(['data' => $data, 'doc' => $doc, 'id' => $id]);
         } catch (\Exception $e) {
             // Log the error
-            \Log::error($e->getMessage());
+            Log::error($e->getMessage());
 
             // Return an error response
             return response()->json(['error' => 'An error occurred while processing the request.'], 500);
@@ -206,7 +206,7 @@ class InstallmentReportsController extends Controller
             // $trans_id = createstoretransaction::storeTransaction($store, $payList->depositamount, true, 1, 2, null, null, $description);
             // StoreTransactionDetailsModel::createDetail($trans_id, $trans_data);
 
-            $this->RequestPayment($request->pay_list_id, $request->nameofbank, null);
+            $this->RequestPayment($request->pay_list_id, $request->nameofbank, $payList->trans_id);
             DB::commit();
             toastr()->success('اطلاعات پرداخت موفقیت آمیز ذخیره شد.');
         } catch (\Exception $e) {
@@ -595,7 +595,7 @@ class InstallmentReportsController extends Controller
                 ->addColumn('user', function ($trans) {
                     return $trans->store_trans_id
                         ? $trans->storeTransaction->store->nameofstore
-                        : ($trans->store_trans_id ? $trans->buyerTransaction->user->first_name . ' ' . $trans->buyerTransaction->user->last_name : 'ندارد');
+                        : ($trans->buyer_trans_id ? $trans->buyerTransaction->user->first_name . ' ' . $trans->buyerTransaction->user->last_name : 'ندارد');
                 })
                 ->addColumn('source', function ($trans) {
                     return $trans->user_trans_id
@@ -605,7 +605,7 @@ class InstallmentReportsController extends Controller
                 ->addColumn('username', function ($trans) {
                     return $trans->store_trans_id
                         ? $trans->storeTransaction->store->user->username
-                        : ($trans->store_trans_id ? $trans->buyerTransaction->user->username : 'ندارد');
+                        : ($trans->buyer_trans_id ? $trans->buyerTransaction->user->username : 'ندارد');
                 })
                 ->filterColumn('username', function ($query, $keyword) {
                     $query->where(function ($query) use ($keyword) {
