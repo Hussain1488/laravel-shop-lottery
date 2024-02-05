@@ -53,8 +53,8 @@
                                             </h4>
                                         </div>
                                         <div class="g-col-6 d-col-sm-12 d-flex align-items-center">
-                                            <input id="total_transaction" readonly class="form-control mr-1" type="text"
-                                                value="{{ $total }}">
+                                            <input id="total_transaction" readonly class="form-control mr-1 moneyInput"
+                                                type="text" value="{{ $total }}">
                                             ریال
                                         </div>
                                     </div>
