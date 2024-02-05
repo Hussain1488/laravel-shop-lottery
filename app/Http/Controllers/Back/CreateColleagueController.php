@@ -200,21 +200,21 @@ class CreateColleagueController extends Controller
     {
 
         // dd(ActivityDetailsModel::first()->data);
-        $user = User::where('level', '!=', 'creator')->get();
+        // $user = User::where('level', '!=', 'creator')->get();
 
-        $users = [];
+        // $users = [];
 
-        foreach ($user as $key) {
-            if (!createstore::where('user_id', $key->id)->exists()) {
-                $users[] = $key;
-            };
-        }
+        // foreach ($user as $key) {
+        //     if (!createstore::where('user_id', $key->id)->exists()) {
+        //         $users[] = $key;
+        //     };
+        // }
         // $accounts = BankAccount::where('account_type.name', 'درامد')->get();
         $accounts = BankAccount::whereHas('account_type', function ($query) {
             $query->where('code', 23);
         })->get();
 
-        return view('back.createcolleague.create', compact('users', 'accounts'));
+        return view('back.createcolleague.create', compact('accounts'));
     }
 
     /**
@@ -302,36 +302,36 @@ class CreateColleagueController extends Controller
 
 
     // changin the level of user as user to createcreditoperator
-    public function createcreditoperator(Request $request)
-    {
-        $users = User::where('level', 'user')->get();
-        return view('back.createcolleague.createcreditoperator', compact('users'));
-    }
+    // public function createcreditoperator(Request $request)
+    // {
+    //     $users = User::where('level', 'user')->get();
+    //     return view('back.createcolleague.createcreditoperator', compact('users'));
+    // }
 
     // storing storecreditoperator level for user
 
 
-    public function storecreditoperator(Request $request)
-    {
+    // public function storecreditoperator(Request $request)
+    // {
 
-        $request->validate([
-            'user' => 'required',
-        ], [
-            'user.required' => 'فیلد کاربر الزامی است',
-        ]);
+    //     $request->validate([
+    //         'user' => 'required',
+    //     ], [
+    //         'user.required' => 'فیلد کاربر الزامی است',
+    //     ]);
 
-        $user = User::find($request->user);
+    //     $user = User::find($request->user);
 
-        $user->level = 'createcreditoperator';
-        // dd($users);
-        $user->save();
+    //     $user->level = 'createcreditoperator';
+    //     // dd($users);
+    //     $user->save();
 
-        $users = User::where('level', 'user')->get();
+    //     $users = User::where('level', 'user')->get();
 
-        toastr()->success('اپراتور اعتبار سنجی با موفقیت ایجاد شد.');
+    //     toastr()->success('اپراتور اعتبار سنجی با موفقیت ایجاد شد.');
 
-        return view('back.createcolleague.createcreditoperator', compact('users'));
-    }
+    //     return view('back.createcolleague.createcreditoperator', compact('users'));
+    // }
 
     // giving credit to user store function
     public function colleagueCreditStore(CreateColleagueIndexRequest $request)
@@ -494,7 +494,7 @@ class CreateColleagueController extends Controller
     public function storeIncreaseCredit($store, $request, $bank_id)
     {
         $ex_credit = $store->storecredit;
-        $store->storecredit = $request->storecredit + $ex_credit;
+        $store->storecredit += $request->storecredit;
         $description = 'افزایش اعتبار فروشگاه';
         $trans_data = [
             'تراکنش:' => $description,
@@ -532,7 +532,7 @@ class CreateColleagueController extends Controller
     public function storeDecreaseCreadit($store, $request, $bank_id)
     {
         $ex_credit = $store->storecredit;
-        $store->storecredit = $request->storecredit - $ex_credit;
+        $store->storecredit -=  $request->storecredit;
         $description = 'کاهش اعتبار فروشگاه';
         $trans_data = [
             'تراکنش:' => $description,
