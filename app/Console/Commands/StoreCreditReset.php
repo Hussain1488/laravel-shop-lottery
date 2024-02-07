@@ -53,10 +53,10 @@ class StoreCreditReset extends Command
 
         $stores = createstore::all();
         foreach ($stores as $key) {
-
-            banktransaction::transaction($bank_id->id, $key->storecredit, true, null, 'store');
+            $ex_credit = $key->storecredit;
             $key->storecredit = $key->conrn_job_reccredite;
-            $trans_id = createstoretransaction::storeTransaction($key, $key->conrn_job_reccredite, true, 3, 1, $key->user_id, null,  'اعتبار دهی دوره ای فروشگاه');
+            $trans_id = createstoretransaction::storeTransaction($key, $key->conrn_job_reccredite, true, 3, 0, $key->user_id, null,  'اعتبار دهی دوره ای فروشگاه');
+            banktransaction::transaction($bank_id->id, $ex_credit, true, $trans_id, 'store');
             banktransaction::transaction($bank_id->id, $key->conrn_job_reccredite, false, $trans_id, 'store');
             $key->save();
         }
