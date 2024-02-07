@@ -592,9 +592,9 @@ class CreateColleagueController extends Controller
 
         // Display the merged array
         // dd($type);
-        $users = User::where('level', 'user')->get();
+        // $users = User::where('level', 'user')->get();
 
-        return view('back.createcolleague.createdocument', compact('users', 'type'));
+        return view('back.createcolleague.createdocument', compact('type'));
     }
 
     // storing document store function
@@ -620,6 +620,8 @@ class CreateColleagueController extends Controller
             // dd($request->documents, $data);
             $number = $this->buyerCreditor($data);
             if ($number != 0) {
+                toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
+
                 return redirect()->back()->with('number', $number);
             } else {
                 toastr()->warning('متأسفانه عملیات انجام نشد!');
@@ -630,6 +632,7 @@ class CreateColleagueController extends Controller
             if ($user->wallet->balance >= $request->input('amount')) {
                 $number = $this->buyerDebtor($data);
                 if ($number != 0) {
+                    toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
                     return redirect()->back()->with('number', $number);
                 } else {
                     toastr()->warning('متأسفانه عملیات انجام نشد!');
@@ -668,6 +671,7 @@ class CreateColleagueController extends Controller
         } else {
             $number = $this->accountDocument($data);
             if ($number != 0) {
+                toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
                 return redirect()->back()->with('number', $number);
             } else {
                 toastr()->warning('متأسفانه عملیات انجام نشد!');
@@ -727,7 +731,6 @@ class CreateColleagueController extends Controller
             $operator_id = OperatorActivity::createActivity($user->id, 'CREATE_DOCUMNET_INCREASE');
             ActivityDetailsModel::createActivityDetail($operator_id, $data1);
             DB::commit();
-            toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
             return $number;
         } catch (\Exception $e) {
             DB::rollBack();
@@ -791,7 +794,6 @@ class CreateColleagueController extends Controller
             $operator_id = OperatorActivity::createActivity($user->id, 'CREATE_DOCUMNET_DECREASE');
             ActivityDetailsModel::createActivityDetail($operator_id, $data1);
             DB::commit();
-            toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
             return $number;
         } catch (\Exception $e) {
             DB::rollBack();
