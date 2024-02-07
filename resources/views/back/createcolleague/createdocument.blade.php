@@ -56,7 +56,7 @@
                                                     <select type="text" class="form-control select2 debtor_selection"
                                                         name="debtor_type">
                                                         @isset($type)
-                                                            <option value="0">نوع حساب را انتخاب کنید</option>
+                                                            <option value="">نوع حساب را انتخاب کنید</option>
                                                             @foreach ($type as $key)
                                                                 <option {{ old('bank_id') == $key['id'] ? 'selected' : '' }}
                                                                     attr-code="{{ $key['code'] }}" value="{{ $key['id'] }}">
@@ -68,16 +68,16 @@
                                                         @endisset
 
                                                     </select>
+                                                    @error('debtor_type')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
 
                                                     <div class="">
                                                         <span class="account-title" id=""></span>
                                                         <span class="text-success account-name" id=""></span>
                                                     </div>
-                                                    @error('bank_id')
-                                                        <span class="text-danger">
-                                                            {{ $message }}
-                                                        </span>
-                                                    @enderror
                                                 </div>
                                                 <div class="form-group debtor-container">
                                                     <label></label>
@@ -85,6 +85,11 @@
                                                         name="debtor" style="width:100%">
                                                     </select>
                                                 </div>
+                                                @error('debtor')
+                                                    <span class="text-danger">
+                                                        {{ $message }}
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="row">
@@ -99,7 +104,7 @@
                                                     <select type="text" class="form-control select2 creditor_selection"
                                                         name="creditor_type">
                                                         @isset($type)
-                                                            <option value="0">نوع حساب را انتخاب کنید</option>
+                                                            <option value="">نوع حساب را انتخاب کنید</option>
                                                             @foreach ($type as $key)
                                                                 <option {{ old('creditor') == $key['id'] ? 'selected' : '' }}
                                                                     attr-code="{{ $key['code'] }}" value="{{ $key['id'] }}">
@@ -110,7 +115,7 @@
                                                             <option value="mellat bank">گزینه ای برای انتخاب وجود ندارد</option>
                                                         @endisset
                                                     </select>
-                                                    @error('user_id')
+                                                    @error('creditor_type')
                                                         <span class="text-danger">
                                                             {{ $message }}
                                                         </span>
@@ -126,6 +131,11 @@
                                                             name="creditor" style="width:100%">
                                                         </select>
                                                     </div>
+                                                    @error('creditor')
+                                                        <span class="text-danger">
+                                                            {{ $message }}
+                                                        </span>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
@@ -147,7 +157,7 @@
                                                     <span>ریال</span>
                                                 </div>
                                                 <span class="text-danger price_limit_message"></span>
-                                                @error('ReCredintAmount')
+                                                @error('amount')
                                                     <span class="text-danger">
                                                         {{ $message }}
                                                     </span>
