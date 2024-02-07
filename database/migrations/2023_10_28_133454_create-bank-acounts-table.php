@@ -18,7 +18,9 @@ class CreateBankAcountsTable extends Migration
             $table->string('bankname');
             $table->bigInteger('accountnumber');
             $table->unsignedBigInteger('account_type_id');
+            $table->unsignedBigInteger('gateway_id')->nullable()->index();
             $table->foreign('account_type_id')->references('id')->on('type_of_account')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('gateway_id')->references('id')->on('gateways')->onUpdate('cascade')->onDelete('cascade');
             $table->index('account_type_id');
             $table->timestamps();
         });
