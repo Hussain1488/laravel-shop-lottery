@@ -25,7 +25,7 @@
                                 <div class="content-body">
                                     <section class="card">
                                         <div class="card-header">
-                                            <h4 class="card-title">اسم کاربر</h4>
+                                            <h4 class="card-title">{{ $user->first_name . ' ' . $user->last_name }}</h4>
                                         </div>
                                         <div class="card-content">
                                             <div class="container mt-3">
