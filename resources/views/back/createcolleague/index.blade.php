@@ -15,7 +15,7 @@
                                      </li>
                                      <li class="breadcrumb-item">ایجاد همکار
                                      </li>
-                                     <li class="breadcrumb-item active">اعتبار دهی به خریدار
+                                     <li class="breadcrumb-item active">اعتبار خریدار
                                      </li>
                                  </ol>
                              </div>
@@ -27,7 +27,7 @@
              <div class="content-body">
                  <section class="card">
                      <div class="card-header">
-                         <h4 class="card-title">اعتبار دهی به کاربر</h4>
+                         <h4 class="card-title">اعتبار کاربر</h4>
                      </div>
                      <div class="card-content">
 
