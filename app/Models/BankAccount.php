@@ -10,7 +10,7 @@ class BankAccount extends Model
     use HasFactory;
 
     protected $table = "createbankaccounts";
-    protected $fillable = ['bankname', 'accountnumber', 'accounttype', 'account_type_id'];
+    protected $fillable = ['bankname', 'accountnumber', 'accounttype', 'account_type_id', 'gateway_id'];
 
     public function account_type()
     {
@@ -19,5 +19,10 @@ class BankAccount extends Model
     public function paymentDetails()
     {
         return $this->hasMany(paymentdetails::class, 'bank_id');
+    }
+
+    public function gateway()
+    {
+        return $this->belongsTo(Gateway::class, 'gateway_id');
     }
 }
