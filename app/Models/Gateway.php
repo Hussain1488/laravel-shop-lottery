@@ -22,6 +22,11 @@ class Gateway extends Model
             ->where('is_active', true);
     }
 
+    public function bank()
+    {
+        return $this->hasOne(BankAccount::class, 'gateway_id');
+    }
+
     public function config($key)
     {
         $config = $this->configs()->where('gateway_configs.key', $key)->first();
