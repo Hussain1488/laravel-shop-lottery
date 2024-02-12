@@ -11,6 +11,7 @@ use App\Models\bankTypeModel;
 use App\Models\buyertransaction;
 use App\Models\createstore;
 use App\Models\createstoretransaction;
+use App\Models\Gateway;
 use App\Models\installmentdetails;
 use App\Models\Makeinstallmentsm;
 use App\Models\OperatorActivity;
@@ -235,10 +236,14 @@ class InstallmentReportsController extends Controller
 
     public function createinternalaccount()
     {
-        $listbank = BankAccount::all();
+        // $listbank = BankAccount::all();
         $types = bankTypeModel::all();
+        $gateways = Gateway::whereDoesntHave('bank')->active()->get(['id', 'name']);
 
-        return view('back.installmentreports.createinternalaccount', compact('listbank', 'types'));
+        // dd($gateways);
+
+
+        return view('back.installmentreports.createinternalaccount', compact('types', 'gateways'));
     }
     public function storebank(internalBankStoreRequest $request)
     {
@@ -253,6 +258,7 @@ class InstallmentReportsController extends Controller
         try {
             DB::beginTransaction();
             BankAccount::create([
+                'gateway_id' => $request->gateway,
                 'bankname' => $request->bankname,
                 'accountnumber' => $request->accountnumber,
                 'account_type_id' => $request->account_type_id,
