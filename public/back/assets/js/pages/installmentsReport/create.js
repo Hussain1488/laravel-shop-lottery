@@ -127,7 +127,13 @@ $(document).ready(function () {
         let Prefix = $('#Acount_number_prefix').val();
         let main_account_number = $('#main_account_number').val();
         $('#main_account_number').val(Prefix + main_account_number);
-        $('#create_bank_form').submit();
+        let account_type = $('#Account_type option:selected');
+        let account_gateway = $('#account_gatewy option:selected').val();
+        if (account_type.data('code') == 21 && account_gateway == '') {
+            toastr.warning('انتخاب درگاه پرداخت برای ماهیت بانک الزامی است!');
+        } else {
+            $('#create_bank_form').submit();
+        }
     });
     accountType();
     $('.imageInput').on('change', function (e) {
@@ -196,7 +202,12 @@ $('#Account_type').on('change', function () {
 
 function accountType() {
     let account_type = $('#Account_type option:selected');
-    console.log(account_type);
+    // console.log(account_type);
+    if (account_type.data('code') == 21) {
+        $('.gateway_input').show(500);
+    } else {
+        $('.gateway_input').hide(500);
+    }
     $('#Acount_number_prefix').val(account_type.data('code'));
 }
 
