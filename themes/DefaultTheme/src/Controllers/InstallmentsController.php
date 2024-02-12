@@ -72,8 +72,7 @@ class InstallmentsController extends Controller
             $paystatus++;
         }
 
-        $gateways = Gateway::active()->get();
-
+        $gateways = Gateway::whereHas('bank')->active()->get();
         $user = User::with('wallet')->find(Auth::user()->id);
 
         return view('front::user.installments.index', compact('installmentsm', 'installmentsm1', 'installmentsm2', 'user', 'userstat', 'paystatus', 'gateways'));

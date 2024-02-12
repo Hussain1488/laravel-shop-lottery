@@ -32,7 +32,7 @@ class WalletController extends Controller
         $wallet    = auth()->user()->getWallet();
         $trans = $wallet->histories()->latest()->paginate(15);
         $user = User::with('wallet')->find(Auth::user()->id);
-        $gateways = Gateway::active()->get();
+        $gateways = Gateway::whereHas('bank')->active()->get();
 
         return view('front::user.wallet.index', compact('trans', 'user', 'gateways'));
     }
@@ -52,9 +52,9 @@ class WalletController extends Controller
     public function store(Request $request)
     {
 
-        session()->put('bank_id', BankAccount::whereHas('account_type', function ($query) {
-            $query->where('code', 21);
-        })->first());
+        $bank_id = BankAccount::where('gateway_id', Gateway::where('key', $request->gateway)->first()->id)->first();
+        // dd($bank_id);
+        session()->put('bank_id', $bank_id);
 
         if (!session()->get('bank_id')) {
             return redirect()->back()->with('warning', 'خطای سرور. لطفا به مرکز اطلاع بدهید.');
@@ -65,7 +65,7 @@ class WalletController extends Controller
             'amount'      => 'required|numeric|max:5000000000|min:10000',
             'gateway'     => 'required|in:' . implode(',', $gateways),
         ]);
-
+        // dd($request->gateway);
         $gateway = $request->gateway;
         $amount  = intval($request->amount / 10);
         $wallet  = auth()->user()->getWallet();
