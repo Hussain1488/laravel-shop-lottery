@@ -13,8 +13,8 @@ class DailyCodeModel extends Model
 
     protected $fillable = ['source', 'date'];
 
-    static function latteryCode()
+    static function lotteryCode()
     {
-        return $this->hasMany(LatteryCodeModel::class, 'daily_code_id')
+        return $this->hasMany(LotteryCodeModel::class, 'daily_code_id')
     }
 }
