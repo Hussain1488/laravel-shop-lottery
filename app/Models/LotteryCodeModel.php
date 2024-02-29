@@ -27,4 +27,9 @@ class LotteryCodeModel extends Model
     {
         return $this->hasMany(LotteryWinnersModel::class, 'lottery_code_id');
     }
+
+    public function invoice()
+    {
+        return $this->belongsTo(InvoicesModel::class, 'invoice_id');
+    }
 }
