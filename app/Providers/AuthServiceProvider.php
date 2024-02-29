@@ -33,6 +33,13 @@ class AuthServiceProvider extends ServiceProvider
                 });
             }
         }
+
+        Gate::define('lottery', function ($user) {
+            return $user->level == 'creator';
+        });
+        Gate::define('lottery.index', function ($user) {
+            return $user->level == 'creator';
+        });
     }
 
     protected function getPermissions()
