@@ -270,6 +270,12 @@
                                         class="menu-item">گزارش قرعه کشی</span></a>
                             </li>
                         @endcan
+                        @can('lottery.dailyCode')
+                            <li class="{{ active_class('admin.lottery.dailyCode') }}">
+                                <a href="{{ route('admin.lottery.dailyCode') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item">کد روزانه</span></a>
+                            </li>
+                        @endcan
 
                         @can('lottery.setting')
                             <li class="{{ active_class('admin.cornjob.setting') }}">

@@ -182,6 +182,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     // lottery routes:
 
     Route::get('lottery/index', [lotteryController::class, 'index'])->name('lottery.index');
+    Route::get('lottery/dailyCode', [lotteryController::class, 'dailyCode'])->name('lottery.dailyCode');
+    Route::get('lottery/generate-daily-code', [lotteryController::class, 'generateCode'])->name('lottery.generateCode');
 
 
     // ------------------ users
