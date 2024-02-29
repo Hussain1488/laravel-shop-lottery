@@ -54,6 +54,7 @@ use App\Http\Controllers\PushSubscriptionController;
 use Rap2hpoutre\LaravelLogViewer\LogViewerController;
 use App\Http\Controllers\Back\WalletHistoryController;
 use App\Http\Controllers\Back\AttributeGroupController;
+use App\Http\Controllers\lotteryController;
 use Melipayamak\MelipayamakApi;
 
 /*
@@ -176,6 +177,12 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::get('cornjob/index', [CornjobController::class, 'index'])->name('cornjob.index');
     Route::get('cornjob/setting', [CornjobController::class, 'create'])->name('cornjob.setting');
     Route::post('cornjob/store', [CornjobController::class, 'store'])->name('cornjob.store');
+
+
+    // lottery routes:
+
+    Route::get('lottery/index', [lotteryController::class, 'index'])->name('lottery.index');
+
 
     // ------------------ users
     Route::resource('users', UserController::class);
