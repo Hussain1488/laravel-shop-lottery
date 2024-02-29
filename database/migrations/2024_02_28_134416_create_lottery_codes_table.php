@@ -17,11 +17,11 @@ class CreateLotteryCodesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->index();
             $table->tinyInteger('code');
-            $table->unsignedBigInteger('invoice_id')->nullable();
-            $table->boolean('weekly_stat');
-            $table->boolean('monthly_stat');
+            $table->string('invoice_number', 6)->nullable();
+            $table->enum('state', ['wait', 'won', 'not-win']);
+            $table->boolean('weekly_state');
+            $table->boolean('monthly_state');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
