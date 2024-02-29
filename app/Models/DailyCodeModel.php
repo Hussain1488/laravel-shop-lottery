@@ -11,7 +11,7 @@ class DailyCodeModel extends Model
 
     protected $table = 'daily_code';
 
-    protected $fillable = ['source', 'date'];
+    protected $fillable = ['insta', 'rubika', 'site', 'date'];
 
     public function lotteryCode()
     {
