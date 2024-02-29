@@ -40,6 +40,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('lottery.index', function ($user) {
             return $user->level == 'creator';
         });
+        Gate::define('lottery.dailyCode', function ($user) {
+            return $user->level == 'creator';
+        });
     }
 
     protected function getPermissions()
