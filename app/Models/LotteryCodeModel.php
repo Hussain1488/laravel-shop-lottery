@@ -11,7 +11,7 @@ class LotteryCodeModel extends Model
 
     protected $table = 'lottery_codes';
 
-    protected $fillable = ['user_id', 'code', 'daily_code_id', 'invoice_id', 'weekly_stat', 'monthly_stat'];
+    protected $fillable = ['user_id', 'code', 'daily_code_id', 'invoice_id', 'weekly_state', 'monthly_state', 'state'];
 
     public function dailyCode()
     {
@@ -26,10 +26,5 @@ class LotteryCodeModel extends Model
     public function winner()
     {
         return $this->hasMany(LotteryWinnersModel::class, 'lottery_code_id');
-    }
-
-    public function invoice()
-    {
-        return $this->belongsTo(InvoicesModel::class, 'invoice_id');
     }
 }
