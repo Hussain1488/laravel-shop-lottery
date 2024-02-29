@@ -260,7 +260,28 @@
                     </ul>
                 </li>
             @endcan
+            @can('lottery')
+                <li class="nav-item has-sub {{ open_class(['admin.lottery.*']) }}"><a href="#"><i
+                            class="feather icon-sunrise"></i><span class="menu-title">قرعه کشی</span></a>
+                    <ul class="menu-content">
+                        @can('lottery.index')
+                            <li class="{{ active_class('admin.lottery.index') }}">
+                                <a href="{{ route('admin.lottery.index') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item">گزارش قرعه کشی</span></a>
+                            </li>
+                        @endcan
 
+                        @can('lottery.setting')
+                            <li class="{{ active_class('admin.cornjob.setting') }}">
+                                <a href="{{ route('admin.cornjob.setting') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item">تنظیمات قرعه کشی</span></a>
+                            </li>
+                        @endcan
+
+                    </ul>
+                </li>
+
+            @endcan
 
             @can('posts')
                 <li class="nav-item has-sub {{ open_class(['admin.posts.*']) }}"><a href="#"><i
