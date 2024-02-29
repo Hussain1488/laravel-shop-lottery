@@ -16,8 +16,9 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->integer('amount');
-            $table->string('number',7);
+            $table->string('number', 7);
+            $table->string('image');
+            $table->enum('state', ['valid', 'pending', 'not-valid']);
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

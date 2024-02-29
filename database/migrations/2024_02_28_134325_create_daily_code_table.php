@@ -15,7 +15,9 @@ class CreateDailyCodeTable extends Migration
     {
         Schema::create('daily_code', function (Blueprint $table) {
             $table->id();
-            $table->enum('source', ['insta','rubika','site']);
+            $table->string('insta', 7);
+            $table->string('rubika', 7);
+            $table->string('site', 7);
             $table->date('date');
             $table->timestamps();
         });
