@@ -15,6 +15,6 @@ class DailyCodeModel extends Model
 
     public function lotteryCode()
     {
-        return $this->belongsToMany(LotteryCodeModel::class, 'daily_code_id');
+        return $this->belongsToMany(LotteryCodeModel::class, 'lottery_codes_daily_code', 'daily_code_id', 'lottery_code_id');
     }
 }
