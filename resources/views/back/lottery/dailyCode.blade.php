@@ -42,11 +42,15 @@
                                     <div class="row">
                                         <div class="ml-1">
                                             <button type="button" id="daily_code_gerator_button"
+                                                action="{{ route('admin.lottery.generateCode') }}"
                                                 class="btn btn-primary">تولید کد روزانه</button>
                                         </div>
-                                        <div class="">
-                                            <button type="button" class="btn btn-primary">تولید کد روزانه</button>
+                                        <div class="ml-1">
+                                            <button type="button" id="dailyCodeExport"
+                                                action="{{ route('admin.lottery.dailyCodePrint') }}"
+                                                class="btn btn-primary">پرنت اکسل</button>
                                         </div>
+
                                     </div>
 
 
@@ -57,53 +61,11 @@
                                     </div>
 
 
-                                    <table class="table table-hover" id="cornjob_report_table">
+                                    <table class="table table-hover" id="daily_code_table"
+                                        action={{ route('admin.lottery.dailyCodeDatatable') }}>
                                         <thead>
-                                            <tr>
-                                                <th>
-                                                    #
-                                                </th>
-                                                <th>
-                                                    موضوع
-                                                </th>
-                                                <th>
-                                                    توضیح
-                                                </th>
-                                                <th>
-                                                    تاریخ
-                                                </th>
 
-                                            </tr>
                                         </thead>
-                                        @php
-                                            $counter = 1;
-                                        @endphp
-                                        {{-- <tbody>
-                                            @if (!$cornjobs->count() > 0)
-                                                <div class="m-2 alert alert-warning">
-                                                    چیزی برای نمایش وجود ندارد!
-                                                </div>
-                                            @else
-                                                @foreach ($cornjobs as $key)
-                                                    <tr>
-                                                        <td>
-                                                            {{ $counter++ }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $key->name }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $key->description }}
-                                                        </td>
-                                                        <td>
-                                                            {{ jdate($key->created_at)->format('d/M/Y') }}
-                                                            <br>
-                                                            {{ $key->created_at->format('H:i:s') }}
-
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif --}}
                                         </tbody>
                                     </table>
 
@@ -124,5 +86,5 @@
 ])
 @push('scripts')
     <script src="{{ asset('back/assets/datatable/datatables.min.js') }}"></script>
-    <script src="{{ asset('back/assets/js/pages/lottery/index.js') }}"></script>
+    <script src="{{ asset('back/assets/js/pages/lottery/daily_code.js') }}"></script>
 @endpush
