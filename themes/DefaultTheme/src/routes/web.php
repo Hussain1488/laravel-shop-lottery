@@ -21,6 +21,7 @@ use Themes\DefaultTheme\src\Controllers\VerifyController;
 use Themes\DefaultTheme\src\Controllers\DiscountController;
 use Themes\DefaultTheme\src\Controllers\WalletController;
 use Themes\DefaultTheme\src\Controllers\InstallmentsController;
+use Themes\DefaultTheme\src\Controllers\LotteryController;
 
 // ------------------ Front Part Routes
 
@@ -58,6 +59,12 @@ Route::group(['as' => 'front.'], function () {
     Route::delete('cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 
     Route::post('stock-notify', [StockNotifyController::class, 'store']);
+
+
+    // Lottery routes
+    Route::get('lottery/index', [LotteryController::class, 'index'])->name('lottery.index');
+    Route::get('lottery/dailyCode', [LotteryController::class, 'dailyCode'])->name('lottery.dailyCode');
+    Route::post('lottery/invoiceCode', [LotteryController::class, 'invoiceCode'])->name('lottery.invoiceCode');
 
 
     // ------------------ pages
