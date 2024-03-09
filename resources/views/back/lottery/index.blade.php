@@ -47,54 +47,9 @@
                                     </div>
 
 
-                                    <table class="table table-hover" id="cornjob_report_table">
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    #
-                                                </th>
-                                                <th>
-                                                    موضوع
-                                                </th>
-                                                <th>
-                                                    توضیح
-                                                </th>
-                                                <th>
-                                                    تاریخ
-                                                </th>
+                                    <table class="table table-hover" id="lottery_codes_table"
+                                        data-action={{ route('admin.lottery.lotteryCodeNumbers') }}>
 
-                                            </tr>
-                                        </thead>
-                                        @php
-                                            $counter = 1;
-                                        @endphp
-                                        {{-- <tbody>
-                                            @if (!$cornjobs->count() > 0)
-                                                <div class="m-2 alert alert-warning">
-                                                    چیزی برای نمایش وجود ندارد!
-                                                </div>
-                                            @else
-                                                @foreach ($cornjobs as $key)
-                                                    <tr>
-                                                        <td>
-                                                            {{ $counter++ }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $key->name }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $key->description }}
-                                                        </td>
-                                                        <td>
-                                                            {{ jdate($key->created_at)->format('d/M/Y') }}
-                                                            <br>
-                                                            {{ $key->created_at->format('H:i:s') }}
-
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif --}}
-                                        </tbody>
                                     </table>
 
                                 </div>
@@ -114,5 +69,5 @@
 ])
 @push('scripts')
     <script src="{{ asset('back/assets/datatable/datatables.min.js') }}"></script>
-    <script src="{{ asset('back/assets/js/pages/cornjob/index.js') }}"></script>
+    <script src="{{ asset('back/assets/js/pages/lottery/index.js') }}"></script>
 @endpush
