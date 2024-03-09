@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'lottery' => [
+        'lottery' => 'قرعه کشی'
+    ],
     'header' => [
         'account'                => 'حساب کاربری',
         'control-panel'          => 'پنل مدیریت',

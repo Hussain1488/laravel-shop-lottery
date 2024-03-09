@@ -1,6 +1,9 @@
 <?php
 
 return [
+    'lottery' => [
+        'lottery' => 'lottery'
+    ],
     'header' => [
         'account'                => 'Account',
         'control-panel'          => 'Control panel',
