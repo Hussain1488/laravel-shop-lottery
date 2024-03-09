@@ -277,10 +277,16 @@
                             </li>
                         @endcan
 
+                        @can('lottery.invoicesIndex')
+                            <li class="{{ active_class('admin.lottery.invoicesIndex') }}">
+                                <a href="{{ route('admin.lottery.invoicesIndex') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item">فاکتور های فروش</span></a>
+                            </li>
+                        @endcan
                         @can('lottery.setting')
-                            <li class="{{ active_class('admin.cornjob.setting') }}">
-                                <a href="{{ route('admin.cornjob.setting') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item">تنظیمات قرعه کشی</span></a>
+                            <li class="{{ active_class('admin.lottery.invoices') }}">
+                                <a href="{{ route('admin.lottery.invoices') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item"></span></a>
                             </li>
                         @endcan
 
