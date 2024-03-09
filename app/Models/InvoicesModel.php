@@ -11,7 +11,7 @@ class InvoicesModel extends Model
     use HasFactory;
 
     protected $table = 'invoices';
-    protected $fillable = '';
+    protected $fillable = ['user_id', 'number', 'image', 'state', 'amount'];
 
     public function user()
     {
