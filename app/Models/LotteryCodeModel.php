@@ -11,7 +11,7 @@ class LotteryCodeModel extends Model
 
     protected $table = 'lottery_codes';
 
-    protected $fillable = ['user_id', 'code', 'daily_code_id', 'invoice_id', 'weekly_state', 'monthly_state', 'state'];
+    protected $fillable = ['user_id', 'code', 'daily_code', 'invoice_id', 'weekly_state', 'monthly_state', 'state'];
 
     public function dailyCode()
     {
