@@ -128,7 +128,7 @@ function verifySms($type, $user)
         $sms = $api->sms();
         $to = $user->username;
         $from = option('admin_mobile_number');
-        $text = $type->text['string'] . ' :' .  $type->code;
+        $text = $type->text['string'] . ' :' .  $type->code . ' https://khaneaghsate.ir';
         $response = $sms->send($to, $from, $text);
         $json = json_decode($response);
         SmsLog($response, $user, $type->text);
