@@ -107,7 +107,8 @@
                                                     </tr>
                                                 </thead>
                                                 @php
-                                                    $counter = ($transaction->currentPage() - 1) * $transaction->perPage() + 1;
+                                                    $counter =
+                                                        ($transaction->currentPage() - 1) * $transaction->perPage() + 1;
                                                 @endphp
                                                 <tbody>
                                                     @foreach ($transaction as $key)
@@ -313,7 +314,9 @@
                                                     </tr>
                                                 </thead>
                                                 @php
-                                                    $counter1 = ($transaction1->currentPage() - 1) * $transaction1->perPage() + 1;
+                                                    $counter1 =
+                                                        ($transaction1->currentPage() - 1) * $transaction1->perPage() +
+                                                        1;
                                                 @endphp
                                                 <tbody>
                                                     @foreach ($transaction1 as $key)
@@ -557,13 +560,14 @@
             </div>
 
         </div>
-        @include('back.installmentreports.payDetailsModal')
-    @endsection
-    @include('back.partials.plugins', ['plugins' => ['jquery.validate']])
+    </div>
+    @include('back.installmentreports.payDetailsModal')
+@endsection
+@include('back.partials.plugins', ['plugins' => ['jquery.validate']])
 
-    @push('scripts')
-        <script>
-            var pay_url = "{{ route('admin.installmentreports.RequestPaymentStore') }}";
-        </script>
-        <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
-    @endpush
+@push('scripts')
+    <script>
+        var pay_url = "{{ route('admin.installmentreports.RequestPaymentStore') }}";
+    </script>
+    <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
+@endpush
