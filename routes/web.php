@@ -187,6 +187,12 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::post('lottery/dailyCodeDatatable', [lotteryController::class, 'dailyCodeDatatable'])->name('lottery.dailyCodeDatatable');
     Route::post('lottery/dailyCodePrint', [lotteryController::class, 'dailyCodePrint'])->name('lottery.dailyCodePrint');
 
+    Route::get('lottery/lotteryCodeNumbers  ', [lotteryController::class, 'lotteryCodeNumbers'])->name('lottery.lotteryCodeNumbers');
+
+    Route::get('lottery/invoicesIndex', [lotteryController::class, 'invoicesIndex'])->name('lottery.invoicesIndex');
+    Route::post('lottery/invoicesDatatable', [lotteryController::class, 'invoicesDatatable'])->name('lottery.invoicesDatatable');
+    Route::get('lottery/invoiceRejection/{id?}', [lotteryController::class, 'invoiceRejection'])->name('lottery.invoiceRejection');
+    Route::post('lottery/invoiceValidation/{id?}', [lotteryController::class, 'invoiceValidation'])->name('lottery.invoiceValidation');
 
     // ------------------ users
     Route::resource('users', UserController::class);
