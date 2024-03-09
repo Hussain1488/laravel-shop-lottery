@@ -69,8 +69,6 @@
 
 <body>
     <div class="wrapper @yield('wrapper-classes')">
-
-
         <!-- Start header -->
         <header class="main-header dt-sl">
             <!-- Start topbar -->
@@ -84,6 +82,16 @@
                                         alt="{{ option('info_site_title', 'خانه اقساط') }}">
                                 </a>
                             </div>
+                            @if (Auth::user())
+                                <div class="logo-area float-right mr-2">
+                                    <button href="{{ route('front.index') }}"
+                                        class="border-0 bg-none lottery_code_button">
+                                        <img data-src="{{ theme_asset('img/ghorekeshi.png') }}"
+                                            alt="{{ option('info_site_title', 'خانه اقساط') }}">
+                                    </button>
+                                </div>
+                            @endif
+
                         </div>
                         <div class="col-lg-6 col-md-5 hidden-sm">
                             <div class="search-area dt-sl">
@@ -129,6 +137,7 @@
         @yield('content')
 
         @include('front::partials.footer')
+        @include('front::partials.modal')
     </div>
 
     <script>
@@ -167,6 +176,8 @@
     @endif
 
     @toastr_render
+
+
 
     {!! option('info_scripts') !!}
     <!-- endinject -->
