@@ -153,6 +153,13 @@
                                                 {{ trans('front::messages.profile.personal-information') }}
                                             </a>
                                         </li>
+                                        <li>
+                                            <a href="{{ route('front.lottery.index') }}"
+                                                class="{{ active_class('front.lottery.index') }}">
+                                                <i class="mdi mdi-gift"></i>
+                                                {{ trans('front::messages.lottery.lottery') }}
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
