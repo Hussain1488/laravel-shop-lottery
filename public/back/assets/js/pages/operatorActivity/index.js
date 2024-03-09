@@ -184,5 +184,5 @@ $(document).ready(function () {
             }
         });
     });
-    $('.details-show').on('click', function () {});
+    //$('.details-show').on('click', function () {});
 });
