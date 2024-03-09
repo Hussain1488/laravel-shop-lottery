@@ -27,7 +27,7 @@ class MelipayamakSms extends SmsService implements SmsContract, SmsNotificationC
             $sms = $api->sms();
             $to = $mobile;
             $from = option('admin_mobile_number');
-            $text = $this->type['string'] . ' :' . implode(', ', $input_data);
+            $text = $this->type['string'] . ' :' . implode(', ', $input_data) . ' https://khaneaghsate.ir';
             $response = $sms->send($to, $from, $text);
             $json = json_decode($response);
             // echo $json->Value; //RecId or Error Number
