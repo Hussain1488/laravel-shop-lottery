@@ -16,7 +16,7 @@ class CreateLotteryCodesTable extends Migration
         Schema::create('lottery_codes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->index();
-            $table->tinyInteger('code');
+            $table->string('code', 9);
             $table->unsignedBigInteger('invoice_id')->nullable();
             $table->string('daily_code')->nullable();
             $table->enum('state', ['wait', 'won', 'not-win']);
