@@ -17,6 +17,7 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->string('number', 7);
+            $table->integer('amount')->default(0);
             $table->string('image');
             $table->enum('state', ['valid', 'pending', 'not-valid']);
             $table->foreign('user_id')->references('id')->on('users');
