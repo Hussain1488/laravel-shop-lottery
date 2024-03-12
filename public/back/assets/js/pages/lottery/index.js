@@ -1,6 +1,5 @@
 $(document).ready(function () {
     let table = $('#lottery_codes_table');
-    console.log(table.data('action'));
     $('#lottery_codes_table').DataTable({
         searching: true,
         processing: true,
@@ -33,19 +32,77 @@ $(document).ready(function () {
                 data: 'source',
                 name: 'source',
                 title: 'منبع کد',
+                render: function (data) {
+                    if (data == 'invoice') {
+                        return (
+                            '<span class="badge badge-success">' +
+                            'فاکتور خرید' +
+                            '</span>'
+                        );
+                    } else {
+                        return (
+                            '<span class="badge badge-info">' +
+                            'کد روزانه' +
+                            '</span>'
+                        );
+                    }
+                },
                 searchable: true
             },
             {
                 data: 'weekly_state',
                 name: 'weekly_state',
                 title: 'وضعیت هفتگی',
+                render: function (data) {
+                    if (data == 0) {
+                        return (
+                            '<span class="badge badge-success">' +
+                            'فعال' +
+                            '</span>'
+                        );
+                    } else {
+                        return (
+                            '<span class="badge badge-danger">' +
+                            'باطل' +
+                            '</span>'
+                        );
+                    }
+                },
                 searchable: true
             },
             {
                 data: 'monthly_state',
                 name: 'monthly_state',
                 title: 'وضعیت ماهانه',
+                render: function (data) {
+                    if (data == 0) {
+                        return (
+                            '<span class="badge badge-success">' +
+                            'فعال' +
+                            '</span>'
+                        );
+                    } else {
+                        return (
+                            '<span class="badge badge-danger">' +
+                            'باطل' +
+                            '</span>'
+                        );
+                    }
+                },
                 searchable: true
+            },
+            {
+                data: 'button',
+                name: 'button',
+                title: 'عملیات',
+                render: function (data) {
+                    return (
+                        '<input type="button" data-id="' +
+                        data +
+                        '" value="بیشتر"' +
+                        ' class="lotteryCodeButton btn btn-info btn-sm" />'
+                    );
+                }
             }
         ],
         select: 'single',
@@ -71,4 +128,8 @@ $(document).ready(function () {
                 });
         }
     });
+});
+$(document).on('click', '.lotteryCodeButton', function () {
+    let btn = $(this);
+    alert(btn.data('id'));
 });
