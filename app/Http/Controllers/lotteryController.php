@@ -100,7 +100,7 @@ class lotteryController extends Controller
 
     public function invoiceValidation(Request $request, $id)
     {
-        return response()->json(['status' => 'error', 'data' => 'انجام عملیات با خطا روبه رو شد!']);
+        // return response()->json(['status' => 'error', 'data' => 'انجام عملیات با خطا روبه رو شد!']);
         try {
             $invoice = InvoicesModel::find($id);
 
@@ -122,18 +122,49 @@ class lotteryController extends Controller
     }
     public function dailyCode()
     {
-        $lastValue = DailyCodeModel::latest()->first()->date;
+        $lastValue = DailyCodeModel::orderBy('date', 'desc')->first();
         if (!$lastValue) {
             $lastValue = null;
+        } else {
+            $lastValue = $lastValue->date;
         }
+        // dd($lastValue);
         // dd($lastValue);
         return view('back.lottery.dailyCode', compact('lastValue'));
     }
 
-    public function dailyCodeDatatable()
+    public function dailyCodeDatatable(Request $request)
     {
+        $filter = $request->input('filter');
+        if ($filter == 'weekly') {
+            Carbon::setWeekStartsAt(Carbon::SATURDAY);
 
-        $query = DailyCodeModel::query();
+            // Set Friday as the end of the week
+            Carbon::setWeekEndsAt(Carbon::FRIDAY);
+
+            // Get the start and end dates of the current week
+            $startOfWeek = Carbon::now()->startOfWeek();
+            $endOfWeek = Carbon::now()->endOfWeek();
+            $query = DailyCodeModel::whereBetween('date', [$startOfWeek, $endOfWeek]);
+        } else if ($filter == 'all') {
+            $query = DailyCodeModel::query();
+        } else if ($filter == 'today') {
+            $today = Carbon::now()->format('Y-m-d');
+            $query = DailyCodeModel::where('date', $today);
+        } else {
+            $jalalianNow = Jalalian::now();
+            // Get the year and month components of the current Persian date
+            $year = $jalalianNow->getYear();
+            $month = $jalalianNow->format('m');
+            // Get the first day of the current Persian month
+            $firstDayOfMonth = Jalalian::fromFormat('Y-m-d', $year . '-' . $month . '-01');
+            // Get the last day of the current Persian month
+            $lastDayOfMonth = $firstDayOfMonth->addMonths(1)->subDays(1);
+            $firstDay = $firstDayOfMonth->toCarbon();
+            $lastDay = $lastDayOfMonth->toCarbon();
+            $query = DailyCodeModel::whereBetween('date', [$firstDay, $lastDay]);
+        }
+        // Log::info($query->all());
 
         return DataTables::eloquent($query)
             ->addColumn('counter', function () {
@@ -167,23 +198,43 @@ class lotteryController extends Controller
         $dateExists = DailyCodeModel::where('date', $carbonDate->format('Y-m-d'))->exists();
 
         // If the date exists, move to the next month
-        $nextMonth = $today->addMonths(1);
-        if ($dateExists) {
-            $today = $today->addMonths(1);
+        if (!$dateExists) {
+            $nextMonth = $carbonDate;
+            $nextMonth1 = $today;
+            Log::info('not existes');
+        } else {
+            $nextMonth = $carbonDate->addMonths(1);
+            $nextMonth1 = $today->addMonths(1);
+            Log::info('exists');
         }
-
         // Get the number of days in the current month
-        $numDaysInMonth = $nextMonth->subdays()->format('d');
+        // $numDaysInMonth = $nextMonth1->subdays()->format('d') + 1;
+        $nextMonthFirstDay = $nextMonth1->addMonths(1)->getFirstDayOfMonth();
 
+        // Move back one day to get the last day of the current month
+        $lastDayOfMonth = $nextMonthFirstDay->subDays(1);
+
+        // Get the day part of the date (e.g., '01' for the first day, '02' for the second day, etc.)
+        $lastDayOfMonthDayPart = $lastDayOfMonth->format('d');
+
+        // Convert it to an integer to get the number of days
+        $numDaysInMonth = (int) $lastDayOfMonthDayPart;
+
+        Log::info($numDaysInMonth);
+        $monthBefore = Jalalian::now()->subMonths(1)->getFirstDayOfMonth();
+        $monthBefore = Carbon::createFromFormat('Y-m-d H:i:s', $monthBefore->toCarbon()->toDateTimeString());
+        Log::info($monthBefore);
         // Loop through each day of the month
-        $daily_codes_to_delete = DailyCodeModel::doesntHave('lotteryCode')->get();
-        foreach ($daily_codes_to_delete as $key) {
-            $key->delete();
+        $monthBeforeCodes = DailyCodeModel::where('date', '<', $monthBefore)->get();
+        Log::info($monthBeforeCodes);
+
+        foreach ($monthBeforeCodes as $code) {
+            $code->delete();
         }
+
         for ($day = 1; $day <= $numDaysInMonth; $day++) {
             // Create Jalalian date for each day
 
-            $carbonDate = $carbonDate->addDay();
 
             $rubika = $this->CodeGerator('rubika');
             $site = $this->CodeGerator('site');
@@ -194,6 +245,7 @@ class lotteryController extends Controller
                 'insta' => $insta,
                 'date' => $carbonDate->format('Y-m-d'),
             ];
+            $carbonDate = $carbonDate->addDay();
 
 
             DailyCodeModel::create($DailyCode);
@@ -231,5 +283,42 @@ class lotteryController extends Controller
     {
         return $this->exportExcel(DailyCodeModel::get());
         return Excel::download(new UsersExport(DailyCodeModel::get()), 'users.xlsx');
+    }
+    public function dailyCodeTest()
+    {
+        $today = Jalalian::now()->getFirstDayOfMonth();
+        $today = $today->subMonths(1)->getFirstDayOfMonth();
+
+        // Convert Jalali date to Carbon date and format it as 'Y-m-d'
+        $carbonDate = Carbon::createFromFormat('Y-m-d H:i:s', $today->toCarbon()->toDateTimeString());
+        $nextMonth1 = $today;
+        $nextMonthFirstDay = $nextMonth1->subMonths(2)->getFirstDayOfMonth();
+
+        // Move back one day to get the last day of the current month
+        $lastDayOfMonth = $nextMonthFirstDay->subDays(1);
+
+        // Get the day part of the date (e.g., '01' for the first day, '02' for the second day, etc.)
+        $lastDayOfMonthDayPart = $lastDayOfMonth->format('d');
+
+        // Convert it to an integer to get the number of days
+        $numDaysInMonth = (int) $lastDayOfMonthDayPart;
+        for ($day = 1; $day <= $numDaysInMonth; $day++) {
+            // Create Jalalian date for each day
+
+
+            $rubika = $this->CodeGerator('rubika');
+            $site = $this->CodeGerator('site');
+            $insta = $this->CodeGerator('insta');
+            $DailyCode = [
+                'rubika' => $rubika,
+                'site' => $site,
+                'insta' => $insta,
+                'date' => $carbonDate->format('Y-m-d'),
+            ];
+            $carbonDate = $carbonDate->addDay();
+
+
+            DailyCodeModel::create($DailyCode);
+        }
     }
 }
