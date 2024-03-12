@@ -1,5 +1,8 @@
 $(document).ready(function () {
     let table = $('#daily_code_table');
+    var codes = 'monthly';
+    var codeBtn = null;
+
     // console.log(table.attr('action'));
     $('#daily_code_table').DataTable({
         searching: true,
@@ -7,12 +10,45 @@ $(document).ready(function () {
         language: {
             url: window.Laravel.datatable_fa
         },
+        initComplete: function () {
+            // Add start_date and end_date inputs to the search input row
+            $('.dataTables_filter').append(
+                '<input type="button" data-value="today"  class="btn btn-dark code-filter text-white end_date" value="امروز">'
+                // '<div class="col"><input type="text" id="end_date" class="form-control btn btn-dark code-filter text-white" placeholder="فیلتر تا تاریخ..."></div>'
+            );
+            $('.dataTables_filter').append(
+                '<input type="button" data-value="weekly"  class="btn btn-dark code-filter text-white start_date" value="این هفته">'
+                // '<div class="col"><input type="text" id="start_date" class="form-control btn btn-dark code-filter text-white" placeholder="فیلتر از تاریخ..."></div>'
+            );
+            $('.dataTables_filter').append(
+                '<input type="button" data-value="monthly"  class="btn btn-dark code-filter text-white end_date" value="این ماه">'
+                // '<div class="col"><input type="text" id="end_date" class="form-control btn btn-dark code-filter text-white" placeholder="فیلتر تا تاریخ..."></div>'
+            );
+            $('.dataTables_filter').append(
+                '<input type="button" data-value="all"  class="btn btn-dark code-filter text-white end_date" value="همه">'
+                // '<div class="col"><input type="text" id="end_date" class="form-control btn btn-dark code-filter text-white" placeholder="فیلتر تا تاریخ..."></div>'
+            );
+
+            // Add event listener to trigger search on date inputs
+            $('.code-filter').on('click', function () {
+                // Convert Persian dates to Gregorian before sending to server
+                // alert($(this).data('value'));
+
+                codes = $(this).data('value');
+
+                // alert(codes);
+                $('#daily_code_table').DataTable().draw();
+            });
+        },
         ajax: {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             url: table.attr('action'), // Replace with the actual URL of your data endpoint
-            type: 'POST'
+            type: 'POST',
+            data: function (d) {
+                d.filter = codes;
+            }
         },
         serverSide: true,
 
@@ -120,7 +156,9 @@ $('#daily_code_gerator_button').on('click', function () {
     let today = new Date();
     let lastDayDate = new Date(lastDay);
     lastDayDate.setHours(0, 0, 0, 0);
+    today.setMonth(today.getMonth() + 1);
     today.setHours(0, 0, 0, 0);
+    // console.log(lastDayDate, today);
     if (lastDayDate.getTime() > today.getTime()) {
         toastr.warning(
             'امروز نمیتوانید برای تولید کد روزانه قرعه کشی درخواست دهید. لطفا بعدا دوباره امتهان کنید!'
@@ -143,6 +181,7 @@ $('#daily_code_gerator_button').on('click', function () {
             }
         });
     }
+    condition = false;
 });
 
 $('#dailyCodeExport').on('click', function () {
