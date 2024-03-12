@@ -71,7 +71,7 @@ $(document).ready(function () {
             {
                 data: 'action',
                 name: 'action',
-                title: 'پاسخ',
+                title: 'عملیات',
                 render: function (data, type, row) {
                     if (row.state != 'valid') {
                         return (
