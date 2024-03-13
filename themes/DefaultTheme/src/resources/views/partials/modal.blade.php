@@ -48,15 +48,20 @@
                                     </div>
                                     <div class="form-row form-group">
                                         <select class="form-control py-0 gateway-select" name="code_source" required>
-                                            <option class="" value="">منبع را انتخاب کنید</option>
+                                            <option class="" value="">منبع را انتخاب کنید
+
+                                            </option>
                                             <option class="" value="insta">
                                                 اینستاگرام
                                             </option>
-                                            <option class="" value="site">
-                                                وبسایت خانه اقساط
-                                            </option>
                                             <option class="" value="rubika">
                                                 روبیکا
+                                            </option>
+                                            <option class="" value="eitaa">
+                                                ایتا
+                                            </option>
+                                            <option class="" value="site">
+                                                وبسایت خانه اقساط
                                             </option>
                                         </select>
                                     </div>
