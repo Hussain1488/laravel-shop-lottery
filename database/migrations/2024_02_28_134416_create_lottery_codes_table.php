@@ -19,7 +19,7 @@ class CreateLotteryCodesTable extends Migration
             $table->string('code', 9);
             $table->unsignedBigInteger('invoice_id')->nullable();
             $table->string('daily_code')->nullable();
-            $table->enum('state', ['wait', 'won', 'not-win']);
+            $table->enum('state', ['active', 'deactive']);
             $table->boolean('weekly_state');
             $table->boolean('monthly_state');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
