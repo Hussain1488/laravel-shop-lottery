@@ -109,6 +109,23 @@ $(document).ready(function () {
                 searchable: true
             },
             {
+                data: 'eitaa',
+                name: 'eitaa',
+                title: 'ایتا',
+                render: function (data, type, row) {
+                    if (row.date.is_today) {
+                        return (
+                            '<span class="badge badge-success">' +
+                            data +
+                            '</span>'
+                        );
+                    } else {
+                        return data;
+                    }
+                },
+                searchable: true
+            },
+            {
                 data: 'site',
                 name: 'site',
                 title: 'سایت',
