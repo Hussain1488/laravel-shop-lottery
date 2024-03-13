@@ -2,7 +2,7 @@
 
 @section('content')
     @use \Morilog\Jalali\Jalalian;
-
+    <input type="hidden" name="id" value="" class="lottery_code_id">
     <div class="app-content content">
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
@@ -63,6 +63,7 @@
             </div>
         </div>
     </div>
+    @include('back.lottery.modal')
 @endsection
 @include('back.partials.plugins', [
     'plugins' => ['persian-datepicker', 'jquery.validate'],
