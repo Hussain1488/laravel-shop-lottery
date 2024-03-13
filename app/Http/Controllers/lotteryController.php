@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\back\lottery\LotteryCodeStateRequest;
+use App\Http\Requests\back\lottery\LotteryCodeWonRequest;
 use App\Models\DailyCodeModel;
 use App\Models\InvoicesModel;
 use App\Models\LotteryCodeModel;
+use App\Models\LotteryWinnersModel;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -21,28 +24,52 @@ class lotteryController extends Controller
         return view('back.lottery.index');
     }
 
-    public function lotteryCodeNumbers()
+    public function lotteryCodeNumbers(Request $request)
     {
-        $query = LotteryCodeModel::query();
+        // Log::info($request->filter);
+        $query = LotteryCodeModel::latest();
+
+        if ($request->filter == 'invoice') {
+            $query = LotteryCodeModel::where('invoice_id', '!=', null)->latest();
+        } else if ($request->filter == 'dailyCode') {
+            $query = LotteryCodeModel::where('daily_code', '!=', null)->latest();
+        } else if ($request->filter == 'active') {
+            $query = LotteryCodeModel::where('state', 'active')->latest();
+        } else if ($request->filter == 'deactive') {
+            $query = LotteryCodeModel::where('state', 'deactive')->latest();
+        }
+
 
         return DataTables::eloquent($query)
             ->addColumn('counter', function () {
                 return null;
             })
-            ->addColumn('user', function ($query) {
+            ->addColumn('user_id', function ($query) {
                 return $query->user->username;
-            })->addColumn('code', function ($query) {
+            })
+            ->addColumn('code', function ($query) {
                 return $query->code;
-            })->addColumn('source', function ($query) {
+            })
+            ->filterColumn('code', function ($query, $keyword) {
+                return $query->where('code', 'like', '%' . $keyword . '%');
+            })
+            ->addColumn('source', function ($query) {
                 return $query->invoice_id ? 'invoice' : 'daily_code';
-            })->addColumn('weekly_state', function ($query) {
-                return $query->weekly_state;
-            })->addColumn('monthly_state', function ($query) {
-                return $query->monthly_state;
-            })->addColumn('button', function ($query) {
+            })
+            ->addColumn('state', function ($query) {
+                return $query->state;
+            })
+            ->addColumn('date', function ($query) {
+                return jDate($query->created_at)->format('Y-m-d');
+            })
+            ->addColumn('button', function ($query) {
                 return $query->id;
-            })->make(true);
+            })->addColumn('unused_column', function () {
+                return ''; // Provide dummy data for unused column
+            })
+            ->make(true);
     }
+
 
     public function invoicesIndex()
     {
@@ -184,6 +211,8 @@ class lotteryController extends Controller
             })
             ->addColumn('site', function ($query) {
                 return $query->site;
+            })->addColumn('eitaa', function ($query) {
+                return $query->eitaa;
             })->make(true);
     }
     public function generateCode()
@@ -239,10 +268,12 @@ class lotteryController extends Controller
             $rubika = $this->CodeGerator('rubika');
             $site = $this->CodeGerator('site');
             $insta = $this->CodeGerator('insta');
+            $eitaa = $this->CodeGerator('eitaa');
             $DailyCode = [
                 'rubika' => $rubika,
                 'site' => $site,
                 'insta' => $insta,
+                'eitaa' => $eitaa,
                 'date' => $carbonDate->format('Y-m-d'),
             ];
             $carbonDate = $carbonDate->addDay();
@@ -260,6 +291,7 @@ class lotteryController extends Controller
         $exists = DailyCodeModel::where('insta', $code)
             ->orWhere('rubika', $code)
             ->orWhere('site', $code)
+            ->orWhere('eitaa', $code)
             ->exists();
 
         if ($exists) {
@@ -283,6 +315,38 @@ class lotteryController extends Controller
     {
         return $this->exportExcel(DailyCodeModel::get());
         return Excel::download(new UsersExport(DailyCodeModel::get()), 'users.xlsx');
+    }
+
+    public function codeWonState(LotteryCodeWonRequest $request)
+    {
+        try {
+            $lotteryCode = LotteryCodeModel::find($request->id);
+            LotteryWinnersModel::create([
+                'user_id' => $lotteryCode->user_id,
+                'lottery_code_id' => $lotteryCode->id,
+                'type' => $request->type,
+                'state' => 'not-paid',
+                'description' => $request->description,
+                'lottery_date' => Carbon::now()->format('Y-m-d'),
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'عملیات با موفقیت انجام شد!']);
+        } catch (Exception $e) {
+            Log::error($e);
+            return response()->json(['status' => 'fail', 'message' => 'مشکلی در انجام عملیات رخ داده است!']);
+        }
+    }
+    public function CodeState(LotteryCodeStateRequest $request)
+    {
+        // dd($request->all());
+        try {
+            $lotteryCode = LotteryCodeModel::find($request->id);
+            $lotteryCode->state = $request->state;
+            $lotteryCode->save();
+            return response()->json(['status' => 'success', 'message' => 'عملیات با موفقیت انجام شد!']);
+        } catch (Exception $e) {
+            Log::error($e);
+            return response()->json(['status' => 'fail', 'message' => 'مشکلی در انجام عملیات رخ داده است!']);
+        }
     }
     public function dailyCodeTest()
     {
@@ -309,10 +373,12 @@ class lotteryController extends Controller
             $rubika = $this->CodeGerator('rubika');
             $site = $this->CodeGerator('site');
             $insta = $this->CodeGerator('insta');
+            $eitaa = $this->CodeGerator('eitaa');
             $DailyCode = [
                 'rubika' => $rubika,
                 'site' => $site,
                 'insta' => $insta,
+                'eitaa' => $eitaa,
                 'date' => $carbonDate->format('Y-m-d'),
             ];
             $carbonDate = $carbonDate->addDay();
