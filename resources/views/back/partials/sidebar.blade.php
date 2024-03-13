@@ -283,10 +283,10 @@
                                         class="menu-item">فاکتور های فروش</span></a>
                             </li>
                         @endcan
-                        @can('lottery.setting')
-                            <li class="{{ active_class('admin.lottery.invoices') }}">
-                                <a href="{{ route('admin.lottery.invoices') }}"><i class="feather icon-circle"></i><span
-                                        class="menu-item"></span></a>
+                        @can('lottery.winners')
+                            <li class="{{ active_class('admin.lottery.winners') }}">
+                                <a href="{{ route('admin.lottery.winners') }}"><i class="feather icon-circle"></i><span
+                                        class="menu-item">لیست برنده ها</span></a>
                             </li>
                         @endcan
 
