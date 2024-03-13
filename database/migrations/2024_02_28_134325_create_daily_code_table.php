@@ -18,6 +18,7 @@ class CreateDailyCodeTable extends Migration
             $table->string('insta', 7);
             $table->string('rubika', 7);
             $table->string('site', 7);
+            $table->string('eitaa', 7);
             $table->date('date');
             $table->timestamps();
         });
