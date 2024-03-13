@@ -10,7 +10,7 @@ class LotteryWinnersModel extends Model
     use HasFactory;
 
     protected $table = 'lottery_winners';
-    protected $fillable = ['user_id', 'lottery_code_id', 'type', 'start_date', 'end_date', 'lottery_date'];
+    protected $fillable = ['user_id', 'lottery_code_id', 'type', 'description', 'lottery_date'];
 
 
     public function latteryCode()
