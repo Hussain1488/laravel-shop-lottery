@@ -17,9 +17,9 @@ class CreateLotteryWinnersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('lottery_code_id');
-            $table->enum('type', ['weekly', 'monthly']);
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->enum('type', ['weekly', 'monthly', 'yearly']);
+            $table->enum('state', ['paid', 'not-paid']);
+            $table->string('decription', 256)->nullable();
             $table->date('lottery_date');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('lottery_code_id')->references('id')->on('lottery_codes')->onDelete('cascade')->onUpdate('cascade');
