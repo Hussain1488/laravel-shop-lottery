@@ -131,7 +131,7 @@ class OperatorActivityController extends Controller
                 ->rawColumns(['details_action', 'username']) // Mark 'details_action' as raw HTML
                 ->make(true);
         } catch (\Exception $e) {
-            \Log::error('Error in operator activity data: ' . $e->getMessage());
+            // \Log::error('Error in operator activity data: ' . $e->getMessage());
             // You can return an error response or handle it according to your application's needs.
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
