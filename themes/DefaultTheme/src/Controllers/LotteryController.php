@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DailyCodeModel;
 use App\Models\InvoicesModel;
 use App\Models\LotteryCodeModel;
+use App\Models\LotteryWinnersModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,9 +22,15 @@ class LotteryController extends Controller
 
     public function index()
     {
-        $lottery = LotteryCodeModel::where('user_id', Auth::user()->id)->latest()->paginate(15);
-        $invoice = InvoicesModel::where('user_id', Auth::user()->id)->latest()->paginate(15);
-        return view('front::user.lottery.index', compact('lottery', 'invoice'));
+        $lottery = LotteryCodeModel::where('user_id', Auth::user()->id)->latest()->paginate(15, ['*'], 'lottery');
+        $invoice = InvoicesModel::where('user_id', Auth::user()->id)->latest()->paginate(15, ['*'], 'invoice');
+        $winners = LotteryWinnersModel::with(['user' => function ($query) {
+            $query->get(['first_name', 'last_name', 'username', 'users.id as user_id']); // Include user_id
+        }])
+            ->latest()
+            ->paginate(15, ['*'], 'winner');
+        // dd($winners);
+        return view('front::user.lottery.index', compact('lottery', 'invoice', 'winners'));
     }
 
     public function dailyCode(Request $request)
