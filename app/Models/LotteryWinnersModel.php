@@ -17,4 +17,8 @@ class LotteryWinnersModel extends Model
     {
         return $this->belongsTo(LotteryCodeModel::class, 'lottery_code_id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
