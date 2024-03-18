@@ -268,4 +268,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(createstore::class, 'user_id');
     }
+
+    public function lotteryWinners()
+    {
+        return $this->hasMany(LotteryWinnersModel::class, 'user_id');
+    }
 }
