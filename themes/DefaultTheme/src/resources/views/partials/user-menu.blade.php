@@ -9,10 +9,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-sm dropdown-menu-left">
 
-                @if (auth()->user()->level == 'admin' ||
-                        auth()->user()->level == 'creator' ||
-                        auth()->user()->level == 'seller' ||
-                        auth()->user()->level == 'createcreditoperator')
+                @if (auth()->user()->level == 'admin' || auth()->user()->level == 'creator')
                     <a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                         {{ trans('front::messages.header.control-panel') }}
                     </a>
@@ -49,7 +46,7 @@
                     <i class="mdi mdi-account-card-details-outline"></i>
                     {{ trans('front::messages.header.sign-in-to-site') }}
                 </a>
-          
+
             </div>
         </li>
     </ul>
