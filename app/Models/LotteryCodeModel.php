@@ -25,7 +25,7 @@ class LotteryCodeModel extends Model
 
     public function winner()
     {
-        return $this->hasMany(LotteryWinnersModel::class, 'lottery_code_id');
+        return $this->hasOne(LotteryWinnersModel::class, 'lottery_code_id');
     }
 
     public function invoice()
