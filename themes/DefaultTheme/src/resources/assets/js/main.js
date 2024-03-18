@@ -564,9 +564,4 @@ $(document).ready(function (l) {
             }
         });
     });
-
-    $('.lottery_code_button').on('click', function () {
-        alert('hey');
-        $('.general_modal').modal();
-    });
 });
