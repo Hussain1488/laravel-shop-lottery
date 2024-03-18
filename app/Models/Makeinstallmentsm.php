@@ -45,9 +45,7 @@ class Makeinstallmentsm extends Model
     {
         $refuse = Makeinstallmentsm::find($id);
         $store = createstore::find($refuse->store_id);
-        $user = User::find($refuse->user_id);
         $store->storecredit += $refuse->Creditamount;
-        $user->purchasecredit += $refuse->Creditamount;
         // dd($refuse->Creditamount, $user->purchasecredit);
         $description = 'انصراف از فروش';
         $trans_data = [
@@ -59,7 +57,6 @@ class Makeinstallmentsm extends Model
         ];
         $store_trans = createstoretransaction::storeTransaction($store, $refuse->Creditamount, true, 3, 0, null, null, $description);
         StoreTransactionDetailsModel::createDetail($store_trans, $trans_data);
-        $user->save();
         $store->save();
         $refuse->delete();
 
