@@ -63,7 +63,7 @@ class lotteryController extends Controller
                 return jDate($query->created_at)->format('Y-m-d');
             })
             ->addColumn('button', function ($query) {
-                return $query->id;
+                return ['id' => $query->id, 'state' => $query->winner != null ? false : true];
             })->addColumn('unused_column', function () {
                 return ''; // Provide dummy data for unused column
             })
@@ -319,10 +319,12 @@ class lotteryController extends Controller
 
     public function codeWonState(LotteryCodeWonRequest $request)
     {
+        // dd($request->all());
         try {
             $lotteryCode = LotteryCodeModel::find($request->id);
+            // Log::error($lotteryCode);
             LotteryWinnersModel::create([
-                'user_id' => $lotteryCode->user_id,
+                'user_id' => $lotteryCode->user->id,
                 'lottery_code_id' => $lotteryCode->id,
                 'type' => $request->type,
                 'state' => 'not-paid',
@@ -386,5 +388,39 @@ class lotteryController extends Controller
 
             DailyCodeModel::create($DailyCode);
         }
+    }
+    public function winners()
+    {
+        return view('back.lottery.winners');
+    }
+    public function winnerData(Request $request)
+    {
+        Log::info($request->all());
+
+        if ($request->filter == 'weekly') {
+            $query = LotteryWinnersModel::where('type', 'weekly')->latest();
+        } else if ($request->filter == 'monthly') {
+            $query = LotteryWinnersModel::where('type', 'monthly')->latest();
+        } else if ($request->filter == 'yearly') {
+            $query = LotteryWinnersModel::where('type', 'yearly')->latest();
+        } else {
+            $query = LotteryWinnersModel::latest();
+        }
+
+
+        return DataTables::eloquent($query)
+            ->addColumn('counter', function () {
+                return null;
+            })->addColumn('user_id', function ($query) {
+                return $query->user->first_name . ' ' . $query->user->last_name;
+            })->addColumn('lottery_code', function ($query) {
+                return $query->latteryCode->code;
+            })->addColumn('type', function ($query) {
+                return $query->type;
+            })->addColumn('description', function ($query) {
+                return $query->description;
+            })->addColumn('lottery_date', function ($query) {
+                return jDate($query->lottery_date)->format('Y-m-d');
+            })->make(true);
     }
 }
