@@ -44,28 +44,4 @@ $('#lottery-daily-code-button').on('click', function () {
         }
     });
 });
-// $('#lottery-invoice-code-button').on('click', function () {
-//     $('#general_modal').modal('hide');
-//     var formData = $('#daily_code_insert_form').serialize();
-//     $.blockUI(loading);
-//     $.ajax({
-//         url: $(this).attr('action'),
-//         type: 'GET',
-//         data: formData,
-//         success: function (response) {
-//             $.unblockUI();
-//             if (response.status == 'error') {
-//                 toastr.warning(response.data);
-//             } else {
-//                 $('.code_show_conteiner').html(
-//                     '<span>درخواست شما با موفقیت انجام شد</span>' +
-//                         '<br />' +
-//                         'کد قرعه کشی شما : ' +
-//                         response.data +
-//                         ' میباشد! شما میتوانید نتایج و کد قرعه کشی خود را در پروفایل خود مشاهده کنید!'
-//                 );
-//                 $('#large_modal').modal();
-//             }
-//         }
-//     });
-// });
+
