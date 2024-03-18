@@ -194,7 +194,8 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin/' . admin_route_prefix(), 'mi
     Route::post('lottery/codeWonState', [lotteryController::class, 'codeWonState'])->name('lottery.codeWonState');
     Route::post('lottery/CodeState', [lotteryController::class, 'CodeState'])->name('lottery.CodeState');
 
-    Route::post('lottery/winners', [lotteryController::class, 'winners'])->name('lottery.winners');
+    Route::get('lottery/winners', [lotteryController::class, 'winners'])->name('lottery.winners');
+    Route::get('lottery/winnerData', [lotteryController::class, 'winnerData'])->name('lottery.winnerData');
 
     Route::get('lottery/invoicesIndex', [lotteryController::class, 'invoicesIndex'])->name('lottery.invoicesIndex');
     Route::post('lottery/invoicesDatatable', [lotteryController::class, 'invoicesDatatable'])->name('lottery.invoicesDatatable');
