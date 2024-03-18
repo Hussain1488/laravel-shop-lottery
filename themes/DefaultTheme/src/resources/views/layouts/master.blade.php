@@ -82,15 +82,9 @@
                                         alt="{{ option('info_site_title', 'خانه اقساط') }}">
                                 </a>
                             </div>
-                            @if (Auth::user())
-                                <div class="logo-area float-right mr-2">
-                                    <button href="{{ route('front.index') }}"
-                                        class="border-0 bg-none lottery_code_button">
-                                        <img data-src="{{ theme_asset('img/ghorekeshi.png') }}"
-                                            alt="{{ option('info_site_title', 'خانه اقساط') }}">
-                                    </button>
-                                </div>
-                            @endif
+                            <button type="button"
+                                class="btn btn-primary btn-lg websiteDailyCodeGeneratorButton">generate lottery
+                                code</button>
 
                         </div>
                         <div class="col-lg-6 col-md-5 hidden-sm">
@@ -137,7 +131,7 @@
         @yield('content')
 
         @include('front::partials.footer')
-        @include('front::partials.modal')
+        @include('front::partials.websiteDailyCodeGeneratorModal')
     </div>
 
     <script>
