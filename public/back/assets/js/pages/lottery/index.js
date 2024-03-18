@@ -95,11 +95,15 @@ $(document).ready(function () {
                 name: 'button',
                 title: 'عملیات',
                 render: function (data) {
-                    return (
-                        '<input type="button" data-id="' +
-                        data +
-                        '" value="بیشتر" class="lotteryCodeButton btn btn-info btn-sm" />'
-                    );
+                    if (data.state) {
+                        return (
+                            '<input type="button" data-id="' +
+                            data.id +
+                            '" value="بیشتر" class="lotteryCodeButton btn btn-info btn-sm" />'
+                        );
+                    } else {
+                        return '';
+                    }
                 }
             }
         ],
