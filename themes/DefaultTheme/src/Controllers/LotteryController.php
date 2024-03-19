@@ -55,7 +55,7 @@ class LotteryController extends Controller
                 'daily_code' => $request->daily_code,
                 'weekly_state' => false,
                 'monthly_state' => false,
-                'state' => 'wait',
+                'state' => 'active',
             ]);
         }
         return response()->json(['status' => 'success', 'data' => $code]);
