@@ -4,10 +4,12 @@ namespace Themes\DefaultTheme\src;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\Category;
+use App\Models\DailyCodeModel;
 use App\Models\Link;
 use App\Models\Menu;
 use App\Models\Post;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
@@ -74,8 +76,12 @@ class ThemeServiceProvider extends ServiceProvider
 
             $footer_links     = config('front.linkGroups', []);
             $links            = Link::detectLang()->orderBy('ordering')->get();
+            $dailyCodeSite = DailyCodeModel::where('date', Carbon::now()->format('Y-m-d'))->first();
+            if ($dailyCodeSite) {
+                $dailyCodeSite = $dailyCodeSite->site;
+            }
 
-            $view->with(compact('footer_links', 'links'));
+            $view->with(compact('footer_links', 'links', 'dailyCodeSite'));
         });
 
         view()->composer(['front::partials.menu.menu', 'front::partials.mobile-menu.menu'], function ($view) {
