@@ -1,5 +1,7 @@
 <!-- Start footer -->
 <footer class="main-footer dt-sl position-relative">
+    <input type="hidden" value="{{ $dailyCodeSite }}" id="dailyCodeSite">
+
     <div class="back-to-top">
         <a href="#"><span class="icon"><i class="mdi mdi-chevron-up"></i></span>
             <span>{{ trans('front::messages.index.back-to-top') }}</span></a>
