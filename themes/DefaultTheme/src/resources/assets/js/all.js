@@ -17605,6 +17605,91 @@ $('.product-special-end-date').each(function (t, e) {
     intervals[t] = i;
 });
 
+function copyToClipboard(text) {
+    // Create a temporary textarea element
+    var $temp = $('<textarea>');
+
+    // Set the text content to be copied
+    $('body').append($temp);
+    $temp.val(text).select();
+
+    // Copy the selected text to the clipboard
+    document.execCommand('copy');
+
+    // Remove the temporary textarea
+    $temp.remove();
+}
+
+// Roll Dice play
+var elDiceOne = document.getElementById('dice1');
+var elDiceTwo = document.getElementById('dice2');
+var elDiceThree = document.getElementById('dice3');
+var elComeOut = document.getElementById('roll');
+var target = 25;
+var score = 0;
+var counter = 0;
 $(document).on('click', '.websiteDailyCodeGeneratorButton', function () {
-    $('#websiteDailyCodeGeneratorModal').modal();
+    reset();
+    $('#rollDiceModal').modal();
 });
+
+$(document).on('click', '#palay-again', function () {
+    reset();
+});
+
+function reset() {
+    score = 0;
+    counter = 0;
+    $('#palay-again').addClass('d-none');
+    $('#roll').removeClass('d-none');
+    $('.roll-span1').text(score);
+    $('.getCode-button').prop('disabled', true);
+}
+
+elComeOut.onclick = function () {
+    counter++;
+    // console.log(counter);
+    rollDice();
+    if (counter == 3) {
+        $('#roll').addClass('d-none');
+        $('#palay-again').removeClass('d-none');
+    }
+    if (target <= score) {
+        setTimeout(() => {
+            $('.getCode-button').prop('disabled', false);
+        }, 3000);
+    }
+};
+
+function rollDice() {
+    var diceOne = Math.floor(Math.random() * 6 + 1);
+    var diceTwo = Math.floor(Math.random() * 6 + 1);
+    var diceThree = Math.floor(Math.random() * 6 + 1);
+
+    for (var i = 1; i <= 6; i++) {
+        elDiceOne.classList.remove('show-' + i);
+        if (diceOne === i) {
+            elDiceOne.classList.add('show-' + i);
+        }
+    }
+
+    for (var k = 1; k <= 6; k++) {
+        elDiceTwo.classList.remove('show-' + k);
+        if (diceTwo === k) {
+            elDiceTwo.classList.add('show-' + k);
+        }
+    }
+    for (var j = 1; j <= 6; j++) {
+        elDiceThree.classList.remove('show-' + j);
+        if (diceThree === j) {
+            elDiceThree.classList.add('show-' + j);
+        }
+    }
+    // setTimeout(rollDice(), 1000);
+    // console.log('one: ' + diceOne, 'two: ' + diceTwo, 'three: ' + diceThree);
+    score = score + diceOne + diceTwo + diceThree;
+    setTimeout(function () {
+        $('.roll-span1').text(score);
+    }, 3000);
+    // copyToClipboard(score);
+}
