@@ -132,6 +132,7 @@
 
         @include('front::partials.footer')
         @include('front::partials.websiteDailyCodeGeneratorModal')
+        @include('front::partials.rollDiceModal')
     </div>
 
     <script>
