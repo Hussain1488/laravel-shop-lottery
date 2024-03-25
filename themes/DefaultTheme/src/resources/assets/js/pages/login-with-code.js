@@ -94,7 +94,8 @@ $('#sendCodeRegister').on('click', function () {
             success: function (data) {
                 unblock();
                 if (data.data == 'true') {
-                    window.location.href = '/';
+                    $('#refralModal').modal();
+                    // window.location.href = '/';
                 } else {
                     $('#code_error3')
                         .text('کد وارد شده اشتباه است')
