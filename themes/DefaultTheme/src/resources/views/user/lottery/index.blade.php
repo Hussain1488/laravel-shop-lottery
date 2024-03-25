@@ -1,8 +1,7 @@
 @extends('front::user.layouts.master')
 
 @section('user-content')
-    <!-- Start Content -->
-    {{-- @if ($trans->count()) --}}
+
     <div class="col-xl-9 col-lg-8 col-md-8 col-sm-12">
 
 
@@ -38,8 +37,7 @@
                                         <button type="button" href="{{ route('front.index') }}"
                                             class="border-0 bg-none lottery_code_button">
                                             <img data-src="{{ theme_asset('img/ghorekeshi.png') }}"
-                                                style="width: 100%;height: auto;
-    "
+                                                style="width: 100%;height: auto;"
                                                 alt="{{ option('info_site_title', 'خانه اقساط') }}">
                                         </button>
                                     </div>
@@ -49,7 +47,7 @@
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
                                 <a class="nav-link {{ request('tab') != 'winner' && request('tab') != 'invoice' ? 'active' : '' }}"
-                                    style="font-size: .625rem" data-toggle="tab" href="#lotteryCodes">
+                                    style="font-size: .625rem" data-toggle="tab" href="#lottery">
                                     کد های قرعه کشی شما</a>
                             </li>
                             <li class="nav-item">
@@ -68,7 +66,7 @@
 
                         </ul>
                         <div class="tab-content ">
-                            <div id="lotteryCodes"
+                            <div id="lottery"
                                 class="container tab-pane {{ request('tab') != 'winner' && request('tab') != 'invoice' ? 'active' : 'fade' }} my-2 py-3">
 
 
@@ -78,11 +76,7 @@
                                             <label for="first_name" class="mr-2">
                                                 کد های قرعه کشی شما
                                             </label>
-                                            <div class="d-flex ">
-                                                {{-- <input readonly type="text" class="form-control moneyInput" id="first_name"
-                                                name="first_name" value="{{ $user->wallet->balance ?? 0 }}"
-                                                style="margin-left: 4px"><span> ریال</span> --}}
-                                            </div>
+
                                         </div>
                                     </div>
 
@@ -145,12 +139,10 @@
 
                                                         </td>
                                                         <td>
-                                                            @if ($key->state == 'wait')
+                                                            @if ($key->state == 'active')
                                                                 <span class="badge badge-success">فعال</span>
-                                                            @elseif($key->state == 'won')
-                                                                <span class="badge badge-primary">یک دور برنده</span>
                                                             @else
-                                                                <span class="badge badge-danger">غیر فعال</span>
+                                                                <span class="badge badge-danger">باطل</span>
                                                             @endif
                                                         </td>
                                                         <td>
@@ -189,74 +181,120 @@
                                     </div>
 
                                     <div class="mobile-size " data-screen="mobile">
-                                        {{-- @foreach ($trans as $key)
-                                <div class=" border rounded mb-1">
-                                    <div class="row pt-1">
-                                        <div class="col mr-2">
-                                            <h6 class="">
-                                                تاریخ تراکنش:
+                                        @foreach ($lottery as $key)
+                                            <div class=" border rounded mb-1">
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
+                                                        <h6 class="">
+                                                            کد قرعه کشی:
 
-                                            </h6>
-                                        </div>
-                                        <div class="col">
-                                            <span class="transaction_datetime">
-                                                {{ jdate($key->created_at)->format('d/M/Y') }}
-                                                <br>
-                                                {{ jdate($key->created_at)->format('H:i:s') }}
-                                            </span>
-                                        </div>
-                                    </div>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span class="transaction_datetime">
+                                                            {{ $key->code }}
+                                                        </span>
+                                                    </div>
+                                                </div>
 
-                                    <div class="row pt-1">
-                                        <div class="col mr-2">
-                                            <h6 class="">
-                                                نوع تراکنش: </h6>
-                                        </div>
-                                        <div class="col">
-                                            <span class="text-dark">
-                                                {{ $key->type == 'deposit' ? 'شارژ کیف پول' : 'برداشت ازکیف پول' }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col mr-2">
-                                            <h6 class="">
-                                                منبع
-                                            </h6>
-                                        </div>
-                                        <div class="col">
-                                            {{ $key->source == 'user' ? 'کاربر' : 'اپراتور' }}
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col mr-2">
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
+                                                        <h6 class="">
+                                                            تاریخ دریافت:</h6>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span class="text-dark">
+                                                            {{ jDate($key->created_at)->format('Y-m-d') }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
+                                                        <h6 class="">
+                                                            منبع:
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col">
+                                                        @if ($key->daily_code)
+                                                            <span class="badge bg-success text-white">کد
+                                                                روزانه</span>
+                                                        @else
+                                                            <span class="badge bg-info">فاکتور خرید</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
 
-                                            <h6 class="">
-                                                مبلغ تراکنش </h6>
-                                        </div>
-                                        <div class="col">
+                                                        <h6 class="">
+                                                            وضعیت:</h6>
+                                                    </div>
+                                                    <div class="col">
 
-                                            <span
-                                                class="moneyInputSpan {{ $key->type == 'deposit' ? 'text-success' : 'text-danger' }}">{{ $key->amount }}</span>
-                                            ریال
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col mr-2">
+                                                        @if ($key->state == 'active')
+                                                            <span class="badge badge-success">فعال</span>
+                                                        @else
+                                                            <span class="badge badge-danger">باطل</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
 
-                                            <h6 class="">
-                                                وضعیت </h6>
-                                        </div>
+                                                        <h6 class="">
+                                                            قرعه کشی هفته گی </h6>
+                                                    </div>
 
-                                        <div class="col">
-                                            <span
-                                                class="{{ $key->status == 'success' ? 'text-success' : 'text-danger' }}">{{ $key->status == 'success' ? 'موفق' : 'ناموفق' }}</span>
-                                        </div>
+                                                    <div class="col">
+                                                        @if (!$key->weekly_state)
+                                                            <span class="badge badge-warning">
+                                                                در انتظار
+                                                            </span>
+                                                        @else
+                                                            <span class="badge badge-danger">
+                                                                منقضی
+                                                            </span>
+                                                        @endif
+                                                    </div>
 
-                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
 
-                                </div>
-                            @endforeach --}}
+                                                        <h6 class="">
+                                                            قرعه کشی ماهانه</h6>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        @if (!$key->monthly_state)
+                                                            <span class="badge badge-warning">
+                                                                در انتظار
+                                                            </span>
+                                                        @else
+                                                            <span class="badge badge-danger">
+                                                                منقضی
+                                                            </span>
+                                                        @endif
+                                                    </div>
+
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
+
+                                                        <h6 class="">
+                                                            قرعه کشی سالانه</h6>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <span class="badge badge-warning">
+                                                            در انتظار
+                                                        </span>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        @endforeach
                                     </div>
                                 @else
                                     <div class="p-3">
@@ -278,17 +316,16 @@
                                             <label for="first_name" class="mr-2">
                                                 فاکتور های خرید شما
                                             </label>
-                                            <div class="d-flex ">
-                                                {{-- <input readonly type="text" class="form-control moneyInput" id="first_name"
-                                                name="first_name" value="{{ $user->wallet->balance ?? 0 }}"
-                                                style="margin-left: 4px"><span> ریال</span> --}}
-                                            </div>
+
                                         </div>
                                     </div>
 
                                 </div>
 
                                 @if ($invoice->count() > 0)
+                                    @php
+                                        $counter = ($invoice->currentPage() - 1) * $invoice->perPage() + 1;
+                                    @endphp
                                     <div class="pc-size" data-screen="pc">
 
                                         <table class="table table-hover">
@@ -311,9 +348,6 @@
                                                     </th>
                                                 </tr>
                                             </thead>
-                                            @php
-                                                $counter = ($invoice->currentPage() - 1) * $invoice->perPage() + 1;
-                                            @endphp
                                             <tbody>
                                                 @foreach ($invoice as $key)
                                                     <tr>
@@ -345,74 +379,64 @@
                                     </div>
 
                                     <div class="mobile-size " data-screen="mobile">
-                                        {{-- @foreach ($trans as $key)
-                                    <div class=" border rounded mb-1">
-                                        <div class="row pt-1">
-                                            <div class="col mr-2">
-                                                <h6 class="">
-                                                    تاریخ تراکنش:
+                                        @foreach ($invoice as $key)
+                                            <div class=" border rounded mb-1">
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
+                                                        <h6 class="">
+                                                            تاریخ ارسال:
 
-                                                </h6>
-                                            </div>
-                                            <div class="col">
-                                                <span class="transaction_datetime">
-                                                    {{ jdate($key->created_at)->format('d/M/Y') }}
-                                                    <br>
-                                                    {{ jdate($key->created_at)->format('H:i:s') }}
-                                                </span>
-                                            </div>
-                                        </div>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span class="transaction_datetime">
+                                                            {{ jDate($key->created_at)->format('Y-m-d') }}
+                                                        </span>
+                                                    </div>
+                                                </div>
 
-                                        <div class="row pt-1">
-                                            <div class="col mr-2">
-                                                <h6 class="">
-                                                    نوع تراکنش: </h6>
-                                            </div>
-                                            <div class="col">
-                                                <span class="text-dark">
-                                                    {{ $key->type == 'deposit' ? 'شارژ کیف پول' : 'برداشت ازکیف پول' }}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="row pt-1">
-                                            <div class="col mr-2">
-                                                <h6 class="">
-                                                    منبع
-                                                </h6>
-                                            </div>
-                                            <div class="col">
-                                                {{ $key->source == 'user' ? 'کاربر' : 'اپراتور' }}
-                                            </div>
-                                        </div>
-                                        <div class="row pt-1">
-                                            <div class="col mr-2">
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
+                                                        <h6 class="">
+                                                            شماره فاکتور: </h6>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span class="text-dark">
+                                                            {{ $key->number }} </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
+                                                        <h6 class="">
+                                                            مبلغ خرید:
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col">
+                                                        {{ $key->amount }}
+                                                    </div>
+                                                </div>
 
-                                                <h6 class="">
-                                                    مبلغ تراکنش </h6>
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
+
+                                                        <h6 class="">
+                                                            وضعیت:</h6>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        @if ($key->state == 'pending')
+                                                            <span class="badge badge-primary">انتظار تأیید</span>
+                                                        @elseif($key->state == 'valid')
+                                                            <span class="badge badge-success">تأیید شده</span>
+                                                        @else
+                                                            <span class="badge badge-danger">رد شده</span>
+                                                        @endif
+                                                    </div>
+
+                                                </div>
+
                                             </div>
-                                            <div class="col">
-
-                                                <span
-                                                    class="moneyInputSpan {{ $key->type == 'deposit' ? 'text-success' : 'text-danger' }}">{{ $key->amount }}</span>
-                                                ریال
-                                            </div>
-                                        </div>
-                                        <div class="row pt-1">
-                                            <div class="col mr-2">
-
-                                                <h6 class="">
-                                                    وضعیت </h6>
-                                            </div>
-
-                                            <div class="col">
-                                                <span
-                                                    class="{{ $key->status == 'success' ? 'text-success' : 'text-danger' }}">{{ $key->status == 'success' ? 'موفق' : 'ناموفق' }}</span>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                @endforeach --}}
+                                        @endforeach
                                     </div>
                                 @else
                                     <div class="p-3">
@@ -435,11 +459,7 @@
                                             <label for="first_name" class="mr-2">
                                                 فاکتور های خرید شما
                                             </label>
-                                            <div class="d-flex ">
-                                                {{-- <input readonly type="text" class="form-control moneyInput" id="first_name"
-                                                name="first_name" value="{{ $user->wallet->balance ?? 0 }}"
-                                                style="margin-left: 4px"><span> ریال</span> --}}
-                                            </div>
+
                                         </div>
                                     </div>
 
@@ -502,74 +522,63 @@
                                     </div>
 
                                     <div class="mobile-size " data-screen="mobile">
-                                        {{-- @foreach ($trans as $key)
-                                    <div class=" border rounded mb-1">
-                                        <div class="row pt-1">
-                                            <div class="col mr-2">
-                                                <h6 class="">
-                                                    تاریخ تراکنش:
+                                        @foreach ($winners as $key)
+                                            <div class=" border rounded mb-1">
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
+                                                        <h6 class="">
+                                                            کاربر:
 
-                                                </h6>
-                                            </div>
-                                            <div class="col">
-                                                <span class="transaction_datetime">
-                                                    {{ jdate($key->created_at)->format('d/M/Y') }}
-                                                    <br>
-                                                    {{ jdate($key->created_at)->format('H:i:s') }}
-                                                </span>
-                                            </div>
-                                        </div>
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span class="transaction_datetime">
+                                                            {{ $key->user->first_name . ' ' . $key->user->last_name }}
+                                                        </span>
+                                                    </div>
+                                                </div>
 
-                                        <div class="row pt-1">
-                                            <div class="col mr-2">
-                                                <h6 class="">
-                                                    نوع تراکنش: </h6>
-                                            </div>
-                                            <div class="col">
-                                                <span class="text-dark">
-                                                    {{ $key->type == 'deposit' ? 'شارژ کیف پول' : 'برداشت ازکیف پول' }}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="row pt-1">
-                                            <div class="col mr-2">
-                                                <h6 class="">
-                                                    منبع
-                                                </h6>
-                                            </div>
-                                            <div class="col">
-                                                {{ $key->source == 'user' ? 'کاربر' : 'اپراتور' }}
-                                            </div>
-                                        </div>
-                                        <div class="row pt-1">
-                                            <div class="col mr-2">
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
+                                                        <h6 class="">
+                                                            کد قرعه کشی</h6>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span class="text-dark">
+                                                            {{ $key->latteryCode->code }}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
+                                                        <h6 class="">
+                                                            نوع قرعه کشی
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col">
+                                                        @if ($key->type == 'weekly')
+                                                            <span class="badge badge-primary">هفته ای</span>
+                                                        @elseif($key->type == 'monthly')
+                                                            <span class="badge badge-success">ماهانه</span>
+                                                        @else
+                                                            <span class="badge badge-danger">سالانه</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="row pt-1">
+                                                    <div class="col mr-2">
 
-                                                <h6 class="">
-                                                    مبلغ تراکنش </h6>
+                                                        <h6 class="">
+                                                            تاریخ قرعه کشی</h6>
+                                                    </div>
+                                                    <div class="col">
+
+                                                        {{ jDate($key->lottery_date)->format('Y-m-d') }}
+                                                    </div>
+                                                </div>
+
+
                                             </div>
-                                            <div class="col">
-
-                                                <span
-                                                    class="moneyInputSpan {{ $key->type == 'deposit' ? 'text-success' : 'text-danger' }}">{{ $key->amount }}</span>
-                                                ریال
-                                            </div>
-                                        </div>
-                                        <div class="row pt-1">
-                                            <div class="col mr-2">
-
-                                                <h6 class="">
-                                                    وضعیت </h6>
-                                            </div>
-
-                                            <div class="col">
-                                                <span
-                                                    class="{{ $key->status == 'success' ? 'text-success' : 'text-danger' }}">{{ $key->status == 'success' ? 'موفق' : 'ناموفق' }}</span>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                @endforeach --}}
+                                        @endforeach
                                     </div>
                                 @else
                                     <div class="p-3">
@@ -591,10 +600,10 @@
             </div>
         </div>
     </div>
-    @include('front::partials.modal')
 
     <!-- End Content -->
 @endsection
+@include('front::partials.modal')
 
 @push('scripts')
     <script src="{{ theme_asset('js/pages/lottery/index.js') }}"></script>
