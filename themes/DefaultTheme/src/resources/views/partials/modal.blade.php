@@ -1,5 +1,5 @@
 <div class="modal fade" id="general_modal">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
@@ -135,9 +135,7 @@
 
                 <!-- Modal footer -->
 
-                <div class="modal-footer">
-
-                </div>
+                <button type="button" class="btn btn-danger btn-sm w-auto" data-dismiss="modal">بستن</button>
 
             </div>
         </div>
@@ -153,4 +151,6 @@
             </div>
         </div>
     </div>
+    <button type="button" class="btn btn-danger m-1 btn-sm" data-dismiss="modal">بستن</button>
+
 </div>
