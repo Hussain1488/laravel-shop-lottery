@@ -53,12 +53,6 @@
                                     class="d-inline-block mt-2">{{ trans('front::messages.auth.login-with-password') }}</a>
                             </div>
 
-                            {{-- <div class="form-footer text-right mt-3">
-                                <span
-                                    class="d-block font-weight-bold">{{ trans('front::messages.auth.are-you-a-new-user') }}</span>
-                                <a href="{{ route('register') }}"
-                                    class="d-inline-block mr-3 mt-2">{{ trans('front::messages.auth.register-on-the-site') }}</a>
-                            </div> --}}
 
                         </form>
                     </div>
@@ -137,6 +131,40 @@
                         <input class="user-value" type="hidden"
                             value="{{ optional(Session::get('newUser'))['number'] }}" name="user">
                         {{-- {{ optional(Session::get('newUser')) }} --}}
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+
+                <div class="modal-footer">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="refralModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <span id="code_error3" class="alert alert-danger d-none m-2" role="alert">
+                </span>
+
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <span class="alert alert-info" id="operation_title">لطفا شماره معرف خود را وارد کنید تا هر دو جایزه
+                        شارژ کیف پول را دریافت کنید!</span>
+
+                </div>
+                <div class="alert alert-success d-none" id="success-alert1"></div>
+                <hr />
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="">
+                        <input type="number" name="refral-number">
+                        <input type="button" class="btn btn-success" name="" value="ارسال">
                     </form>
                 </div>
 
