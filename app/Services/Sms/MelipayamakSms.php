@@ -24,11 +24,11 @@ class MelipayamakSms extends SmsService implements SmsContract, SmsNotificationC
             $username = option('MELIPAYAMAK_PANEL_USERNAME');
             $password = option('MELIPAYAMAK_PANEL_PASSWORD');
             $api = new MelipayamakApi($username, $password);
-            $sms = $api->sms();
+            $smsSoap = $api->sms('soap');
             $to = $mobile;
             $from = option('admin_mobile_number');
-            $text = $this->type['string'] . ' :' . implode(', ', $input_data) . ' https://khaneaghsate.ir';
-            $response = $sms->send($to, $from, $text);
+            $text = $input_data;
+            $response = $smsSoap->sendByBaseNumber($text, $to, $this->type['bodyId']);
             $json = json_decode($response);
             // echo $json->Value; //RecId or Error Number
         } catch (Exception $e) {
