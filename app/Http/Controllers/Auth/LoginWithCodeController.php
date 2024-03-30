@@ -9,6 +9,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 
@@ -56,7 +57,6 @@ class LoginWithCodeController extends Controller
             $type->text = Sms::TYPES['USER_CREATE'];
             // Assuming verifySms is a function that expects $type and $user as arguments
             $response = verifySms($type, $user);
-
             Session::put('newUser', ['number' => $request->mobile, 'code' => $type->code]);
             return response()->json(['status' => 'success', 'data' => 'true']);
         }
@@ -85,5 +85,46 @@ class LoginWithCodeController extends Controller
         OneTimeCode::where('user_id', $user->id)->delete();
 
         return response('success');
+    }
+    public function refral(Request $request)
+    {
+        $refral_user = User::where('username', $request->refral_number)->first();
+        if (!$refral_user) {
+            return response()->json(['status' => 'fail', 'message' => 'شماره معرف شما یافت نشد، لطفا دوباره امتهان کنید!']);
+        }
+        Log::info($request->refral_number);
+        try {
+            $user = User::find(Auth::user()->id);
+
+            if ($refral_user && $user) {
+                $refral_user_wallet = $refral_user->wallet; // Access the wallet model associated with the referral user
+                $refral_user_wallet->balance += 200000;
+                $refral_user_wallet->save(); // Save the changes to the referral user's wallet balance
+
+                $referral_history = $refral_user_wallet->histories()->create([
+                    'type'        => 'deposit',
+                    'amount'      => 200000,
+                    'description' => 'شارژ کیف پول، برای استفاده از شماره به عنوان معرف',
+                    'source'      => 'user',
+                    'status'      => 'success' // Assuming the recharge is successful
+                ]);
+
+                $user_wallet = $user->wallet; // Access the wallet model associated with the current user
+                $user_wallet->balance += 200000;
+                $user_wallet->save(); // Save the changes to the current user's wallet balance
+
+                $user_history = $user_wallet->histories()->create([
+                    'type'        => 'deposit',
+                    'amount'      => 200000,
+                    'description' => 'شارژ کیف پول، برای استفاده از شماره معرف',
+                    'source'      => 'user',
+                    'status'      => 'success' // Assuming the recharge is successful
+                ]);
+            }
+            return response()->json(['status' => 'success', 'message' => 'کد معرف پذیرفته شد و کیف پول شما و معرفتان هر یک ۲۰ هزار تومان شارژ شد!']);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['status' => 'fail', 'message' => 'عملیات با خطا روبرو شد']);
+        }
     }
 }
