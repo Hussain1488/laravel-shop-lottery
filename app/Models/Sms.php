@@ -12,32 +12,37 @@ class Sms extends Model
         'VERIFY_CODE' => [
             'key'    => 'verify-code',
             'string' => 'کد تأیید خانه اقساط',
-            'method' => 'verifyCode'
+            'method' => 'verifyCode',
+            'bodyId' => 201310
         ],
         'USER_CREATED' => [
             'key'    => 'user-created',
             'string' => 'خوش آمدگویی کاربر',
-            'method' => 'userCreated'
+            'method' => 'userCreated',
         ],
         'USER_CREATE' => [
             'key'    => 'user-create',
             'string' => 'کد تأیید ثبت نام کاربر جدید',
-            'method' => 'userCreate'
+            'method' => 'userCreate',
+            'bodyId' => 201309
         ],
         'RESEND_VERIFY_CODE' => [
             'key'    => 'resend-verify-code',
             'string' => 'کد مجدد تأیید خانه اقساط',
-            'method' => 'resendVerifyCode'
+            'method' => 'resendVerifyCode',
+            'bodyId' => 201302
         ],
         'INSTA_CODE' => [
             'key'    => 'insta-code',
             'string' => 'کد تأیید پرداخت قسط خانه اقساط',
-            'method' => 'InstaCode'
+            'method' => 'InstaCode',
+            'bodyId' => 201306
         ],
         'PRE_PAY_CODE' => [
             'key'    => 'pre-pay-code',
             'string' => 'کد تأیید پیش پرداخت خانه اقساط',
-            'method' => 'PrePayCode'
+            'method' => 'PrePayCode',
+            'bodyId' => 201305
         ],
         'ORDER_PAID' => [
             'key'    => 'order-paid',
