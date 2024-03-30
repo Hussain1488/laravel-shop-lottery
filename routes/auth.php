@@ -81,3 +81,6 @@ Route::post('/confirm-smscode-register', [ResendSmsController::class, 'resendSms
 
 Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store'])
     ->middleware('auth');
+
+Route::post('/refral-number', [LoginWithCodeController::class, 'refral'])
+    ->name('refral-number');
