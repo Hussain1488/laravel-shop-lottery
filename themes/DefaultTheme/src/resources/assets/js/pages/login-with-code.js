@@ -78,6 +78,45 @@ $('#sendAgain1').on('click', function () {
     });
 });
 
+$('#reject-refral').on('click', function () {
+    window.location.href = '/';
+});
+
+$(document).on('click', '.refral_test', function () {
+    $('#refralModal').modal();
+});
+
+$('#refral_send_button').on('click', function () {
+    let btn = $(this);
+    let form = $('#refral_form');
+    let formData = form.serialize();
+    $.ajax({
+        url: form.attr('action'),
+        type: 'POST',
+        data: formData,
+        dataType: 'json', // Specify that the expected response type is JSON
+        success: function (response) {
+            if (response.status == 'success') {
+                toastr.success(response.message);
+                window.location.href = '/';
+            } else {
+                toastr.warning(response.message);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.log(xhr.responseText);
+            alert('An error occurred. Please try again.');
+        },
+
+        beforeSend: function (xhr) {
+            block(btn);
+        },
+        complete: function () {
+            unblock(btn);
+        }
+    });
+});
+
 $('#sendCodeRegister').on('click', function () {
     $('#registerWithCode').modal('hide');
 
