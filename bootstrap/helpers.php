@@ -125,17 +125,15 @@ function verifySms($type, $user)
         $username = option('MELIPAYAMAK_PANEL_USERNAME');
         $password = option('MELIPAYAMAK_PANEL_PASSWORD');
         $api = new MelipayamakApi($username, $password);
-        $sms = $api->sms();
+        $smsSoap = $api->sms('soap');
         $to = $user->username;
         $from = option('admin_mobile_number');
-        $text = $type->text['string'] . ' :' .  $type->code . ' https://khaneaghsate.ir';
-        $response = $sms->send($to, $from, $text);
+        $text = $type->code;
+        $response = $smsSoap->sendByBaseNumber($text, $to, $type->text['bodyId']);
         $json = json_decode($response);
         SmsLog($response, $user, $type->text);
     } catch (Exception $e) {
-        // echo $e->getMessage();
-        // dd($e->getMessage());
-        SmsLog($response, $user, $type->text);
+        Log::error($e);
         return $e->getMessage();
     }
     return;
