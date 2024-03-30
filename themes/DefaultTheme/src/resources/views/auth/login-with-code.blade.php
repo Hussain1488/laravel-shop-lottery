@@ -4,7 +4,7 @@
     <!-- Start main-content -->
     <main class="main-content dt-sl mt-4 mb-3">
         <div class="container main-container">
-
+            {{-- <button class="btn btn-success refral_test">تست رفرال</button> --}}
             <div class="row">
                 <div class="col-xl-4 col-lg-5 col-md-7 col-12 mx-auto">
                     <div class="form-ui dt-sl dt-sn pt-4">
@@ -162,9 +162,12 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form action="">
-                        <input type="number" name="refral-number">
-                        <input type="button" class="btn btn-success" name="" value="ارسال">
+                    <form action="{{ route('refral-number') }}" method="POST" id="refral_form">
+                        @csrf
+                        <input type="number" class="form-control" name="refral_number">
+                        <input type="button" id="refral_send_button" class="btn btn-success" value="ارسال">
+                        <button type="button" class="btn btn-danger m-1 btn-sm reject-refral"
+                            id="reject-refral">ندارم</button>
                     </form>
                 </div>
 
