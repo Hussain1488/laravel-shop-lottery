@@ -22437,7 +22437,7 @@ button.roll-button:active {
     width: 100px;
     height: 100px;
     transform-style: preserve-3d;
-    transition: transform 3s;
+    transition: transform 5s;
 }
 
 .dot {
@@ -22529,15 +22529,15 @@ button.roll-button:active {
 }
 
 .show-3 {
-    transform: rotateY(810deg) rotateZ(720deg);
+    transform: rotateY(810deg) rotateZ(7200deg);
 }
 
 .show-4 {
-    transform: rotateX(-810deg) rotateZ(-1080deg);
+    transform: rotateX(-810deg) rotateZ(-10800deg);
 }
 
 .show-5 {
-    transform: rotateX(450deg) rotateZ(-720deg);
+    transform: rotateX(450deg) rotateZ(-7200deg);
 }
 
 .two-1,
