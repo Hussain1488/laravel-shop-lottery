@@ -1,3 +1,18 @@
+var lotteryDailyCodeStat = null;
+var elDiceOne = document.getElementById('dice1');
+var elDiceTwo = document.getElementById('dice2');
+var elDiceThree = document.getElementById('dice3');
+var elComeOut = document.getElementById('roll');
+var target = 25;
+var score = 0;
+var counter = 0;
+var expirationDate = new Date();
+expirationDate.setDate(expirationDate.getDate() + 1);
+var LotteryDailyData = {
+    value: false,
+    expirationDate: expirationDate.getTime() // Convert expiration date to timestamp
+};
+
 function _typeof(t) {
     return (
         (_typeof =
@@ -17336,6 +17351,10 @@ function number_format(t) {
                     }
                 });
             });
+
+        if (localStorage.getItem('commentState') != null) {
+            showGenerateDailyCode();
+        }
     }),
     $.ajaxSetup({
         error: function (t) {
@@ -17621,45 +17640,35 @@ function copyToClipboard(text) {
 }
 
 // Roll Dice play
-var elDiceOne = document.getElementById('dice1');
-var elDiceTwo = document.getElementById('dice2');
-var elDiceThree = document.getElementById('dice3');
-var elComeOut = document.getElementById('roll');
-var target = 25;
-var score = 0;
-var counter = 0;
+
 $(document).on('click', '.websiteDailyCodeGeneratorButton', function () {
-    reset();
+    // reset();
+    if (localStorage.getItem('commentState') != null) {
+        showGenerateDailyCode();
+    }
     $('#rollDiceModal').modal();
+    console.log(lotteryDailyCodeStat);
 });
 
 $(document).on('click', '#palay-again', function () {
-    reset();
+    if (localStorage.getItem('commentState') != null) {
+        showGenerateDailyCode();
+    }
+    lotteryDailyCodeStat = false;
+    CommentForDailyCode();
+    console.log(lotteryDailyCodeStat);
+    localStorage.setItem('commentState', 'true');
+    window.open($(this).data('action'), '_blank');
 });
 
-function reset() {
-    score = 0;
-    counter = 0;
+function CommentForDailyCode() {
+    // score = 0;
+    // counter++ ;
     $('#palay-again').addClass('d-none');
     $('#roll').removeClass('d-none');
     $('.roll-span1').text(score);
     $('.getCode-button').prop('disabled', true);
 }
-
-elComeOut.onclick = function () {
-    counter++;
-    // console.log(counter);
-    rollDice();
-    if (counter == 3) {
-        $('#roll').addClass('d-none');
-        $('#palay-again').removeClass('d-none');
-    }
-    if (target <= score) {
-        setTimeout(() => {
-            $('.getCode-button').prop('disabled', false);
-        }, 3000);
-    }
-};
 
 function rollDice() {
     var diceOne = Math.floor(Math.random() * 6 + 1);
@@ -17672,7 +17681,6 @@ function rollDice() {
             elDiceOne.classList.add('show-' + i);
         }
     }
-
     for (var k = 1; k <= 6; k++) {
         elDiceTwo.classList.remove('show-' + k);
         if (diceTwo === k) {
@@ -17690,6 +17698,52 @@ function rollDice() {
     score = score + diceOne + diceTwo + diceThree;
     setTimeout(function () {
         $('.roll-span1').text(score);
-    }, 3000);
+    }, 5000);
     // copyToClipboard(score);
 }
+elComeOut.onclick = function () {
+    counter++;
+    // console.log(counter);
+    rollDice();
+    if (counter == 2) {
+        $('#roll').addClass('d-none');
+        $('#palay-again').removeClass('d-none');
+    }
+    if (diceOne == 5 && diceTwo == 5 && diceThree == 5) {
+        setTimeout(() => {
+            $('.getCode-button').prop('disabled', false);
+        }, 5000);
+    }
+};
+
+function showGenerateDailyCode() {
+    $('.getCode-button').removeClass('d-none');
+}
+
+$('.codeCopyBtn').on('click', function () {
+    console.log('hey');
+    $.ajax({
+        url: $(this).data('action'),
+        type: 'GET',
+        data: {
+            number: $('#dailyCodeSite').val(),
+            code_source: 'site'
+        },
+        success: function (response) {
+            $.unblockUI();
+            // $('#large_modal').modal();
+            if (response.status == 'error') {
+                toastr.warning(response.data);
+            } else {
+                $('#code_show_conteiner').html(
+                    '<span>درخواست شما با موفقیت انجام شد</span>' +
+                        '<br />' +
+                        'کد قرعه کشی شما : ' +
+                        response.data +
+                        ' میباشد! شما میتوانید نتایج و کد قرعه کشی خود را در پروفایل خود مشاهده کنید!'
+                );
+                $('#large_modal').modal();
+            }
+        }
+    });
+});
