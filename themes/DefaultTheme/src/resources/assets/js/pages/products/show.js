@@ -478,22 +478,31 @@ $(document).ready(function () {
     $('.product-review-rate input').on('change', function () {
         $('#selected-rating-text').text($(this).data('title'));
     });
-
-    $('#add-product-review-form').on('submit', function (e) {
+    $('.review_submit_button').on('click', function (e) {
+        var commentState = localStorage.getItem('commentState');
         e.preventDefault();
-        var formData = new FormData(this);
+        var formData = new FormData($('#add-product-review-form').get(0));
 
         $.ajax({
-            url: $(this).attr('action'),
+            url: $('#add-product-review-form').attr('action'),
             type: 'POST',
             data: formData,
             success: function (data) {
+                // console.log(commentState);
                 Swal.fire({
                     text: 'نظر شما با موفقیت ثبت شد و پس از تایید مدیر نمایش داده خواهد شد.',
                     type: 'success',
                     showCancelButton: false,
                     confirmButtonText: 'باشه'
                 });
+                if (commentState == 'true') {
+                    localStorage.setItem('commentState', 'false'); // This updates commentState to 'false'
+                    localStorage.setItem(
+                        'LotteryDailyData',
+                        JSON.stringify(LotteryDailyData)
+                    );
+                    dailyCode();
+                }
 
                 $('#add-product-review-form').trigger('reset');
                 $('.js-icon-form-remove').trigger('click');
