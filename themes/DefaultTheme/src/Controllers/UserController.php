@@ -31,8 +31,8 @@ class UserController extends Controller
             'email'        => 'string|email|max:191|unique:users,email,' . auth()->user()->id . '|nullable',
             'province_id'  => 'required|exists:provinces,id',
             'city_id'      => 'required|exists:cities,id',
-            'postal_code' => 'required|numeric|digits:10',
-            'address'      => 'required|string|max:300',
+            // 'postal_code' => 'required|numeric|digits:10',
+            // 'address'      => 'required|string|max:300',
         ]);
 
         $address = auth()->user()->address;
@@ -41,15 +41,15 @@ class UserController extends Controller
             $address = auth()->user()->address()->create([
                 'province_id' => $request->province_id,
                 'city_id'     => $request->city_id,
-                'postal_code' => $request->postal_code,
-                'address'     => $request->address,
+                'postal_code' => $request->postal_code ? $request->postal_code : 00000,
+                'address'     => $request->address ? $request->address : '',
             ]);
         } else {
             $address->update([
                 'province_id' => $request->province_id,
                 'city_id'     => $request->city_id,
-                'postal_code' => $request->postal_code,
-                'address'     => $request->address,
+                'postal_code' => $request->postal_code ? $request->postal_code : 00000,
+                'address'     => $request->address ? $request->address : '',
             ]);
         }
 
