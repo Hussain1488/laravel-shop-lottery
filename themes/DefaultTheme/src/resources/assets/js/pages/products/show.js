@@ -488,22 +488,18 @@ $(document).ready(function () {
             type: 'POST',
             data: formData,
             success: function (data) {
-                // console.log(commentState);
+                showGenerateDailyCode();
                 Swal.fire({
                     text: 'نظر شما با موفقیت ثبت شد و پس از تایید مدیر نمایش داده خواهد شد.',
                     type: 'success',
                     showCancelButton: false,
                     confirmButtonText: 'باشه'
+                }).then((result) => {
+                    if (commentState == 'true') {
+                        dailyCode();
+                        localStorage.setItem('commentState', 'false');
+                    }
                 });
-                if (commentState == 'true') {
-                    localStorage.setItem('commentState', 'false'); // This updates commentState to 'false'
-                    localStorage.setItem(
-                        'LotteryDailyData',
-                        JSON.stringify(LotteryDailyData)
-                    );
-                    dailyCode();
-                }
-
                 $('#add-product-review-form').trigger('reset');
                 $('.js-icon-form-remove').trigger('click');
                 $('#add-product-review-modal').modal('hide');
