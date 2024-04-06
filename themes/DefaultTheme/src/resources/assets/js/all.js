@@ -3,15 +3,39 @@ var elDiceOne = document.getElementById('dice1');
 var elDiceTwo = document.getElementById('dice2');
 var elDiceThree = document.getElementById('dice3');
 var elComeOut = document.getElementById('roll');
-var target = 25;
-var score = 0;
 var counter = 0;
-var expirationDate = new Date();
-expirationDate.setDate(expirationDate.getDate() + 1);
+// var expirationDate = new Date();
+var today = formatDate(new Date()); // Format: YYYY-MM-DD
+// Convert expiration date to JavaScript date format (YYYY-MM-DD)
 var LotteryDailyData = {
     value: false,
-    expirationDate: expirationDate.getTime() // Convert expiration date to timestamp
+    expirationDate: '2024-04-06' // Use the formatted tomorrow date
 };
+var loading = {
+    message:
+        '<div class="loadingio-spinner-eclipse-mbdtacxsn3d"> ' +
+        '<div class="ldio-ffthf4779sc">' +
+        '<div></div>' +
+        '</div>' +
+        '</div>',
+    css: {
+        width: 'auto' /* Auto width for the blockUI container */,
+        top: '50%' /* Center vertically */,
+        left: '50%' /* Center horizontally */,
+        transform: 'translate(-50%, -50%)' /* Center the element itself */,
+        backgroundColor: 'transparent' /* No background color */,
+        border: 'none' /* No border */,
+        color: '#333' /* Text color */
+    }
+};
+
+// Check if one day has passed
+function formatDate(date) {
+    var year = date.getFullYear();
+    var month = String(date.getMonth() + 1).padStart(2, '0');
+    var day = String(date.getDate()).padStart(2, '0');
+    return year + '-' + month + '-' + day;
+}
 
 function _typeof(t) {
     return (
@@ -17352,7 +17376,19 @@ function number_format(t) {
                 });
             });
 
-        if (localStorage.getItem('commentState') != null) {
+        var dailyExpirationDate = JSON.parse(
+            localStorage.getItem('LotteryDailyData')
+        );
+
+        if (dailyExpirationDate && dailyExpirationDate.expirationDate) {
+            if (today != dailyExpirationDate.expirationDate) {
+                localStorage.removeItem('LotteryDailyData');
+                localStorage.removeItem('commentState');
+                localStorage.removeItem('codeGenerated');
+            }
+        }
+
+        if (localStorage.getItem('commentState') == 'false') {
             showGenerateDailyCode();
         }
     }),
@@ -17643,22 +17679,14 @@ function copyToClipboard(text) {
 
 $(document).on('click', '.websiteDailyCodeGeneratorButton', function () {
     // reset();
-    if (localStorage.getItem('commentState') != null) {
-        showGenerateDailyCode();
-    }
     $('#rollDiceModal').modal();
-    console.log(lotteryDailyCodeStat);
 });
 
 $(document).on('click', '#palay-again', function () {
-    if (localStorage.getItem('commentState') != null) {
-        showGenerateDailyCode();
-    }
     lotteryDailyCodeStat = false;
     CommentForDailyCode();
-    console.log(lotteryDailyCodeStat);
     localStorage.setItem('commentState', 'true');
-    window.open($(this).data('action'), '_blank');
+    window.location.href = $(this).data('action');
 });
 
 function CommentForDailyCode() {
@@ -17666,7 +17694,7 @@ function CommentForDailyCode() {
     // counter++ ;
     $('#palay-again').addClass('d-none');
     $('#roll').removeClass('d-none');
-    $('.roll-span1').text(score);
+    // $('.roll-span1').text(score);
     $('.getCode-button').prop('disabled', true);
 }
 
@@ -17693,17 +17721,9 @@ function rollDice() {
             elDiceThree.classList.add('show-' + j);
         }
     }
-    // setTimeout(rollDice(), 1000);
-    // console.log('one: ' + diceOne, 'two: ' + diceTwo, 'three: ' + diceThree);
-    score = score + diceOne + diceTwo + diceThree;
-    setTimeout(function () {
-        $('.roll-span1').text(score);
-    }, 5000);
-    // copyToClipboard(score);
 }
 elComeOut.onclick = function () {
     counter++;
-    // console.log(counter);
     rollDice();
     if (counter == 2) {
         $('#roll').addClass('d-none');
@@ -17716,33 +17736,149 @@ elComeOut.onclick = function () {
     }
 };
 
+$(document).on('click', '.getCode-button', function () {
+    dailyCode();
+});
+
 function showGenerateDailyCode() {
     $('.getCode-button').removeClass('d-none');
 }
 
 $('.codeCopyBtn').on('click', function () {
-    console.log('hey');
+    let csrfToken = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
-        url: $(this).data('action'),
+        url: $(this).attr('action'),
         type: 'GET',
+        headers: {
+            'X-CSRF-Token': csrfToken // Include CSRF token in headers
+        },
         data: {
-            number: $('#dailyCodeSite').val(),
+            daily_code: $('#dailyCodeSite').val(),
             code_source: 'site'
         },
-        success: function (response) {
+        success: function (data) {
+            $('#websiteDailyCodeGeneratorModal').modal('hide');
             $.unblockUI();
             // $('#large_modal').modal();
-            if (response.status == 'error') {
-                toastr.warning(response.data);
+            localStorage.setItem(
+                'LotteryDailyData',
+                JSON.stringify(LotteryDailyData)
+            );
+            if (data.status == 'error') {
+                // toastr.warning(data.data);
+                Swal.fire({
+                    text: data.data,
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'باشه'
+                });
             } else {
-                $('#code_show_conteiner').html(
-                    '<span>درخواست شما با موفقیت انجام شد</span>' +
-                        '<br />' +
+                Swal.fire({
+                    html:
                         'کد قرعه کشی شما : ' +
-                        response.data +
-                        ' میباشد! شما میتوانید نتایج و کد قرعه کشی خود را در پروفایل خود مشاهده کنید!'
-                );
-                $('#large_modal').modal();
+                        '<span class="badge badge-success">' +
+                        data.data +
+                        '</span> میباشد! شما میتوانید نتایج و کد قرعه کشی خود را در پروفایل خود مشاهده کنید!',
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonText: 'باشه'
+                });
+            }
+        }
+    });
+});
+function dailyCode() {
+    let codeGenerated = localStorage.getItem('codeGenerated');
+    $('#websiteDailyCodeGeneratorModal').modal();
+    $('#rollDiceModal').modal('hide');
+    let RealNumber = ' ' + $('#dailyCodeSite').val();
+    let concatenatedNumber = '';
+    $('.codeCopyBtn').addClass('d-none');
+    // generatRandomNumber();
+
+    function displayCharacters() {
+        for (let i = 0; i < RealNumber.length; i++) {
+            setTimeout(() => {
+                concatenatedNumber += RealNumber.charAt(i); // Concatenate each character to the variable
+                $('#RealNumber').text(concatenatedNumber); // Display concatenated string
+            }, 4000 * i + 1); // Show each character after 3 seconds
+        }
+    }
+
+    // Call the function to start displaying characters
+    if (codeGenerated == 'true') {
+        $('#RealNumber').text(RealNumber);
+        $('.codeCopyBtn').addClass('d-none');
+        $('.codeCopyBtn').removeClass('d-none');
+    } else {
+        generatRandomNumber();
+        displayCharacters();
+        codeCopyBtn();
+    }
+
+    function generatRandomNumber() {
+        function generateRandomNumber() {
+            return Math.floor(Math.random() * 10); // Generate random number between 0 and 9
+        }
+
+        function updateNumber() {
+            const outputDiv = $('#RandomNumber');
+            outputDiv.text(generateRandomNumber()); // Update output with random number
+        }
+
+        const interval = setInterval(updateNumber, 100);
+
+        // Stop updating after 3 seconds
+        setTimeout(function () {
+            clearInterval(interval);
+            $('#RandomNumber').text('');
+        }, 24000);
+    }
+
+    function codeCopyBtn() {
+        setTimeout(() => {
+            $('.codeCopyBtn').removeClass('d-none');
+            localStorage.setItem('codeGenerated', 'true');
+        }, 24000);
+    }
+}
+$('.lottery_code_button').on('click', function () {
+    $('#general_modal').modal();
+});
+$('#lottery-daily-code-button').on('click', function () {
+    $('#general_modal').modal('hide');
+    var formData = $('#daily_code_insert_form').serialize();
+    $.blockUI(loading);
+    $.ajax({
+        url: $(this).attr('action'),
+        type: 'GET',
+        data: formData,
+        success: function (data) {
+            $.unblockUI();
+            // $('#large_modal').modal();
+            localStorage.setItem(
+                'LotteryDailyData',
+                JSON.stringify(LotteryDailyData)
+            );
+            if (data.status == 'error') {
+                // toastr.warning(data.data);
+                Swal.fire({
+                    text: data.data,
+                    type: 'warning',
+                    showCancelButton: false,
+                    confirmButtonText: 'باشه'
+                });
+            } else {
+                Swal.fire({
+                    html:
+                        'کد قرعه کشی شما : ' +
+                        '<span class="badge badge-success">' +
+                        data.data +
+                        '</span> میباشد! شما میتوانید نتایج و کد قرعه کشی خود را در پروفایل خود مشاهده کنید!',
+                    type: 'success',
+                    showCancelButton: false,
+                    confirmButtonText: 'باشه'
+                });
             }
         }
     });
