@@ -141,16 +141,3 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade bd-example-modal-sm" id="large_modal" tabindex="-1" role="dialog"
-    aria-labelledby="mySmallModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="p-4 alert alert-success m-2 "id="code_show_conteiner">
-
-            </div>
-        </div>
-    </div>
-    <button type="button" class="btn btn-danger m-1 btn-sm" data-dismiss="modal">بستن</button>
-
-</div>
