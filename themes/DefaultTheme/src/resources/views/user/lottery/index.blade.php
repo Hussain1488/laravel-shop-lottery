@@ -603,7 +603,6 @@
 
     <!-- End Content -->
 @endsection
-@include('front::partials.modal')
 
 @push('scripts')
     <script src="{{ theme_asset('js/pages/lottery/index.js') }}"></script>
