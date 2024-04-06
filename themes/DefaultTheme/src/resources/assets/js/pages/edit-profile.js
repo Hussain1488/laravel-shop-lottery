@@ -1,54 +1,44 @@
 $.validator.addMethod(
-    "regex",
-    function(value, element, regexp) {
+    'regex',
+    function (value, element, regexp) {
         var re = new RegExp(regexp);
         return this.optional(element) || re.test(value);
     },
-    "لطفا یک مقدار معتبر وارد کنید"
+    'لطفا یک مقدار معتبر وارد کنید'
 );
 
 jQuery('#profile-form').validate({
-
     rules: {
-        'first_name': {
-            required: true,
+        first_name: {
+            required: true
         },
-        'last_name': {
-            required: true,
+        last_name: {
+            required: true
         },
-        'mobile': {
+        mobile: {
             required: true,
-            regex: "(09)[0-9]{9}"
+            regex: '(09)[0-9]{9}'
         },
-        'postal_code': {
-            required: true,
-            digits: true,
-            maxlength: 10,
-            minlength: 10
+
+        province_id: {
+            required: true
         },
-        'province_id': {
-            required: true,
-        },
-        'city_id': {
-            required: true,
-        },
-        'address': {
-            required: true,
-            maxlength: 300,
-        },
-    },
+        city_id: {
+            required: true
+        }
+    }
 });
 
 $.validator.addMethod(
-    "regex",
-    function(value, element, regexp) {
+    'regex',
+    function (value, element, regexp) {
         var re = new RegExp(regexp);
         return this.optional(element) || re.test(value);
     },
-    "لطفا یک مقدار معتبر وارد کنید"
+    'لطفا یک مقدار معتبر وارد کنید'
 );
 
-$('#profile-form').submit(function(e) {
+$('#profile-form').submit(function (e) {
     e.preventDefault();
 
     if ($(this).valid()) {
@@ -59,7 +49,7 @@ $('#profile-form').submit(function(e) {
             url: $(this).attr('action'),
             type: 'POST',
             data: formData,
-            success: function(data) {
+            success: function (data) {
                 Swal.fire({
                     title: 'تغییرات با موفقیت ثبت شد',
                     type: 'success',
@@ -69,11 +59,14 @@ $('#profile-form').submit(function(e) {
                     closeOnCancel: false
                 });
             },
-            beforeSend: function(xhr) {
+            beforeSend: function (xhr) {
                 block(btn);
-                xhr.setRequestHeader("X-CSRF-TOKEN", $('meta[name="csrf-token"]').attr('content'));
+                xhr.setRequestHeader(
+                    'X-CSRF-TOKEN',
+                    $('meta[name="csrf-token"]').attr('content')
+                );
             },
-            complete: function() {
+            complete: function () {
                 unblock(btn);
             },
 
