@@ -22608,3 +22608,23 @@ button.roll-button:active {
     width: 120px;
     height: 40px;
 }
+
+@keyframes pulseAnimation {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Apply the animation to the button */
+.button-pulse {
+    animation: pulseAnimation 0.5s infinite;
+    /* Repeat the animation infinitely */
+}
