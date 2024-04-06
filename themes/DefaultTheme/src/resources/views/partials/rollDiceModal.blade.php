@@ -124,20 +124,20 @@
                     </div>
                 </div>
                 <div class='m-2 pt-4 row'>
-                    <div class="col d-flex justify-content-center align-items-center pt-2 ">نمره:<span
-                            class="roll-span roll-span1">0</span></div>
+                    <div class="col d-flex justify-content-center align-items-center pt-2 "></div>
                     <div class="col d-flex justify-content-center">
                         <button id="roll" class="roll-button btn btn-success">تاس
                             بریز!</button>
-                        <button id="palay-again" class="roll-button btn btn-primary">
-                            دوباره بازی کن</button>
+                        <button id="palay-again" class="roll-button btn btn-primary d-none"
+                            data-action="{{ url('products/و-پیدا-است-که') }}">
+                            نظر بده بلیط بگیر!
+                        </button>
                     </div>
-                    <div class="col d-flex justify-content-center align-items-center pt-2 ">هدف:<span
-                            class="roll-span roll-span2">25</span></div>
+                    <div class="col d-flex justify-content-center align-items-center pt-2 "></div>
                 </div>
                 <div class="row my-4">
-                    <div class="col d-flex justify-content-center"><button disabled
-                            class="btn btn-success getCode-button">دریافت کد
+                    <div class="col d-flex justify-content-center "><button
+                            class="btn btn-success getCode-button d-none button-pulse">دریافت کد
                             روزانه</button></div>
                     <div class="col d-flex justify-content-center"><button class="btn btn-danger cancel-button"
                             data-dismiss="modal">انصراف!</button>
@@ -145,8 +145,6 @@
                 </div>
             </div>
             <!-- Modal footer -->
-
-
             <div class="modal-footer">
 
             </div>
@@ -154,3 +152,6 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+@endpush
