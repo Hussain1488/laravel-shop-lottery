@@ -5,12 +5,14 @@ namespace Themes\DefaultTheme\src\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Province;
 use App\Models\Referral;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
+use Morilog\Jalali\Jalalian;
 
 class UserController extends Controller
 {
@@ -52,13 +54,23 @@ class UserController extends Controller
                 'address'     => $request->address ? $request->address : '',
             ]);
         }
+        $jalaliDate = $request->birth_date;
+        // $carbonDate = Jalalian::fromFormat('Y/m/d', $jalaliDate)->toCarbon();
+        try {
 
-        auth()->user()->update([
-            'first_name' => $request->first_name,
-            'last_name'  => $request->last_name,
-            'username'   => $request->mobile,
-            'email'      => $request->email,
-        ]);
+
+            auth()->user()->update([
+                'first_name' => $request->first_name,
+                'last_name'  => $request->last_name,
+                'birth_date'  => auth()->user()->birth_date == null && $request->birth_date ? Jalalian::fromFormat('Y-m-d', $jalaliDate)->toCarbon() : auth()->user()->birth_date,
+                'Id_number'  => $request->Id_number,
+                'gender'  => $request->gender,
+                'username'   => $request->mobile,
+                'email'      => $request->email,
+            ]);
+        } catch (Exception $e) {
+            \Log::error($e);
+        }
 
         return response('success');
     }
