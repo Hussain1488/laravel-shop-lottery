@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -29,6 +30,10 @@ class ReviewController extends Controller
 
     public function store(Request $request)
     {
+        if (Auth::user()->comment_permision == 'not_valid') {
+            // dd('error');
+            return response('error');
+        }
         $product = Product::findOrFail($request->product_id);
 
         $data = $this->validate($request, [
