@@ -8,7 +8,8 @@
                 <p>{{ $review->user ? $review->user->fullname : $review->name }}
 
                     @if ($review->user)
-                        <a class="float-right" href="{{ route('admin.users.show', ['user' => $review->user]) }}" target="_blank"><i class="feather icon-external-link"></i></a>
+                        <a class="float-right" href="{{ route('admin.users.show', ['user' => $review->user]) }}"
+                            target="_blank"><i class="feather icon-external-link"></i></a>
                     @endif
                 </p>
             </div>
@@ -16,7 +17,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label>تاریخ ارسال</label>
-                <p>{{ jdate($review->created_at) }}  ( {{ jdate($review->created_at)->ago() }} )</p>
+                <p>{{ jdate($review->created_at) }} ( {{ jdate($review->created_at)->ago() }} )</p>
             </div>
         </div>
         <div class="col-md-6">
@@ -48,15 +49,29 @@
                 </select>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>اجازه نظر دادن</label>
+                <select class="form-control" name="comment">
+                    <option value="valid" {{ $review->user->comment_permision == 'valid' ? 'selected' : '' }}>مجاز
+                        نظر دادن</option>
+                    <option value="not_valid" {{ $review->user->comment_permision == 'valid' ? '' : 'selected' }}>غیر
+                        مجاز نظر دادن</option>
+                </select>
+            </div>
+        </div>
 
         @if ($review->suggest)
             <div class="col-md-6">
                 <div class="form-group">
                     <label>پیشنهاد</label>
                     <select class="form-control" name="suggest">
-                        <option value="yes" {{ $review->suggest == 'yes' ? 'selected' : '' }}>پیشنهاد می کنم</option>
-                        <option value="not_sure" {{ $review->suggest == 'not_sure' ? 'selected' : '' }}>مطمئن نیستم</option>
-                        <option value="no" {{ $review->suggest == 'no' ? 'selected' : '' }}>پیشنهاد نمی کنم</option>
+                        <option value="yes" {{ $review->suggest == 'yes' ? 'selected' : '' }}>پیشنهاد می کنم
+                        </option>
+                        <option value="not_sure" {{ $review->suggest == 'not_sure' ? 'selected' : '' }}>مطمئن نیستم
+                        </option>
+                        <option value="no" {{ $review->suggest == 'no' ? 'selected' : '' }}>پیشنهاد نمی کنم
+                        </option>
                     </select>
                 </div>
             </div>
@@ -79,10 +94,13 @@
                 @foreach ($review->points->where('type', 'positive') as $point)
                     <div class="row mb-1">
                         <div class="col-10">
-                            <input type="text" name="review[advantages][]" class="form-control" value="{{ $point->text }}">
+                            <input type="text" name="review[advantages][]" class="form-control"
+                                value="{{ $point->text }}">
                         </div>
                         <div class="col-2">
-                            <button type="button" class="btn btn-flat-danger waves-effect waves-light remove-review-pint custom-padding"><i class="feather icon-minus"></i></button>
+                            <button type="button"
+                                class="btn btn-flat-danger waves-effect waves-light remove-review-pint custom-padding"><i
+                                    class="feather icon-minus"></i></button>
                         </div>
                     </div>
                 @endforeach
@@ -98,10 +116,13 @@
                 @foreach ($review->points->where('type', 'negative') as $point)
                     <div class="row mb-1">
                         <div class="col-10">
-                            <input type="text" name="review[disadvantages][]" class="form-control" value="{{ $point->text }}">
+                            <input type="text" name="review[disadvantages][]" class="form-control"
+                                value="{{ $point->text }}">
                         </div>
                         <div class="col-2">
-                            <button type="button" class="btn btn-flat-danger waves-effect waves-light remove-review-pint custom-padding"><i class="feather icon-minus"></i></button>
+                            <button type="button"
+                                class="btn btn-flat-danger waves-effect waves-light remove-review-pint custom-padding"><i
+                                    class="feather icon-minus"></i></button>
                         </div>
                     </div>
                 @endforeach
