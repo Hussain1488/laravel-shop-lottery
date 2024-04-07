@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Models\Review;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -17,6 +18,7 @@ class ReviewController extends Controller
 
     public function show(Review $review)
     {
+        // dd($review);
         return view('back.reviews.show', compact('review'))->render();
     }
 
@@ -37,7 +39,9 @@ class ReviewController extends Controller
             'rating'      => 'required|between:1,5',
             'suggest'     => 'nullable|in:yes,no,not_sure',
             'status'      => 'in:pending,accepted,rejected',
+            'comment'     => 'in:valid,not_valid'
         ]);
+        // dd($review);
 
         $review->update($data);
 
@@ -47,6 +51,10 @@ class ReviewController extends Controller
             'review.advantages.*' => 'string',
             'review.disadvantages.*' => 'string',
         ]);
+
+        $user = User::find($review->user_id);
+        $user->comment_permision = $request->comment;
+        $user->save();
 
         $advantages = $request->input('review.advantages');
 
