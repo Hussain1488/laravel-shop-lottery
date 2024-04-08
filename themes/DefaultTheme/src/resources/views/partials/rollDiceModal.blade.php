@@ -3,9 +3,9 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header d-flex justify-content-center alert alert-success m-3">
-                <h4 class="modal-title">
-                    بازی کن و کد روزانه قرعه کشی بگیر!!!
-                </h4>
+                <h5>
+                    سه تا (۵) بیار بلیط قرعه کشی بگیر!
+                </h5>
             </div>
             <hr />
             <!-- Modal body -->
@@ -146,6 +146,12 @@
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
+                <div class="row p-2 d-none rollDice-alert-message">
+                    <div class="alert alert-warning">
+                        متأسفانه شما برنده نشدید، برای داشتن شانسی دوباره لطفا در باره یکی از محصولات ما نظر بدهید تا
+                        شانسی دوباره برای برنده شدن داشته باشید!
+                    </div>
+                </div>
 
             </div>
 
