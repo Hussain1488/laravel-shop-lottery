@@ -488,18 +488,29 @@ $(document).ready(function () {
             type: 'POST',
             data: formData,
             success: function (data) {
-                showGenerateDailyCode();
-                Swal.fire({
-                    text: 'نظر شما با موفقیت ثبت شد و پس از تایید مدیر نمایش داده خواهد شد.',
-                    type: 'success',
-                    showCancelButton: false,
-                    confirmButtonText: 'باشه'
-                }).then((result) => {
-                    if (commentState == 'true') {
-                        dailyCode();
-                        localStorage.setItem('commentState', 'false');
-                    }
-                });
+                if (data == 'success') {
+                    showGenerateDailyCode();
+                    Swal.fire({
+                        text: 'نظر شما با موفقیت ثبت شد و پس از تایید مدیر نمایش داده خواهد شد.',
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonText: 'باشه'
+                    }).then((result) => {
+                        if (commentState == 'true') {
+                            // dailyCode();
+                            $('.rollDice-alert-message').addClass('d-none');
+                            $('#rollDiceModal').modal();
+                            localStorage.setItem('commentState', 'false');
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        text: 'به دلیل تخلف در نظر دادن و استفاده از کلمات رکیک و الفاظ نا مربوط، شما مجاز به نظر دادن نمیباشید!',
+                        type: 'error',
+                        showCancelButton: false,
+                        confirmButtonText: 'باشه'
+                    });
+                }
                 $('#add-product-review-form').trigger('reset');
                 $('.js-icon-form-remove').trigger('click');
                 $('#add-product-review-modal').modal('hide');
