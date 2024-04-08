@@ -313,6 +313,12 @@ return [
     ],
 
     'user' => [
+        'id_number'                 => 'شماره ملی',
+        'birth_date'                => 'تاریخ تولد',
+        'gender'                    => 'جنسیت',
+        'insert_birth_date'         => 'تاریخ تولد را وارد کنید',
+        'insert_id'                 => 'کد ملی خود را وارد کنید',
+        'insert_gender'             => 'جنسیت خود را مشخص کنید',
         'your-views'                => 'پرسش و پاسخ و دیدگاه',
         'reviews'                   => 'نظرات',
         'waiting-for-confirmation'  => 'منتظر تایید',
@@ -383,6 +389,9 @@ return [
     ],
 
     'profile' => [
+        'id_number'                    => 'شماره ملی',
+        'birth_date'                   => 'تاریخ تولد',
+        'gender'                       => 'جنسیت',
         'wallet-balance'               => 'موجودی کیف پول:',
         'change-password'              => 'تغییر رمز',
         'logout'                       => 'خروج از حساب',
