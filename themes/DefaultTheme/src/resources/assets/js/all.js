@@ -3,7 +3,12 @@ var elDiceOne = document.getElementById('dice1');
 var elDiceTwo = document.getElementById('dice2');
 var elDiceThree = document.getElementById('dice3');
 var elComeOut = document.getElementById('roll');
-var counter = 0;
+var diceOne, diceTwo, diceThree;
+if (localStorage.getItem('counter') != null) {
+    var counter = localStorage.getItem('counter');
+} else {
+    var counter = 0;
+}
 // var expirationDate = new Date();
 var today = formatDate(new Date()); // Format: YYYY-MM-DD
 // Convert expiration date to JavaScript date format (YYYY-MM-DD)
@@ -17385,6 +17390,8 @@ function number_format(t) {
                 localStorage.removeItem('LotteryDailyData');
                 localStorage.removeItem('commentState');
                 localStorage.removeItem('codeGenerated');
+            } else {
+                $('.getCode-button').removeClass('d-none');
             }
         }
 
@@ -17683,10 +17690,11 @@ $(document).on('click', '.websiteDailyCodeGeneratorButton', function () {
 });
 
 $(document).on('click', '#palay-again', function () {
+    localStorage.setItem('counter', counter);
     lotteryDailyCodeStat = false;
     CommentForDailyCode();
     localStorage.setItem('commentState', 'true');
-    window.location.href = $(this).data('action');
+    window.location.href = '/';
 });
 
 function CommentForDailyCode() {
@@ -17699,9 +17707,15 @@ function CommentForDailyCode() {
 }
 
 function rollDice() {
-    var diceOne = Math.floor(Math.random() * 6 + 1);
-    var diceTwo = Math.floor(Math.random() * 6 + 1);
-    var diceThree = Math.floor(Math.random() * 6 + 1);
+    if (counter == 3) {
+        diceOne = 5;
+        diceTwo = 5;
+        diceThree = 5;
+    } else {
+        diceOne = Math.floor(Math.random() * 6 + 1);
+        diceTwo = Math.floor(Math.random() * 6 + 1);
+        diceThree = Math.floor(Math.random() * 6 + 1);
+    }
 
     for (var i = 1; i <= 6; i++) {
         elDiceOne.classList.remove('show-' + i);
@@ -17726,17 +17740,23 @@ elComeOut.onclick = function () {
     counter++;
     rollDice();
     if (counter == 2) {
-        $('#roll').addClass('d-none');
-        $('#palay-again').removeClass('d-none');
+        setTimeout(() => {
+            $('#roll').addClass('d-none');
+            $('#palay-again').removeClass('d-none');
+            $('.rollDice-alert-message').removeClass('d-none');
+        }, 5000);
     }
+
     if (diceOne == 5 && diceTwo == 5 && diceThree == 5) {
         setTimeout(() => {
             $('.getCode-button').prop('disabled', false);
+            $('.getCode-button').removeClass('d-none');
         }, 5000);
     }
 };
 
 $(document).on('click', '.getCode-button', function () {
+    localStorage.removeItem('counter');
     dailyCode();
 });
 
