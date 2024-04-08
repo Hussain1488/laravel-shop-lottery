@@ -15,7 +15,7 @@
         <div class="container main-container">
             <!-- Start title - breadcrumb -->
             <div class="title-breadcrumb-special dt-sl mb-3">
-                <div class="breadcrumb dt-sl">
+                <div class="breadcrumb dt-sl"> 
                     <nav>
                         <a href="{{ route('front.index') }}">{{ trans('front::messages.products.home') }}</a>
                         <a href="{{ route('front.products.index') }}">{{ trans('front::messages.products.products') }}</a>
