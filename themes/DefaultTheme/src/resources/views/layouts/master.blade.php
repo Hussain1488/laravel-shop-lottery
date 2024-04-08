@@ -141,6 +141,7 @@
         var IS_RTL = {{ $current_local['direction'] == 'rtl' ? 1 : 0 }};
     </script>
 
+
     @if (config('app.debug'))
         <!-- Core JS Files -->
         <script src="{{ theme_asset('js/vendor/jquery-3.4.1.min.js') }}"></script>
@@ -164,6 +165,9 @@
         <!-- All JS Files -->
         <script src="{{ theme_asset('js/all.js', config('front.mainfest_path')) }}"></script>
     @endif
+
+    @stack('plugin-scripts')
+    {{-- <script src="{{ asset('back/assets/js/helpers.js') }}?v=10"></script> --}}
 
     @stack('scripts')
 
