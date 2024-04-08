@@ -1,3 +1,111 @@
+$(document).ready(function () {
+    $('.persian-date-picker').customPersianDate();
+});
+
+(function ($) {
+    $.fn.customPersianDate = function () {
+        $(this).each(function (i, el) {
+            var pickerId = 'customPersianDate' + Date.now();
+            var input = this;
+
+            if ($(input).data('persian-date')) return;
+
+            $(input).after(
+                '<input type="hidden" name="' +
+                    $(input).attr('name') +
+                    '" id="' +
+                    pickerId +
+                    '">'
+            );
+            $(input).removeAttr('name');
+            $(input).attr('autocomplete', 'off');
+            $(input).attr('data-persian-date', true);
+
+            $(input).on('keydown', function (e) {
+                e.preventDefault();
+                $(input).val('');
+                $('#' + pickerId).val('');
+                $(input).trigger('change');
+            });
+
+            let pickerOptions = {
+                toolbox: {
+                    calendarSwitch: {
+                        enabled: false
+                    }
+                },
+                format: 'YYYY-MM-DD',
+                initialValue: false,
+                altField: '#' + pickerId,
+                altFormat: 'YYYY-MM-DD',
+                altFieldFormatter: function (unixDate) {
+                    var self = this;
+                    var thisAltFormat = self.altFormat.toLowerCase();
+                    if (
+                        thisAltFormat === 'gregorian' ||
+                        thisAltFormat === 'g'
+                    ) {
+                        return new Date(unixDate);
+                    }
+                    if (thisAltFormat === 'unix' || thisAltFormat === 'u') {
+                        return unixDate;
+                    } else {
+                        var pd = new persianDate(unixDate);
+                        pd.formatPersian = this.persianDigit;
+
+                        setTimeout(function () {
+                            $(input).trigger('change');
+                        }, 100);
+
+                        return pd.format(self.altFormat).toEnglishDigit();
+                    }
+                },
+                onSelect: function (unixDate) {
+                    // $(input).trigger('change');
+                },
+                onSet: function (unixDate) {
+                    // $(input).trigger('change');
+                }
+            };
+
+            if ($(input).data('timestamps')) {
+                pickerOptions.timePicker = {
+                    enabled: true,
+                    meridian: {
+                        enabled: false
+                    },
+                    second: {
+                        enabled: false
+                    }
+                };
+
+                pickerOptions.altFormat = 'YYYY-MM-DD HH:mm:ss';
+                pickerOptions.format = 'YYYY-MM-DD HH:mm:ss';
+            }
+
+            var publishDatePicker = $(input).pDatepicker(pickerOptions);
+
+            var date = $(input).val();
+
+            if (date) {
+                publishDatePicker.setDate(parseInt(date + '000'));
+            }
+        });
+
+        return this;
+    };
+})(jQuery);
+String.prototype.toEnglishDigit = function () {
+    var find = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+    var replace = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    var replaceString = this;
+    var regex;
+    for (var i = 0; i < find.length; i++) {
+        regex = new RegExp(find[i], 'g');
+        replaceString = replaceString.replace(regex, replace[i]);
+    }
+    return replaceString;
+};
 $.validator.addMethod(
     'regex',
     function (value, element, regexp) {
@@ -15,9 +123,19 @@ jQuery('#profile-form').validate({
         last_name: {
             required: true
         },
+        gender: {
+            required: true
+        },
+        birth_date: {
+            required: true
+        },
         mobile: {
             required: true,
             regex: '(09)[0-9]{9}'
+        },
+        Id_number: {
+            required: true,
+            regex: '[0-9]{10}'
         },
 
         province_id: {
