@@ -30,6 +30,30 @@
 
                             <div class="col-md-6 col-sm-12">
                                 <div class="label-info">
+                                    <span>{{ trans('front::messages.profile.birth_date') }}</span>
+                                </div>
+                                <div class="value-info">
+                                    <span>{{ $user->birth_date ? Jdate($user->birth_date)->format('Y-m-d') : '-' }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="label-info">
+                                    <span>{{ trans('front::messages.profile.gender') }}</span>
+                                </div>
+                                <div class="value-info">
+                                    <span>{{ $user->gender == 'male' ? 'مرد' : ($user->gender == 'female' ? 'زن' : '-') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="label-info">
+                                    <span>{{ trans('front::messages.profile.id_number') }}</span>
+                                </div>
+                                <div class="value-info">
+                                    <span>{{ $user->Id_number ?: '-' }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                <div class="label-info">
                                     <span>{{ trans('front::messages.profile.phone-number') }}</span>
                                 </div>
                                 <div class="value-info">
