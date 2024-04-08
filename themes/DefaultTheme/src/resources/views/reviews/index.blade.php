@@ -5,18 +5,20 @@
     <div class="col-xl-9 col-lg-8 col-md-8 col-sm-12">
         <div class="row">
             <div class="col-12">
-                <div class="section-title text-sm-title title-wide mb-1 no-after-title-wide dt-sl mb-2 px-res-1">
+                <div class="section-title text-sm-title title-wide  no-after-title-wide dt-sl mb-2 px-res-1">
                     <h2>نظرات شما</h2>
                 </div>
                 <div class="dt-sl reviews-container">
                     <div class="row">
-                        @if($reviews->count())
-                            @foreach($reviews as $review)
+                        @if ($reviews->count())
+                            @foreach ($reviews as $review)
                                 <div class="col-lg-6 col-md-12">
                                     <div class="card-horizontal-product">
                                         <div class="card-horizontal-product-thumb">
-                                            <a title="{{ $review->product->title }}" href="{{ route('front.products.show', ['product' => $review->product]) }}">
-                                                <img src="{{ $review->product->imageUrl() }}" alt="{{ $review->product->title }}">
+                                            <a title="{{ $review->product->title }}"
+                                                href="{{ route('front.products.show', ['product' => $review->product]) }}">
+                                                <img src="{{ $review->product->imageUrl() }}"
+                                                    alt="{{ $review->product->title }}">
                                             </a>
                                             <small class="font-weight-bold">امتیاز من به محصول</small>
                                             <div class="rating-stars">
@@ -31,18 +33,20 @@
                                             @switch($review->status)
                                                 @case('accepted')
                                                     <div class="label-status-comment">تایید شده</div>
-                                                    @break
+                                                @break
+
                                                 @case('pending')
                                                     <div class="label-status-comment">منتظر تایید</div>
-                                                    @break
+                                                @break
+
                                                 @case('rejected')
                                                     <div class="label-status-comment">رد شده</div>
-                                                    @break
-
+                                                @break
                                             @endswitch
 
                                             <div class="card-horizontal-comment-title">
-                                                <a href="{{ route('front.products.show', ['product' => $review->product]) }}">
+                                                <a
+                                                    href="{{ route('front.products.show', ['product' => $review->product]) }}">
                                                     <h3>{{ $review->title }}</h3>
                                                 </a>
                                             </div>
@@ -55,7 +59,8 @@
                                                         <i class="mdi mdi-thumb-up-outline"></i>{{ $review->likes_count }}
                                                     </span>
                                                     <span class="count-like">
-                                                        <i class="mdi mdi-thumb-down-outline"></i>{{ $review->dislikes_count }}
+                                                        <i
+                                                            class="mdi mdi-thumb-down-outline"></i>{{ $review->dislikes_count }}
                                                     </span>
                                                 </div>
                                             </div>
@@ -63,9 +68,6 @@
                                     </div>
                                 </div>
                             @endforeach
-
-
-
                         @else
                             <div class="col-12">
                                 <div class="page dt-sl dt-sn pt-3">
