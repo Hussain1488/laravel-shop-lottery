@@ -36,12 +36,16 @@ class OperatorActivity extends Model
             'value' => 'کاهش موجودی و ایجاد سند مالی  کاربر',
         ],
         'BUYER_CREDIT' => [
-            'KEY' => 'create_document',
+            'KEY' => 'buyer_credit_increase',
             'value' => 'عملیات اعتبار دهی به کاربر انجام شده ',
         ],
         'STORE_CREDIT' => [
-            'KEY' => 'create_document',
+            'KEY' => 'store_credit_increase',
             'value' => 'عملیات اعتبار دهی به فروشگاه انجام شده ',
+        ],
+        'STORE_CREDIT_DECREASE' => [
+            'KEY' => 'store_credit_decrease',
+            'value' => 'عملیات کاهش اعتبار فروشگاه انجام شده ',
         ],
         'CREATE_INTERNAL_ACCOUNT' => [
             'KEY' => 'create_document',
