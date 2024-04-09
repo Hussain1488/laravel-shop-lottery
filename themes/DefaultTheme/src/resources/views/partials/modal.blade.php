@@ -60,9 +60,6 @@
                                             <option class="" value="eitaa">
                                                 ایتا
                                             </option>
-                                            <option class="" value="site">
-                                                وبسایت خانه اقساط
-                                            </option>
                                         </select>
                                     </div>
                                 </div>
