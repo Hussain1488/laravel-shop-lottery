@@ -40,11 +40,7 @@
                                                 action="{{ route('admin.lottery.generateCode') }}"
                                                 class="btn btn-primary">تولید کد روزانه</button>
                                         </div>
-                                        <div class="ml-1">
-                                            <button type="button" id="dailyCodeExport"
-                                                action="{{ route('admin.lottery.dailyCodePrint') }}"
-                                                class="btn btn-primary">پرنت اکسل</button>
-                                        </div>
+
                                     </div>
                                     <div class="row mt-1 ml-2 mb-2">
                                         <h3>
