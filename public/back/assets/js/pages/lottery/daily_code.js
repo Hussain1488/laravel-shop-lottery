@@ -202,7 +202,7 @@ $('#daily_code_gerator_button').on('click', function () {
     condition = false;
 });
 
-$('.dailyCodeExport').on('click', function () {
+$('#dailyCodeExport').on('click', function () {
     let button = $(this);
     window.open(button.attr('action'));
     // $.ajax({
