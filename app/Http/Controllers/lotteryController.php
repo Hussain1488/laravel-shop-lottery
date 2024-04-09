@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\DailyCodeExport;
 use App\Http\Requests\back\lottery\LotteryCodeStateRequest;
 use App\Http\Requests\back\lottery\LotteryCodeWonRequest;
 use App\Models\DailyCodeModel;
@@ -12,6 +13,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 use Morilog\Jalali\Jalalian;
 use Shetabit\Multipay\Invoice;
 use Yajra\DataTables\Facades\DataTables;
@@ -311,10 +313,10 @@ class lotteryController extends Controller
     }
 
 
-    public function dailyCodePring()
+    public function dailyCodePrint()
     {
-        return $this->exportExcel(DailyCodeModel::get());
-        return Excel::download(new UsersExport(DailyCodeModel::get()), 'users.xlsx');
+        // dd('hey');
+        return Excel::download(new DailyCodeExport(DailyCodeModel::get()), 'dailyCode.xlsx');
     }
 
     public function codeWonState(LotteryCodeWonRequest $request)
