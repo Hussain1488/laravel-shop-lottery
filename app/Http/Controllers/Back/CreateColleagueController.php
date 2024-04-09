@@ -550,7 +550,7 @@ class CreateColleagueController extends Controller
         try {
             DB::beginTransaction();
 
-            $operator_id = OperatorActivity::createActivity($store->user->id, 'STORE_CREDIT');
+            $operator_id = OperatorActivity::createActivity($store->user->id, 'STORE_CREDIT_DECREASE');
             ActivityDetailsModel::createActivityDetail($operator_id, $data);
             $trans_id = createstoretransaction::storeTransaction($store, $request->storecredit, false, 3, 0, null, null, $description);
             StoreTransactionDetailsModel::createDetail($trans_id, $trans_data);
@@ -828,12 +828,12 @@ class CreateColleagueController extends Controller
             $store_trans = createstoretransaction::storeTransaction($store, $data['amount'], true, 0, 1, $store->user_id, null, 'ایجاد سند مالی فروشگاه');
             $bank_trans = banktransaction::transaction($data['debtor'], $data['amount'], false, $store_trans, 'store');
             StoreTransactionDetailsModel::createDetail($store_trans, $trans_data);
-            $store->salesamount += $data['amount'];
 
             $data1 = [
                 'موجودی قبلی' => $store->salesamount . ' ریال',
                 'مقدار افزایش موجودی' => $data['amount'] . ' ریال',
             ];
+            $store->salesamount += $data['amount'];
 
             StoreDoumentModel::create([
                 'type'          => 'deposit',
