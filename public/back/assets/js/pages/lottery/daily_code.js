@@ -186,8 +186,9 @@ $('#daily_code_gerator_button').on('click', function () {
             url: button.attr('action'), // Use stored reference
             type: 'GET',
             success: function (response) {
+                button.prop('disabled', true);
                 toastr.success('تولید کد روزانه برای یک ماه ایجاد شد!');
-                location.reload();
+                $('#daily_code_table').DataTable().draw();
             },
             error: function (xhr, status, error) {},
             beforeSend: function (xhr) {
@@ -201,13 +202,14 @@ $('#daily_code_gerator_button').on('click', function () {
     condition = false;
 });
 
-$('#dailyCodeExport').on('click', function () {
+$('.dailyCodeExport').on('click', function () {
     let button = $(this);
-    $.ajax({
-        url: button.attr('action'),
-        type: 'GET',
-        success: function () {
-            window.location.href = button.attr('action');
-        }
-    });
+    window.open(button.attr('action'));
+    // $.ajax({
+    //     url: button.attr('action'),
+    //     type: 'GET',
+    //     success: function () {
+    //         window.location.href = button.attr('action');
+    //     }
+    // });
 });
