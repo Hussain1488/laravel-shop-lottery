@@ -590,9 +590,6 @@ class CreateColleagueController extends Controller
         // Merge the arrays into a single array
         $type = array_merge($existingRecordsArray, [$newRecordArray1, $newRecordArray2]);
 
-        // Display the merged array
-        // dd($type);
-        // $users = User::where('level', 'user')->get();
 
         return view('back.createcolleague.createdocument', compact('type'));
     }
@@ -600,15 +597,7 @@ class CreateColleagueController extends Controller
     // storing document store function
     public function createDocumentStore(ColleagueCreateDocument $request)
     {
-
-        if (($request->debtor_type == 9 || $request->debtor_type == 8) && ($request->creditor_type == 9 || $request->creditor_type == 8)) {
-            // dd($request->all());
-            toastr()->warning('ماهیت طلب کار باید از نوع حساب های داخلی باشد!');
-            return redirect()->back();
-        } else if ($request->debtor_type == $request->creditor_type) {
-            toastr()->warning('ماهیت طلب کار و بدهکار نمیتوانند یکی باشند!');
-            return redirect()->back();
-        }
+        $number = 0;
         $data = [
             'debtor' => $request->input('debtor'),
             'creditor' => $request->input('creditor'),
@@ -616,16 +605,17 @@ class CreateColleagueController extends Controller
             'description' => $request->input('description'),
             'document' => $request->documents,
         ];
-        if ($request->creditor_type == 9) {
+        if (($request->debtor_type == 9 || $request->debtor_type == 8) && ($request->creditor_type == 9 || $request->creditor_type == 8)) {
+            toastr()->warning('ماهیت بستانکار باید از نوع حساب های داخلی باشد!');
+        } else if ($request->debtor_type == $request->creditor_type) {
+            toastr()->warning('ماهیت بستانکار و بدهکار نمیتوانند یکی باشند!');
+        } else if ($request->creditor_type == 9) {
             // dd($request->documents, $data);
             $number = $this->buyerCreditor($data);
             if ($number != 0) {
                 toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
-
-                return redirect()->back()->with('number', $number);
             } else {
                 toastr()->warning('متأسفانه عملیات انجام نشد!');
-                return redirect()->back();
             }
         } else if ($request->debtor_type == 9) {
             $user = user::with('wallet')->find($request->input('debtor'));
@@ -633,23 +623,18 @@ class CreateColleagueController extends Controller
                 $number = $this->buyerDebtor($data);
                 if ($number != 0) {
                     toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
-                    return redirect()->back()->with('number', $number);
                 } else {
                     toastr()->warning('متأسفانه عملیات انجام نشد!');
-                    return redirect()->back();
                 }
             } else {
                 toastr()->warning('مبلغ کیف پول کاربر کمتر از مبلغ درخواستی میباشد!');
-                return redirect()->back();
             }
         } else if ($request->creditor_type == 8) {
             $number = $this->storeCreditor($data);
             if ($number != 0) {
                 toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
-                return redirect()->back()->with('number', $number);
             } else {
                 toastr()->warning('متأسفانه عملیات انجام نشد!');
-                return redirect()->back();
             }
         } else if ($request->debtor_type == 8) {
             $store = createstore::where('user_id', $request->input('debtor'))->first();
@@ -659,24 +644,24 @@ class CreateColleagueController extends Controller
                 $number = $this->storeDebtor($data);
                 if ($number != 0) {
                     toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
-                    return redirect()->back()->with('number', $number);
                 } else {
                     toastr()->warning('متأسفانه عملیات انجام نشد!');
-                    return redirect()->back();
                 }
             } else {
                 toastr()->warning('مبلغ کیف پول فروشگاه کمتر از مبلغ درخواستی میباشد!');
-                return redirect()->back();
             }
         } else {
             $number = $this->accountDocument($data);
             if ($number != 0) {
                 toastr()->success('ایجاد سند جدید با شماره ' . $number . ' با موفقیت ثبت گردید.');
-                return redirect()->back()->with('number', $number);
             } else {
                 toastr()->warning('متأسفانه عملیات انجام نشد!');
-                return redirect()->back();
             }
+        }
+        if ($number != 0) {
+            return redirect()->back()->with('number', $number);
+        } else {
+            return redirect()->back();
         }
     }
     public function buyerCreditor($data)
