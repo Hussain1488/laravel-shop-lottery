@@ -14,7 +14,7 @@ var today = formatDate(new Date()); // Format: YYYY-MM-DD
 // Convert expiration date to JavaScript date format (YYYY-MM-DD)
 var LotteryDailyData = {
     value: false,
-    expirationDate: '2024-04-06' // Use the formatted tomorrow date
+    expirationDate: today // Use the formatted tomorrow date
 };
 var loading = {
     message:
@@ -17391,7 +17391,7 @@ function number_format(t) {
                 localStorage.removeItem('commentState');
                 localStorage.removeItem('codeGenerated');
             } else {
-                $('.getCode-button').removeClass('d-none');
+                showGenerateDailyCode();
             }
         }
 
@@ -17707,7 +17707,11 @@ function CommentForDailyCode() {
 }
 
 function rollDice() {
-    if (counter == 3) {
+    let commentState = localStorage.getItem('commentState');
+    if (commentState == 'false') {
+        setTimeout(() => {
+            $('#roll').prop('disabled', true);
+        }, 5000);
         diceOne = 5;
         diceTwo = 5;
         diceThree = 5;
@@ -17749,8 +17753,7 @@ elComeOut.onclick = function () {
 
     if (diceOne == 5 && diceTwo == 5 && diceThree == 5) {
         setTimeout(() => {
-            $('.getCode-button').prop('disabled', false);
-            $('.getCode-button').removeClass('d-none');
+            showGenerateDailyCode();
         }, 5000);
     }
 };
@@ -17761,7 +17764,9 @@ $(document).on('click', '.getCode-button', function () {
 });
 
 function showGenerateDailyCode() {
+    $('.getCode-button').prop('disabled', false);
     $('.getCode-button').removeClass('d-none');
+    $('#roll').prop('disabled', true);
 }
 
 $('.codeCopyBtn').on('click', function () {
