@@ -17694,7 +17694,7 @@ $(document).on('click', '#palay-again', function () {
     lotteryDailyCodeStat = false;
     CommentForDailyCode();
     localStorage.setItem('commentState', 'true');
-    window.location.href = '/';
+    window.location.href = '/all';
 });
 
 function CommentForDailyCode() {
