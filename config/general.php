@@ -91,6 +91,16 @@ return [
             ]
         ],
 
+        'lottery' => [
+            'title'         => 'قرعه کشی',
+            'values'        => [
+                'index'     => 'گزارش قرعه کشی',
+                'dailyCodes'     => 'کد روزانه',
+                'invoicesIndex'     => 'فاکتور های فروش',
+                'winners'     => 'لیست برنده ها',
+            ]
+        ],
+
 
         'products' => [
             'title'  => 'مدیریت محصولات',
