@@ -82,6 +82,14 @@ class ProductController extends Controller
 
         return view('front::products.search', compact('products'));
     }
+    public function all(Request $request)
+    {
+        $products = Product::detectLang()
+            ->latest()
+            ->paginate(20);
+
+        return view('front::products.all', compact('products'));
+    }
 
     public function specials()
     {
