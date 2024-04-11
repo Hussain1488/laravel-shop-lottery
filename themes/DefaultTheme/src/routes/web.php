@@ -43,6 +43,7 @@ Route::group(['as' => 'front.'], function () {
     Route::get('products/category-specials/{category}', [ProductController::class, 'categorySpecials'])->name('products.category-specials');
     Route::get('search', [ProductController::class, 'search'])->name('products.search');
     Route::post('search', [ProductController::class, 'ajax_search'])->name('products.ajax_search');
+    Route::get('all', [ProductController::class, 'all'])->name('products.all');
     Route::get('product/specials', [ProductController::class, 'specials'])->name('products.specials');
     Route::get('product/discount', [ProductController::class, 'discount'])->name('products.discount');
     Route::get('product/{product}/prices', [ProductController::class, 'prices'])->name('products.prices');
