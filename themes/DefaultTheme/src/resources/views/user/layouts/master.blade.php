@@ -131,6 +131,7 @@
                                                 {{ trans('front::messages.profile.reviews') }}
                                             </a>
                                         </li>
+
                                         <li>
                                             <a href="{{ route('front.tickets.index') }}"
                                                 class="{{ active_class('front.tickets.index') }}">
@@ -138,11 +139,20 @@
                                                 {{ trans('front::messages.profile.your-tickets') }}
                                             </a>
                                         </li>
+
                                         <li>
                                             <a href="{{ route('front.favorites.index') }}"
                                                 class="{{ active_class('front.favorites.index') }}">
                                                 <i class="mdi mdi-heart-outline"></i>
                                                 {{ trans('front::messages.profile.wishlist') }}
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ route('front.lottery.index') }}"
+                                                class="{{ active_class('front.lottery.index') }}">
+                                                <i class="mdi mdi-gift"></i>
+                                                {{ trans('front::messages.lottery.lottery') }}
                                             </a>
                                         </li>
 
@@ -153,13 +163,7 @@
                                                 {{ trans('front::messages.profile.personal-information') }}
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="{{ route('front.lottery.index') }}"
-                                                class="{{ active_class('front.lottery.index') }}">
-                                                <i class="mdi mdi-gift"></i>
-                                                {{ trans('front::messages.lottery.lottery') }}
-                                            </a>
-                                        </li>
+
                                     </ul>
                                 </div>
                             </div>
