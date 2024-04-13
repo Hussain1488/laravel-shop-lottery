@@ -14,7 +14,7 @@
                         <div class="col-12">
                             <div class="breadcrumb-wrapper col-12">
                                 <ol class="breadcrumb no-border">
-                                    <li class="breadcrumb-item">مدیریت
+                                    <li class="breadcrumb-item">قرعه کشی
                                     </li>
                                     <li class="breadcrumb-item active">کد قرعه کشی روزانه
                                     </li>
@@ -56,7 +56,7 @@
 
                                     <div class="row mt-1 ml-2 mb-2">
                                         <h3>
-                                            لیست لاگ های کرن جاب
+                                            کد قرعه کشی روزانه
                                         </h3>
                                     </div>
 
