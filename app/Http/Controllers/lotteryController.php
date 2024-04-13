@@ -28,7 +28,6 @@ class lotteryController extends Controller
 
     public function lotteryCodeNumbers(Request $request)
     {
-        // Log::info($request->filter);
         $query = LotteryCodeModel::latest();
 
         if ($request->filter == 'invoice') {
@@ -78,15 +77,20 @@ class lotteryController extends Controller
         return view('back.lottery.invoiceIndex');
     }
 
-    public function invoicesDatatable()
+    public function invoicesDatatable(Request $request)
     {
-        $query = InvoicesModel::orderByRaw("
-                    CASE
-                        WHEN state = 'pending' THEN 1
-                        WHEN state = 'valid' THEN 2
-                        WHEN state = 'not-valid' THEN 3
-                        ELSE 4
-                    END")->latest();
+        if ($request->filter != 'all') {
+            $query = InvoicesModel::where('state', $request->filter)->latest();
+        } else {
+
+            $query = InvoicesModel::orderByRaw("
+            CASE
+            WHEN state = 'pending' THEN 1
+            WHEN state = 'valid' THEN 2
+            WHEN state = 'not-valid' THEN 3
+            ELSE 4
+            END")->latest();
+        }
 
         return DataTables::eloquent($query)
             ->addColumn('counter', function () {
@@ -122,14 +126,13 @@ class lotteryController extends Controller
             return response()->json(['status' => 'success', 'data' => 'عملیات با موفقیت انجام شد!']);
         } catch (\Exception $e) {
             Log::error($e);
-            Log::info($id);
             return response()->json(['status' => 'error', 'data' => 'انجام عملیات با خطا روبه رو شد!']);
         }
     }
 
     public function invoiceValidation(Request $request, $id)
     {
-        // return response()->json(['status' => 'error', 'data' => 'انجام عملیات با خطا روبه رو شد!']);
+        // dd($request, $id);
         try {
             $invoice = InvoicesModel::find($id);
 
@@ -140,13 +143,15 @@ class lotteryController extends Controller
                     'code' => $code,
                     'weekly_state' => false,
                     'monthly_state' => false,
-                    'state' => 'wait',
+                    'state' => 'active',
                 ]);
             }
             $invoice->state = 'valid';
             $invoice->save();
             return response()->json(['status' => 'success', 'data' => 'عملیات با موفقیت انجام شده و کدهای قرعه کشی برای کاربر ایجاد شد!']);
         } catch (Exception $e) {
+            \Log::error($e);
+            return response()->json(['status' => 'error', 'data' => $e]);
         }
     }
     public function dailyCode()
@@ -193,7 +198,6 @@ class lotteryController extends Controller
             $lastDay = $lastDayOfMonth->toCarbon();
             $query = DailyCodeModel::whereBetween('date', [$firstDay, $lastDay]);
         }
-        // Log::info($query->all());
 
         return DataTables::eloquent($query)
             ->addColumn('counter', function () {
@@ -232,11 +236,9 @@ class lotteryController extends Controller
         if (!$dateExists) {
             $nextMonth = $carbonDate;
             $nextMonth1 = $today;
-            Log::info('not existes');
         } else {
             $nextMonth = $carbonDate->addMonths(1);
             $nextMonth1 = $today->addMonths(1);
-            Log::info('exists');
         }
         // Get the number of days in the current month
         // $numDaysInMonth = $nextMonth1->subdays()->format('d') + 1;
@@ -251,13 +253,10 @@ class lotteryController extends Controller
         // Convert it to an integer to get the number of days
         $numDaysInMonth = (int) $lastDayOfMonthDayPart;
 
-        Log::info($numDaysInMonth);
         $monthBefore = Jalalian::now()->subMonths(1)->getFirstDayOfMonth();
         $monthBefore = Carbon::createFromFormat('Y-m-d H:i:s', $monthBefore->toCarbon()->toDateTimeString());
-        Log::info($monthBefore);
         // Loop through each day of the month
         $monthBeforeCodes = DailyCodeModel::where('date', '<', $monthBefore)->get();
-        Log::info($monthBeforeCodes);
 
         foreach ($monthBeforeCodes as $code) {
             $code->delete();
@@ -397,7 +396,6 @@ class lotteryController extends Controller
     }
     public function winnerData(Request $request)
     {
-        Log::info($request->all());
 
         if ($request->filter == 'weekly') {
             $query = LotteryWinnersModel::where('type', 'weekly')->latest();
