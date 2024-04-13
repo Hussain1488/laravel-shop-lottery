@@ -13,9 +13,9 @@
                         <div class="col-12">
                             <div class="breadcrumb-wrapper col-12">
                                 <ol class="breadcrumb no-border">
-                                    <li class="breadcrumb-item">مدیریت
+                                    <li class="breadcrumb-item">قرعه کشی
                                     </li>
-                                    <li class="breadcrumb-item active">کد قرعه کشی روزانه
+                                    <li class="breadcrumb-item active">فاکتور فروش
                                     </li>
                                 </ol>
                             </div>
@@ -36,23 +36,15 @@
 
                                     <div class="row">
                                         <div class="ml-1">
-                                            <button type="button" id="daily_code_gerator_button"
-                                                action="{{ route('admin.lottery.generateCode') }}"
-                                                class="btn btn-primary">تولید کد روزانه</button>
                                         </div>
-
                                     </div>
                                     <div class="row mt-1 ml-2 mb-2">
                                         <h3>
-                                            لیست لاگ های کرن جاب
+                                            فاکتور فروش
                                         </h3>
                                     </div>
                                     <table class="table table-hover" id="invoice_code_table"
                                         action={{ route('admin.lottery.invoicesDatatable') }}>
-                                        <thead>
-
-                                        </thead>
-                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -62,11 +54,9 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="validationChicking">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">اعتبار سنجی فاکتور فروش<span class="text-success"
@@ -79,7 +69,7 @@
                         <input type="button" class="btn btn-success validationValidateButton" value="تأیید اعتبار" />
                         <input type="button" data-action=""
                             class="btn
-                            btn-danger validationRejectButton" value="رد اعتبار" />
+                            btn-danger invoiceRejectButton" value="رد اعتبار" />
                     </div>
                     <input type="hidden" id="selectedInvoice">
                 </div>
@@ -90,7 +80,6 @@
     <div class="modal fade" id="validationValidateModal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">تأیید فاکتور برای تولید کد قرعه کشی<span class="text-success"
@@ -99,8 +88,7 @@
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <form id="invoiceValidationForm" action="{{ '#' }}" method="POST"
-                        enctype="multipart/form-data">
+                    <form id="invoiceValidationForm" action="{{ route('admin.lottery.invoiceValidation') }}" method="POST">
                         @csrf
                         <div class="d-flex justify-content-around my-1">
                             <div class="col">
@@ -121,8 +109,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="modal image_modal fade" style="max-height: 90%" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
