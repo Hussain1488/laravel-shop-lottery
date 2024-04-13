@@ -86,15 +86,7 @@
 
                                                         <select class="form-control user_select2" id="user_select"
                                                             name="user_id">
-                                                            {{-- <option value="0">کاربر را انتخاب کنید</option> --}}
-                                                            {{-- @foreach ($users as $item)
-                                                                <option data-name="{{ $item->first_name }}"
-                                                                    data-lastname="{{ $item->last_name }}"
-                                                                    creadit_attr="{{ $item->purchasecredit }}"
-                                                                    value="{{ $item->id }}">
-                                                                    {{ $item->username }}
-                                                                </option>
-                                                            @endforeach --}}
+                                                            
                                                         </select>
 
                                                         @error('user_id')
