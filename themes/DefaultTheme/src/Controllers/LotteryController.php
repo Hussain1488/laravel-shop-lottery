@@ -10,6 +10,7 @@ use App\Models\LotteryWinnersModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class LotteryController extends Controller
 {
@@ -72,28 +73,41 @@ class LotteryController extends Controller
 
     public function invoiceCode(Request $request)
     {
-        // dd($request->all());
+        // Validate the request data
+
+
+        // Check if the invoice amount exceeds the maximum allowed value
+        $amount = str_replace(',', '', $request->amount);
+        $numeric_amount = (float) $amount;
+        if ($numeric_amount > 999999999) {
+            return response()->json(['state' => 'fail', 'message' => 'مبلغ وارده بیشتر از حد مجاز میباشد، لطفا اصلاح نموده دوباره بفرستید!']);
+        }
+
+        // Check if the file has been successfully uploaded
+        if (!$request->hasFile('invoice_img')) {
+            return response()->json(['state' => 'fail', 'message' => 'لطفا تصویر فاکتور را بارگذاری کنید.']);
+        }
+
+        // Move the uploaded file to the desired location
         $file = $request->file('invoice_img');
-        // dd($file);
         $imageName = time() . '_invoice.' . $file->getClientOriginalExtension();
-        $file->move('document/userImg/', $imageName);
-        $image_path = '/document/userImg/' . $imageName;
-        // dd($request->number);
+        $file->move('document/invoice_img/', $imageName);
+        $image_path = '/document/invoice_img/' . $imageName;
+
+        // Check if the invoice number already exists
         $codeExists = InvoicesModel::where('number', $request->number)->exists();
         if (!$codeExists) {
-
+            // Create a new invoice record
             $newInvoice = InvoicesModel::create([
                 'user_id' => Auth::user()->id,
                 'number' => $request->number,
                 'image' => $image_path,
                 'state' => 'pending',
-                'amount' => $request->amount
+                'amount' => $numeric_amount
             ]);
-            toastr()->success('اطلاعات فاکتور شما با موفقیت ثبت شد، بعد از تأیید کد قرعه کشی برای شما ایجاد میشود!');
+            return response()->json(['state' => 'success', 'message' => 'اطلاعات فاکتور شما با موفقیت ثبت شد، بعد از تأیید کد قرعه کشی برای شما ایجاد میشود!']);
         } else {
-            toastr()->warning('شماره فاکتور وارد شده قبلا استفاده شده است!');
+            return response()->json(['state' => 'fail', 'message' => 'شماره فاکتور وارد شده قبلا استفاده شده است!']);
         }
-        return redirect()->back();
-        // return response()->json(['status' => 'success', 'data', 'اطلاعات فاکتور شما با موفقیت ثبت شد، بعد از تأیید کد قرعه کشی برای شما ایجاد میشود!']);
     }
 }
