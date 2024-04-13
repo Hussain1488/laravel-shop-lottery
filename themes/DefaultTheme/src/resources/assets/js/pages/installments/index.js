@@ -83,21 +83,7 @@ $('.insta_pay_button').on('click', function () {
     let amount = parseFloat(clickedButton.attr('data-amount'));
     if (amount > wallet) {
         toastr.warning('مقدار قسط از موجودی کیف پول شما بیشتر میباشد!');
-        // let alertContainer = $('.alert-message');
-        // alertContainer.text('مقدار قسط از موجودی کیف پول شما بیشتر میباشد!');
-        // alertContainer.fadeIn(1000, function () {
-        //     alertContainer.removeClass('d-none');
-        // });
-
-        // setTimeout(function () {
-        //     // Use jQuery to add the fade-out class
-        //     alertContainer.fadeOut(1000, function () {
-        //         // Reset visibility before fadeIn
-        //         alertContainer.css('display', 'block');
-        //         // Add the d-none class after the fade-out effect completes
-        //         $(this).addClass('d-none');
-        //     });
-        // }, 4000);
+        
     } else {
         flag = 3;
         insta_pay_url = $(this).data('href');
