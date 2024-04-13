@@ -17390,15 +17390,63 @@ function number_format(t) {
                 localStorage.removeItem('LotteryDailyData');
                 localStorage.removeItem('commentState');
                 localStorage.removeItem('codeGenerated');
+                localStorage.removeItem('rollDiceStat');
             } else {
                 showGenerateDailyCode();
             }
+        }
+        let counter2 = localStorage.getItem('counter');
+        let rollDiceStat = localStorage.getItem('rollDiceStat');
+        console.log(counter2, rollDiceStat);
+        if (counter2 >= 2 && rollDiceStat == 'true') {
+            $('#roll').addClass('d-none');
+            $('#palay-again').removeClass('d-none');
+            $('.rollDice-alert-message').removeClass('d-none');
+            showGenerateDailyCode();
         }
 
         if (localStorage.getItem('commentState') == 'false') {
             showGenerateDailyCode();
         }
+        $('.moneyInputSpan').each(function () {
+            var input = $(this).text();
+
+            // Remove any non-digit characters (e.g., commas)
+            var digits = input.replace(/\D/g, '');
+
+            // Format the number with commas
+            var formattedNumber = addCommas(digits);
+
+            // Update the input field with the formatted number
+            $(this).text(formattedNumber);
+        });
+
+        $('.moneyInput').on('input', function () {
+            var input = $(this).val();
+
+            // Remove any non-digit characters (e.g., commas)
+            var digits = input.replace(/\D/g, '');
+
+            // Format the number with commas
+            var formattedNumber = addCommas(digits);
+
+            // Update the input field with the formatted number
+            $(this).val(formattedNumber);
+        });
     }),
+    // $('.moneyInput').on('input', function () {
+    //     var input = $(this).val();
+
+    //     // Remove any non-digit characters (e.g., commas)
+    //     var digits = input.replace(/\D/g, '');
+
+    //     // Format the number with commas
+    //     var formattedNumber = addCommas(digits);
+
+    //     // Update the input field with the formatted number
+    //     $(this).val(formattedNumber);
+    // });
+
     $.ajaxSetup({
         error: function (t) {
             if ((reloadCaptcha(), 403 != t.status))
@@ -17694,6 +17742,7 @@ $(document).on('click', '#palay-again', function () {
     lotteryDailyCodeStat = false;
     CommentForDailyCode();
     localStorage.setItem('commentState', 'true');
+    localStorage.setItem('rollDiceStat', 'true');
     window.location.href = '/all';
 });
 
@@ -17743,7 +17792,7 @@ function rollDice() {
 elComeOut.onclick = function () {
     counter++;
     rollDice();
-    if (counter == 2) {
+    if (counter >= 2) {
         setTimeout(() => {
             $('#roll').addClass('d-none');
             $('#palay-again').removeClass('d-none');
@@ -17872,7 +17921,7 @@ $('.lottery_code_button').on('click', function () {
 });
 $('#lottery-daily-code-button').on('click', function () {
     $('#general_modal').modal('hide');
-    var formData = $('#daily_code_insert_form').serialize();
+    var formData = $('#invoice_code_insert_form').serialize();
     $.blockUI(loading);
     $.ajax({
         url: $(this).attr('action'),
@@ -17881,11 +17930,7 @@ $('#lottery-daily-code-button').on('click', function () {
         success: function (data) {
             $.unblockUI();
             // $('#large_modal').modal();
-            localStorage.setItem(
-                'LotteryDailyData',
-                JSON.stringify(LotteryDailyData)
-            );
-            if (data.status == 'error') {
+            if (data.status == 'fail') {
                 // toastr.warning(data.data);
                 Swal.fire({
                     text: data.data,
@@ -17895,11 +17940,7 @@ $('#lottery-daily-code-button').on('click', function () {
                 });
             } else {
                 Swal.fire({
-                    html:
-                        'کد قرعه کشی شما : ' +
-                        '<span class="badge badge-success">' +
-                        data.data +
-                        '</span> میباشد! شما میتوانید نتایج و کد قرعه کشی خود را در پروفایل خود مشاهده کنید!',
+                    text: data.data,
                     type: 'success',
                     showCancelButton: false,
                     confirmButtonText: 'باشه'
@@ -17908,3 +17949,72 @@ $('#lottery-daily-code-button').on('click', function () {
         }
     });
 });
+$('#lottery-invoice-code-button').on('click', function () {
+    $('#general_modal').modal('hide');
+    var formData = new FormData($('#invoice_code_insert_form')[0]); // Use FormData for file uploads
+    $.blockUI(loading);
+    $.ajax({
+        url: $('#invoice_code_insert_form').attr('action'), // Use form action URL
+        type: 'POST', // Change to POST method
+        data: formData,
+        contentType: false, // Set contentType to false for file uploads
+        processData: false, // Set processData to false for file uploads
+        success: function (data) {
+            $.unblockUI();
+            localStorage.setItem(
+                'LotteryDailyData',
+                JSON.stringify(LotteryDailyData)
+            );
+            if (data.state === 'fail') {
+                // Check for 'state' instead of 'status'
+                Swal.fire({
+                    text: data.message,
+                    type: 'warning', // Use 'type' instead of 'type'
+                    showCancelButton: false,
+                    confirmButtonText: 'باشه'
+                }).then((result) => {
+                    $('#general_modal').modal();
+                });
+            } else {
+                Swal.fire({
+                    text: data.message,
+                    type: 'success', // Use 'type' instead of 'type'
+                    showCancelButton: false,
+                    confirmButtonText: 'باشه'
+                });
+            }
+        },
+        error: function (xhr, status, error) {
+            $.unblockUI();
+            console.log(error);
+            Swal.fire({
+                text: 'مشکلی در انجام عملیات شما رخ داده است!',
+                type: 'error',
+                showCancelButton: false,
+                confirmButtonText: 'باشه'
+            }).then((result) => {
+                $('#general_modal').modal();
+            });
+        }
+    });
+});
+
+$('.factore-number-input').on('input', function () {
+    let input = $(this);
+    if (input.val().length > 5) {
+        toastr.warning('شماره فاکتور نمیتواند از پنج رقم بیشتر باشد!');
+        input.val(input.val().slice(0, 5)); // Truncate input to 5 characters
+    }
+});
+
+function addCommas(nStr) {
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+}
