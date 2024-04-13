@@ -76,7 +76,7 @@
                     </div>
                     <div id="menu1" class="container tab-pane my-2 py-3">
                         <form action="{{ route('front.lottery.invoiceCode') }}" class="" method="POST"
-                            enctype="multipart/form-data">
+                            id="invoice_code_insert_form" enctype="multipart/form-data">
                             @csrf
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
@@ -86,24 +86,48 @@
                                         </h6>
                                     </div>
                                     <div class="form-row form-group">
-                                        <input type="number" class="form-control input-ui pr-2 amount-input"
+                                        <input type="number" class="form-control  pr-2 factore-number-input"
                                             name="number">
                                     </div>
                                 </div>
                             </div>
+                            @error('number')
+                                <span class="text-danger">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                            {{-- <div class="row d-flex justify-content-center"> --}}
+                            {{-- <div class="col-lg-8">
+                                    <div class="form-group">
+                                        <div class="form-row-title">
+                                            <h6 class="">
+                                                مبلغ فاکتور
+                                            </h6>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <input type="text" class="form-control  pr-2  moneyInput" name="amount">
+                                        </div> ریال
+
+                                    </div>
+                                </div> --}}
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
-                                    <div class="form-row-title">
-                                        <h6 class="">
-                                            مبلغ فاکتور
-                                        </h6>
-                                    </div>
-                                    <div class="form-row form-group">
-                                        <input type="number" class="form-control input-ui pr-2 amount-input"
-                                            name="amount">
+                                    <div class="form-group">
+                                        <label>مبلغ فاکتور</label>
+                                        <div class="d-flex align-items-center">
+                                            <input class="form-control moneyInput" name="amount"
+                                                style="margin-left: 4px"> ریال
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            @error('amount')
+                                <span class="text-danger">
+                                    {{ $message }}
+                                </span>
+                            @enderror
+                            {{-- </div> --}}
+
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
                                     <div class="form-row-title">
@@ -119,7 +143,7 @@
                             <hr>
                             <div class="form-row mt-3 justify-content-center">
                                 <button id="lottery-invoice-code-button"
-                                    action="{{ route('front.lottery.invoiceCode') }}" type="submit"
+                                    action="{{ route('front.lottery.invoiceCode') }}" type="button"
                                     class="btn-primary-cm btn-with-icon ml-2">
                                     <i class="mdi mdi-arrow-left"></i>
                                     ارسال فاکتور خرید
