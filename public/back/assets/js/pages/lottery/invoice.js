@@ -1,19 +1,47 @@
 $(document).ready(function () {
     // $('.image_modal').modal();
     let table = $('#invoice_code_table');
-    console.log(table.attr('action'));
-    $('#invoice_code_table').DataTable({
+    var filter = 'all';
+    table.DataTable({
         searching: true,
         processing: true,
         language: {
             url: window.Laravel.datatable_fa
+        },
+        initComplete: function () {
+            // Add start_date and end_date inputs to the search input row
+            $('.dataTables_filter').append(
+                '<input type="button" data-value="all"  class="btn btn-dark code-filter text-white end_date" value="همه">'
+                // '<div class="col"><input type="text" id="end_date" class="form-control btn btn-dark code-filter text-white" placeholder="فیلتر تا تاریخ..."></div>'
+            );
+            $('.dataTables_filter').append(
+                '<input type="button" data-value="valid"  class="btn btn-dark code-filter text-white end_date" value="تأیید شده">'
+                // '<div class="col"><input type="text" id="end_date" class="form-control btn btn-dark code-filter text-white" placeholder="فیلتر تا تاریخ..."></div>'
+            );
+            $('.dataTables_filter').append(
+                '<input type="button" data-value="not-valid"  class="btn btn-dark code-filter text-white start_date" value="رد شده">'
+                // '<div class="col"><input type="text" id="start_date" class="form-control btn btn-dark code-filter text-white" placeholder="فیلتر از تاریخ..."></div>'
+            );
+            $('.dataTables_filter').append(
+                '<input type="button" data-value="pending"  class="btn btn-dark code-filter text-white end_date" value="انتظار تأیید">'
+                // '<div class="col"><input type="text" id="end_date" class="form-control btn btn-dark code-filter text-white" placeholder="فیلتر تا تاریخ..."></div>'
+            );
+
+            // Add event listener to trigger search on date inputs
+            $('.code-filter').on('click', function () {
+                filter = $(this).data('value');
+                table.DataTable().draw(); // Redraw the DataTable with the new filter
+            });
         },
         ajax: {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             url: table.attr('action'), // Replace with the actual URL of your data endpoint
-            type: 'POST'
+            type: 'POST',
+            data: function (d) {
+                d.filter = filter;
+            }
         },
         serverSide: true,
 
@@ -125,8 +153,8 @@ $('.validationValidateButton').on('click', function () {
     $('#validationValidateModal').modal();
 });
 
-$(document).on('click', '.validationRejectButton', function () {
-    let btn = $('.validationRejectButton');
+$(document).on('click', '.invoiceRejectButton', function () {
+    let btn = $('.invoiceRejectButton');
     $.ajax({
         url: rejectionUrl + '/' + $('#selectedInvoice').val(),
         type: 'get',
@@ -154,11 +182,13 @@ $(document).on('click', '.validationRejectButton', function () {
 $('#invoiceValidationButton').on('click', function () {
     let btn = $(this);
     let formData = $('#invoiceValidationForm').serialize();
+    // console.log($('#selectedInvoice').val());
     $.ajax({
         url: validationUrl + '/' + $('#selectedInvoice').val(),
         type: 'post',
         data: formData,
         success: function (response) {
+            console.log(response);
             if (response.status == 'success') {
                 toastr.success(response.data);
                 $('#invoice_code_table').DataTable().ajax.reload();
