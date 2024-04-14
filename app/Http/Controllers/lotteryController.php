@@ -52,7 +52,7 @@ class lotteryController extends Controller
                 return $query->code;
             })
             ->filterColumn('code', function ($query, $keyword) {
-                return $query->where('code', 'like', '%' . $keyword . '%');
+                return $query->where('code', 'like', $keyword . '%');
             })
             ->addColumn('source', function ($query) {
                 return $query->invoice_id ? 'invoice' : 'daily_code';
@@ -100,12 +100,12 @@ class lotteryController extends Controller
             })->addColumn('number', function ($query) {
                 return $query->number;
             })->filterColumn('number', function ($query, $keyword) {
-                $query->where('number', 'like', '%' . $keyword . '%');
+                $query->where('number', 'like', $keyword . '%');
             })
             ->addColumn('amount', function ($query) {
                 return $query->amount;
             })->filterColumn('amount', function ($query, $keyword) {
-                $query->where('amount', 'like', '%' . $keyword . '%');
+                $query->where('amount', 'like', $keyword . '%');
             })->addColumn('image', function ($query) {
                 return asset($query->image);
             })
