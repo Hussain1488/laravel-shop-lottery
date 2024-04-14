@@ -1,5 +1,13 @@
 $(document).ready(function () {
-    // $('.image_modal').modal();
+    // function moneyInputSpan() {
+    //     $('.monyInputSpan').each(function () {
+    //         var input = $(this).text();
+    //         var digits = input.replace(/\D/g, '');
+    //         var formattedNumber = addCommas(digits);
+    //         $(this).text(formattedNumber);
+    //     });
+    // }
+    $('.image_modal').modal();
     let table = $('#invoice_code_table');
     var filter = 'all';
     table.DataTable({
@@ -105,6 +113,12 @@ $(document).ready(function () {
                         return (
                             '<input type="button" data-id="' +
                             data +
+                            '" data-amount="' +
+                            row.amount +
+                            '" data-factor="' +
+                            row.number +
+                            '" data-image="' +
+                            row.image +
                             '" value="بیشتر"' +
                             ' class="invoiceActionButton btn btn-info btn-sm" />'
                         );
@@ -141,9 +155,23 @@ $(document).ready(function () {
     });
 });
 
+function addCommas(nStr) {
+    nStr += '';
+    var x = nStr.split('.');
+    var x1 = x[0];
+    var x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+}
+
 $(document).on('click', '.invoiceActionButton', function () {
     let btn = $(this);
+    $('.invoiceImage').attr('src', btn.data('image'));
     $('#selectedInvoice').val(btn.data('id'));
+    // moneyInputSpan();
     $('#validationChicking').modal();
 });
 
