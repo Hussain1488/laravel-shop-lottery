@@ -89,7 +89,7 @@ $(document).ready(function () {
                         return data;
                     }
                 },
-                searchable: false
+                searchable: true
             },
             {
                 data: 'rubika',
