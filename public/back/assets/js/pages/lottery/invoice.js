@@ -1,13 +1,4 @@
 $(document).ready(function () {
-    // function moneyInputSpan() {
-    //     $('.monyInputSpan').each(function () {
-    //         var input = $(this).text();
-    //         var digits = input.replace(/\D/g, '');
-    //         var formattedNumber = addCommas(digits);
-    //         $(this).text(formattedNumber);
-    //     });
-    // }
-    $('.image_modal').modal();
     let table = $('#invoice_code_table');
     var filter = 'all';
     table.DataTable({
@@ -68,7 +59,7 @@ $(document).ready(function () {
                 name: 'number',
                 title: 'شماره فاکتور',
 
-                searchable: true
+                searchable: false
             },
             {
                 data: 'amount',
@@ -87,7 +78,7 @@ $(document).ready(function () {
                         '" value="نمایش" id="">'
                     );
                 },
-                searchable: true
+                searchable: false
             },
             {
                 data: 'state',
@@ -102,7 +93,7 @@ $(document).ready(function () {
                         return '<span class="badge badge-danger">رد شده</span>';
                     }
                 },
-                searchable: true
+                searchable: false
             },
             {
                 data: 'action',
@@ -170,13 +161,14 @@ function addCommas(nStr) {
 $(document).on('click', '.invoiceActionButton', function () {
     let btn = $(this);
     $('.invoiceImage').attr('src', btn.data('image'));
+    $('.invoice-price').text(btn.data('amount'));
+    $('.invoice-code-number').text(btn.data('factor'));
     $('#selectedInvoice').val(btn.data('id'));
     // moneyInputSpan();
     $('#validationChicking').modal();
 });
 
 $('.validationValidateButton').on('click', function () {
-    // console.log($('#selectedInvoice').val()); // Retrieve the data attribute value
     $('#validationChicking').modal('hide');
     $('#validationValidateModal').modal();
 });
@@ -235,7 +227,7 @@ $('#invoiceValidationButton').on('click', function () {
 });
 
 $(document).on('click', '.invoiceImageShow', function () {
-    console.log($(this).data('src'));
+    console.log($(this).attr('src'));
     $('#invoiceImage').attr('src', $(this).data('src'));
     $('.image_modal').modal();
 });
