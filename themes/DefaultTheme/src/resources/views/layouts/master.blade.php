@@ -75,16 +75,15 @@
             <div class="container main-container">
                 <div class="topbar dt-sl">
                     <div class="row align-items-center">
-                        <div class="col-lg-2 col-md-3 col-4">
+                        <div class="col-lg-2 col-md-3 col-4 d-flex justify-center align-items-center">
                             <div class="logo-area float-right">
                                 <a href="{{ route('front.index') }}">
                                     <img data-src="{{ option('info_logo', theme_asset('img/logo.png')) }}"
                                         alt="{{ option('info_site_title', 'خانه اقساط') }}">
                                 </a>
                             </div>
-                            <button type="button"
-                                class="btn btn-primary btn-lg websiteDailyCodeGeneratorButton">generate lottery
-                                code</button>
+                            <input type="image" src="{{ theme_asset('img/gift.gif') }}"
+                                class="websiteDailyCodeGeneratorButton">
 
                         </div>
                         <div class="col-lg-6 col-md-5 hidden-sm">
