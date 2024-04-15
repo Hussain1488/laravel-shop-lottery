@@ -22349,7 +22349,7 @@ input {
 
 
 .topbar .logo-area {
-    width: 3.75rem;
+    width: 2.75rem;
 }
 
 @media only screen and (max-width: 62.5rem) {
@@ -22627,4 +22627,10 @@ button.roll-button:active {
 .button-pulse {
     animation: pulseAnimation 0.5s infinite;
     /* Repeat the animation infinitely */
+}
+
+.websiteDailyCodeGeneratorButton {
+
+    width: 80px;
+    padding: auto;
 }
