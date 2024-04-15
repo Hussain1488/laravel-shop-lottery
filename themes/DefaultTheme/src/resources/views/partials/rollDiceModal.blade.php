@@ -123,7 +123,13 @@
                         </div>
                     </div>
                 </div>
-                <div class='m-2 pt-4 row'>
+                <div class="row mt-1 p-2 d-none rollDice-alert-message">
+                    <div class="alert alert-warning">
+                        متأسفانه شما برنده نشدید، برای داشتن شانسی دوباره لطفا در باره یکی از محصولات ما نظر بدهید تا
+                        شانسی دوباره برای برنده شدن داشته باشید!
+                    </div>
+                </div>
+                <div class='m-2 pt-2 row'>
                     <div class="col d-flex justify-content-center align-items-center pt-2 "></div>
                     <div class="col d-flex justify-content-center">
                         <button id="roll" class="roll-button btn btn-success">تاس
@@ -146,18 +152,10 @@
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <div class="row p-2 d-none rollDice-alert-message">
-                    <div class="alert alert-warning">
-                        متأسفانه شما برنده نشدید، برای داشتن شانسی دوباره لطفا در باره یکی از محصولات ما نظر بدهید تا
-                        شانسی دوباره برای برنده شدن داشته باشید!
-                    </div>
-                </div>
+
 
             </div>
 
         </div>
     </div>
 </div>
-
-@push('scripts')
-@endpush
