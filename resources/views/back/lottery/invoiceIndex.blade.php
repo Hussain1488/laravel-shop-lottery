@@ -65,11 +65,24 @@
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
+
+                    <div class="d-flex justify-content-center">
+                        <img style="max-width: 100%; max-height: 100%;" class="invoiceImage" id="" src=""
+                            alt="عکس فاکتور">
+                    </div>
+                    <div class="d-flex justify-content-around p-2 text-lg text-dark">
+                        <div>
+                            مبلغ خرید: <span class="text-success invoice-price monyInputSpan"></span> ریال
+                        </div>
+                        <div>
+                            شماره فاکتور: <span class="text-success invoice-code-number"></span>
+                        </div>
+                    </div>
                     <div class="d-flex justify-content-around">
                         <input type="button" class="btn btn-success validationValidateButton" value="تأیید اعتبار" />
                         <input type="button" data-action=""
                             class="btn
-                            btn-danger invoiceRejectButton" value="رد اعتبار" />
+                            btn-warning invoiceRejectButton" value="رد اعتبار" />
                     </div>
                     <input type="hidden" id="selectedInvoice">
                 </div>
