@@ -488,7 +488,6 @@ $(document).ready(function () {
             type: 'POST',
             data: formData,
             success: function (data) {
-                localStorage.setItem('commentState', 'false');
                 if (data == 'success') {
                     Swal.fire({
                         text: 'نظر شما با موفقیت ثبت شد و پس از تایید مدیر نمایش داده خواهد شد.',
@@ -500,7 +499,9 @@ $(document).ready(function () {
                             // dailyCode();
                             $('.rollDice-alert-message').addClass('d-none');
                             $('#rollDiceModal').modal();
-                            // showGenerateDailyCode();
+                            showGenerateDailyCode();
+                            localStorage.setItem('rollDiceStat', 'false');
+                            localStorage.setItem('commentState', 'false');
                         }
                     });
                 } else {

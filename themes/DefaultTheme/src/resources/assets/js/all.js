@@ -17384,29 +17384,29 @@ function number_format(t) {
         var dailyExpirationDate = JSON.parse(
             localStorage.getItem('LotteryDailyData')
         );
-
         if (dailyExpirationDate && dailyExpirationDate.expirationDate) {
+            console.log(dailyExpirationDate.expirationDate, today);
             if (today != dailyExpirationDate.expirationDate) {
                 localStorage.removeItem('LotteryDailyData');
                 localStorage.removeItem('commentState');
                 localStorage.removeItem('codeGenerated');
-                localStorage.removeItem('rollDiceStat');
+                localStorage.removeItem('counter');
             } else {
-                showGenerateDailyCode();
+                CommentForDailyCode();
             }
         }
-        let counter2 = localStorage.getItem('counter');
-        let rollDiceStat = localStorage.getItem('rollDiceStat');
-        console.log(counter2, rollDiceStat);
-        if (counter2 >= 2 && rollDiceStat == 'true') {
+        if (localStorage.getItem('commentState') == 'false') {
+            console.log('false');
+            showGenerateDailyCode();
+        } else if (localStorage.getItem('commentState') == 'true') {
+            console.log('true');
             $('#roll').addClass('d-none');
             $('#palay-again').removeClass('d-none');
-            $('.rollDice-alert-message').removeClass('d-none');
+        } else if (localStorage.getItem('commentState') == 'done') {
             showGenerateDailyCode();
-        }
-
-        if (localStorage.getItem('commentState') == 'false') {
-            showGenerateDailyCode();
+            $('.getCode-button').removeClass('d-none');
+            $('#roll').prop('disabled', true);
+            console.log('done');
         }
         $('.moneyInputSpan').each(function () {
             var input = $(this).text();
@@ -17434,19 +17434,6 @@ function number_format(t) {
             $(this).val(formattedNumber);
         });
     }),
-    // $('.moneyInput').on('input', function () {
-    //     var input = $(this).val();
-
-    //     // Remove any non-digit characters (e.g., commas)
-    //     var digits = input.replace(/\D/g, '');
-
-    //     // Format the number with commas
-    //     var formattedNumber = addCommas(digits);
-
-    //     // Update the input field with the formatted number
-    //     $(this).val(formattedNumber);
-    // });
-
     $.ajaxSetup({
         error: function (t) {
             if ((reloadCaptcha(), 403 != t.status))
@@ -17740,19 +17727,15 @@ $(document).on('click', '.websiteDailyCodeGeneratorButton', function () {
 $(document).on('click', '#palay-again', function () {
     localStorage.setItem('counter', counter);
     lotteryDailyCodeStat = false;
-    CommentForDailyCode();
+    // CommentForDailyCode();
     localStorage.setItem('commentState', 'true');
-    localStorage.setItem('rollDiceStat', 'true');
+
     window.location.href = '/all';
 });
 
 function CommentForDailyCode() {
-    // score = 0;
-    // counter++ ;
     $('#palay-again').addClass('d-none');
     $('#roll').removeClass('d-none');
-    // $('.roll-span1').text(score);
-    $('.getCode-button').prop('disabled', true);
 }
 
 function rollDice() {
@@ -17764,6 +17747,7 @@ function rollDice() {
         diceOne = 5;
         diceTwo = 5;
         diceThree = 5;
+        localStorage.setItem('commentState', 'done');
     } else {
         diceOne = Math.floor(Math.random() * 6 + 1);
         diceTwo = Math.floor(Math.random() * 6 + 1);
@@ -17792,17 +17776,18 @@ function rollDice() {
 elComeOut.onclick = function () {
     counter++;
     rollDice();
-    if (counter >= 2) {
+
+    if (diceOne == 5 && diceTwo == 5 && diceThree == 5) {
+        setTimeout(() => {
+            $('.getCode-button').removeClass('d-none');
+            showGenerateDailyCode();
+            $('#roll').prop('disabled', true);
+        }, 5000);
+    } else if (counter >= 2) {
         setTimeout(() => {
             $('#roll').addClass('d-none');
             $('#palay-again').removeClass('d-none');
             $('.rollDice-alert-message').removeClass('d-none');
-        }, 5000);
-    }
-
-    if (diceOne == 5 && diceTwo == 5 && diceThree == 5) {
-        setTimeout(() => {
-            showGenerateDailyCode();
         }, 5000);
     }
 };
@@ -17813,9 +17798,8 @@ $(document).on('click', '.getCode-button', function () {
 });
 
 function showGenerateDailyCode() {
-    $('.getCode-button').prop('disabled', false);
-    $('.getCode-button').removeClass('d-none');
-    $('#roll').prop('disabled', true);
+    $('#roll').removeClass('d-none');
+    $('#palay-again').addClass('d-none');
 }
 
 $('.codeCopyBtn').on('click', function () {
@@ -17869,6 +17853,7 @@ function dailyCode() {
     let concatenatedNumber = '';
     $('.codeCopyBtn').addClass('d-none');
     // generatRandomNumber();
+    console.log('log');
 
     function displayCharacters() {
         for (let i = 0; i < RealNumber.length; i++) {
@@ -17882,7 +17867,6 @@ function dailyCode() {
     // Call the function to start displaying characters
     if (codeGenerated == 'true') {
         $('#RealNumber').text(RealNumber);
-        $('.codeCopyBtn').addClass('d-none');
         $('.codeCopyBtn').removeClass('d-none');
     } else {
         generatRandomNumber();
@@ -17961,10 +17945,6 @@ $('#lottery-invoice-code-button').on('click', function () {
         processData: false, // Set processData to false for file uploads
         success: function (data) {
             $.unblockUI();
-            localStorage.setItem(
-                'LotteryDailyData',
-                JSON.stringify(LotteryDailyData)
-            );
             if (data.state === 'fail') {
                 // Check for 'state' instead of 'status'
                 Swal.fire({
