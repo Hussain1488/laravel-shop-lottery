@@ -211,15 +211,25 @@ class lotteryController extends Controller
             })
             ->addColumn('insta', function ($query) {
                 return $query->insta;
+            })->filterColumn('insta', function ($query, $keyword) {
+                $query->where('insta', 'like', $keyword . '%');
             })
             ->addColumn('rubika', function ($query) {
                 return $query->rubika;
+            })->filterColumn('rubika', function ($query, $keyword) {
+                $query->where('rubika', 'like', $keyword . '%');
             })
             ->addColumn('site', function ($query) {
                 return $query->site;
-            })->addColumn('eitaa', function ($query) {
+            })->filterColumn('site', function ($query, $keyword) {
+                $query->where('site', 'like', $keyword . '%');
+            })
+            ->addColumn('eitaa', function ($query) {
                 return $query->eitaa;
-            })->make(true);
+            })->filterColumn('eitaa', function ($query, $keyword) {
+                $query->where('eitaa', 'like', $keyword . '%');
+            })
+            ->make(true);
     }
     public function generateCode()
     {
