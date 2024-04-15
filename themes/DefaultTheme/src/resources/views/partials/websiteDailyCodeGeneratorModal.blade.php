@@ -5,7 +5,7 @@
             <div class="modal-header d-flex justify-content-center m-3"
                 style="border-radius: 5px; background-color:rgba(128, 228, 141, 0.5)">
                 <h4 class="modal-title">
-                    تولید کد روزانه بلیط قرعه کشی
+                    تولید بلیط قرعه کشی
                 </h4>
             </div>
             <hr />
@@ -34,7 +34,5 @@
 </div>
 
 @push('scripts')
-    <script>
-        
-    </script>
+    <script></script>
 @endpush
