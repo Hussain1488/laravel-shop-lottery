@@ -86,7 +86,15 @@
 
                                                         <select class="form-control user_select2" id="user_select"
                                                             name="user_id">
-                                                            
+                                                            {{-- <option value="0">کاربر را انتخاب کنید</option> --}}
+                                                            {{-- @foreach ($users as $item)
+                                                                <option data-name="{{ $item->first_name }}"
+                                                                    data-lastname="{{ $item->last_name }}"
+                                                                    creadit_attr="{{ $item->purchasecredit }}"
+                                                                    value="{{ $item->id }}">
+                                                                    {{ $item->username }}
+                                                                </option>
+                                                            @endforeach --}}
                                                         </select>
 
                                                         @error('user_id')
@@ -131,12 +139,13 @@
                                                         نقدی یا اقساط
                                                     </h5>
                                                 </div>
-                                                <div class="col-md-6 col-12">
+                                                <div class="col-md-6 col-12 ">
                                                     <div class="form-group">
                                                         <select id="cash_status" type="text" class="form-control "
                                                             name="typeofpayment">
                                                             <option value="cash">نقدی</option>
-                                                            <option value="installment">اقساط</option>
+                                                            <option value="monthly_installment">اقساط ماهانه</option>
+                                                            <option value="weekly_installment">اقساط هفته ای</option>
                                                         </select>
                                                         @error('typeofpayment')
                                                             <span class="text-danger">
@@ -146,7 +155,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row mt-1">
+                                            <div class="row mt-1 monthly_instalment">
                                                 <div class="col-md-6 col-12">
                                                     <h5>
                                                         تعداد اقساط
@@ -155,8 +164,8 @@
                                                 <div class="col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label>تعداد اقساط را انتخاب نمایید</label>
-                                                        <select disabled id="payment" type="text" class="form-control"
-                                                            name="numberofinstallments">
+                                                        <select disabled id="monthly_payment" type="text"
+                                                            class="form-control" name="numberofinstallments">
                                                             <option id="one_month" selected value="1" selected>۱ ماه
                                                             </option>
                                                             <option {{ old('numberofinstallments') == 2 ? 'selected' : '' }}
@@ -187,13 +196,46 @@
                                                                 value="14">۱۴ ماه</option>
                                                             <option {{ old('numberofinstallments') == 15 ? 'selected' : '' }}
                                                                 value="15">۱۵ ماه</option>
-                                                            <option {{ old('numberofinstallments') == 16 ? 'selected' : '' }}
-                                                                value="16">۱۶ ماه</option>
-                                                            <option {{ old('numberofinstallments') == 17 ? 'selected' : '' }}
-                                                                value="17">۱۷ ماه</option>
-                                                            <option {{ old('numberofinstallments') == 18 ? 'selected' : '' }}
-                                                                value="18">۱۸ ماه</option>
-
+                                                        </select>
+                                                        @error('numberofinstallments')
+                                                            <span class="text-danger">
+                                                                {{ $message }}
+                                                            </span>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1 weekly_instalment">
+                                                <div class="col-md-6 col-12">
+                                                    <h5>
+                                                        تعداد اقساط
+                                                    </h5>
+                                                </div>
+                                                <div class="col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label>تعداد اقساط را انتخاب نمایید</label>
+                                                        <select disabled id="weekly_payment" type="text"
+                                                            class="form-control" name="numberofinstallments">
+                                                            <option id="one_month" selected value="5" selected>۵ هفته
+                                                            </option>
+                                                            <option {{ old('numberofinstallments') == 10 ? 'selected' : '' }}
+                                                                value="10">۱۰ هفته</option>
+                                                            <option {{ old('numberofinstallments') == 15 ? 'selected' : '' }}
+                                                                value="15">۱۵ هفته</option>
+                                                            <option {{ old('numberofinstallments') == 20 ? 'selected' : '' }}
+                                                                value="20">۲۰ هفته</option>
+                                                            <option {{ old('numberofinstallments') == 25 ? 'selected' : '' }}
+                                                                value="25">۲۵ هفته</option>
+                                                            <option {{ old('numberofinstallments') == 30 ? 'selected' : '' }}
+                                                                value="30">۳۰ هفته</option>
+                                                            <option {{ old('numberofinstallments') == 35 ? 'selected' : '' }}
+                                                                value="35">۳۵ هفته</option>
+                                                            <option {{ old('numberofinstallments') == 40 ? 'selected' : '' }}
+                                                                value="40">۴۰ هفته</option>
+                                                            <option {{ old('numberofinstallments') == 45 ? 'selected' : '' }}
+                                                                value="45">۴۵ هفته</option>
+                                                            <option {{ old('numberofinstallments') == 50 ? 'selected' : '' }}
+                                                                value="50">۵۰ هفته</option>
                                                         </select>
                                                         @error('numberofinstallments')
                                                             <span class="text-danger">
@@ -227,7 +269,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row mt-1">
+                                            <div class="row mt-1 installment_fileds_container">
                                                 <div class="col-md-6 col-12">
                                                     <h5>
                                                         مبلغ هر قسط
