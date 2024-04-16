@@ -92,9 +92,12 @@ class LoginWithCodeController extends Controller
         if (!$refral_user) {
             return response()->json(['status' => 'fail', 'message' => 'شماره معرف شما یافت نشد، لطفا دوباره امتهان کنید!']);
         }
-        Log::info($request->refral_number);
+        // Log::info($request->refral_number);
         try {
             $user = User::find(Auth::user()->id);
+            if ($user->referral_id) {
+                return response()->json(['status' => 'fail', 'message' => 'شما قبلا معرف داشته اید، و برای بار دوم نمیتوانید از شماره معرف استفاده کنید!']);
+            }
             if ($refral_user == $user) {
                 return response()->json(['status' => 'fail', 'message' => 'شما نمیتوانید اط شماره خودتان به عنوان معرف استفاده کنید!']);
             } else if ($refral_user->wallet) {
@@ -112,9 +115,13 @@ class LoginWithCodeController extends Controller
                         'status'      => 'success' // Assuming the recharge is successful
                     ]);
 
+                    $user->referral_id = $refral_user->id;
+
+
                     $user_wallet = $user->wallet; // Access the wallet model associated with the current user
                     $user_wallet->balance += 200000;
                     $user_wallet->save(); // Save the changes to the current user's wallet balance
+                    $user->save(); // Save the changes to the current user's wallet balance
 
                     $user_history = $user_wallet->histories()->create([
                         'type'        => 'deposit',
