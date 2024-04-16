@@ -93,7 +93,17 @@ var startDatePicker = $('#start_date_picker').pDatepicker({
         }
     },
     initialValue: false,
-    altField: '#start_date'
+    altField: '#start_date',
+    altFormat: 'YYYY-MM-DD HH:mm:ss',
+
+    onSelect: function (unixDate) {
+        var date = $('#start_date').val();
+        $('#start_date').val(date.toEnglishDigit());
+    },
+    onSet: function (unixDate) {
+        var date = $('#start_date').val();
+        $('#start_date').val(date.toEnglishDigit());
+    }
 });
 
 var start_date = $('#start_date_picker').val();
