@@ -1,4 +1,8 @@
+// const {isTypedArray} = require('lodash');
 $(document).ready(function () {
+    $('.installment_fileds_container').hide();
+    $('.monthly_instalment').hide();
+    $('.weekly_instalment').hide();
     var userSelect = $('.user_select2');
 
     userSelect.select2({
@@ -101,12 +105,25 @@ $(document).ready(function () {
     $('#cash_status').on('change', function () {
         var cash_status = $('#cash_status').val();
 
-        if (cash_status == 'installment') {
-            $('#payment').prop('disabled', false);
-            updatePayment();
+        if (cash_status == 'monthly_installment') {
+            $('.installment_fileds_container').show(500);
+            $('.monthly_instalment').show(500);
+            $('.weekly_instalment').hide(500);
+            $('#monthly_payment').prop('disabled', false);
+            updatePaymentMonthly();
+        } else if (cash_status == 'weekly_installment') {
+            $('.installment_fileds_container').show(500);
+            $('.monthly_instalment').hide(500);
+            $('.weekly_instalment').show(500);
+            $('#weekly_payment').prop('disabled', false);
+            updatePaymentWeekly();
+            // alert('weekly');
         } else {
-            $('#payment').prop('disabled', true);
-            $('#payment').val($('#payment option:first').val());
+            $('.installment_fileds_container').hide(500);
+            $('.monthly_instalment').hide(500);
+            $('.weekly_instalment').hide(500);
+            $('#payment_method').prop('disabled', true);
+            $('#payment_method').val($('#payment_method option:first').val());
             var payment1 = $('#main_price').val();
             // console.log(payment1);
             $('#prepayment').val(payment1);
@@ -127,53 +144,56 @@ $(document).ready(function () {
         } else {
             $('.price_limit_error').text('');
         }
-        if ($('#cash_status').val() == 'installment') {
-            updatePayment();
+        if ($('#cash_status').val() == 'monthly_installment') {
+            updatePaymentMonthly();
+        } else if ($('#cash_status').val() == 'weekly_installment') {
+            updatePaymentWeekly();
         } else {
             let payment = $('#main_price').val();
             $('#prepayment').val(payment);
             $('#each_pay').val(0);
         }
     });
-    $('#payment').on('change', function () {
-        if ($('#cash_status').val() == 'installment') {
-            updatePayment();
+    $('#monthly_payment').on('change', function () {
+        if ($('#cash_status').val() == 'monthly_installment') {
+            updatePaymentMonthly();
         }
     });
-
-    function updatePayment() {
+    $('#weekly_payment').on('change', function () {
+        if ($('#cash_status').val() == 'weekly_installment') {
+            updatePaymentWeekly();
+        }
+    });
+    function updatePaymentMonthly() {
         let payment = parseFloat($('#main_price').val().replace(/,/g, ''));
-        let installment = parseFloat($('#payment').val());
-        let total_pay = payment + payment * (30 / 100);
+        let installment = parseFloat($('#monthly_payment').val());
+        let total_pay = payment + payment * ((installment * 3) / 100);
         let prepayment = total_pay * 0.3;
         let rest_pay = total_pay - prepayment;
-        let each_pay = Math.round(rest_pay / $('#payment').val());
+        let each_pay = Math.round(rest_pay / $('#monthly_payment').val());
         $('#prepayment').val(addCommas(prepayment));
         $('#each_pay').val(addCommas(each_pay));
-        // console.log(total_pay);
     }
-
+    function updatePaymentWeekly() {
+        let payment = parseFloat($('#main_price').val().replace(/,/g, ''));
+        let installment = parseFloat($('#weekly_payment').val());
+        let total_pay = payment + payment * ((installment * 0.9) / 100);
+        let prepayment = total_pay * 0.3;
+        let rest_pay = total_pay - prepayment;
+        let each_pay = Math.round(rest_pay / $('#weekly_payment').val());
+        $('#prepayment').val(addCommas(prepayment));
+        $('#each_pay').val(addCommas(each_pay));
+    }
     $('.custom-file-input').on('change', function () {
         var fileName = $(this).val();
         $(this).next('.custom-file-label').html(fileName);
     });
-
-    $('#payment');
-
     $('.moneyInput').on('input', function () {
         var input = $(this).val();
-
-        // Remove any non-digit characters (e.g., commas)
         var digits = input.replace(/\D/g, '');
-
-        // Format the number with commas
         var formattedNumber = addCommas(digits);
-
-        // Update the input field with the formatted number
         $(this).val(formattedNumber);
     });
-
-    // Function to add commas as a thousands separator
     function addCommas(nStr) {
         nStr += '';
         var x = nStr.split('.');
@@ -228,7 +248,7 @@ $(document).ready(function () {
         var main_price = $('#main_price').val().replace(/,/g, '');
         var store_creadit = parseFloat($('#store_creadit').val());
         let toDay = new Date();
-        console.log(store_creadit, main_price, store_creadit >= main_price);
+        console.log(store_creadit, main_price, toDay <= end_date);
         if (toDay <= end_date) {
             if (main_price == '' || isNaN(main_price) || main_price <= 0) {
                 // console.log('this is NaN');
@@ -248,20 +268,9 @@ $(document).ready(function () {
                             $('#user-create-form').submit();
                         }
                     } else {
-                        // If the condition is not met, show a confirmation dialog
-                        // $('#modal_body').html(
-                        //     '<p>' +
-                        //         'مقدار قیمت اصلی نباید از اعتبار خریدار بیشتر باشد.' +
-                        //         '<br />' +
-                        //         'لطفا اصلاح کنید بعد تآیید و ارسال کنید.' +
-                        //         '</p>'
-                        // );
-                        // $('#myModal').modal();
                         toastr.warning(
                             'مقدار قیمت اصلی نباید از اعتبار خریدار بیشتر باشد.'
                         );
-
-                        // Close the popup when the close button is clicked
                     }
                 } else {
                     $('#store_creadit2').text(addCommas(store_creadit));
@@ -272,12 +281,6 @@ $(document).ready(function () {
             toastr.warning(
                 'مهلت اعتبار فروشگاه شما به اتمام رسیده است و شما نمیتوانید فروشی انجام دهید!'
             );
-            // $('#modal_body').html(
-            //     '<p>' +
-            //         'مهلت اعتبار فروشگاه شما به اتمام رسیده است و شما نمیتوانید قسطی ایجاد کنید' +
-            //         '</p>'
-            // );
-            // $('#myModal').modal();
         }
     });
     $('#User_selected').change(function () {
@@ -335,8 +338,8 @@ $('#clearing_button').on('click', function () {
             } else {
                 $('.modal-body').html(
                     '<p>' +
-                        'شماره ثبت شبا درست نمیباشد،‌لطفا اصلاح کرده دوباره امتهان کنید.' +
-                        '</p>'
+                    'شماره ثبت شبا درست نمیباشد،‌لطفا اصلاح کرده دوباره امتهان کنید.' +
+                    '</p>'
                 );
                 $('#myModal').modal();
             }
@@ -345,13 +348,13 @@ $('#clearing_button').on('click', function () {
         let a = $('#total_amount').val();
         $('.modal-body').html(
             '<p>' +
-                'شما نمیتوانید از موجودی قابل برداشت خود بیشتر درخواست بدهید.' +
-                '<br />' +
-                ' موجودی قابل برداشت شما فعلا:' +
-                '<span class="text-success" id="total_amount_text" >' +
-                '</span> ' +
-                ' ریال میباشد.' +
-                '</p>'
+            'شما نمیتوانید از موجودی قابل برداشت خود بیشتر درخواست بدهید.' +
+            '<br />' +
+            ' موجودی قابل برداشت شما فعلا:' +
+            '<span class="text-success" id="total_amount_text" >' +
+            '</span> ' +
+            ' ریال میباشد.' +
+            '</p>'
         );
         $('#total_amount_text').text(a);
         $('#myModal').modal();
@@ -383,15 +386,9 @@ $('.imageInput').on('change', function (e) {
     if (files && files.length > 0) {
         // Clear existing images
         $('.imgContainer').empty();
-
-        // Loop through each selected file
         for (var i = 0; i < files.length; i++) {
-            // Check if the file is an image
             if (files[i].type.startsWith('image/')) {
-                // If it's an image, create a FileReader to display the image
                 var reader = new FileReader();
-
-                // Set the callback function to display the image after reading
                 reader.onload = function (event) {
                     // Create an image element
                     var image = $('<img>')
@@ -403,14 +400,11 @@ $('.imageInput').on('change', function (e) {
                             'box-shadow': '0 0 5px rgba(0, 0, 0, 0.3)',
                             display: 'inline'
                         });
-
-                    // Append the image to the container
                     $('.imgContainer').append(image);
                 };
 
                 reader.readAsDataURL(files[i]);
             } else {
-                // If it's not an image, just display the file name
                 var fileName = $('<span>').text(files[i].name).css({
                     border: '2px solid #ccc',
                     padding: '5px',
@@ -418,8 +412,6 @@ $('.imageInput').on('change', function (e) {
                     'box-shadow': '0 0 5px rgba(0, 0, 0, 0.3)',
                     display: 'inline-block'
                 });
-
-                // Append the file name to the container
                 $('.imgContainer').append(fileName);
             }
         }
