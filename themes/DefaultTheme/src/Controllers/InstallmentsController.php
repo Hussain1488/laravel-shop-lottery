@@ -108,18 +108,34 @@ class InstallmentsController extends Controller
                 $Insta_dateils = new installmentdetails();
 
                 $jalali_date_now = carbon::now();
+
                 // $new_date = $jalali_date_now->addMonths(1)->format('Y-m-d');
                 if ($installments->numberofinstallments > 0) {
-                    for ($i = 0; $i < $installments->numberofinstallments; $i++) {
-                        $dutedate = $jalali_date_now->addMonths(1)->format('Y-m-d');
-                        $Insta_dateils->create([
-                            'state' => $i == 0 ? '1' : '0',
-                            'installment_id' => $installments->id,
-                            'installmentnumber' => $i + 1,
-                            'installmentprice' => $installments->amounteachinstallment,
-                            'paymentstatus' => 0,
-                            'duedate' => $dutedate,
-                        ]);
+                    if ($installments->typeofpayment == 'monthly_installment') {
+
+                        for ($i = 0; $i < $installments->numberofinstallments; $i++) {
+                            $dutedate = $jalali_date_now->addMonths(1)->format('Y-m-d');
+                            $Insta_dateils->create([
+                                'state' => $i == 0 ? '1' : '0',
+                                'installment_id' => $installments->id,
+                                'installmentnumber' => $i + 1,
+                                'installmentprice' => $installments->amounteachinstallment,
+                                'paymentstatus' => 0,
+                                'duedate' => $dutedate,
+                            ]);
+                        }
+                    } else if ($installments->typeofpayment == 'weekly_installment') {
+                        for ($i = 0; $i < $installments->numberofinstallments; $i++) {
+                            $dutedate = $jalali_date_now->addWeeks(1)->format('Y-m-d');
+                            $Insta_dateils->create([
+                                'state' => $i == 0 ? '1' : '0',
+                                'installment_id' => $installments->id,
+                                'installmentnumber' => $i + 1,
+                                'installmentprice' => $installments->amounteachinstallment,
+                                'paymentstatus' => 0,
+                                'duedate' => $dutedate,
+                            ]);
+                        }
                     }
                     $message = 'پیش پرداخت شما با موفقیت پرداخت شده و اقساط شما ایجاد شد.';
                 } else {
