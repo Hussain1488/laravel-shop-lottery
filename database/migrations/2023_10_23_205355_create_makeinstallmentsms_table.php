@@ -19,7 +19,7 @@ class CreateMakeinstallmentsmsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->boolean('status');
             $table->integer('Creditamount');
-            $table->enum('typeofpayment', ['cash', 'installment']);
+            $table->enum('typeofpayment', ['cash', 'monthly_installment', 'weekly_installment']);
             $table->string('numberofinstallments');
             $table->string('prepaidamount');
             $table->string('amounteachinstallment');
