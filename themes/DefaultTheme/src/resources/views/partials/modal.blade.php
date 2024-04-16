@@ -96,20 +96,7 @@
                                     {{ $message }}
                                 </span>
                             @enderror
-                            {{-- <div class="row d-flex justify-content-center"> --}}
-                            {{-- <div class="col-lg-8">
-                                    <div class="form-group">
-                                        <div class="form-row-title">
-                                            <h6 class="">
-                                                مبلغ فاکتور
-                                            </h6>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <input type="text" class="form-control  pr-2  moneyInput" name="amount">
-                                        </div> ریال
-
-                                    </div>
-                                </div> --}}
+                            
                             <div class="row d-flex justify-content-center">
                                 <div class="col-lg-8">
                                     <div class="form-group">
