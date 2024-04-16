@@ -69,31 +69,26 @@
                                             $counter = 1;
                                         @endphp
                                         <tbody>
-                                            @if (!$cornjobs->count() > 0)
-                                                <div class="m-2 alert alert-warning">
-                                                    چیزی برای نمایش وجود ندارد!
-                                                </div>
-                                            @else
-                                                @foreach ($cornjobs as $key)
-                                                    <tr>
-                                                        <td>
-                                                            {{ $counter++ }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $key->name }}
-                                                        </td>
-                                                        <td>
-                                                            {{ $key->description }}
-                                                        </td>
-                                                        <td>
-                                                            {{ jdate($key->created_at)->format('d/M/Y') }}
-                                                            <br>
-                                                            {{ $key->created_at->format('H:i:s') }}
 
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
+                                            @foreach ($cornjobs as $key)
+                                                <tr>
+                                                    <td>
+                                                        {{ $counter++ }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $key->name }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $key->description }}
+                                                    </td>
+                                                    <td>
+                                                        {{ jdate($key->created_at)->format('d/M/Y') }}
+                                                        <br>
+                                                        {{ $key->created_at->format('H:i:s') }}
+
+                                                    </td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
 
