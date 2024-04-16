@@ -85,8 +85,13 @@ class CooperationSalesController extends Controller
         if ($request->typeofpayment == 'cash') {
             $prepaidamount = $Creditamount;
             $amounteachinstallment = 0;
-        } else {
-            $total_pay = $Creditamount + $Creditamount * (30 / 100);
+        } else if ($request->typeofpayment == 'monthly_installment') {
+            $total_pay = $Creditamount + $Creditamount * (($request->numberofinstallments * 3) / 100);
+            $prepaidamount = $total_pay * 0.3;
+            $rest_pay = $total_pay - $prepaidamount;
+            $amounteachinstallment = intval($rest_pay / $request->numberofinstallments);
+        } else if ($request->typeofpayment == 'weekly_installment') {
+            $total_pay = $Creditamount + $Creditamount * (($request->numberofinstallments * 0.9) / 100);
             $prepaidamount = $total_pay * 0.3;
             $rest_pay = $total_pay - $prepaidamount;
             $amounteachinstallment = intval($rest_pay / $request->numberofinstallments);
