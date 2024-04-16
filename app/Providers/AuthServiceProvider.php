@@ -33,22 +33,6 @@ class AuthServiceProvider extends ServiceProvider
                 });
             }
         }
-
-        Gate::define('lottery', function ($user) {
-            return $user->level == 'creator';
-        });
-        Gate::define('lottery.index', function ($user) {
-            return $user->level == 'creator';
-        });
-        Gate::define('lottery.dailyCode', function ($user) {
-            return $user->level == 'creator';
-        });
-        Gate::define('lottery.invoicesIndex', function ($user) {
-            return $user->level == 'creator';
-        });
-        Gate::define('lottery.winners', function ($user) {
-            return $user->level == 'creator';
-        });
     }
 
     protected function getPermissions()
