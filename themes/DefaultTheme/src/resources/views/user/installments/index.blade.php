@@ -125,7 +125,7 @@
                                                                     <div class="row text-center"
                                                                         style="flex-direction: column;">
                                                                         <h5>
-                                                                            {{ $key->user->username }}
+                                                                            فروشگاه: {{ $key->store->nameofstore }}
                                                                         </h5>
                                                                     </div>
 
@@ -227,7 +227,8 @@
 
                                                                         <div class="row ">
                                                                             <div class="col m-2">
-                                                                                قسط شماره
+                                                                                قسط
+                                                                                {{ $key->installments->typeofpayment == 'weekly_installment' ? 'هفته' : 'ماه' }}
                                                                                 {{ $key->installmentnumber }}
                                                                                 به
                                                                                 سر
@@ -306,7 +307,8 @@
 
 
                                                                     <div class="row m-2">
-                                                                        قسط شماره
+                                                                        قسط
+                                                                        {{ $value->installments->typeofpayment == 'weekly_installment' ? 'هفته' : 'ماه' }}
                                                                         {{ $value->installmentnumber }}
                                                                         به
                                                                         سر
@@ -474,11 +476,11 @@
                         <input name="mobile" type="hidden" value="{{ $user->username }}">
                         <div class="email-otp-container d-flex justify-center">
                             <!-- Six input fields for OTP digits -->
-                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
-                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
-                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
-                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
-                            <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
+                            <input type="number" class="email-otp-input" pattern="\d" maxlength="1">
+                            <input type="number" class="email-otp-input" pattern="\d" maxlength="1">
+                            <input type="number" class="email-otp-input" pattern="\d" maxlength="1">
+                            <input type="number" class="email-otp-input" pattern="\d" maxlength="1">
+                            <input type="number" class="email-otp-input" pattern="\d" maxlength="1">
 
                         </div>
                         <div class="numbers-verify form-content form-content1">
@@ -497,7 +499,7 @@
                             <button data-url="{{ route('front.wallet.sentCode') }}" type="button" id="sendCode1"
                                 class="btn-primary-cm btn-with-icon mx-auto w-100">
                                 <i class="mdi mdi-check"></i>
-                                {{ trans('front::messages.auth.confirm-mobile-number') }}
+                                تأیید پرداخت
                             </button>
                         </div>
                     </form>

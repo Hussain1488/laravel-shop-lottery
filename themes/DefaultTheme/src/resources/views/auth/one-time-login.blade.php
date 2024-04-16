@@ -35,11 +35,11 @@
                             <input name="mobile" type="hidden" value="{{ $user->username }}">
                             <div class="email-otp-container d-flex justify-center">
                                 <!-- Six input fields for OTP digits -->
-                                <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
-                                <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
-                                <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
-                                <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
-                                <input type="text" class="email-otp-input" pattern="\d" maxlength="1">
+                                <input type="number" class="email-otp-input" pattern="\d" maxlength="1">
+                                <input type="number" class="email-otp-input" pattern="\d" maxlength="1">
+                                <input type="number" class="email-otp-input" pattern="\d" maxlength="1">
+                                <input type="number" class="email-otp-input" pattern="\d" maxlength="1">
+                                <input type="number" class="email-otp-input" pattern="\d" maxlength="1">
 
                             </div>
                             <div class="numbers-verify form-content form-content1">
