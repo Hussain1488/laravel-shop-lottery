@@ -85,7 +85,7 @@
                                                 </td>
                                                 <td>
                                                     <span class="transaction_datetime">
-                                                        {{ jdate($key->created_at)->format('d/M/Y') }}
+                                                        {{ jdate($key->created_at)->format('Y-m-d') }}
                                                         <br>
                                                         {{ jdate($key->created_at)->format('H:i:s') }}
                                                     </span>
@@ -125,7 +125,7 @@
                                             </div>
                                             <div class="col">
                                                 <span class="transaction_datetime">
-                                                    {{ jdate($key->created_at)->format('d/M/Y') }}
+                                                    {{ jdate($key->created_at)->format('Y-m-d') }}
                                                     <br>
                                                     {{ jdate($key->created_at)->format('H:i:s') }}
                                                 </span>
@@ -225,8 +225,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">درخواست تسویه حساب به مبلغ:<span class="text-success"
-                            id="deposit_amount_show"></span>ریال
+                    <h4 class="modal-title">درخواست شارژ کیف پول
                     </h4>
                 </div>
                 <hr />
