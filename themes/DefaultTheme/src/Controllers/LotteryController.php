@@ -80,12 +80,12 @@ class LotteryController extends Controller
         $amount = str_replace(',', '', $request->amount);
         $numeric_amount = (float) $amount;
         if ($numeric_amount > 999999999) {
-            return response()->json(['state' => 'fail', 'message' => 'مبلغ وارده بیشتر از حد مجاز میباشد، لطفا اصلاح نموده دوباره بفرستید!']);
+            return response()->json(['state' => 'error', 'message' => 'مبلغ وارده بیشتر از حد مجاز میباشد، لطفا اصلاح نموده دوباره بفرستید!']);
         }
 
         // Check if the file has been successfully uploaded
         if (!$request->hasFile('invoice_img')) {
-            return response()->json(['state' => 'fail', 'message' => 'لطفا تصویر فاکتور را بارگذاری کنید.']);
+            return response()->json(['state' => 'error', 'message' => 'لطفا تصویر فاکتور را بارگذاری کنید.']);
         }
 
         // Move the uploaded file to the desired location
@@ -107,7 +107,7 @@ class LotteryController extends Controller
             ]);
             return response()->json(['state' => 'success', 'message' => 'اطلاعات فاکتور شما با موفقیت ثبت شد، بعد از تأیید کد قرعه کشی برای شما ایجاد میشود!']);
         } else {
-            return response()->json(['state' => 'fail', 'message' => 'شماره فاکتور وارد شده قبلا استفاده شده است!']);
+            return response()->json(['state' => 'error', 'message' => 'شماره فاکتور وارد شده قبلا استفاده شده است!']);
         }
     }
 }

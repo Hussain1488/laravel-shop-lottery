@@ -17905,7 +17905,8 @@ $('.lottery_code_button').on('click', function () {
 });
 $('#lottery-daily-code-button').on('click', function () {
     $('#general_modal').modal('hide');
-    var formData = $('#invoice_code_insert_form').serialize();
+    var formData = $('#daily_code_insert_form').serialize();
+    console.log(formData);
     $.blockUI(loading);
     $.ajax({
         url: $(this).attr('action'),
@@ -17914,7 +17915,7 @@ $('#lottery-daily-code-button').on('click', function () {
         success: function (data) {
             $.unblockUI();
             // $('#large_modal').modal();
-            if (data.status == 'fail') {
+            if (data.status == 'error') {
                 // toastr.warning(data.data);
                 Swal.fire({
                     text: data.data,
@@ -17924,7 +17925,11 @@ $('#lottery-daily-code-button').on('click', function () {
                 });
             } else {
                 Swal.fire({
-                    text: data.data,
+                    html:
+                        'کد قرعه کشی شما : ' +
+                        '<span class="badge badge-success">' +
+                        data.data +
+                        '</span> میباشد! شما میتوانید نتایج و کد قرعه کشی خود را در پروفایل خود مشاهده کنید!',
                     type: 'success',
                     showCancelButton: false,
                     confirmButtonText: 'باشه'
@@ -17945,7 +17950,7 @@ $('#lottery-invoice-code-button').on('click', function () {
         processData: false, // Set processData to false for file uploads
         success: function (data) {
             $.unblockUI();
-            if (data.state === 'fail') {
+            if (data.state === 'error') {
                 // Check for 'state' instead of 'status'
                 Swal.fire({
                     text: data.message,
