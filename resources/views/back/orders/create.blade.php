@@ -188,5 +188,5 @@
 
 @push('scripts')
     <script src="{{ asset('back/app-assets/plugins/ejs/ejs.min.js') }}"></script>
-    <script src="{{ asset('back/assets/js/pages/orders/create.js') }}?v=1"></script>
+    <script src="{{ asset('back/assets/js/pages/orders/create.js') }}?v=50"></script>
 @endpush

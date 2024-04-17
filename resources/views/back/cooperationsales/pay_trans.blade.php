@@ -302,5 +302,5 @@
     @push('scripts')
         <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}"></script>
 
-        <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
+        <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}?v=50"></script>
     @endpush

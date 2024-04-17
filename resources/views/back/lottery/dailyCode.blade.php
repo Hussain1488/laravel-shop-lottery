@@ -86,5 +86,5 @@
 ])
 @push('scripts')
     <script src="{{ asset('back/assets/datatable/datatables.min.js') }}"></script>
-    <script src="{{ asset('back/assets/js/pages/lottery/daily_code.js') }}"></script>
+    <script src="{{ asset('back/assets/js/pages/lottery/daily_code.js') }}?v=50"></script>
 @endpush

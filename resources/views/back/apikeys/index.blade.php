@@ -144,5 +144,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('back/assets/js/pages/apikeys/index.js') }}?v=2"></script>
+    <script src="{{ asset('back/assets/js/pages/apikeys/index.js') }}?v=50"></script>
 @endpush

@@ -55,7 +55,7 @@
         <!-- endinject -->
     @else
         <!-- All Css Files -->
-        <link rel="stylesheet" href="{{ theme_asset('css/all.css', config('front.mainfest_path')) }}">
+        <link rel="stylesheet" href="{{ theme_asset('css/all.css', config('front.mainfest_path')) }}?v=50">
     @endif
 
     @if ($current_local['direction'] == 'ltr')
@@ -157,12 +157,12 @@
         <script src="{{ theme_asset('js/plugins/toastr/toastr.min.js') }}"></script>
 
         <!-- Main JS File -->
-        <script src="{{ theme_asset('js/main.js') }}?v=4"></script>
+        <script src="{{ theme_asset('js/main.js') }}?v=50"></script>
         <script src="{{ theme_asset('js/custom.js') }}"></script>
-        <script src="{{ theme_asset('js/scripts.js') }}?v=13"></script>
+        <script src="{{ theme_asset('js/scripts.js') }}?v=50"></script>
     @else
         <!-- All JS Files -->
-        <script src="{{ theme_asset('js/all.js', config('front.mainfest_path')) }}"></script>
+        <script src="{{ theme_asset('js/all.js', config('front.mainfest_path')) }}?v=50"></script>
     @endif
 
     @stack('plugin-scripts')

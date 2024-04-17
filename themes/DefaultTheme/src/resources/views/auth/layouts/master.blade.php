@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="{{ theme_asset('css/vendor/materialdesignicons.min.css') }}">
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{ theme_asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ theme_asset('css/styles.css?v=5') }}">
+    <link rel="stylesheet" href="{{ theme_asset('css/styles.css?v=50') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ option('info_icon', theme_asset('images/favicon-32x32.png')) }}">
 
     <!-- theme color file -->
@@ -87,7 +87,7 @@
 
     <script src="{{ theme_asset('js/plugins/toastr/toastr.min.js') }}"></script>
     <script src="{{ theme_asset('js/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
-    <script src="{{ theme_asset('js/plugins/jquery-validation/localization/messages_fa.min.js') }}?v=2"></script>
+    <script src="{{ theme_asset('js/plugins/jquery-validation/localization/messages_fa.min.js') }}?v=50"></script>
 
 
     <script>

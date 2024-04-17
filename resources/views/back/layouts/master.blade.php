@@ -166,8 +166,8 @@
 
     @toastr_render
 
-    <script src="{{ asset('back/assets/js/helpers.js') }}?v=10"></script>
-    <script src="{{ asset('back/assets/js/scripts.js') }}?v=11"></script>
+    <script src="{{ asset('back/assets/js/helpers.js') }}?v=50"></script>
+    <script src="{{ asset('back/assets/js/scripts.js') }}?v=50"></script>
     <!-- END: Theme JS-->
 
     <script>

@@ -1,7 +1,7 @@
 @extends('back.layouts.printable')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('back/assets/css/pages/orders/print.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('back/assets/css/pages/orders/print.css') }}?v=50">
     <style>
         @media print {
             @page {

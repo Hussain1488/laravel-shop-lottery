@@ -14,7 +14,7 @@
     </title>
 
     <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/css-rtl/bootstrap.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('back/assets/css/print.css') }}?v=2">
+    <link rel="stylesheet" type="text/css" href="{{ asset('back/assets/css/print.css') }}?v=50">
     <link rel="stylesheet" href="{{ asset('back/assets/fonts/vazir/style.css') }}">
 
     @stack('styles')

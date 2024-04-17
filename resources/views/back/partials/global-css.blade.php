@@ -1,6 +1,6 @@
 <!-- BEGIN: Custom CSS-->
 <link rel="stylesheet" type="text/css" href="{{ asset('back/app-assets/css-rtl/custom-rtl.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('back/assets/css/style-rtl.css') }}?v=11">
+<link rel="stylesheet" type="text/css" href="{{ asset('back/assets/css/style-rtl.css') }}?v=50">
 <!-- END: Custom CSS-->
 
 <!-- font css file -->

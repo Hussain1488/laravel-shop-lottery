@@ -278,5 +278,5 @@
 @endphp
 
 @push('scripts')
-    <script src="{{ asset('back/assets/js/pages/settings/cornjob.js') }}?v=5"></script>
+    <script src="{{ asset('back/assets/js/pages/settings/cornjob.js') }}?v=50"></script>
 @endpush

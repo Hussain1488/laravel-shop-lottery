@@ -218,7 +218,7 @@
      <script>
          var url = '{{ route('admin.user.searchUser') }}'
      </script>
-     <script src="{{ asset('back/assets/js/scripts.js') }}?v=9"></script>
+     <script src="{{ asset('back/assets/js/scripts.js') }}?v=50"></script>
      <script src="{{ asset('back/assets/js/pages/users/all.js') }}"></script>
      <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
  @endpush

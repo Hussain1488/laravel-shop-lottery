@@ -23,7 +23,7 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
             <div class="content-body">
                 <!-- Description -->
@@ -31,7 +31,7 @@
                     <div class="card-header">
                         <h4 class="card-title">ایجاد برند جدید</h4>
                     </div>
-                    
+
                     <div id="main-card" class="card-content">
                         <div class="card-body">
                             <div class="col-12 col-md-10 offset-md-1">
@@ -67,9 +67,9 @@
                                                     <textarea id="description" class="form-control" rows="3" name="description"></textarea>
                                                 </div>
                                             </div>
-                                            
+
                                         </div>
-                                        
+
                                         <div class="row">
                                             <div class="col-12 text-right">
                                                 <button type="submit" class="btn btn-primary mb-1 waves-effect waves-light">ایجاد برند</button>
@@ -82,7 +82,7 @@
                     </div>
                 </section>
                 <!--/ Description -->
-                
+
             </div>
         </div>
     </div>
@@ -92,5 +92,5 @@
 @include('back.partials.plugins', ['plugins' => ['ckeditor','jquery.validate']])
 
 @push('scripts')
-    <script src="{{ asset('back/assets/js/pages/brands/create.js') }}?v=2"></script>
+    <script src="{{ asset('back/assets/js/pages/brands/create.js') }}?v=50"></script>
 @endpush

@@ -53,8 +53,8 @@
                                             </h4>
                                         </div>
                                         <div class="g-col-6 d-col-sm-12 d-flex align-items-center">
-                                            <input id="total_transaction" readonly class="form-control mr-1 moneyInput" type="text"
-                                                value="{{ $total }}">
+                                            <input id="total_transaction" readonly class="form-control mr-1 moneyInput"
+                                                type="text" value="{{ $total }}">
                                             ریال
                                         </div>
                                     </div>
@@ -293,6 +293,6 @@
 
 
 @push('scripts')
-    <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}"></script>
-    <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}"></script>
+    <script src="{{ asset('back/assets/js/pages/banktransaction/script.js') }}?v=50"></script>
+    <script src="{{ asset('back/assets/js/pages/installmentsReport/create.js') }}?v=50"></script>
 @endpush

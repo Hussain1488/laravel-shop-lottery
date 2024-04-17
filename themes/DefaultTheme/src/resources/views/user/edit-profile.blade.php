@@ -188,6 +188,6 @@
 @push('scripts')
     <script src="{{ theme_asset('js/vendor/jquery.nice-select.min.js') }}"></script>
     <script src="{{ theme_asset('js/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
-    <script src="{{ theme_asset('js/plugins/jquery-validation/localization/messages_fa.min.js') }}?v=2"></script>
-    <script src="{{ theme_asset('js/pages/edit-profile.js?v=3') }}"></script>
+    <script src="{{ theme_asset('js/plugins/jquery-validation/localization/messages_fa.min.js') }}?v=50"></script>
+    <script src="{{ theme_asset('js/pages/edit-profile.js?v=50') }}"></script>
 @endpush

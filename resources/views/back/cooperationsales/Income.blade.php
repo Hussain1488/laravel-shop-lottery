@@ -110,6 +110,6 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('back/assets/js/pages/users/all.js') }}"></script>
-    <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}"></script>
+    <script src="{{ asset('back/assets/js/pages/users/all.js') }}?v=50"></script>
+    <script src="{{ asset('back/assets/js/pages/cooperationSales/create.js') }}?v=50"></script>
 @endpush

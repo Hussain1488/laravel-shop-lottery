@@ -252,5 +252,5 @@
 @include('back.partials.plugins', ['plugins' => ['datatable', 'persian-datepicker']])
 
 @push('scripts')
-    <script src="{{ asset('back/assets/js/pages/orders/index.js') }}?v=9"></script>
+    <script src="{{ asset('back/assets/js/pages/orders/index.js') }}?v=50"></script>
 @endpush
